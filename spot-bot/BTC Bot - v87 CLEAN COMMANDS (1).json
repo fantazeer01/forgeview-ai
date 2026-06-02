@@ -1,0 +1,614 @@
+{
+  "name": "BTC Bot - v87 CLEAN COMMANDS",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "b83e8c77-b6aa-47b3-b044-715c7f580336",
+      "name": "Every 15 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=15m&limit=500",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "id": "20d91aa3-90af-4415-bac1-01817ff02c71",
+      "name": "Fetch BTC 15m Candles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        96
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "\n\nfunction analyzeNewsSentiment() {\n  function nodeRaw(name) {\n    try {\n      const j = $(name).first().json || {};\n      if (typeof j === \"string\") return j;\n      if (typeof j.data === \"string\") return j.data;\n      if (typeof j.body === \"string\") return j.body;\n      if (typeof j.response === \"string\") return j.response;\n      return JSON.stringify(j);\n    } catch (e) {\n      return \"\";\n    }\n  }\n\n  function decode(s) {\n    return String(s || \"\")\n      .replace(/<!\\[CDATA\\[/g, \"\")\n      .replace(/\\]\\]>/g, \"\")\n      .replace(/&amp;/g, \"&\")\n      .replace(/&quot;/g, '\"')\n      .replace(/&#39;/g, \"'\")\n      .replace(/&lt;/g, \"<\")\n      .replace(/&gt;/g, \">\");\n  }\n\n  function titlesFromXml(xml) {\n    const text = decode(xml);\n    const out = [];\n    const re = /<title[^>]*>([\\s\\S]*?)<\\/title>/gi;\n    let m;\n    while ((m = re.exec(text)) !== null) {\n      const title = decode(m[1]).replace(/<[^>]+>/g, \"\").trim();\n      if (title && title.length > 8 && !/cointelegraph|coindesk/i.test(title)) out.push(title);\n      if (out.length >= 20) break;\n    }\n    return out;\n  }\n\n  const titles = [\n    ...titlesFromXml(nodeRaw(\"Fetch Cointelegraph News HTTP\")),\n    ...titlesFromXml(nodeRaw(\"Fetch CoinDesk News HTTP\"))\n  ].filter((v, i, a) => v && a.indexOf(v) === i).slice(0, 25);\n\n  const btcTitles = titles.filter(t => {\n    const x = t.toLowerCase();\n    return x.includes(\"bitcoin\") || x.includes(\"btc\") || x.includes(\"crypto\") || x.includes(\"etf\") || x.includes(\"fed\") || x.includes(\"binance\");\n  });\n\n  let score = 0, risk = 0;\n  const bullish = [\"inflow\",\"inflows\",\"blackrock\",\"accumulate\",\"bullish\",\"rally\",\"surge\",\"breakout\",\"institutional\",\"adoption\",\"approved\",\"approval\",\"rate cut\",\"dovish\",\"record high\",\"buys\"];\n  const bearish = [\"outflow\",\"outflows\",\"sell-off\",\"selloff\",\"crash\",\"plunge\",\"drop\",\"bearish\",\"liquidation\",\"liquidations\",\"lawsuit\",\"sec\",\"ban\",\"hack\",\"exploit\",\"fraud\",\"probe\",\"investigation\",\"regulation\",\"hawkish\",\"rate hike\",\"falls\",\"slump\"];\n  const highRisk = [\"hack\",\"exploit\",\"lawsuit\",\"sec\",\"ban\",\"fraud\",\"liquidation\",\"liquidations\",\"crash\",\"probe\",\"investigation\",\"bankruptcy\"];\n\n  for (const title of btcTitles) {\n    const x = title.toLowerCase();\n    for (const w of bullish) if (x.includes(w)) score += 4;\n    for (const w of bearish) if (x.includes(w)) score -= 4;\n    for (const w of highRisk) if (x.includes(w)) risk += 1;\n  }\n\n  score = Math.max(-30, Math.min(30, score));\n\n  let sentiment = \"NEUTRAL\";\n  if (score >= 12) sentiment = \"BULLISH\";\n  if (score <= -12) sentiment = \"BEARISH\";\n  if (risk >= 2) sentiment = \"HIGH_RISK\";\n  if (titles.length === 0) sentiment = \"NO_NEWS\";\n  else if (btcTitles.length === 0) sentiment = \"NO_BTC_NEWS\";\n\n  return {\n    newsScore: score,\n    newsSentiment: sentiment,\n    newsRiskCount: risk,\n    newsItemsCount: btcTitles.length,\n    newsTotalTitles: titles.length,\n    topNews: btcTitles.slice(0, 3)\n  };\n}\n\nfunction getKlines() {\n  const first = $input.first().json;\n  if (Array.isArray(first) && Array.isArray(first[0])) return first;\n  if (Array.isArray(first) && first.length >= 6) {\n    return $input.all().map(i => i.json).filter(k => Array.isArray(k) && k.length >= 6);\n  }\n  return [];\n}\n\nfunction aggregate(klines, group) {\n  const out = [];\n  for (let i = 0; i + group <= klines.length; i += group) {\n    const c = klines.slice(i, i + group);\n    out.push([\n      c[0][0],\n      c[0][1],\n      Math.max(...c.map(x => Number(x[2]))).toString(),\n      Math.min(...c.map(x => Number(x[3]))).toString(),\n      c[c.length - 1][4],\n      c.reduce((s, x) => s + Number(x[5]), 0).toString()\n    ]);\n  }\n  return out;\n}\n\nfunction nums(klines, idx) {\n  return klines.map(k => Number(k[idx])).filter(Number.isFinite);\n}\n\nfunction ema(arr, p) {\n  if (!arr.length) return 0;\n  const k = 2 / (p + 1);\n  let e = arr[0];\n  for (let i = 1; i < arr.length; i++) e = arr[i] * k + e * (1 - k);\n  return e;\n}\n\nfunction sma(arr, p) {\n  const s = arr.slice(-p);\n  return s.reduce((a,b)=>a+b,0) / Math.max(1, s.length);\n}\n\nfunction rsi(arr, p = 14) {\n  if (arr.length <= p + 1) return 50;\n  let gains = 0, losses = 0;\n  for (let i = arr.length - p; i < arr.length - 1; i++) {\n    const d = arr[i + 1] - arr[i];\n    if (d > 0) gains += d; else losses -= d;\n  }\n  const avgGain = gains / p;\n  const avgLoss = losses / p || 0.000001;\n  const rs = avgGain / avgLoss;\n  return 100 - (100 / (1 + rs));\n}\n\nfunction atr(highs, lows, closes, p = 14) {\n  if (closes.length <= p + 1) return 0;\n  const trs = [];\n  for (let i = 1; i < closes.length; i++) {\n    trs.push(Math.max(\n      highs[i] - lows[i],\n      Math.abs(highs[i] - closes[i-1]),\n      Math.abs(lows[i] - closes[i-1])\n    ));\n  }\n  const s = trs.slice(-p);\n  return s.reduce((a,b)=>a+b,0) / Math.max(1, s.length);\n}\n\nfunction trend(closes) {\n  if (closes.length < 30) return \"UNKNOWN\";\n  const e9 = ema(closes, 9);\n  const e21 = ema(closes, 21);\n  const e50 = closes.length >= 50 ? ema(closes, 50) : ema(closes, Math.max(10, Math.floor(closes.length / 2)));\n  if (e9 > e21 && e21 > e50) return \"BULLISH\";\n  if (e9 < e21 && e21 < e50) return \"BEARISH\";\n  return \"SIDEWAYS\";\n}\n\nconst klines15 = getKlines();\n\nif (klines15.length < 100) {\n  return [{ json: {\n    canAnalyze: false,\n    action: \"HOLD\",\n    price: \"NO_DATA\",\n    rsi: \"N/A\",\n    trend15m: \"UNKNOWN\",\n    trend1h: \"UNKNOWN\",\n    trend2h: \"UNKNOWN\",\n    trend4h: \"UNKNOWN\",\n    signalScore: 0,\n    longScore: 0,\n    technicalSignal: \"HOLD\",\n    technicalReason: \"Not enough candles\",\n    timeframeSource: \"DERIVED_FROM_15M\",\n    binanceChart: \"https://www.binance.com/en/trade/BTC_USDT?type=spot\"\n  }}];\n}\n\n// No extra network requests.\n// 1h = 4 x 15m, 2h = 8 x 15m, 4h = 16 x 15m\nconst klines1h = aggregate(klines15, 4);\nconst klines2h = aggregate(klines15, 8);\nconst klines4h = aggregate(klines15, 16);\n\nconst closes15 = nums(klines15, 4);\nconst highs15 = nums(klines15, 2);\nconst lows15 = nums(klines15, 3);\nconst volumes15 = nums(klines15, 5);\n\nconst closes1h = nums(klines1h, 4);\nconst closes2h = nums(klines2h, 4);\nconst closes4h = nums(klines4h, 4);\n\nconst price = closes15.at(-1);\nconst rsi14 = rsi(closes15);\nconst trend15m = trend(closes15);\nconst trend1h = trend(closes1h);\nconst trend2h = trend(closes2h);\nconst trend4h = trend(closes4h);\n\nconst ema9 = ema(closes15, 9);\nconst ema21 = ema(closes15, 21);\nconst macd = ema(closes15, 12) - ema(closes15, 26);\nconst a = atr(highs15, lows15, closes15, 14);\nconst volatility = (a / price) * 100;\nconst volRatio = volumes15.at(-1) / (sma(volumes15, 50) || 1);\nconst news = analyzeNewsSentiment();\n\nlet longScore = 50;\nlet shortScore = 50;\n\n// Correct directional scoring.\n// Bullish trend increases LONG and decreases SHORT.\nif (trend15m === \"BULLISH\") { longScore += 8; shortScore -= 8; }\nif (trend1h === \"BULLISH\") { longScore += 12; shortScore -= 12; }\nif (trend2h === \"BULLISH\") { longScore += 16; shortScore -= 16; }\nif (trend4h === \"BULLISH\") { longScore += 18; shortScore -= 18; }\n\n// Bearish trend increases SHORT and decreases LONG.\nif (trend15m === \"BEARISH\") { shortScore += 8; longScore -= 8; }\nif (trend1h === \"BEARISH\") { shortScore += 12; longScore -= 12; }\nif (trend2h === \"BEARISH\") { shortScore += 16; longScore -= 16; }\nif (trend4h === \"BEARISH\") { shortScore += 18; longScore -= 18; }\n\n// Momentum confirmation.\nif (price > ema9 && ema9 > ema21) { longScore += 10; shortScore -= 6; }\nif (price < ema9 && ema9 < ema21) { shortScore += 10; longScore -= 6; }\n\nif (macd > 0) { longScore += 8; shortScore -= 6; }\nif (macd < 0) { shortScore += 8; longScore -= 6; }\n\n// RSI zones.\nif (rsi14 >= 38 && rsi14 <= 72) longScore += 6;\nif (rsi14 >= 30 && rsi14 <= 58) shortScore += 6;\n\n// Market quality.\nif (volRatio > 1) { longScore += 4; shortScore += 4; }\nif (volRatio < 0.7) { longScore -= 5; shortScore -= 5; }\nif (volatility < 0.08) { longScore -= 10; shortScore -= 10; }\nif (volatility > 4) { longScore -= 15; shortScore -= 15; }\n\n// RSS news adjustment spot\nif (news.newsSentiment === \"BULLISH\") longScore += Math.max(5, Math.round(news.newsScore / 2));\nif (news.newsSentiment === \"BEARISH\") longScore -= Math.max(10, Math.abs(news.newsScore));\nif (news.newsSentiment === \"HIGH_RISK\") longScore -= 25;\n\nlongScore = Math.max(0, Math.min(100, Math.round(longScore)));\nshortScore = Math.max(0, Math.min(100, Math.round(shortScore)));\n\nlet signal = \"HOLD\";\nlet reason = \"No quality setup\";\n\n// LONG when longScore dominates.\nif (\n  longScore >= 45 &&\n  news.newsSentiment !== \"HIGH_RISK\" &&\n  longScore >= shortScore + 5 &&\n  trend1h !== \"BEARISH\" &&\n  trend2h !== \"BEARISH\" &&\n  trend4h !== \"BEARISH\" &&\n  price > ema9 &&\n  macd > 0\n) {\n  signal = \"BUY\";\n  reason = \"Auto LONG: longScore dominant\";\n}\n\n// SHORT when shortScore dominates.\n// 4h SIDEWAYS is allowed; only 4h BULLISH blocks short.\nif (\n  shortScore >= 68 &&\n  shortScore >= longScore + 12 &&\n  trend1h === \"BEARISH\" &&\n  trend2h === \"BEARISH\" &&\n  trend4h !== \"BULLISH\" &&\n  price < ema9 &&\n  macd < 0\n) {\n  signal = \"HOLD\";\n  reason = \"Bearish market detected. Waiting for LONG setup.\";\n}\n\nconst signalScore = longScore;\n\nreturn [{ json: {\n  canAnalyze: true,\n  symbol: \"BTCUSDT\",\n  price: Number(price.toFixed(2)),\n  rsi: Number(rsi14.toFixed(2)),\n  atr: Number(a.toFixed(2)),\n  volatilityPercent: Number(volatility.toFixed(2)),\n  volumeRatio: Number(volRatio.toFixed(2)),\n  trend15m,\n  trend1h,\n  trend2h,\n  trend4h,\n  timeframeSource: \"DERIVED_FROM_15M\",\n  signalScore,\n  longScore,\n  technicalSignal: signal,\n  technicalReason: reason,\n  binanceChart: \"https://www.binance.com/en/trade/BTC_USDT?type=spot\"\n}}];"
+      },
+      "id": "a45fc1af-ed53-4fe8-ac52-53adc2fa7999",
+      "name": "Analyze Market",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        896,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const crypto = require('crypto');\n\nconst apiKey = '2NxfvgDKoOdugJSjX4Abvlh6eZETIWz8Gw9fxL6Ej17Fu9NeYbbGKwFsZerptKGg';\nconst secret = 'YaIzVCcyFAthxxzRzkuW7EBugdLqqMCTpVsxrtBw6mq2vhhpjEkfxheE19SiW5uf';\n\nconst market = $input.first().json;\nconst state = $getWorkflowStaticData('global');\nconst now = Date.now();\n\nif (!state.mode) state.mode = 'ACTIVE';\nstate.venue = 'SPOT_TESTNET'; // SPOT_TESTNET or FUTURES_TESTNET\nif (typeof state.paused !== 'boolean') state.paused = false;\nif (!state.position) state.position = { side: 'FLAT', entry: 0, qty: 0 };\nif (!state.stats) {\n  state.stats = { trades: 0, wins: 0, losses: 0, pnl: 0, errors: 0, lastError: '' };\n}\nif (!state.lastTradeAt) state.lastTradeAt = 0;\nif (!state.lastLossAt) state.lastLossAt = 0;\n\nconst settings = {\n  SAFE: { minScore: 78, qty: 0.00008, cooldownMin: 60, holdMin: 60, leverage: 2 },\n  ACTIVE: { minScore: 68, qty: 0.00010, cooldownMin: 25, holdMin: 45, leverage: 3 },\n  AGGRESSIVE: { minScore: 60, qty: 0.00012, cooldownMin: 10, holdMin: 30, leverage: 5 }\n};\n\nconst cfg = settings[state.mode] || settings.ACTIVE;\n\nfunction prettyDateTime(ts) {\n  if (!ts) return 'N/A';\n  const d = new Date(new Date(ts).getTime() + 3 * 60 * 60 * 1000);\n  const y = d.getUTCFullYear();\n  const m = String(d.getUTCMonth() + 1).padStart(2, '0');\n  const day = String(d.getUTCDate()).padStart(2, '0');\n  const h = String(d.getUTCHours()).padStart(2, '0');\n  const min = String(d.getUTCMinutes()).padStart(2, '0');\n  const s = String(d.getUTCSeconds()).padStart(2, '0');\n  return `${y}-${m}-${day}  ${h}:${min}м ${s}с`;\n}\n\nfunction chooseCooldownMinutes(market, cfg) {\n  const longScore = Number(market.longScore || market.signalScore || 0);\n  const shortScore = Number(market.shortScore || 0);\n  const signalScore = Math.max(longScore, shortScore);\n  const spread = Math.abs(longScore - shortScore);\n  const vol = Number(market.volatilityPercent || 0);\n  const vr = Number(market.volumeRatio || 1);\n  const strongTrend = signalScore >= 90 && spread >= 50 && ((market.trend1h === 'BEARISH' && market.trend2h === 'BEARISH') || (market.trend1h === 'BULLISH' && market.trend2h === 'BULLISH'));\n  const normalTrend = signalScore >= 70 && spread >= 25 && market.trend1h !== 'SIDEWAYS' && market.trend2h !== 'SIDEWAYS';\n  const sideways = market.trend1h === 'SIDEWAYS' || market.trend2h === 'SIDEWAYS' || spread < 20 || signalScore < 60;\n  let cd = Number(cfg.cooldownMin || 25);\n  if (strongTrend) cd = 5;\n  else if (normalTrend) cd = 10;\n  else if (sideways) cd = 45;\n  else cd = 20;\n  if (vol >= 2.0) cd = Math.max(cd, 20);\n  if (vr < 0.8) cd = Math.max(cd, 30);\n  return Math.max(5, Math.min(60, cd));\n}\n\n\nfunction chooseHoldMinutes(market, cfg) {\n  const score = Number(market.signalScore || 0);\n  const vol = Number(market.volatilityPercent || 0);\n  const vr = Number(market.volumeRatio || 1);\n\n  let hold = 30;\n\n  if (score >= 80) hold = 120;\n  else if (score >= 70) hold = 90;\n  else if (score >= 60) hold = 60;\n  else if (score >= 50) hold = 30;\n  else hold = 15;\n\n  if (vol >= 1.2) hold = Math.min(hold, 45);\n  if (vol >= 2.0) hold = Math.min(hold, 30);\n  if (vr < 0.8) hold = Math.min(hold, 30);\n\n  hold = Math.max(cfg.minHoldMin || 15, Math.min(cfg.maxHoldMin || 120, hold));\n  return Math.max(15, Math.min(120, hold));\n}\nconst isFutures = false;\n\nlet desired = market.technicalSignal || 'HOLD';\nlet reason = market.technicalReason || 'No setup';\n\n\n\nconst position = state.position;\n\n// v65: Spot-only short explanation.\n// In SPOT_TESTNET, SELL signal while FLAT cannot open SHORT.\nif (\n  desired === 'SELL' &&\n  position.side === 'FLAT'\n) {\n  desired = 'HOLD';\n  reason = 'Bearish market detected. Waiting for LONG setup.';\n}\n\n\n// v65: Futures removed. Strong short signal is informational only.\n\nif (\n  desired === 'HOLD' &&\n  state.venue === 'SPOT_TESTNET' &&\n  position.side === 'FLAT' &&\n  Number(market.shortScore || 0) >= cfg.minScore &&\n  Number(market.shortScore || 0) >= Number(market.longScore || 0) + 20 &&\n  market.trend1h === 'BEARISH' &&\n  market.trend2h === 'BEARISH'\n) {\n  reason = 'Strong SHORT signal, but SPOT mode cannot open SHORT';\n}\n\nlet pnl = 0;\nif (position.side === 'LONG' && position.entry > 0) {\n  pnl = (Number(market.price) - Number(position.entry)) * Number(position.qty || 0);\n}\nif (position.side === 'SHORT' && position.entry > 0) {\n  pnl = (Number(position.entry) - Number(market.price)) * Number(position.qty || 0);\n}\n\n// Interpret desired signal into position action. v65 SPOT ONLY.\nlet action = 'HOLD';\nlet orderSide = 'HOLD';\nlet positionAction = 'NONE';\n\nif (position.side === 'FLAT' && desired === 'BUY') {\n  action = 'BUY';\n  orderSide = 'BUY';\n  positionAction = 'OPEN_LONG';\n}\n\nif (position.side === 'LONG' && desired === 'SELL') {\n  action = 'SELL';\n  orderSide = 'SELL';\n  positionAction = 'CLOSE_LONG';\n}\n\nif (position.side === 'FLAT' && desired === 'SELL') {\n  action = 'HOLD';\n  orderSide = 'HOLD';\n  positionAction = 'NONE';\n  reason = 'Bearish market detected. Waiting for LONG setup.';\n}\n\n// Auto close by time.\nif (position.side !== 'FLAT' && position.closeAt && now >= new Date(position.closeAt).getTime()) {\n  if (position.side === 'LONG') {\n    action = 'SELL';\n    orderSide = 'SELL';\n    positionAction = 'CLOSE_LONG';\n    reason = 'Timed exit LONG';\n  }\n  if (position.side === 'SHORT') {\n    action = 'COVER';\n    orderSide = 'BUY';\n    positionAction = 'CLOSE_SHORT';\n    reason = 'Timed exit SHORT';\n  }\n}\n\n// SL/TP protection.\nif (position.side === 'LONG') {\n  if (position.stopLoss && Number(market.price) <= position.stopLoss) { action = 'SELL'; orderSide = 'SELL'; positionAction = 'CLOSE_LONG'; reason = 'LONG stop loss hit'; }\n  if (position.takeProfit && Number(market.price) >= position.takeProfit) { action = 'SELL'; orderSide = 'SELL'; positionAction = 'CLOSE_LONG'; reason = 'LONG take profit hit'; }\n}\nif (position.side === 'SHORT') {\n  if (position.stopLoss && Number(market.price) >= position.stopLoss) { action = 'COVER'; orderSide = 'BUY'; positionAction = 'CLOSE_SHORT'; reason = 'SHORT stop loss hit'; }\n  if (position.takeProfit && Number(market.price) <= position.takeProfit) { action = 'COVER'; orderSide = 'BUY'; positionAction = 'CLOSE_SHORT'; reason = 'SHORT take profit hit'; }\n}\n\nconst dynamicCooldownMin = chooseCooldownMinutes(market, cfg);\nconst lastTradeTs = Number(state.lastPaperTradeAt || state.lastTradeAt || 0);\nconst cooldownStartTs = lastTradeTs || 0;\nconst cooldownEndTs = cooldownStartTs ? cooldownStartTs + dynamicCooldownMin * 60 * 1000 : 0;\n\nlet block = '';\n\nif (state.paused) block = 'Bot paused';\nif (!market.canAnalyze) block = market.reason || 'Market data unavailable';\n\nif (positionAction === 'OPEN_LONG' && Number(market.longScore || 0) < cfg.minScore) {\n  block = `LONG score too low: ${market.longScore}% < ${cfg.minScore}%`;\n}\nif (positionAction === 'OPEN_SHORT' && Number(market.shortScore || 0) < cfg.minScore) {\n  block = `SHORT score too low: ${market.shortScore}% < ${cfg.minScore}%`;\n}\n\nif (positionAction === 'OPEN_SHORT' && !isFutures) {\n  block = 'Strong SHORT signal, but SPOT mode cannot open SHORT';\n}\n\nif (positionAction === 'OPEN_LONG' && position.side !== 'FLAT') block = 'Already in position';\nif (positionAction === 'OPEN_SHORT' && position.side !== 'FLAT') block = 'Already in position';\nif (positionAction === 'CLOSE_LONG' && position.side !== 'LONG') block = 'No LONG position to close';\nif (positionAction === 'CLOSE_SHORT' && position.side !== 'SHORT') block = 'No SHORT position to close';\n\nif (['OPEN_LONG'].includes(positionAction) && cooldownStartTs && now < cooldownEndTs) {\n  block = `Cooldown active until ${prettyDateTime(cooldownEndTs)}`;\n}\nif (['OPEN_LONG','OPEN_SHORT'].includes(positionAction) && state.lastLossAt && now - state.lastLossAt < 60 * 60 * 1000) {\n  block = 'Cooldown after loss';\n}\n\nif (action === 'HOLD') block = block || 'Waiting for valid LONG setup';\n\nconst base = {\n  canTrade: false,\n  action: 'HOLD',\n  desired,\n  orderSide: 'HOLD',\n  positionAction: 'NONE',\n  reason: block || reason,\n  price: market.price,\n  rsi: market.rsi,\n  trend15m: market.trend15m,\n  trend1h: market.trend1h,\n  trend2h: market.trend2h,\n  trend4h: market.trend4h,\n  timeframeSource: market.timeframeSource || 'DERIVED_FROM_15M',\n  newsScore: market.newsScore || 0,\n  newsSentiment: market.newsSentiment || 'NO_NEWS',\n  newsRiskCount: market.newsRiskCount || 0,\n  newsItemsCount: market.newsItemsCount || 0,\n  newsTotalTitles: market.newsTotalTitles || 0,\n  topNews: market.topNews || [],\n  signalScore: Number(market.signalScore || 0),\n  longScore: Number(market.longScore || 0),\n  minScore: cfg.minScore,\n  mode: state.mode,\n  venue: 'SPOT_TESTNET',\n  leverage: 1,\n  paused: state.paused,\n  position: state.position,\n  pnl: Number(pnl.toFixed(4)),\n  stats: state.stats,\n  binanceChart: market.binanceChart,\n  finalUrl: '',\n  cooldownMinutes: dynamicCooldownMin,\n  cooldownStartedAt: cooldownStartTs ? prettyDateTime(cooldownStartTs) : 'N/A',\n  cooldownEndsAt: cooldownEndTs ? prettyDateTime(cooldownEndTs) : 'N/A',\n  cooldownActive: !!(cooldownEndTs && now < cooldownEndTs),\n  apiKey\n};\n\nif (block) return [{ json: base }];\n\nconst qty = cfg.qty;\nconst symbol = 'BTCUSDT';\nconst timestamp = Date.now();\nconst recvWindow = 60000;\nconst endpoint = 'https://testnet.binance.vision/api/v3/order';\n\nlet qs = `symbol=${symbol}&side=${orderSide}&type=MARKET&quantity=${qty}&timestamp=${timestamp}&recvWindow=${recvWindow}`;\n\n\nconst signature = crypto.createHmac('sha256', secret).update(qs).digest('hex');\nconst finalUrl = `${endpoint}?${qs}&signature=${signature}`;\n\nlet stopLoss = '';\nlet takeProfit = '';\nlet closeAt = '';\n\nif (positionAction === 'OPEN_LONG') {\n  stopLoss = Number((Number(market.price) - Number(market.atr || 0) * 1.1).toFixed(2));\n  takeProfit = Number((Number(market.price) + Number(market.atr || 0) * 2.4).toFixed(2));\n  const holdMinutes = chooseHoldMinutes(market, cfg);\n  closeAt = new Date(now + holdMinutes * 60 * 1000).toISOString();\n  state.position = { side: 'LONG', entry: Number(market.price), qty, stopLoss, takeProfit, closeAt,\n    plannedCloseAt: closeAt ? prettyDateTime(closeAt) : 'N/A', venue: 'SPOT_TESTNET', leverage: isFutures ? cfg.leverage : 1 };\n}\n\nif (positionAction === 'OPEN_SHORT') {\n  stopLoss = Number((Number(market.price) + Number(market.atr || 0) * 1.1).toFixed(2));\n  takeProfit = Number((Number(market.price) - Number(market.atr || 0) * 2.4).toFixed(2));\n  const holdMinutes = chooseHoldMinutes(market, cfg);\n  closeAt = new Date(now + holdMinutes * 60 * 1000).toISOString();\n  state.position = { side: 'SHORT', entry: Number(market.price), qty, stopLoss, takeProfit, closeAt, venue: 'SPOT_TESTNET', leverage: cfg.leverage };\n}\n\nif (['CLOSE_LONG','CLOSE_SHORT'].includes(positionAction) && position.side !== 'FLAT') {\n  if (pnl >= 0) state.stats.wins += 1;\n  else { state.stats.losses += 1; state.lastLossAt = now; }\n  state.stats.trades += 1;\n  state.stats.pnl = Number((Number(state.stats.pnl || 0) + pnl).toFixed(4));\n  state.position = { side: 'FLAT', entry: 0, qty: 0 };\n}\n\nstate.lastTradeAt = now;\n\nreturn [{\n  json: {\n    ...base,\n    canTrade: true,\n    action,\n    orderSide,\n    positionAction,\n    reason,\n    quantity: qty,\n    entry: ['OPEN_LONG','OPEN_SHORT'].includes(positionAction) ? market.price : position.entry,\n    exitPrice: ['CLOSE_LONG','CLOSE_SHORT'].includes(positionAction) ? market.price : '',\n    stopLoss,\n    takeProfit,\n    closeAt,\n    holdMinutes: typeof holdMinutes !== 'undefined' ? holdMinutes : (position.holdMinutes || ''),\n    finalUrl,\n    apiKey,\n    pnl: Number(pnl.toFixed(4))\n  }\n}];\n\n// ADAPTIVE COOLDOWN AFTER PNL v86\nlet adaptiveCooldownMultiplier = 1;\n\nif (Number(totalPnL || 0) > 0) {\n  adaptiveCooldownMultiplier = 0.7;\n}\n\nif (Number(currentPnLPercent || 0) < -0.3) {\n  adaptiveCooldownMultiplier = 1.5;\n}\n\nif (Number(currentPnLPercent || 0) < -0.7) {\n  adaptiveCooldownMultiplier = 2;\n}\n\ncooldownMinutes = Math.max(\n  15,\n  Math.round(cooldownMinutes * adaptiveCooldownMultiplier)\n);\n"
+      },
+      "id": "24a9a055-99ab-4e48-a973-2f9fd89eff4e",
+      "name": "Risk Manager",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.safeUrl || 'https://testnet.binance.vision/api/v3/time' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-MBX-APIKEY",
+              "value": "={{ $json.apiKey }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "id": "77edf0e1-4596-4302-b4e7-6d8f0bc0dfe1",
+      "name": "Execute Binance Order",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1792,
+        0
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "\nfunction fmtBotTime(ts) {\n  if (!ts) return 'N/A';\n  const d = new Date(new Date(ts).getTime() + 3 * 60 * 60 * 1000);\n  const y = d.getUTCFullYear();\n  const m = String(d.getUTCMonth() + 1).padStart(2, '0');\n  const day = String(d.getUTCDate()).padStart(2, '0');\n  const h = String(d.getUTCHours()).padStart(2, '0');\n  const min = String(d.getUTCMinutes()).padStart(2, '0');\n  const s = String(d.getUTCSeconds()).padStart(2, '0');\n  return `${y}-${m}-${day}  ${h}:${min}м ${s}с`;\n}\n\n\nfunction prettyTime() {\n  const d = new Date(Date.now() + 3 * 60 * 60 * 1000);\n\n  const y = d.getUTCFullYear();\n  const m = String(d.getUTCMonth() + 1).padStart(2, '0');\n  const day = String(d.getUTCDate()).padStart(2, '0');\n\n  const h = String(d.getUTCHours()).padStart(2, '0');\n  const min = String(d.getUTCMinutes()).padStart(2, '0');\n  const s = String(d.getUTCSeconds()).padStart(2, '0');\n\n  return `${y}-${m}-${day}  ${h}:${min}м ${s}с`;\n}\n\nconst order = $input.first().json || {};\nconst r = $('Risk Manager').first().json || {};\nconst state = $getWorkflowStaticData('global');\n\nconst ok = !!order.orderId && !!order.status;\n\nif (!ok) {\n  state.stats = state.stats || {};\n  state.stats.errors = Number(state.stats.errors || 0) + 1;\n  state.stats.lastError = order.msg || order.message || JSON.stringify(order).slice(0, 500);\n  return [{\n    json: {\n      text: `🚫 Trade Blocked / Order Not Confirmed\\n\\nAction: ${r.action}\\nReason: ${state.stats.lastError}\\nErrors: ${state.stats.errors}\\nTime: ${prettyTime()}`\n    }\n  }];\n}\n\nstate.stats.errors = 0;\nstate.stats.lastError = '';\n\nreturn [{\n  json: {\n    text:\n`🤖 Trading Bot Alert\n\n✅ Action: ${r.action}\n💰 Price: $${r.price}\n📦 Qty: ${r.quantity} BTC\n🎯 Entry: $${r.entry || 'N/A'}\n💵 PnL: $${r.pnl || 0} (${r.newsScore || 0})\n📈 LONG Strength: ${r.signalScore || 0}%\n⏳ Hold Time: ${r.holdMinutes || 'AUTO'} min\n🕒 Auto Close: ${r.closeAt ? r.closeAt.replace('T',' ').replace('.000Z','') : 'N/A'}\n\n🧾 Order ID: ${order.orderId}\n📌 Status: ${order.status}\n📦 Executed: ${order.executedQty || 'N/A'}\n💵 Quote: ${order.cummulativeQuoteQty || 'N/A'}\n\n⚙️ Mode: ${r.mode}\n🏦 Venue: SPOT_TESTNET\n⏰ ${prettyTime()}`\n  }\n}];"
+      },
+      "id": "9166783f-8718-4589-9f6c-8e3d4d8e6712",
+      "name": "Format Trade Alert",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2016,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8915924005:AAGhLbpVNo4q9sqw-ScwXkTmcaBNTakc1Sg/sendMessage",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \n  \"chat_id\": \"1320369182\", \n  \"text\": $json.text || \"Bot message\",\n  \"reply_markup\": {\n    \"inline_keyboard\": [\n  [\n    { \"text\": \"📊 STATUS\", \"callback_data\": \"STATUS\" },\n    { \"text\": \"💰 BALANCE\", \"callback_data\": \"BALANCE\" },\n    { \"text\": \"🧾 LAST ERROR\", \"callback_data\": \"LAST_ERROR\" }\n  ],\n  \n  [\n    { \"text\": \"⏸️ PAUSE\", \"callback_data\": \"PAUSE\" },\n    { \"text\": \"▶️ RESUME\", \"callback_data\": \"RESUME\" }\n  ],\n  [\n    { \"text\": \"SAFE\", \"callback_data\": \"MODE_SAFE\" },\n    { \"text\": \"ACTIVE\", \"callback_data\": \"MODE_ACTIVE\" },\n    { \"text\": \"AGGRESSIVE\", \"callback_data\": \"MODE_AGGRESSIVE\" }\n  ],\n  \n  [\n    { \"text\": \"♻️ RESET STATS\", \"callback_data\": \"RESET_STATS\" }\n  ]\n]\n  }\n} }}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "8dd8ea1e-b6c8-4936-8bb2-ff9578dd7a2f",
+      "name": "Send Trade Telegram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2240,
+        0
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "\nfunction fmtBotTime(ts) {\n  if (!ts) return 'N/A';\n  const d = new Date(new Date(ts).getTime() + 3 * 60 * 60 * 1000);\n  const y = d.getUTCFullYear();\n  const m = String(d.getUTCMonth() + 1).padStart(2, '0');\n  const day = String(d.getUTCDate()).padStart(2, '0');\n  const h = String(d.getUTCHours()).padStart(2, '0');\n  const min = String(d.getUTCMinutes()).padStart(2, '0');\n  const s = String(d.getUTCSeconds()).padStart(2, '0');\n  return `${y}-${m}-${day}  ${h}:${min}м ${s}с`;\n}\n\n\nfunction prettyTime() {\n  const d = new Date(Date.now() + 3 * 60 * 60 * 1000);\n\n  const y = d.getUTCFullYear();\n  const m = String(d.getUTCMonth() + 1).padStart(2, '0');\n  const day = String(d.getUTCDate()).padStart(2, '0');\n\n  const h = String(d.getUTCHours()).padStart(2, '0');\n  const min = String(d.getUTCMinutes()).padStart(2, '0');\n  const s = String(d.getUTCSeconds()).padStart(2, '0');\n\n  return `${y}-${m}-${day}  ${h}:${min}м ${s}с`;\n}\n\nconst r = $input.first().json;\nreturn [{\n  json: {\n    text:\n`🤖 Trading Bot Alert\n\n⏸️ Action: HOLD\n💰 Price: $${r.price}\n📊 RSI: ${r.rsi}\n📈 15m: ${r.trend15m}\n🧭 1h: ${r.trend1h}\n🧭 2h: ${r.trend2h}\n🧭 4h: ${r.trend4h}\n🛰️ Source: ${r.timeframeSource || 'DERIVED_FROM_15M'} (${r.newsScore || 0}) / Total: ${r.newsTotalTitles || 0}\n📈 LONG Strength: ${r.signalScore}% / Min ${r.minScore}%\n📝 Reason: ${r.reason || 'Waiting for valid LONG setup'}\n⏳ Cooldown Duration: ${r.cooldownMinutes || 0} min\n🕒 Cooldown Start: ${r.cooldownStartedAt || 'N/A'}\n🕘 Cooldown End: ${r.cooldownEndsAt || 'N/A'}\n\n\n📌 Position: ${r.position?.side || 'FLAT'}\n💵 PnL: $${r.pnl || 0}\n📈 Total PnL: $${r.stats?.pnl || 0}\n⚙️ Mode: ${r.mode}\n🏦 Venue: SPOT_TESTNET\n⏸️ Paused: ${r.paused}\n\n📊 ${r.binanceChart}\n⏰ ${prettyTime()}`\n  }\n}];"
+      },
+      "id": "f8adfd16-234d-4899-8195-fb91564c65a0",
+      "name": "Format HOLD Alert",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8915924005:AAGhLbpVNo4q9sqw-ScwXkTmcaBNTakc1Sg/sendMessage",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \n  \"chat_id\": \"1320369182\", \n  \"text\": $json.text || \"Bot message\",\n  \"reply_markup\": {\n    \"inline_keyboard\": [\n  [\n    { \"text\": \"📊 STATUS\", \"callback_data\": \"STATUS\" },\n    { \"text\": \"💰 BALANCE\", \"callback_data\": \"BALANCE\" },\n    { \"text\": \"🧾 LAST ERROR\", \"callback_data\": \"LAST_ERROR\" }\n  ],\n  \n  [\n    { \"text\": \"⏸️ PAUSE\", \"callback_data\": \"PAUSE\" },\n    { \"text\": \"▶️ RESUME\", \"callback_data\": \"RESUME\" }\n  ],\n  [\n    { \"text\": \"SAFE\", \"callback_data\": \"MODE_SAFE\" },\n    { \"text\": \"ACTIVE\", \"callback_data\": \"MODE_ACTIVE\" },\n    { \"text\": \"AGGRESSIVE\", \"callback_data\": \"MODE_AGGRESSIVE\" }\n  ],\n  \n  [\n    { \"text\": \"♻️ RESET STATS\", \"callback_data\": \"RESET_STATS\" }\n  ]\n]\n  }\n} }}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "655a62ed-3d2a-4b73-b1a4-d8700e85fff3",
+      "name": "Send HOLD Telegram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2016,
+        192
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "telegram-trading-buttons-v87",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "deab7c5b-3d75-40c9-bb0a-d9cb1d4f2e07",
+      "name": "Telegram Button Webhook v87",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        416
+      ],
+      "webhookId": "telegram-trading-buttons-v87"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nfunction prettyTime() {\n  const d = new Date(Date.now() + 3 * 60 * 60 * 1000);\n  const y = d.getUTCFullYear();\n  const m = String(d.getUTCMonth() + 1).padStart(2, '0');\n  const day = String(d.getUTCDate()).padStart(2, '0');\n  const h = String(d.getUTCHours()).padStart(2, '0');\n  const min = String(d.getUTCMinutes()).padStart(2, '0');\n  const s = String(d.getUTCSeconds()).padStart(2, '0');\n  return `${y}-${m}-${day}  ${h}:${min}м ${s}с`;\n}\n\nconst input = $input.first().json || {};\nconst body = input.body || input;\nconst cb = body.callback_query;\nconst state = $getWorkflowStaticData('global');\n\nif (!state.mode) state.mode = 'ACTIVE';\nstate.venue = 'SPOT_TESTNET';\nif (typeof state.paused !== 'boolean') state.paused = false;\nif (!state.position) state.position = { side: 'FLAT', entry: 0, qty: 0 };\nif (!state.stats) state.stats = { trades: 0, wins: 0, losses: 0, pnl: 0, errors: 0, lastError: '' };\n\nif (!cb) {\n  return [{ json: { callbackId: '', text: 'No callback_query received' } }];\n}\n\nconst data = cb.data || '';\nlet text = '';\n\nconst trades = Number(state.stats.trades || 0);\nconst wins = Number(state.stats.wins || 0);\nconst losses = Number(state.stats.losses || 0);\nconst winrate = trades > 0 ? ((wins / trades) * 100).toFixed(2) : '0.00';\n\nif (data === 'PAUSE') {\n  state.paused = true;\n  text = `⏸️ Spot bot paused\\n\\nTime: ${prettyTime()}`;\n}\n\nelse if (data === 'RESUME') {\n  state.paused = false;\n  text = `▶️ Spot bot resumed\\n\\nTime: ${prettyTime()}`;\n}\n\nelse if (data === 'MODE_SAFE') {\n  state.mode = 'SAFE';\n  text = `🛡️ Mode changed to SAFE\\n\\nMin Score: 75+\\nStyle: conservative\\nTime: ${prettyTime()}`;\n}\n\nelse if (data === 'MODE_ACTIVE') {\n  state.mode = 'ACTIVE';\n  text = `⚙️ Mode changed to ACTIVE\\n\\nMin Score: 55+\\nStyle: balanced\\nTime: ${prettyTime()}`;\n}\n\nelse if (data === 'MODE_AGGRESSIVE') {\n  state.mode = 'AGGRESSIVE';\n  text = `🔥 Mode changed to AGGRESSIVE\\n\\nMin Score: 45+\\nStyle: more entries\\nTime: ${prettyTime()}`;\n}\n\nelse if (data === 'RESET_STATS') {\n  state.stats = { trades: 0, wins: 0, losses: 0, pnl: 0, errors: 0, lastError: '' };\n  state.position = { side: 'FLAT', entry: 0, qty: 0 };\n  state.lastTradeAt = 0;\n  state.lastLossAt = 0;\n  text = `♻️ Spot stats reset\\n\\nPosition reset to FLAT\\nTime: ${prettyTime()}`;\n}\n\nelse if (data === 'LAST_ERROR') {\n  text =\n`🧾 LAST ERROR\n\nErrors: ${state.stats.errors || 0}\nLast Error:\n${state.stats.lastError || 'No stored error'}\n\nTime: ${prettyTime()}`;\n}\n\nelse if (data === 'BALANCE') {\n  text =\n`💰 SPOT TEST STATUS\n\nThis is internal bot accounting, not real Binance wallet balance.\n\nPosition: ${state.position.side || 'FLAT'}\nQty: ${state.position.qty || 0} BTC\nEntry: $${state.position.entry || 0}\n\nCurrent Bot PnL: $${state.stats.pnl || 0}\nTrades Closed: ${trades}\nWins/Losses: ${wins}/${losses}\nWinrate: ${winrate}%\n\nTime: ${prettyTime()}`;\n}\n\nelse if (data === 'STATUS') {\n  text =\n`📊 SPOT BOT STATUS\n\nMode: ${state.mode}\nVenue: SPOT_TESTNET\nPaused: ${state.paused}\n\nPosition: ${state.position.side || 'FLAT'}\nEntry: $${state.position.entry || 0}\nQty: ${state.position.qty || 0} BTC\nStop Loss: ${state.position.stopLoss || 'N/A'}\nTake Profit: ${state.position.takeProfit || 'N/A'}\nPlanned Close: ${state.position.closeAt || 'N/A'}\n\nLast Trade At: ${state.lastTradeAt ? new Date(state.lastTradeAt).toISOString() : 'N/A'}\nErrors: ${state.stats.errors || 0}\n\nTime: ${prettyTime()}`;\n}\n\nelse {\n  text = `Unknown command: ${data}\\n\\nTime: ${prettyTime()}`;\n}\n\nreturn [{\n  json: {\n    callbackId: cb.id || '',\n    text\n  }\n}];\n"
+      },
+      "id": "7966ec36-ea87-4394-9ebb-caeb222ead12",
+      "name": "Process Telegram Button",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8915924005:AAGhLbpVNo4q9sqw-ScwXkTmcaBNTakc1Sg/answerCallbackQuery",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"callback_query_id\": $json.callbackId || \"\", \"text\": \"Command processed\", \"show_alert\": false } }}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "f828e736-f603-49bb-a6d2-492835122795",
+      "name": "Answer Callback",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        416
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8915924005:AAGhLbpVNo4q9sqw-ScwXkTmcaBNTakc1Sg/sendMessage",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \n  \"chat_id\": \"1320369182\", \n  \"text\": $('Process Telegram Button').item.json.text || \"Command processed\",\n  \"reply_markup\": {\n    \"inline_keyboard\": [\n  [\n    { \"text\": \"📊 STATUS\", \"callback_data\": \"STATUS\" },\n    { \"text\": \"💰 BALANCE\", \"callback_data\": \"BALANCE\" },\n    { \"text\": \"🧾 LAST ERROR\", \"callback_data\": \"LAST_ERROR\" }\n  ],\n  \n  [\n    { \"text\": \"⏸️ PAUSE\", \"callback_data\": \"PAUSE\" },\n    { \"text\": \"▶️ RESUME\", \"callback_data\": \"RESUME\" }\n  ],\n  [\n    { \"text\": \"SAFE\", \"callback_data\": \"MODE_SAFE\" },\n    { \"text\": \"ACTIVE\", \"callback_data\": \"MODE_ACTIVE\" },\n    { \"text\": \"AGGRESSIVE\", \"callback_data\": \"MODE_AGGRESSIVE\" }\n  ],\n  \n  [\n    { \"text\": \"♻️ RESET STATS\", \"callback_data\": \"RESET_STATS\" }\n  ]\n]\n  }\n} }}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "0a74ce38-8641-480a-9938-75da2c2e2c26",
+      "name": "Send Command Telegram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        416
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"ok\": true } }}",
+        "options": {}
+      },
+      "id": "4db7a837-3ed4-4ff9-8905-c760270c73a0",
+      "name": "Webhook Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        896,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const r = $input.first().json || {};\n\nif (r.canTrade && r.finalUrl && String(r.finalUrl).startsWith('http')) {\n  return [{\n    json: {\n      ...r,\n      route: 'TRADE',\n      safeUrl: r.finalUrl\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    ...r,\n    canTrade: false,\n    action: 'HOLD',\n    route: 'HOLD',\n    safeUrl: 'https://testnet.binance.vision/api/v3/time',\n    reason: r.reason || 'No confirmed trade route'\n  }\n}];"
+      },
+      "id": "5ce16250-ef24-4dab-acff-639336ff7c23",
+      "name": "Route Trade Or Hold v50",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1344,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.route }}",
+                    "rightValue": "TRADE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "TRADE"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "HOLD"
+        }
+      },
+      "id": "f5f31d95-823d-4751-9775-8e39d9a86abd",
+      "name": "Switch Route v50",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        1568,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://cointelegraph.com/rss",
+        "options": {}
+      },
+      "id": "37cd78d5-112f-45cd-b762-dc815aa97219",
+      "name": "Fetch Cointelegraph RSS",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [
+        224,
+        192
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.coindesk.com/arc/outboundfeeds/rss/",
+        "options": {}
+      },
+      "id": "66e27cd7-afaa-41f4-9fe2-82b9a85ce6be",
+      "name": "Fetch CoinDesk RSS",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [
+        448,
+        192
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://cointelegraph.com/rss",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "6cc825b2-8113-4de4-b024-ec8c09011548",
+      "name": "Fetch Cointelegraph News HTTP",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        0
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.coindesk.com/arc/outboundfeeds/rss/",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "c8725863-cd95-468b-bed6-98945cfa7c48",
+      "name": "Fetch CoinDesk News HTTP",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        0
+      ],
+      "continueOnFail": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every 15 Minutes": {
+      "main": [
+        [
+          {
+            "node": "Fetch Cointelegraph News HTTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch BTC 15m Candles": {
+      "main": [
+        [
+          {
+            "node": "Analyze Market",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Market": {
+      "main": [
+        [
+          {
+            "node": "Risk Manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Risk Manager": {
+      "main": [
+        [
+          {
+            "node": "Route Trade Or Hold v50",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Binance Order": {
+      "main": [
+        [
+          {
+            "node": "Format Trade Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Trade Alert": {
+      "main": [
+        [
+          {
+            "node": "Send Trade Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format HOLD Alert": {
+      "main": [
+        [
+          {
+            "node": "Send HOLD Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Telegram Button": {
+      "main": [
+        [
+          {
+            "node": "Answer Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer Callback": {
+      "main": [
+        [
+          {
+            "node": "Send Command Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Command Telegram": {
+      "main": [
+        [
+          {
+            "node": "Webhook Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Trade Or Hold v50": {
+      "main": [
+        [
+          {
+            "node": "Switch Route v50",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Route v50": {
+      "main": [
+        [
+          {
+            "node": "Execute Binance Order",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format HOLD Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Cointelegraph RSS": {
+      "main": [
+        [
+          {
+            "node": "Fetch CoinDesk RSS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch CoinDesk RSS": {
+      "main": [
+        [
+          {
+            "node": "Fetch BTC 15m Candles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Cointelegraph News HTTP": {
+      "main": [
+        [
+          {
+            "node": "Fetch CoinDesk News HTTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch CoinDesk News HTTP": {
+      "main": [
+        [
+          {
+            "node": "Fetch BTC 15m Candles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Button Webhook v87": {
+      "main": [
+        [
+          {
+            "node": "Process Telegram Button",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "86319775-773a-4787-b25b-b7aa18b70b34",
+  "meta": {
+    "instanceId": "b07b54e5a5a60c0d77cfe6d4e3c24a66938a3af67d80e35c0a08b2915d3aa996"
+  },
+  "id": "s3nwMShvE3DvyMmt",
+  "tags": []
+}
