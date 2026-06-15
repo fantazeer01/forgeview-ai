@@ -1,0 +1,19 @@
+# Local secrets and credentials
+ForgeViewAIContent/*config.json
+ForgeViewAIContent/youtube_token.json
+ForgeViewAIContent/youtube_client_secret.json
+ForgeViewAIContent/telegram_config*.json
+
+# Generated media and working files
+ForgeViewAIVideos/
+Logs/
+**/__pycache__/
+**/*.pyc
+**/.venv/
+**/work/
+**/output/
+
+# Runtime logs and API responses
+Exports/*_response.json
+Exports/*_stdout.log
+Exports/*_stderr.log
