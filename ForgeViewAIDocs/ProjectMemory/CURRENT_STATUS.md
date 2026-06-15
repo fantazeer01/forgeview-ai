@@ -2,138 +2,159 @@
 
 Last updated: 2026-06-15.
 
-## Project State
+## Source Of Truth
 
-ForgeViewAI is a documentation-heavy automation and trading operations project with several working foundations:
-
-- BTC Spot Bot workflow source in the repository.
-- BTC Futures Paper Bot workflow source in the repository.
-- documented newer exports for Spot v88 STABILITY FIX and Futures v22 EXIT SAFETY outside the repository download folder.
-- project docs for overview, roadmap, backlog, bot version history, and future Codex tasks.
-- growth assets for content prompts, lead-system MVP, automation map offer, and a local shorts generator.
-
-The project is not yet a packaged SaaS product. The current best business loop is manual and Telegram-first: publish useful lessons, start conversations, deliver free Automation Maps, and convert some users into paid Automation Audits.
-
-## Content Machine State
-
-Content Machine v2 is prepared, not deployed.
-
-Current assets:
-
-- `growth/content-machine-v2/PROMPTS.md` defines the content rules.
-- `growth/content-machine-v2/IMPLEMENTATION_REPORT.md` records the implementation.
-- `growth/lead-system-mvp/content_queue_map.csv` contains ready MAP offer posts.
-- `growth/shorts-generator/` can render text-slide vertical videos locally.
-
-Core rule:
-
-Public content must lead with a mistake, bug, lesson, insight, principle, workflow insight, automation insight, or operational takeaway. Internal events are context only.
-
-Known state:
-
-- No automatic publishing is documented as deployed.
-- YouTube upload remains manual for the shorts generator MVP.
-- Image generation is optional for MVP content.
-- `gpt-image-1` is the documented default if image generation is used; `gpt-image-2` should not be assumed available.
-
-## Spot Bot State
-
-Repository source:
+Live Git repository:
 
 ```text
-spot-bot/BTC Bot - v87 CLEAN COMMANDS (1).json
+D:\ForgeViewAI
 ```
 
-Documented newer export:
+Project memory location:
 
 ```text
-%USERPROFILE%\Downloads\BTC Bot - v88 STABILITY FIX.json
+D:\ForgeViewAI\ForgeViewAIDocs\ProjectMemory
 ```
 
-Current behavior and purpose:
+`ForgeViewAIBackup/` is backup and reference-only. It is not the live source.
 
-- BTCUSDT spot testnet workflow.
-- Long-only trading.
-- 15-minute schedule.
-- Uses 15m Binance candles and derived 1h, 2h, and 4h trend.
-- Uses RSS news sentiment as a score adjustment.
-- Supports stop loss, take profit, timed exit, and bearish reversal exit.
-- Supports Telegram controls.
-
-Important v88 safety focus:
-
-- avoid phantom internal positions after failed Binance orders;
-- commit planned position only after confirmed order response;
-- expose `shortScore` and `bearishExitSignal`;
-- close using existing `position.qty`;
-- preserve scoring, thresholds, and risk parameters.
-
-Known issues:
-
-- Spot v88 still needs import and controlled validation in n8n.
-- Telegram mode text may not match actual thresholds.
-- News fields are computed but not fully surfaced downstream.
-- Original adaptive cooldown code may still include unreachable logic outside current fix scope.
-
-## Futures Bot State
-
-Repository source:
+## Live Repository Structure
 
 ```text
-spot-bot/futures-bot/BTC Futures Paper Bot - v21 QUALITY FILTERS (1).json
+D:\ForgeViewAI
+  Exports/
+  ForgeViewAIn8n/
+  ForgeViewAIContent/
+  ForgeViewAIDocs/
+  ForgeViewAIBackup/
+  ForgeViewAIVideos/
+  Logs/
+  .gitignore
 ```
 
-Documented newer export:
+Directory roles:
+
+- `Exports/`: exported workflow files, bridge scripts, tunnel docs, upload scripts, and runtime helper files.
+- `ForgeViewAIn8n/`: live n8n workflow export library for ForgeViewAI content/video automation.
+- `ForgeViewAIContent/`: local config area for OpenAI, Telegram, YouTube, bridge, and provider settings. Treat real config files as private.
+- `ForgeViewAIDocs/`: live documentation area, including ProjectMemory.
+- `ForgeViewAIBackup/`: backup/reference-only archive. Do not treat as live source.
+- `ForgeViewAIVideos/`: generated video outputs. Do not commit generated media unless explicitly reviewed and requested.
+- `Logs/`: runtime/e2e logs and generated status artifacts. Do not commit by default.
+
+## Actual Workflow Index
+
+Latest detected Content Machine workflow:
 
 ```text
-%USERPROFILE%\Downloads\BTC Futures Paper Bot - v22 EXIT SAFETY.json
+ForgeViewAIn8n\ForgeViewAI Unified Content Machine v14.2 - Sales Routing Stability Fix.json
 ```
 
-Current behavior and purpose:
+Detected workflow lineage includes v8 through v14.2 plus:
 
-- BTCUSDT futures paper trading workflow.
-- Supports LONG and SHORT signals.
-- Includes v21 short quality filters.
-- Tracks internal paper position, paper PnL, wins, and losses.
-- Supports Telegram controls.
+```text
+ForgeViewAIn8n\ForgeViewAI YouTube Shorts Upload - Telegram Drafts.json
+```
 
-Verified v22 safety result:
+Current branch/status notes from repository audit:
 
-- Futures v22 EXIT SAFETY was documented as PASS.
-- Normal cooldown and loss cooldown apply only to `OPEN_LONG` and `OPEN_SHORT`.
-- `CLOSE_LONG` and `CLOSE_SHORT` are not blocked by cooldown logic.
+- MP4 branch status: FAIL, bridge URL not configured.
+- Telegram post: PASS.
+- X draft: PASS.
+- Shorts draft: PASS.
 
-Known issues:
+Runtime artifact detected:
 
-- Paper PnL does not fully model leverage, fees, slippage, funding, or liquidation.
-- `Execute Futures Demo Order` remains disconnected in paper mode.
-- Futures AGGRESSIVE mode currently has a higher min score than ACTIVE.
-- Duplicate cooldown output fields remain in the base object.
-- Long-side quality filters are not yet equivalent to short-side filters.
+```text
+Logs\e2e_v14_2_real_run_20260615_220516.json
+```
 
-## GitHub State
+## Trading Export Index
 
-GitHub state is not fully verifiable from this local environment because the `git` command is not available in the current PowerShell session.
+Latest detected Futures export:
 
-Known repository state from files:
+```text
+Exports\BTC Futures Paper Bot - v24 ANTI LATE LONG.json
+```
 
-- project files are present locally;
-- docs and workflow JSON exports exist in the workspace;
-- current docs reference exports stored outside the repository under the user Downloads folder;
-- no GitHub remote, branch, commit, or PR status was verified during this documentation update.
+Other detected live Futures export:
 
-Operational rule:
+```text
+Exports\BTC Futures Paper Bot - v22 QUALITY FILTERS.json
+```
 
-Before claiming repository cleanliness, branch status, or pushed changes, verify Git availability or use an available GitHub connector.
+Clarification needed:
+
+- Futures v22/v23 status must be clarified by filename and actual release intent.
+- Existing memory previously referenced `v22 EXIT SAFETY`, but live filename says `v22 QUALITY FILTERS`.
+- Futures v23 was detected in backup, not live exports.
+
+Spot status:
+
+- Spot v88 was detected in `ForgeViewAIBackup/`, not in live `Exports/`.
+- Spot v88 is backup-only unless confirmed live by the user or by a future inventory task.
+- Do not assume Spot v88 is deployed or live.
+
+## Content And Video State
+
+The old `growth/content-machine-v2` path belongs to the archived `forgeview-ai-main` structure and should not be treated as live.
+
+Live content/video automation is now centered around:
+
+- `ForgeViewAIn8n/` workflow exports;
+- `ForgeViewAIContent/` local configs;
+- `Exports/forgeview_local_bridge.py`;
+- `Exports/upload_short_to_youtube.py`;
+- `ForgeViewAIVideos/short.mp4`;
+- `Logs/` e2e outputs.
+
+The latest live Content Machine is v14.2, not v2.
+
+## Runtime Unknowns
+
+The following are currently unknown and must be verified before claiming deployment readiness:
+
+- active n8n workflow unknown;
+- Telegram webhook status unknown;
+- bridge/tunnel URL unknown;
+- YouTube upload credentials/status unknown;
+- deployed workflow unknown.
+
+Do not infer these from file presence alone.
+
+## Git And Tooling State
+
+The live repo has a `.git` directory at:
+
+```text
+D:\ForgeViewAI\.git
+```
+
+In the current Codex PowerShell environment, `git` was not available through `git` or `where.exe git` during prior checks. Git status, branch, remote, commit, and push state therefore remain unverified from this environment.
+
+## Security And Generated Files
+
+`.gitignore` excludes local secrets, config files, generated media, logs, runtime responses, cache files, virtualenvs, and work/output directories.
+
+Never commit:
+
+- real token/config/client secret files;
+- generated videos;
+- logs;
+- generated frames;
+- runtime API responses;
+- cache or virtualenv artifacts.
+
+Only commit explicit reviewed files.
 
 ## Known Problems
 
-- Stable Spot v88 import is not yet validated in n8n.
-- Telegram webhook URLs need verification after workflow import.
-- Telegram STATUS lacks enough diagnostics to explain decisions without opening n8n.
-- LAST ERROR needs richer context.
-- Spot mode text mismatch should be fixed without changing thresholds.
-- News fields should be returned consistently to avoid fake `NO_NEWS` style fallbacks.
-- n8n import checklist is still a proposed task.
-- Growth workflows are prepared as assets but not proven as deployed automation.
-- First 10 MAP conversations have not been documented as completed.
+- Project memory was originally written from an older `forgeview-ai-main` structure and has now been updated to live repo structure.
+- Active deployed n8n workflow is unknown.
+- Bridge/tunnel URL is not configured for the MP4 branch.
+- YouTube upload credential/status is unknown.
+- Telegram webhook status is unknown.
+- Futures v22/v23 naming/status needs clarification.
+- Spot v88 is backup-only unless confirmed live.
+- Git status cannot currently be checked from this environment because `git` is unavailable.
+

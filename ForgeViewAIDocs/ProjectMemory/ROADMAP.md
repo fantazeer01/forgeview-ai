@@ -2,194 +2,208 @@
 
 ## Strategic Direction
 
-ForgeViewAI should develop as a Telegram-first AI automation business, using the trading bots as both real operating infrastructure and high-quality source material for lessons, content, diagnostics, and future products.
+ForgeViewAI should develop as a Telegram-first AI automation and content operations business, supported by n8n workflows, local bridge/runtime tools, and carefully documented trading workflow research.
 
-The roadmap is ordered by ROI:
+Live repository:
 
-1. prove demand with conversations and small paid offers;
-2. publish useful content from real ForgeView lessons;
-3. automate the repeated parts of the growth loop;
-4. keep trading bots safe, observable, and versioned;
-5. improve trading strategy only after validation infrastructure is stronger.
+```text
+D:\ForgeViewAI
+```
 
-## Stage 1: Project Memory and Operating Clarity
+`ForgeViewAIBackup/` is backup/reference-only and is not a live development area.
 
-Status: In progress.
+## Roadmap Order
 
-Goal:
+1. Make live repo and deployment status accurate.
+2. Verify active n8n workflow and runtime integrations.
+3. Restore safe GitHub push/commit workflow.
+4. Resume sales/content loop.
+5. Improve content/video automation reliability.
+6. Clarify and verify trading exports.
+7. Package repeatable offers and products.
 
-Make future work consistent across Codex sessions and prevent random task selection.
-
-Deliverables:
-
-- CEO directive.
-- Current status.
-- Decision rules.
-- Roadmap.
-- Next objectives.
-- clear priority between sales, audience, automation, and trading.
-
-Success criteria:
-
-- a future session can choose the next task without re-discovering project intent;
-- docs do not conflict on mission, priorities, or trading safety rules;
-- trading bots and workflow JSON are not modified during documentation-only work.
-
-## Stage 2: Manual Growth Loop
-
-Status: Ready.
-
-Goal:
-
-Get real market feedback before building heavier SaaS infrastructure.
-
-Deliverables:
-
-- publish ready MAP offer posts from `growth/lead-system-mvp/content_queue_map.csv`;
-- start 10 ForgeView Automation Map conversations;
-- deliver 10 free Automation Maps manually;
-- offer the $29 Automation Audit when relevant;
-- track every lead, problem, map, and outcome.
-
-Success criteria:
-
-- 10 real workflow problems collected;
-- at least 3 follow-up conversations;
-- at least 1 paid Automation Audit attempt;
-- repeated customer problems identified.
-
-## Stage 3: Content Machine Execution
-
-Status: Prepared, not deployed.
-
-Goal:
-
-Turn internal ForgeView work into useful public lessons.
-
-Deliverables:
-
-- publish content using Content Machine v2 rules;
-- reuse trading bot bugs, automation mistakes, n8n lessons, Telegram lessons, and lead-system lessons;
-- render short videos locally when useful;
-- keep events as context, never as hooks.
-
-Success criteria:
-
-- posts lead with useful lessons rather than internal setup updates;
-- no fake metrics, hype, or guaranteed trading profit claims;
-- content creates replies, DMs, or MAP requests.
-
-## Stage 4: Growth Automation MVP
-
-Status: Proposed.
-
-Goal:
-
-Automate the highest-friction parts of the manual growth loop after the loop is proven.
-
-Candidate workflows:
-
-- Telegram lead intake bot for MAP requests;
-- manual approval content publisher;
-- lead tracker update workflow;
-- follow-up reminder workflow;
-- Automation Map draft generator;
-- daily BTC digest workflow for useful market content.
-
-Constraints:
-
-- do not overbuild before conversations exist;
-- keep a manual approval step for public publishing;
-- do not connect growth workflows to trading state unless explicitly designed and verified.
-
-## Stage 5: Trading Bot Stability and Imports
+## Stage 1: Live Repository Memory And Inventory
 
 Status: In progress.
 
 Goal:
 
-Make existing trading workflows safer and easier to operate.
+Make ProjectMemory match the actual live repository, not the archived `forgeview-ai-main` structure.
 
 Deliverables:
 
-- import Spot v88 STABILITY FIX into n8n;
-- import Futures v22 EXIT SAFETY into n8n;
-- verify Telegram webhooks and button commands;
-- run controlled paper/testnet simulations;
-- document import results and version history.
+- live repo path documented as `D:\ForgeViewAI`;
+- live repository structure documented;
+- `ForgeViewAIBackup/` marked backup/reference-only;
+- workflow index updated to Content Machine v14.2;
+- trading export index updated to Futures v24 and Spot v88 unknown/backup-only;
+- runtime unknowns listed;
+- security and commit policy documented.
 
 Success criteria:
 
-- Spot failed orders do not create phantom internal positions;
-- Spot close uses existing `position.qty`;
-- Futures cooldowns block entries but never exits;
-- Telegram controls reflect actual bot state.
+- Codex no longer creates or updates old `growth/`, `spot-bot/`, or root `docs/` paths as live paths;
+- future tasks can identify live docs, workflow exports, content configs, videos, logs, and backup areas;
+- no code, workflow JSON, or trading bots are changed during memory-only work.
 
-## Stage 6: Bot Observability and Diagnostics
+## Stage 2: Verify Active Deployment State
+
+Status: Next.
+
+Goal:
+
+Determine what is actually deployed and active, because file presence is not enough.
+
+Required checks:
+
+- active n8n workflow unknown;
+- Telegram webhook status unknown;
+- bridge/tunnel URL unknown;
+- YouTube upload credentials/status unknown;
+- deployed workflow unknown.
+
+Success criteria:
+
+- one document records active workflow name/version;
+- Telegram webhook and posting path are verified or clearly marked inactive;
+- bridge/tunnel URL is configured or the MP4 branch remains documented as blocked;
+- YouTube upload status is verified without exposing secrets.
+
+## Stage 3: GitHub And Commit Safety
+
+Status: Blocked by local tooling until Git access is available.
+
+Goal:
+
+Make it safe to commit and push explicit reviewed documentation/workflow changes.
+
+Known issue:
+
+- `git` was not available in the current PowerShell environment during prior checks.
+
+Deliverables:
+
+- confirm Git command availability;
+- run `git status`;
+- identify tracked/untracked sensitive files;
+- stage only explicit reviewed files;
+- never stage secrets, videos, logs, generated frames, cache, or runtime outputs.
+
+Success criteria:
+
+- Git status is known;
+- safe commit scope can be named exactly;
+- push is performed only when explicitly requested.
+
+## Stage 4: Sales And Content Loop
+
+Status: Resume after live runtime state is clear.
+
+Goal:
+
+Use the working content machine and Telegram-first distribution to create attention, conversations, and offers.
+
+Deliverables:
+
+- publish useful Telegram posts;
+- create X drafts;
+- create Shorts drafts;
+- route useful lessons into sales conversations;
+- revive or recreate the Automation Map / Automation Audit loop in live paths if still needed.
+
+Current detected output status:
+
+- Telegram post: PASS.
+- X draft: PASS.
+- Shorts draft: PASS.
+- MP4 branch: FAIL, bridge URL not configured.
+
+Success criteria:
+
+- content output is published or ready for manual approval;
+- sales CTA is clear;
+- runtime failures are logged and do not block text-only content.
+
+## Stage 5: Content Machine Reliability
 
 Status: Proposed.
 
 Goal:
 
-Make bot decisions explainable from Telegram without opening n8n.
+Improve reliability of the latest workflow line without randomly editing old versions.
 
-Deliverables:
+Latest detected workflow:
 
-- STATUS shows long score, short score, trend, cooldown, and current block reason;
-- HOLD messages explain whether pause, cooldown, low score, missing data, or quality filter blocked action;
-- LAST ERROR includes timestamp, context, and latest API failure;
-- news fields are surfaced consistently.
-
-Success criteria:
-
-- operator can understand why the bot traded or did not trade from Telegram;
-- diagnostics do not change scoring, thresholds, or risk parameters.
-
-## Stage 7: Strategy Quality Improvements
-
-Status: Later.
-
-Goal:
-
-Improve trading signal quality without compromising safety.
+```text
+ForgeViewAIn8n\ForgeViewAI Unified Content Machine v14.2 - Sales Routing Stability Fix.json
+```
 
 Candidate work:
 
-- completed candle handling decision;
-- multi-timeframe aggregation alignment;
-- long-side Futures quality filters;
-- Spot early exit scoring;
-- structured trade journal output;
-- controlled simulations before threshold changes.
+- verify v14.2 deployed vs merely exported;
+- fix bridge URL configuration for MP4 path;
+- clarify manual vs automatic YouTube upload;
+- document expected config files without exposing secrets;
+- add operator checklist for running content generation safely.
 
 Constraints:
 
-- do not change thresholds without evidence;
-- do not mix safety fixes and strategy changes;
-- keep every release small and versioned.
+- do not edit workflow JSON unless the task explicitly says workflow mode;
+- do not commit real config/client secret/token files;
+- do not commit generated videos/logs by default.
 
-## Stage 8: Product Packaging
+## Stage 6: Trading Export Clarification
+
+Status: Proposed.
+
+Goal:
+
+Clarify which trading exports are live, archived, or backup-only.
+
+Detected live exports:
+
+- `Exports\BTC Futures Paper Bot - v24 ANTI LATE LONG.json`
+- `Exports\BTC Futures Paper Bot - v22 QUALITY FILTERS.json`
+
+Detected backup/reference exports:
+
+- Spot v88 in `ForgeViewAIBackup/`;
+- Futures v23 in `ForgeViewAIBackup/`.
+
+Required decisions:
+
+- confirm whether Futures v24 is the current intended live version;
+- clarify what happened to v22/v23 naming and status;
+- confirm whether Spot v88 should be restored to live `Exports/` or remain backup-only.
+
+Constraints:
+
+- do not edit trading bots unless the task explicitly says trading mode;
+- do not change strategy thresholds without validation evidence.
+
+## Stage 7: Product Packaging
 
 Status: Future.
 
 Goal:
 
-Turn repeated ForgeView patterns into paid offers and eventually productized services.
+Turn repeated ForgeViewAI patterns into paid offers and eventually productized services.
 
 Candidate offers:
 
 - ForgeView Automation Audit;
-- Telegram automation setup service;
+- Telegram content automation setup;
 - n8n workflow template packs;
+- YouTube Shorts automation setup;
 - trading bot diagnostics checklist;
-- managed Telegram alert workflows;
-- creator or small business automation console.
+- managed Telegram alert workflows.
 
 Required foundation:
 
-- customer-safe credential handling;
-- onboarding docs;
+- verified active workflows;
+- safe credential handling;
 - deployment checklist;
 - support process;
 - pricing and packaging;
 - proof from real conversations.
+

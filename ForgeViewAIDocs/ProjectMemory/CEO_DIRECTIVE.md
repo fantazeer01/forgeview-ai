@@ -1,101 +1,117 @@
 # CEO Directive: ForgeViewAI
 
+## Live Repository
+
+The live ForgeViewAI Git repository is:
+
+```text
+D:\ForgeViewAI
+```
+
+All autonomous Codex work must treat this repository as the source of truth unless the user explicitly says otherwise.
+
+`ForgeViewAIBackup/` is backup and reference-only. It is not the live source. Do not create new work there, do not treat files inside it as current, and do not copy from it into live areas unless the user explicitly requests a recovery or comparison task.
+
 ## Mission
 
 ForgeViewAI exists to turn real operational work into practical AI-first automation products.
 
-The project should compound in three directions:
+The project compounds through:
 
-- safer trading automation;
-- useful public content from real build lessons;
-- simple paid automation offers that can become repeatable products.
+- AI-assisted content and video automation;
+- Telegram-first publishing and sales workflows;
+- safer trading workflow research and diagnostics;
+- small paid automation offers that can become repeatable products.
 
-ForgeViewAI is not a hype project, a fake-metric growth project, or a promise of guaranteed trading profit. It is an operator system: build small useful workflows, verify them, document them, and turn the best patterns into products.
+ForgeViewAI is not a hype project, a fake-metric growth project, or a promise of guaranteed trading profit. It is an operator system: build useful workflows, verify them, document them, publish useful lessons, and turn repeated patterns into products.
 
 ## Project Priorities
 
-Priority order:
+Default priority order:
 
-1. Revenue and real user conversations.
-2. Audience growth through useful lessons.
+1. Revenue, qualified conversations, and usable offers.
+2. Audience growth through useful lessons and working content pipelines.
 3. Automation that reduces repeated manual work.
-4. Trading bot safety and observability.
-5. Strategy experimentation only after safety and validation.
+4. Workflow reliability, runtime observability, and deployment clarity.
+5. Trading bot safety and diagnostics.
+6. Trading strategy experimentation only after safety and validation.
 
-Trading systems matter, but they must not consume all project energy before the business loop exists. The highest-value path is to use trading and automation work as proof, content, and product material.
+Trading systems matter, but they must not consume all project energy before the business loop and live content engine are operational.
 
 ## Task Selection Rules
 
-Choose tasks that create the most ROI with the least risk.
-
 Prefer tasks that:
 
-- create or improve a paid offer;
+- clarify the live repository state;
+- improve or verify deployed n8n/content workflows;
+- create publishable content or sales material;
 - generate real conversations with potential users;
-- turn existing project work into publishable lessons;
 - reduce manual operating load;
 - improve bot safety, diagnostics, or verification without changing strategy;
-- produce reusable documentation, templates, prompts, or checklists.
+- produce reusable documentation, templates, prompts, reports, or checklists.
 
 Avoid tasks that:
 
+- edit files in `ForgeViewAIBackup/` as if they are live;
+- change workflow JSON unless the task explicitly says workflow mode;
+- change trading bots unless the task explicitly says trading mode;
 - change trading thresholds without simulation or backtest evidence;
 - mix safety fixes and strategy changes in one release;
-- overbuild SaaS before the first paid conversations;
-- optimize internal structure without creating operational or commercial value;
+- optimize internal structure without operational or commercial value;
 - add hidden complexity to n8n workflows.
-
-## Decision Rules
-
-When deciding between tasks, ask:
-
-1. Does this help get a user, lead, sale, or publishable lesson?
-2. Does this reduce operational risk or manual effort?
-3. Can it be completed and verified in one focused session?
-4. Does it preserve current safety rules?
-5. Will future Codex sessions understand what changed?
-
-If two tasks are close, choose the one that creates an external asset: a post, offer, lead workflow, checklist, report, or user-facing automation.
-
-## Budget Constraints
-
-Operate as if cash and attention are limited.
-
-Rules:
-
-- Prefer free or low-cost tools first: n8n, Telegram, local scripts, simple files, spreadsheets, and existing APIs.
-- Do not buy new SaaS tools until a manual or low-cost MVP proves demand.
-- Treat paid AI/image generation as optional unless it directly supports a revenue experiment.
-- Keep workflow versions small enough to inspect manually.
-- Do not create expensive automation for unvalidated product ideas.
-- Protect time budget: one session should usually deliver one concrete artifact.
 
 ## AI-First Strategy
 
-ForgeViewAI should use AI as an operating layer, not decoration.
-
-AI should help with:
+AI should act as an operating layer for:
 
 - content transformation from real project events into useful lessons;
+- Telegram posts, X drafts, shorts drafts, and sales routing;
 - automation maps, audits, prompts, and checklists;
 - workflow diagnostics and operator summaries;
-- Telegram-first product experiences;
-- documentation memory for future sessions;
-- rapid prototype generation where the result can be inspected.
+- project memory and task selection;
+- rapid prototypes where results can be inspected.
 
-AI must not be used to:
+AI must not:
 
 - invent fake performance metrics;
 - make guaranteed profit claims;
 - hide unverified trading risk;
 - replace verification of workflow behavior;
-- create content with no practical takeaway.
+- publish content with no practical takeaway;
+- expose tokens, client secrets, or private config values.
 
-The core AI-first loop is:
+Core loop:
 
 ```text
 Real work -> verified lesson -> content -> conversation -> small offer -> repeatable automation product
 ```
+
+## Budget Constraints
+
+- Prefer existing local tools, n8n, Telegram, simple files, and current APIs.
+- Do not buy new SaaS tools until a low-cost MVP proves demand.
+- Treat paid AI/image/video generation as optional unless it directly supports a revenue or publishing experiment.
+- Keep workflow versions small enough to inspect manually.
+- Protect attention budget: one session should usually deliver one concrete artifact.
+
+## Security And Commit Policy
+
+- Never commit tokens.
+- Never commit real config files, client secrets, OAuth tokens, or private credential files.
+- Never commit generated videos, runtime logs, generated frames, cache files, `__pycache__`, `.venv`, or temporary outputs.
+- Respect `.gitignore`.
+- Only commit explicit reviewed files.
+- Do not run `git add`, `git commit`, or `git push` unless the user explicitly requests that action.
+
+## Autonomous Codex Operating Rules
+
+- Always read `ForgeViewAIDocs/ProjectMemory/` first.
+- Never treat `ForgeViewAIBackup/` as live source.
+- Never edit trading bots unless the task explicitly says trading mode.
+- Never edit n8n workflow JSON unless the task explicitly says workflow mode.
+- Never edit runtime secrets or real config files.
+- After each substantial task, update `CURRENT_STATUS.md` and `NEXT_OBJECTIVES.md` if project state or next priorities changed.
+- If live deployment status is unknown, say unknown; do not infer.
 
 ## Non-Negotiable Trading Rules
 

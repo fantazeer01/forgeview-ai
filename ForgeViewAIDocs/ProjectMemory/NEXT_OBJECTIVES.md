@@ -1,154 +1,120 @@
 # Next Objectives: ForgeViewAI
 
-## Objective 1: Launch the Manual MAP Loop
+## Priority 1: Complete Live Repo Inventory/Status Update
 
 Why:
 
-This is the highest-ROI next task because it can create conversations, customer insight, content, and a paid offer without changing code or trading bots.
+Project memory previously described the archived `forgeview-ai-main` structure. The live repository is `D:\ForgeViewAI`, with different live paths and newer workflow exports.
 
 Tasks:
 
-- publish or send the ready MAP offer posts;
-- track each lead manually;
-- ask the 4 intake questions from `growth/lead-system-mvp/TELEGRAM_DM_WORKFLOW.md`;
-- deliver a free Automation Map using `AUTOMATION_MAP_TEMPLATE.md`;
-- offer the $29 Automation Audit where relevant;
-- record outcomes.
+- verify all live top-level directories;
+- document active vs backup/reference-only areas;
+- create or update a live workflow index;
+- create or update a live trading export index;
+- confirm which files are generated/runtime outputs;
+- update `CURRENT_STATUS.md` after any new verified facts.
 
 Acceptance criteria:
 
-- 10 MAP conversations started;
-- 10 workflow problems logged;
-- 10 free maps delivered or clearly marked incomplete;
-- 3 follow-up conversations attempted;
-- 1 paid Automation Audit attempt made.
+- `D:\ForgeViewAI` is documented as the live repo;
+- `ForgeViewAIBackup/` is documented as backup/reference-only;
+- Content Machine v14.2 is documented as latest detected workflow;
+- Futures v24 is documented as latest detected Futures export;
+- Spot v88 is documented as backup-only unless confirmed live.
 
-## Objective 2: Create a Lead Tracking Document
-
-Why:
-
-The lead-system MVP currently defines the tracking fields but does not yet have a dedicated tracker.
-
-Suggested output:
-
-```text
-growth/lead-system-mvp/LEAD_TRACKER.md
-```
-
-Fields:
-
-- lead;
-- platform;
-- repeated task;
-- tools used now;
-- desired output;
-- free MAP delivered;
-- paid audit offered;
-- outcome;
-- next follow-up date.
-
-Acceptance criteria:
-
-- tracker exists;
-- it supports the first 10 conversations;
-- it does not require new SaaS.
-
-## Objective 3: Publish From Content Machine v2
+## Priority 2: Verify Active Deployed n8n Workflow
 
 Why:
 
-The prompts and content queue are ready. The next value comes from distribution, not more internal setup.
+The repository contains many workflow exports, but active deployment cannot be inferred from files alone.
 
 Tasks:
 
-- choose 3 lessons from existing ForgeView work;
-- generate Telegram, X, and Shorts drafts using `growth/content-machine-v2/PROMPTS.md`;
-- avoid internal setup as the hook;
-- use trading bot bugs, automation lessons, or lead-system lessons as proof;
-- publish manually or mark drafts ready for manual publishing.
+- identify active n8n workflow name/version;
+- verify whether v14.2 is deployed or only exported;
+- verify Telegram webhook status;
+- verify bridge/tunnel URL status;
+- verify YouTube upload credential/status without exposing secrets;
+- document deployed workflow status.
 
 Acceptance criteria:
 
-- 3 useful posts drafted;
-- each post leads with a mistake, bug, lesson, insight, or principle;
-- no fake metrics or guaranteed trading profit claims;
-- each post includes a MAP call to action when relevant.
+- active n8n workflow is known or explicitly marked inactive/unknown after attempted verification;
+- Telegram webhook status is known;
+- bridge/tunnel URL is known or documented as missing;
+- YouTube upload status is known without committing secrets.
 
-## Objective 4: Verify Spot v88 Import
+## Priority 3: Connect GitHub Push Safely
 
 Why:
 
-Spot v88 addresses a critical state-safety issue, but import behavior still needs validation.
+The live repo has `.git`, but current Codex PowerShell environment could not find `git`. Safe commit/push requires verified Git tooling and careful staging.
 
 Tasks:
 
-- import Spot v88 into n8n;
-- confirm workflow name;
-- verify Telegram webhook URL;
-- run test executions with no open position and simulated open position;
-- confirm failed order does not mutate `state.position`;
-- confirm confirmed order commits planned position.
+- make Git command available or use an approved GitHub workflow/tool;
+- run `git status`;
+- identify tracked/untracked sensitive files;
+- verify `.gitignore` is protecting local config, logs, videos, generated outputs, cache, and virtualenvs;
+- prepare exact safe staging commands for explicit reviewed files only.
 
 Acceptance criteria:
 
-- verification report exists;
-- no scoring, threshold, or risk parameter changes;
-- any discovered issues are listed by severity.
+- `git status` can be checked;
+- no secrets are staged;
+- no videos/logs/generated files are staged by default;
+- push happens only after explicit user request.
 
-## Objective 5: Create n8n Import Checklist
+## Priority 4: Resume Sales/Content Loop
 
 Why:
 
-Workflow import is repeated and risky. A checklist reduces operational mistakes.
-
-Suggested output:
-
-```text
-docs/N8N_IMPORT_CHECKLIST.md
-```
+Once live runtime status is clear, ForgeViewAI should return to publishing useful content and generating conversations.
 
 Tasks:
 
-- document import steps;
-- include workflow name verification;
-- include webhook, Telegram token, chat ID, credential, schedule, and manual execution checks;
-- include state reset process;
-- include post-import Telegram callback test.
+- use the latest Content Machine line, not old `growth/content-machine-v2` paths;
+- publish or prepare Telegram posts;
+- prepare X drafts;
+- prepare Shorts drafts;
+- keep MP4/video branch optional until bridge URL is configured;
+- include clear sales or conversation CTA when relevant.
 
 Acceptance criteria:
 
-- checklist is usable for Spot, Futures, and growth workflows;
-- no workflow JSON files are changed.
+- Telegram post path remains PASS;
+- X draft path remains PASS;
+- Shorts draft path remains PASS;
+- MP4 branch is fixed or clearly documented as blocked;
+- content does not claim fake metrics or guaranteed trading profit.
 
-## Objective 6: Add Telegram Diagnostics Without Strategy Changes
+## Priority 5: Clarify Trading Export Status
 
 Why:
 
-Diagnostics improve trust and speed up debugging while preserving strategy behavior.
+Trading export state is currently ambiguous across live `Exports/` and `ForgeViewAIBackup/`.
 
 Tasks:
 
-- add displayed fields only in a future workflow version;
-- show scores, trend, cooldown, and block reason;
-- improve LAST ERROR context;
-- surface news fields consistently.
+- confirm whether `BTC Futures Paper Bot - v24 ANTI LATE LONG.json` is current intended live Futures version;
+- clarify status of Futures v22/v23 by filename and release intent;
+- confirm whether Spot v88 should be restored to live exports or remain backup-only;
+- avoid trading edits unless the task explicitly says trading mode.
 
 Acceptance criteria:
 
-- new versioned workflow export;
-- version history updated;
-- before/after message examples;
-- no scoring, threshold, or risk changes.
+- latest intended Futures version is known;
+- Spot live status is known;
+- backup-only exports are not confused with live exports.
 
-## Highest-ROI Next Task
+## Operating Reminder
 
-Start with Objective 1:
-
-```text
-Launch the manual ForgeView Automation Map loop and track the first 10 conversations.
-```
-
-Reason:
-
-It is the fastest path to demand validation, audience signal, paid offer testing, and reusable product insight. It also does not require code, workflow, or trading bot changes.
+- Work from `D:\ForgeViewAI`.
+- Read ProjectMemory first.
+- Do not edit workflow JSON unless task explicitly says workflow mode.
+- Do not edit trading bots unless task explicitly says trading mode.
+- Do not treat `ForgeViewAIBackup/` as live source.
+- Do not commit tokens, real config files, videos, logs, generated frames, or runtime outputs.
+- After substantial work, update `CURRENT_STATUS.md` and this file if priorities changed.
 
