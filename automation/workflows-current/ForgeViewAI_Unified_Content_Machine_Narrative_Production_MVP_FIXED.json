@@ -1,0 +1,416 @@
+{
+  "name": "ForgeViewAI Unified Content Machine - Narrative Production",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "a1000000-0000-4000-8000-000000000001",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-1040, 0]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "narrative-topic",
+              "name": "topic",
+              "value": "={{ $json.topic || 'ForgeViewAI market intelligence update' }}",
+              "type": "string"
+            },
+            {
+              "id": "narrative-source",
+              "name": "source_context",
+              "value": "={{ $json.source_context || 'Replace this input with the existing Story/Narrative Engine output.' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1000000-0000-4000-8000-000000000002",
+      "name": "Prepare Narrative Engine",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-800, 0],
+      "notes": "Execution bridge. Replace its two placeholder inputs with the existing Narrative Engine payload after import."
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => ({ json: { ...item.json, telegramPrompt: `Create a concise Telegram draft about: ${item.json.topic}\\nContext: ${item.json.source_context}` } }));"
+      },
+      "id": "a1000000-0000-4000-8000-000000000003",
+      "name": "Build Telegram Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-520, -260],
+      "notes": "Independent Telegram content branch placeholder; intentionally not coupled to Shorts delivery."
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => ({ json: { ...item.json, xPrompt: `Create a strict X draft about: ${item.json.topic}\\nContext: ${item.json.source_context}` } }));"
+      },
+      "id": "a1000000-0000-4000-8000-000000000004",
+      "name": "Build Strict X Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-520, -100],
+      "notes": "Independent X content branch placeholder; intentionally not coupled to Shorts delivery."
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => ({ json: { ...item.json, shortsPrompt: `Return ONLY valid JSON with this shape: {\"hook\":\"string\",\"scenes\":[{\"visual\":\"string\",\"voiceover\":\"string\"}],\"caption\":\"string\",\"hashtags\":[\"string\"]}. Create a 30-45 second YouTube Shorts draft. Topic: ${item.json.topic}. Context: ${item.json.source_context}` } }));"
+      },
+      "id": "a1000000-0000-4000-8000-000000000005",
+      "name": "Build YouTube Shorts Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-520, 120]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.shortsPrompt }}",
+        "batching": {}
+      },
+      "id": "a1000000-0000-4000-8000-000000000006",
+      "name": "OpenAI - Generate Shorts Draft Retry 1",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [-260, 120]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "responsesApiEnabled": true,
+        "options": {
+          "responseFormat": "text",
+          "maxTokens": 1800,
+          "temperature": 0.4,
+          "timeout": 120000,
+          "maxRetries": 0
+        }
+      },
+      "id": "a1000000-0000-4000-8000-000000000007",
+      "name": "OpenAI Chat Model - Shorts Retry 1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [-260, 340],
+      "notes": "Select an OpenAI credential after import."
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => { const raw = String(item.json.text ?? item.json.output ?? item.json.response ?? ''); let parsed = null; try { parsed = JSON.parse(raw.replace(/^```(?:json)?\\s*/i, '').replace(/\\s*```$/, '')); } catch {} const valid = !!(parsed && typeof parsed.hook === 'string' && Array.isArray(parsed.scenes) && parsed.scenes.length && typeof parsed.caption === 'string' && Array.isArray(parsed.hashtags)); return { json: { ...item.json, rawShorts: raw, shortsPackage: parsed, shortsValid: valid } }; });"
+      },
+      "id": "a1000000-0000-4000-8000-000000000008",
+      "name": "Validate Structured Shorts JSON Retry 1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [0, 120]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "retry-1-valid",
+              "leftValue": "={{ $json.shortsValid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a1000000-0000-4000-8000-000000000009",
+      "name": "IF Structured Shorts Valid Retry 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [240, 120]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.shortsPrompt + '\\nPrevious response was invalid JSON. Repair it and return only the required JSON object.' }}",
+        "batching": {}
+      },
+      "id": "a1000000-0000-4000-8000-000000000010",
+      "name": "OpenAI - Generate Shorts Draft Retry 2",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [480, 260]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "responsesApiEnabled": true,
+        "options": {
+          "responseFormat": "text",
+          "maxTokens": 1800,
+          "temperature": 0.4,
+          "timeout": 120000,
+          "maxRetries": 0
+        }
+      },
+      "id": "a1000000-0000-4000-8000-000000000011",
+      "name": "OpenAI Chat Model - Shorts Retry 2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [480, 480],
+      "notes": "Response Format Type is explicitly Text. Select an OpenAI credential after import."
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => { const raw = String(item.json.text ?? item.json.output ?? item.json.response ?? ''); let parsed = null; try { parsed = JSON.parse(raw.replace(/^```(?:json)?\\s*/i, '').replace(/\\s*```$/, '')); } catch {} const valid = !!(parsed && typeof parsed.hook === 'string' && Array.isArray(parsed.scenes) && parsed.scenes.length && typeof parsed.caption === 'string' && Array.isArray(parsed.hashtags)); return { json: { ...item.json, rawShorts: raw, shortsPackage: parsed, shortsValid: valid } }; });"
+      },
+      "id": "a1000000-0000-4000-8000-000000000012",
+      "name": "Validate Structured Shorts JSON Retry 2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [740, 260]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "retry-2-valid",
+              "leftValue": "={{ $json.shortsValid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a1000000-0000-4000-8000-000000000013",
+      "name": "IF Structured Shorts Valid Retry 2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [980, 260]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.shortsPrompt + '\\nThis is the final retry. Return only syntactically valid JSON matching the requested schema.' }}",
+        "batching": {}
+      },
+      "id": "a1000000-0000-4000-8000-000000000014",
+      "name": "OpenAI - Generate Shorts Draft Retry 3",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [1220, 400]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "responsesApiEnabled": true,
+        "options": {
+          "responseFormat": "text",
+          "maxTokens": 1800,
+          "temperature": 0.4,
+          "timeout": 120000,
+          "maxRetries": 0
+        }
+      },
+      "id": "a1000000-0000-4000-8000-000000000015",
+      "name": "OpenAI Chat Model - Shorts Retry 3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [1220, 620],
+      "notes": "Response Format Type is explicitly Text. Select an OpenAI credential after import."
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => { const raw = String(item.json.text ?? item.json.output ?? item.json.response ?? ''); let parsed = null; try { parsed = JSON.parse(raw.replace(/^```(?:json)?\\s*/i, '').replace(/\\s*```$/, '')); } catch {} const valid = !!(parsed && typeof parsed.hook === 'string' && Array.isArray(parsed.scenes) && parsed.scenes.length && typeof parsed.caption === 'string' && Array.isArray(parsed.hashtags)); return { json: { ...item.json, rawShorts: raw, shortsPackage: parsed, shortsValid: valid } }; });"
+      },
+      "id": "a1000000-0000-4000-8000-000000000016",
+      "name": "Validate Structured Shorts JSON Retry 3",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1480, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "retry-3-valid",
+              "leftValue": "={{ $json.shortsValid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a1000000-0000-4000-8000-000000000017",
+      "name": "IF Structured Shorts Valid Retry 3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1720, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => ({ json: { ...item.json, shortsPackage: { hook: item.json.topic || 'ForgeViewAI update', scenes: [{ visual: 'Title card and relevant market visual', voiceover: item.json.source_context || 'Market intelligence update.' }], caption: `ForgeViewAI: ${item.json.topic || 'market intelligence update'}`, hashtags: ['#ForgeViewAI', '#MarketIntelligence'] }, shortsValid: true, usedFallback: true } }));"
+      },
+      "id": "a1000000-0000-4000-8000-000000000018",
+      "name": "Fallback Previous Valid Shorts Package",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1960, 560],
+      "notes": "Deterministic safe fallback used only when all three model responses fail validation."
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => { const p = item.json.shortsPackage; const scenes = p.scenes.map((scene, i) => `${i + 1}. VISUAL: ${scene.visual}\\nVOICEOVER: ${scene.voiceover}`).join('\\n\\n'); return { json: { ...item.json, telegramShortsDraft: `🎬 SHORTS DRAFT\\n\\nHOOK\\n${p.hook}\\n\\nSCENES\\n${scenes}\\n\\nCAPTION\\n${p.caption}\\n\\n${p.hashtags.join(' ')}${item.json.usedFallback ? '\\n\\n⚠️ Generated from deterministic fallback after 3 invalid model responses.' : ''}` } }; });"
+      },
+      "id": "a1000000-0000-4000-8000-000000000019",
+      "name": "Format Structured Shorts Draft",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2200, 120]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.FORGEVIEW_SHORTS_TELEGRAM_CHAT_ID }}",
+        "text": "={{ $json.telegramShortsDraft }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true
+        }
+      },
+      "id": "a1000000-0000-4000-8000-000000000020",
+      "name": "Telegram - Send Shorts Draft",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [2460, 120],
+      "notes": "Select a Telegram credential and set FORGEVIEW_SHORTS_TELEGRAM_CHAT_ID after import."
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [[{"node": "Prepare Narrative Engine", "type": "main", "index": 0}]]
+    },
+    "Prepare Narrative Engine": {
+      "main": [[
+        {"node": "Build Telegram Prompt", "type": "main", "index": 0},
+        {"node": "Build Strict X Prompt", "type": "main", "index": 0},
+        {"node": "Build YouTube Shorts Prompt", "type": "main", "index": 0}
+      ]]
+    },
+    "Build YouTube Shorts Prompt": {
+      "main": [[{"node": "OpenAI - Generate Shorts Draft Retry 1", "type": "main", "index": 0}]]
+    },
+    "OpenAI Chat Model - Shorts Retry 1": {
+      "ai_languageModel": [[{"node": "OpenAI - Generate Shorts Draft Retry 1", "type": "ai_languageModel", "index": 0}]]
+    },
+    "OpenAI - Generate Shorts Draft Retry 1": {
+      "main": [[{"node": "Validate Structured Shorts JSON Retry 1", "type": "main", "index": 0}]]
+    },
+    "Validate Structured Shorts JSON Retry 1": {
+      "main": [[{"node": "IF Structured Shorts Valid Retry 1", "type": "main", "index": 0}]]
+    },
+    "IF Structured Shorts Valid Retry 1": {
+      "main": [
+        [{"node": "Format Structured Shorts Draft", "type": "main", "index": 0}],
+        [{"node": "OpenAI - Generate Shorts Draft Retry 2", "type": "main", "index": 0}]
+      ]
+    },
+    "OpenAI Chat Model - Shorts Retry 2": {
+      "ai_languageModel": [[{"node": "OpenAI - Generate Shorts Draft Retry 2", "type": "ai_languageModel", "index": 0}]]
+    },
+    "OpenAI - Generate Shorts Draft Retry 2": {
+      "main": [[{"node": "Validate Structured Shorts JSON Retry 2", "type": "main", "index": 0}]]
+    },
+    "Validate Structured Shorts JSON Retry 2": {
+      "main": [[{"node": "IF Structured Shorts Valid Retry 2", "type": "main", "index": 0}]]
+    },
+    "IF Structured Shorts Valid Retry 2": {
+      "main": [
+        [{"node": "Format Structured Shorts Draft", "type": "main", "index": 0}],
+        [{"node": "OpenAI - Generate Shorts Draft Retry 3", "type": "main", "index": 0}]
+      ]
+    },
+    "OpenAI Chat Model - Shorts Retry 3": {
+      "ai_languageModel": [[{"node": "OpenAI - Generate Shorts Draft Retry 3", "type": "ai_languageModel", "index": 0}]]
+    },
+    "OpenAI - Generate Shorts Draft Retry 3": {
+      "main": [[{"node": "Validate Structured Shorts JSON Retry 3", "type": "main", "index": 0}]]
+    },
+    "Validate Structured Shorts JSON Retry 3": {
+      "main": [[{"node": "IF Structured Shorts Valid Retry 3", "type": "main", "index": 0}]]
+    },
+    "IF Structured Shorts Valid Retry 3": {
+      "main": [
+        [{"node": "Format Structured Shorts Draft", "type": "main", "index": 0}],
+        [{"node": "Fallback Previous Valid Shorts Package", "type": "main", "index": 0}]
+      ]
+    },
+    "Fallback Previous Valid Shorts Package": {
+      "main": [[{"node": "Format Structured Shorts Draft", "type": "main", "index": 0}]]
+    },
+    "Format Structured Shorts Draft": {
+      "main": [[{"node": "Telegram - Send Shorts Draft", "type": "main", "index": 0}]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a1000000-0000-4000-8000-000000000021",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}
