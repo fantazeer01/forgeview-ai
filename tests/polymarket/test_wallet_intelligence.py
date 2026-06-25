@@ -37,6 +37,10 @@ from polymarket.wallet_intelligence.wallet_score import (
     compute_wallet_scores,
     run_wallet_score_fixture,
 )
+from polymarket.wallet_intelligence.wallet_watchlist import (
+    compute_wallet_watchlist,
+    run_wallet_watchlist,
+)
 
 
 class FakeClient:
@@ -1008,6 +1012,116 @@ class WalletScoreFixtureTests(unittest.TestCase):
             "sharpe_ratio",
             "compute_pnl",
             "compute_roi",
+        )
+        for fragment in forbidden_fragments:
+            self.assertFalse(any(fragment in name.lower() for name in names))
+
+
+class WalletWatchlistTests(unittest.TestCase):
+    def _score(self, **overrides):
+        row = {
+            "wallet_id": "0xwallet",
+            "profile_url": "https://polymarket.com/0xwallet",
+            "wallet_score": "73",
+            "score_band": "medium_priority",
+            "score_version": "wallet_score_v1_structural_fixture",
+            "total_lifecycle_positions": "40",
+            "missing_required_metric_count": "0",
+            "fast_crypto_lifecycle_share": "1",
+            "partial_exits": "12",
+            "percentage_still_open_positions": "0.5",
+            "bounded_history_penalty": "0",
+            "oversold_bounded_history": "0",
+            "concentration_penalty": "4",
+            "small_sample_penalty": "0",
+            "near_flat_ambiguity_penalty": "2",
+            "event_density_component": "8",
+            "specialization_component": "8",
+        }
+        row.update(overrides)
+        return row
+
+    def test_watchlist_uses_score_outputs_and_minimum_visibility(self):
+        rows = [
+            self._score(wallet_id="0xbbb", wallet_score="73", score_band="medium_priority"),
+            self._score(
+                wallet_id="0xaaa",
+                wallet_score="44",
+                score_band="low_priority",
+                total_lifecycle_positions="12",
+                partial_exits="0",
+                fast_crypto_lifecycle_share="0",
+            ),
+            self._score(
+                wallet_id="0xsmall",
+                wallet_score="10",
+                score_band="insufficient_visible_structure",
+                total_lifecycle_positions="4",
+            ),
+        ]
+        watchlist, summary = compute_wallet_watchlist(rows, source_scores_sha256="score-hash")
+        self.assertEqual([row["wallet_id"] for row in watchlist], ["0xbbb", "0xaaa"])
+        self.assertEqual(summary["wallets_included"], 2)
+        self.assertEqual(summary["wallets_excluded"], 1)
+        self.assertTrue(summary["validation"]["reason_codes_present"])
+        self.assertTrue(summary["validation"]["no_forbidden_metric_fields"])
+        self.assertTrue(summary["validation"]["no_forbidden_claims"])
+        self.assertIn("fast_crypto_relevant", watchlist[0]["reason_codes"])
+        self.assertIn("no_fast_crypto_visibility", watchlist[1]["reason_codes"])
+
+    def test_watchlist_export_is_repeatable_and_report_has_disclaimers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_csv = root / "wallet_scores.csv"
+            rows = [
+                self._score(wallet_id="0xbbb", wallet_score="73", score_band="medium_priority"),
+                self._score(wallet_id="0xaaa", wallet_score="44", score_band="low_priority"),
+            ]
+            with input_csv.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=list(rows[0].keys()))
+                writer.writeheader()
+                for row in rows:
+                    writer.writerow(row)
+            output = root / "watchlist"
+            first = run_wallet_watchlist(
+                input_csv,
+                output,
+                generated_at="2026-06-26T00:00:00+00:00",
+            )
+            second = run_wallet_watchlist(
+                input_csv,
+                output,
+                generated_at="2026-06-26T00:00:00+00:00",
+            )
+            self.assertTrue(first["validation"]["all_validation_passed"])
+            self.assertTrue(first["validation"]["repeatable_export"])
+            self.assertEqual(
+                first["reproducibility_hashes"]["wallet_watchlist_csv_sha256"],
+                second["reproducibility_hashes"]["wallet_watchlist_csv_sha256"],
+            )
+            self.assertTrue((output / "wallet_watchlist.csv").exists())
+            self.assertTrue((output / "wallet_watchlist_summary.json").exists())
+            self.assertTrue((output / "wallet_watchlist_report.md").exists())
+            report = (output / "wallet_watchlist_report.md").read_text(encoding="utf-8")
+            self.assertIn("monitoring/research artifact", report)
+            self.assertIn("not a trading signal", report)
+            self.assertIn("not a copy-trading recommendation", report)
+            self.assertIn("based only on bounded public history", report)
+
+    def test_wallet_watchlist_module_has_no_execution_or_forbidden_metric_methods(self):
+        import polymarket.wallet_intelligence.wallet_watchlist as wallet_watchlist
+
+        names = dir(wallet_watchlist)
+        forbidden_fragments = (
+            "private_key",
+            "place_order",
+            "copy_trade",
+            "execute_trade",
+            "wallet_connect",
+            "compute_pnl",
+            "compute_roi",
+            "sharpe_ratio",
+            "mark_to_market",
         )
         for fragment in forbidden_fragments:
             self.assertFalse(any(fragment in name.lower() for name in names))

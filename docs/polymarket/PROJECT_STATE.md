@@ -231,8 +231,8 @@ score behavior, and review criteria. It preserves the strict boundary against
 profitability, alpha, copyability, trading recommendations, wallet/private-key
 use, order placement, capture campaigns, production model training, sealed
 holdout inspection, and holdout evaluation.
-The active successor task is Wallet Score Broader Evidence Batch
-Implementation v1.
+Wallet Watchlist v1 is now complete from the existing six-wallet score
+fixture. The active successor task is Wallet Watchlist Review v1.
 
 ## Completed milestones
 
@@ -531,15 +531,16 @@ Polymarket Wallet Intelligence Research.
 Wallet Intelligence Research v1 now has bounded public-data ingestion,
 behavior metrics, a deep-history feasibility review, a public trade-history
 ingestion design, a fixture-only trade-history ingester, a bounded public
-trade-history smoke for the six seed profiles, and a small deterministic
-lifecycle reconstruction fixture prototype, a completed lifecycle review,
-bounded structural lifecycle metrics, a Wallet Metrics Readiness Review, and
-a completed Wallet Score Design v1 and Wallet Score Fixture Implementation
-v1.
-The active successor task is Wallet Score Fixture Review v1: review the
-bounded structural score outputs and validation before any score expansion,
-deeper history ingestion, expiry joins, PnL, reference alignment, copyability
-delay, queue modelling, trading ranking, or execution logic.
+trade-history smoke for the six seed profiles, a deterministic lifecycle
+reconstruction fixture prototype, a completed lifecycle review, bounded
+structural lifecycle metrics, a Wallet Metrics Readiness Review, Wallet Score
+Design v1, Wallet Score Fixture Implementation v1, Wallet Score Fixture
+Review v1, Wallet Score Broader Evidence Collection Design v1, and Wallet
+Watchlist v1.
+The active successor task is Wallet Watchlist Review v1: review the research
+watchlist artifact and interpretation-safety boundaries before broader
+evidence collection, ranking, expiry joins, PnL, reference alignment,
+copyability delay, queue modelling, trading ranking, or execution logic.
 
 Current measured baseline:
 
@@ -1298,10 +1299,69 @@ Suspicious behavior criteria:
   bounded-history oversold artifacts;
 - unstable ordering or guessed unavailable fields.
 
-Next research task: Wallet Score Broader Evidence Batch Implementation v1. It
-should implement the bounded public read-only broader evidence batch, produce
-the expected artifacts, apply the existing Wallet Score v1 without new inputs
-or threshold changes, and run validation gates and tests.
+The current user-directed override superseded the immediate broader-evidence
+implementation loop and created the first Wallet Watchlist v1 artifact from
+existing Wallet Score outputs only.
+
+## Wallet Watchlist v1
+
+Wallet Watchlist v1 is complete.
+
+Code and CLI:
+
+- watchlist logic lives in
+  `polymarket/wallet_intelligence/wallet_watchlist.py`;
+- the CLI command is:
+  `python -m polymarket.wallet_intelligence wallet-watchlist`.
+
+Outputs:
+
+- `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist.csv`
+- `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist_summary.json`
+- `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist_report.md`
+
+Scope and result:
+
+- input: existing
+  `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_scores.csv`;
+- source score SHA-256:
+  `52ceafde32dc6e6c4d07829e824a83c9b767bc7da4d1b3461188e6cda2e3b2ad`;
+- wallets input: 6;
+- wallets included: 6;
+- wallets excluded by minimum visibility: 0;
+- priority bucket distribution: 1 `medium_priority`, 3 `low_priority`, and
+  2 `insufficient_visible_structure`;
+- deterministic `wallet_watchlist.csv` SHA-256:
+  `841dd43c7173161938c52349f753b19cd7ef5b680b5bcb249042a2f57e565caf`.
+
+Validation:
+
+- deterministic ordering: passed;
+- output schema completeness: passed;
+- reason codes present: passed;
+- research actions present: passed;
+- forbidden metric fields absent: passed;
+- forbidden claim phrases absent: passed;
+- repeatable export: passed;
+- Wallet Intelligence tests: 29 passing;
+- full automated suite: 123 passing.
+
+Interpretation:
+
+- the watchlist is a monitoring/research artifact only;
+- it is not a trading signal;
+- it is not a copy-trading recommendation;
+- it is not a profitability ranking;
+- it is based only on bounded public history and existing Wallet Score
+  outputs;
+- no score formula, thresholds, PnL, ROI, Sharpe, alpha, copyability,
+  mark-to-market, execution-quality, order-placement, wallet/private-key,
+  sealed-holdout, or holdout-evaluation logic was added.
+
+Next research task: Wallet Watchlist Review v1. It should review the
+watchlist artifact, validation gates, language, inclusion/exclusion behavior,
+and source-score dependency before any broader evidence collection or ranking
+work resumes.
 
 ## State update protocol
 

@@ -391,33 +391,27 @@ insufficient. No model or alpha claim is currently justified.
 
 ## 14. Next milestone
 
-### Wallet Score Broader Evidence Batch Implementation v1
+### Wallet Watchlist Review v1
 
-The next milestone is to implement the bounded, public, read-only broader
-evidence batch defined in Wallet Score Broader Evidence Collection Design v1.
-The score remains a structural research-priority tool only. This milestone
-must not treat the score as profitability, alpha, ROI, PnL, Sharpe, execution
-quality, copyability, or live-trading evidence.
+The next milestone is to review the first Wallet Watchlist v1 artifact created
+from existing Wallet Score outputs only. The watchlist is a monitoring and
+deeper-analysis research handoff, not a trading signal, copy-trading
+recommendation, profitability ranking, alpha claim, or live-trading input.
 
 Exit criteria:
 
-- read Wallet Score Design v1, Wallet Score Fixture Implementation v1 outputs,
-  Wallet Score Fixture Review v1, and Wallet Score Broader Evidence Collection
-  Design v1;
-- add the broader wallet manifest template;
-- enforce a maximum 30-wallet sample, two primary activity pages per wallet,
-  200 primary activity rows per wallet, 6,000 primary activity rows overall,
-  one cross-check page per wallet, 100 cross-check rows per wallet, and 3,000
-  cross-check rows overall;
-- preserve public read-only endpoint use, source provenance, deterministic
-  raw/normalized exports, and validation gates;
-- apply the existing Wallet Score v1 without new inputs or threshold changes;
-- summarize score behavior against the design's healthy and suspicious
-  behavior criteria;
+- inspect `wallet_watchlist.py`, the CLI wiring, tests, generated watchlist
+  CSV, summary JSON, report, and source `wallet_scores.csv`;
+- verify the watchlist uses existing Wallet Score outputs only and does not
+  change score formula or thresholds;
+- verify every included wallet has score, priority bucket, reason codes,
+  structural strengths, structural risks, and a research-only next action;
+- verify minimum-visibility inclusion/exclusion behavior;
+- verify deterministic ordering, reason-code coverage, no forbidden metrics,
+  no forbidden claims, and repeatable export;
 - recommend exactly one successor task;
-- do not add new score inputs, change thresholds, compute PnL, add reference
-  alignment, expiry joins,
-  mark-to-market, copyability delay, queue modelling, trading ranking, or
+- do not add new score inputs, change thresholds, compute PnL, ROI, Sharpe,
+  alpha, mark-to-market, copyability, execution quality, trading ranking, or
   execution logic;
 - keep outputs separate from canonical outcome-prediction datasets,
   repricing datasets, validation data, and sealed holdout data.

@@ -906,3 +906,28 @@ detect obvious score pathologies while staying reproducible, manually
 reviewable, and clearly separated from profitability, alpha, copyability,
 trading recommendations, execution, canonical outcome validation, and sealed
 holdout workflows.
+
+## D-056: Wallet Watchlist v1 is monitoring research only
+
+Status: Accepted
+Decision: Wallet Watchlist v1 may transform existing Wallet Score fixture
+outputs into a deterministic monitoring/research artifact with `wallet_id`,
+profile URL, score, priority bucket, reason codes, structural strengths,
+structural risks, and a recommended next research action. The watchlist must
+use existing Wallet Score outputs only, must not change the score formula or
+thresholds, and must exclude wallets that fail minimum visible-structure
+requirements.
+
+The watchlist is not a trading signal, not a copy-trading recommendation, not
+a profitability ranking, and not an alpha claim. It must not add PnL, ROI,
+Sharpe, realized profit, copyability, execution quality, mark-to-market
+values, final win/loss outcomes, sealed holdout data, private wallet data,
+order-placement data, authenticated trading data, public ingestion, live
+trading, automatic trade copying, wallet/private-key use, order placement, or
+holdout evaluation.
+
+Reason: The current six-wallet score fixture is useful enough to create a
+small research handoff for monitoring and deeper analysis, but it remains
+bounded public history with structural scores only. A watchlist improves
+review ergonomics without changing score behavior or implying profitability,
+copyability, execution quality, or trading suitability.

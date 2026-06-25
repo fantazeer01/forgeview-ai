@@ -8,63 +8,63 @@ This file contains exactly one active task. A future Codex session must read
 `REPRICING_RESEARCH_V1.md`, and
 `WALLET_INTELLIGENCE_RESEARCH_V1.md` before starting it.
 
-## Active task: Wallet Score Broader Evidence Batch Implementation v1
+## Active task: Wallet Watchlist Review v1
 
 ### Objective
 
-Implement the bounded public read-only Wallet Score broader evidence batch
-defined in Wallet Score Broader Evidence Collection Design v1.
+Review the first Wallet Watchlist v1 artifact for correctness, interpretation
+safety, and readiness as a monitoring/research handoff before any broader
+evidence collection or ranking work resumes.
 
 ### Required scope
 
-1. Read:
-   - `polymarket/models/wallet_intelligence_v1/wallet_score_design/wallet_score_design_v1.md`;
-   - `polymarket/models/wallet_intelligence_v1/wallet_score_fixture_review/wallet_score_fixture_review_report.md`;
-   - `polymarket/models/wallet_intelligence_v1/wallet_score_broader_evidence_design/broader_evidence_plan.md`;
-   - `docs/polymarket/WALLET_INTELLIGENCE_RESEARCH_V1.md`.
-2. Add a broader wallet manifest template at
-   `polymarket/wallet_intelligence/watched_wallets_broader_v1.example.csv`.
-3. Implement or wire a bounded public read-only batch path that can process
-   the broader wallet manifest while enforcing the design limits.
-4. Preserve the existing Wallet Score v1 allowed inputs and thresholds.
-5. Produce expected artifacts under the paths specified in the design:
-   - `polymarket/data/wallet_intelligence/trade_history_broader_v1/`;
-   - `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_broader_v1/`;
-   - `polymarket/models/wallet_intelligence_v1/lifecycle_metrics_broader_v1/`;
-   - `polymarket/models/wallet_intelligence_v1/wallet_score_broader_evidence_v1/`.
-6. Run validation gates:
-   - score bounds;
+1. Inspect:
+   - `polymarket/wallet_intelligence/wallet_watchlist.py`;
+   - `polymarket/wallet_intelligence/cli.py`;
+   - `tests/polymarket/test_wallet_intelligence.py`;
+   - `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist.csv`;
+   - `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist_summary.json`;
+   - `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist_report.md`;
+   - `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_scores.csv`.
+2. Verify that Wallet Watchlist v1 uses existing Wallet Score outputs only.
+3. Verify that the score formula and score thresholds were not changed.
+4. Confirm that every included wallet has:
+   - `wallet_id`;
+   - score;
+   - priority bucket;
+   - reason codes;
+   - structural strengths;
+   - structural risks;
+   - recommended next research action.
+5. Confirm that wallets failing minimum visibility requirements are excluded
+   and that the current included/excluded counts are correct.
+6. Verify report language clearly says the artifact is:
+   - a monitoring/research artifact;
+   - not a trading signal;
+   - not a copy-trading recommendation;
+   - based only on bounded public history.
+7. Verify validation gates:
    - deterministic ordering;
-   - no forbidden inputs;
-   - missing metric handling;
-   - wallet-source provenance;
-   - bounded-scope compliance;
-   - interpretation-safety language.
-7. Summarize score distribution against the healthy and suspicious behavior
-   criteria from the design.
-8. Recommend exactly one successor task.
+   - reason codes present;
+   - no forbidden claims;
+   - no forbidden metrics;
+   - repeatable export.
+8. Do not add score inputs, change thresholds, rank wallets for trading,
+   compute PnL/ROI/Sharpe, estimate copyability, add mark-to-market values,
+   inspect sealed holdout outcomes, or run holdout evaluation.
+9. If bounded correctness or interpretation-safety bugs are found, fix only
+   those issues.
+10. Produce a concise review note or report with:
+   - confirmed invariants;
+   - watchlist behavior observations;
+   - inclusion/exclusion assessment;
+   - known limitations;
+   - recommended successor task.
 
 ### Acceptance criteria
 
-- Public ingestion, if used, is bounded to the design limits:
-  - maximum wallets: 30;
-  - maximum primary activity pages per wallet: 2;
-  - maximum primary activity rows per wallet: 200;
-  - maximum primary activity rows overall: 6,000;
-  - maximum cross-check pages per wallet: 1;
-  - maximum cross-check rows per wallet: 100;
-  - maximum cross-check rows overall: 3,000;
-  - maximum retries per page: 2.
-- No new score inputs are added.
-- No threshold or penalty change is made.
-- No metric generation change is made except path parameterization needed to
-  write the broader evidence artifacts.
-- No PnL, ROI, realized profit, Sharpe, execution quality, copyability, alpha
-  claims, mark-to-market values, final resolved win/loss outcomes, sealed
-  holdout labels, private wallet data, order-placement data, or authenticated
-  trading data is used.
-- No live trading, automatic trade copying, wallet/private-key use, order
-  placement, execution-adjacent code, capture campaign, production model
-  training, sealed holdout inspection, or holdout evaluation is implemented.
 - Wallet Intelligence tests and the full test suite are run.
+- The watchlist remains a research monitoring artifact only.
+- No profitability, alpha, copyability, execution-quality, or trading
+  recommendation claims are introduced.
 - Exactly one successor task remains in this file.

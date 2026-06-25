@@ -1,0 +1,57 @@
+{
+  "excluded_wallets": [],
+  "generated_at_utc": "2026-06-25T21:23:58+00:00",
+  "minimum_visibility": {
+    "known_score_bucket_required": true,
+    "minimum_lifecycle_positions": 5,
+    "missing_required_metric_count": "0"
+  },
+  "not_computed": [
+    "PnL",
+    "ROI",
+    "Sharpe",
+    "copyability",
+    "alpha",
+    "profitability",
+    "mark-to-market values",
+    "wallet ranking",
+    "trading recommendations"
+  ],
+  "output_dir": "polymarket\\models\\wallet_intelligence_v1\\wallet_watchlist_v1",
+  "priority_bucket_counts": {
+    "insufficient_visible_structure": 2,
+    "low_priority": 3,
+    "medium_priority": 1
+  },
+  "recommended_next_task": "Wallet Watchlist Review v1",
+  "reproducibility_hashes": {
+    "csv_repeat_export_hash_match": true,
+    "wallet_watchlist_csv_sha256": "841dd43c7173161938c52349f753b19cd7ef5b680b5bcb249042a2f57e565caf"
+  },
+  "required_disclaimers": [
+    "monitoring/research artifact",
+    "not a trading signal",
+    "not a copy-trading recommendation",
+    "based only on bounded public history"
+  ],
+  "source": "existing Wallet Score outputs only",
+  "source_scores_csv": "polymarket\\models\\wallet_intelligence_v1\\wallet_score_fixture\\wallet_scores.csv",
+  "source_scores_sha256": "52ceafde32dc6e6c4d07829e824a83c9b767bc7da4d1b3461188e6cda2e3b2ad",
+  "task": "Wallet Watchlist v1",
+  "validation": {
+    "all_validation_passed": true,
+    "deterministic_ordering": true,
+    "forbidden_claim_phrases": [],
+    "forbidden_metric_fields": [],
+    "no_forbidden_claims": true,
+    "no_forbidden_metric_fields": true,
+    "output_schema_completeness": true,
+    "reason_codes_present": true,
+    "repeatable_export": true,
+    "research_actions_present": true
+  },
+  "wallets_excluded": 0,
+  "wallets_included": 6,
+  "wallets_input": 6,
+  "watchlist_version": "wallet_watchlist_v1_from_score_fixture"
+}

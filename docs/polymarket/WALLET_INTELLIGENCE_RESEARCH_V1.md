@@ -1058,8 +1058,72 @@ Planned suspicious behavior checks:
 - guessed unavailable fields;
 - excessive sensitivity to bounded-history oversold or all-open artifacts.
 
-Next research task: Wallet Score Broader Evidence Batch Implementation v1. It
-should implement the bounded public read-only batch from this design, produce
-the expected artifacts, apply the existing Wallet Score v1 without new inputs
-or threshold changes, run validation gates, and run the Wallet Intelligence
-and full test suites.
+The current user-directed override superseded the immediate broader-evidence
+implementation loop and created the first Wallet Watchlist v1 artifact from
+existing Wallet Score outputs only.
+
+## Wallet Watchlist v1
+
+Wallet Watchlist v1 is complete.
+
+Code and CLI:
+
+- watchlist logic lives in
+  `polymarket/wallet_intelligence/wallet_watchlist.py`;
+- the CLI command is:
+  `python -m polymarket.wallet_intelligence wallet-watchlist`.
+
+Outputs:
+
+- `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist.csv`
+- `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist_summary.json`
+- `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist_report.md`
+
+Scope:
+
+- the watchlist uses existing Wallet Score outputs only;
+- the Wallet Score formula and thresholds were not changed;
+- all six score-fixture wallets passed the minimum visibility gate and are
+  included;
+- no new public ingestion, broader evidence collection, expiry join,
+  mark-to-market join, Binance/reference alignment, copyability modelling, or
+  ranking was added.
+
+Watchlist summary:
+
+- wallets input: 6;
+- wallets included: 6;
+- wallets excluded: 0;
+- priority bucket distribution: 1 `medium_priority`, 3 `low_priority`, and
+  2 `insufficient_visible_structure`;
+- source score SHA-256:
+  `52ceafde32dc6e6c4d07829e824a83c9b767bc7da4d1b3461188e6cda2e3b2ad`;
+- watchlist CSV SHA-256:
+  `841dd43c7173161938c52349f753b19cd7ef5b680b5bcb249042a2f57e565caf`.
+
+Validation:
+
+- deterministic ordering: passed;
+- output schema completeness: passed;
+- reason codes present: passed;
+- research actions present: passed;
+- forbidden metric fields absent: passed;
+- forbidden claim phrases absent: passed;
+- repeatable export: passed;
+- Wallet Intelligence tests: 29 passing;
+- full automated suite: 123 passing.
+
+Interpretation:
+
+- this is a monitoring/research artifact;
+- it is not a trading signal;
+- it is not a copy-trading recommendation;
+- it is not a profitability ranking;
+- it is based only on bounded public history and existing Wallet Score
+  outputs;
+- it does not compute or claim PnL, ROI, Sharpe, alpha, copyability,
+  mark-to-market value, execution quality, or trading suitability.
+
+Next research task: Wallet Watchlist Review v1. It should review the artifact,
+validation gates, language, inclusion/exclusion behavior, and source-score
+dependency before any broader evidence collection or ranking work resumes.

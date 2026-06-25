@@ -14,6 +14,7 @@ from .trade_history import DEFAULT_SMOKE_OUTPUT, run_bounded_public_smoke
 from .lifecycle import DEFAULT_LIFECYCLE_INPUT, DEFAULT_LIFECYCLE_OUTPUT, run_lifecycle_fixture_reconstruction
 from .lifecycle_metrics import DEFAULT_LIFECYCLE_METRICS_INPUT, DEFAULT_LIFECYCLE_METRICS_OUTPUT, run_lifecycle_metrics
 from .wallet_score import DEFAULT_WALLET_SCORE_INPUT, DEFAULT_WALLET_SCORE_OUTPUT, run_wallet_score_fixture
+from .wallet_watchlist import DEFAULT_WATCHLIST_INPUT, DEFAULT_WATCHLIST_OUTPUT, run_wallet_watchlist
 
 
 DEFAULT_INPUT = Path("polymarket/wallet_intelligence/watched_wallets.example.csv")
@@ -90,6 +91,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     wallet_score.add_argument("--input", type=Path, default=DEFAULT_WALLET_SCORE_INPUT)
     wallet_score.add_argument("--output", type=Path, default=DEFAULT_WALLET_SCORE_OUTPUT)
+
+    watchlist = subparsers.add_parser(
+        "wallet-watchlist",
+        help="Create a research-only watchlist from existing Wallet Score outputs.",
+    )
+    watchlist.add_argument("--input", type=Path, default=DEFAULT_WATCHLIST_INPUT)
+    watchlist.add_argument("--output", type=Path, default=DEFAULT_WATCHLIST_OUTPUT)
     return parser
 
 
@@ -164,6 +172,15 @@ def main(argv: list[str] | None = None) -> int:
         print(
             json.dumps(
                 run_wallet_score_fixture(args.input, args.output),
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return 0
+    if args.command == "wallet-watchlist":
+        print(
+            json.dumps(
+                run_wallet_watchlist(args.input, args.output),
                 indent=2,
                 sort_keys=True,
             )

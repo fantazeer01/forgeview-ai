@@ -15,6 +15,7 @@ from .trade_history import run_fixture_ingestion
 from .lifecycle import run_lifecycle_fixture_reconstruction
 from .lifecycle_metrics import run_lifecycle_metrics
 from .wallet_score import run_wallet_score_fixture
+from .wallet_watchlist import run_wallet_watchlist
 
 __all__ = [
     "LIFECYCLE_POSITION_FIELDS",
@@ -31,5 +32,6 @@ __all__ = [
     "run_lifecycle_fixture_reconstruction",
     "run_lifecycle_metrics",
     "run_wallet_score_fixture",
+    "run_wallet_watchlist",
     "summarize_outputs",
 ]
