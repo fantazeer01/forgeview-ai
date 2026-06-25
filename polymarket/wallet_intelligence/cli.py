@@ -11,6 +11,7 @@ from .behavior_metrics import compute_behavior_metrics
 from .ingestion import ingest_wallets, inspect_outputs, summarize_outputs
 from .trade_history import DEFAULT_FIXTURE, DEFAULT_FIXTURE_OUTPUT, run_fixture_ingestion
 from .trade_history import DEFAULT_SMOKE_OUTPUT, run_bounded_public_smoke
+from .lifecycle import DEFAULT_LIFECYCLE_INPUT, DEFAULT_LIFECYCLE_OUTPUT, run_lifecycle_fixture_reconstruction
 
 
 DEFAULT_INPUT = Path("polymarket/wallet_intelligence/watched_wallets.example.csv")
@@ -66,6 +67,13 @@ def build_parser() -> argparse.ArgumentParser:
     smoke.add_argument("--page-size", type=int, default=100)
     smoke.add_argument("--max-pages-per-wallet", type=int, default=1)
     smoke.add_argument("--delay", type=float, default=1.0)
+
+    lifecycle = subparsers.add_parser(
+        "trade-lifecycle-fixture",
+        help="Reconstruct deterministic lifecycle candidates from normalized trade-history CSV.",
+    )
+    lifecycle.add_argument("--input", type=Path, default=DEFAULT_LIFECYCLE_INPUT)
+    lifecycle.add_argument("--output", type=Path, default=DEFAULT_LIFECYCLE_OUTPUT)
     return parser
 
 
@@ -113,6 +121,15 @@ def main(argv: list[str] | None = None) -> int:
                     page_size=args.page_size,
                     max_pages_per_wallet=args.max_pages_per_wallet,
                 ),
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return 0
+    if args.command == "trade-lifecycle-fixture":
+        print(
+            json.dumps(
+                run_lifecycle_fixture_reconstruction(args.input, args.output),
                 indent=2,
                 sort_keys=True,
             )

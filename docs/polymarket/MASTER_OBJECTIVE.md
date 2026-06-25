@@ -391,27 +391,25 @@ insufficient. No model or alpha claim is currently justified.
 
 ## 14. Next milestone
 
-### Wallet Trade Lifecycle Reconstruction Design v1
+### Wallet Lifecycle Reconstruction Review v1
 
-The next milestone is to design how normalized public wallet trade rows should
-be grouped into entry, exit, partial-exit, and holding-time candidates. This
-milestone is design-only. It must not infer copyability, strategy intent,
-queue position, fill priority, Binance-lag alignment, or executable edge from
-the bounded public smoke alone.
+The next milestone is to review the deterministic wallet lifecycle fixture
+prototype and decide which lifecycle fields can be interpreted safely from
+bounded public trade history. This milestone is review-only. It must not infer
+copyability, strategy intent, queue position, fill priority, Binance-lag
+alignment, or executable edge from the bounded public smoke alone.
 
 Exit criteria:
 
 - read Wallet Intelligence ingestion, behavior metrics, deep-history
-  feasibility, trade-history ingestion design, fixture-ingester, and bounded
-  public smoke outputs;
-- define lifecycle grouping keys and deterministic ordering rules;
-- design entry/exit/partial-exit candidate logic for BUY, SELL, and future
-  REDEEM rows;
-- define holding-time estimation rules and explicit unavailable states;
-- define required joins for expiry, market metadata, CLOB price history, and
-  external BTC/ETH/SOL reference prices;
-- define validation gates for lifecycle reconstruction before implementation;
-- keep the task design-only unless a future active task explicitly authorizes
+  feasibility, trade-history ingestion design, fixture-ingester, bounded
+  public smoke, and lifecycle reconstruction fixture outputs;
+- review lifecycle status groups for still-open, partial-exit, full-exit, and
+  bounded-history oversold candidates;
+- quantify which lifecycle candidates are interpretable from the bounded
+  one-page smoke and which require deeper history;
+- decide whether a future bounded metrics task is justified;
+- keep the task review-only unless a future active task explicitly authorizes
   implementation;
 - keep outputs separate from canonical outcome-prediction datasets,
   repricing datasets, validation data, and sealed holdout data.

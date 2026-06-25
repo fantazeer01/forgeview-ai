@@ -23,6 +23,10 @@ from polymarket.wallet_intelligence.trade_history import (
     run_bounded_public_smoke,
     run_fixture_ingestion,
 )
+from polymarket.wallet_intelligence.lifecycle import (
+    reconstruct_lifecycle_positions,
+    run_lifecycle_fixture_reconstruction,
+)
 
 
 class FakeClient:
@@ -559,6 +563,169 @@ class WalletTradeHistoryFixtureTests(unittest.TestCase):
             self.assertTrue((output / "trade_history_raw.jsonl").exists())
             self.assertTrue((output / "trade_history_normalized.csv").exists())
             self.assertTrue((output / "bounded_smoke_report.md").exists())
+
+
+class WalletLifecycleReconstructionTests(unittest.TestCase):
+    def _trade(self, **overrides):
+        row = {
+            "wallet_id": "0xwallet",
+            "profile_url": "https://polymarket.com/0xwallet",
+            "source_endpoint": "fixture",
+            "source_endpoint_name": "activity_primary",
+            "activity_type": "TRADE",
+            "activity_timestamp": "1771327000",
+            "activity_datetime_utc": "2026-02-17T10:36:40+00:00",
+            "transaction_hash": "0xaaa",
+            "condition_id": "0xcond",
+            "token_id": "123",
+            "asset_id": "123",
+            "market_slug": "btc-updown-15m-fixture",
+            "event_slug": "btc-updown-15m-fixture",
+            "market_title": "Bitcoin Up or Down - Fixture",
+            "outcome": "Up",
+            "outcome_index": "0",
+            "side": "BUY",
+            "price": "0.2",
+            "size": "10",
+            "notional_value": "2",
+            "notional_source": "computed_price_times_size",
+            "market_type": "fast_crypto_up_down",
+            "asset_class": "BTC",
+            "up_down_market": "true",
+            "time_to_expiry_seconds": "",
+            "expiry_timestamp": "",
+            "expiry_source": "unavailable",
+            "entry_or_exit_candidate": "entry_candidate",
+            "lifecycle_group_key": "0xwallet|0xcond|123|Up",
+            "dedupe_key": "dedupe",
+            "source_fetch_timestamp": "2026-06-24T00:00:00+00:00",
+            "raw_payload_hash": "hash",
+            "raw_page_hash": "page",
+            "normalization_version": "wallet_trade_history_v1",
+            "data_quality_flags": "none",
+        }
+        row.update(overrides)
+        return row
+
+    def test_reconstructs_still_open_position(self):
+        positions, summary = reconstruct_lifecycle_positions([self._trade()])
+        self.assertEqual(len(positions), 1)
+        self.assertEqual(positions[0].status, "still_open")
+        self.assertEqual(positions[0].remaining_size, "10")
+        self.assertTrue(summary["validation"]["position_size_conservation"])
+
+    def test_reconstructs_partial_and_full_exits(self):
+        partial_rows = [
+            self._trade(size="10", price="0.2", transaction_hash="0x001"),
+            self._trade(
+                side="SELL",
+                size="4",
+                price="0.7",
+                transaction_hash="0x002",
+                activity_timestamp="1771327100",
+                entry_or_exit_candidate="exit_candidate",
+            ),
+        ]
+        positions, _ = reconstruct_lifecycle_positions(partial_rows)
+        self.assertEqual(positions[0].status, "partial_exit")
+        self.assertEqual(positions[0].remaining_size, "6")
+        self.assertEqual(positions[0].weighted_average_exit_price, "0.7")
+
+        full_rows = [
+            self._trade(size="10", transaction_hash="0x003"),
+            self._trade(
+                side="SELL",
+                size="10",
+                price="0.9",
+                transaction_hash="0x004",
+                activity_timestamp="1771327200",
+                entry_or_exit_candidate="exit_candidate",
+            ),
+        ]
+        positions, _ = reconstruct_lifecycle_positions(full_rows)
+        self.assertEqual(positions[0].status, "full_exit")
+        self.assertEqual(positions[0].remaining_size, "0")
+
+    def test_negative_position_is_flagged_as_bounded_history_gap(self):
+        positions, summary = reconstruct_lifecycle_positions(
+            [
+                self._trade(
+                    side="SELL",
+                    size="5",
+                    transaction_hash="0x005",
+                    entry_or_exit_candidate="exit_candidate",
+                )
+            ]
+        )
+        self.assertEqual(positions[0].status, "oversold_bounded_history")
+        self.assertEqual(positions[0].negative_position_detected, "true")
+        self.assertTrue(summary["validation"]["no_unexpected_negative_position_size"])
+        self.assertEqual(len(summary["validation"]["bounded_history_negative_position_groups"]), 1)
+
+    def test_reconstruction_is_deterministically_ordered_and_repeatable(self):
+        rows = [
+            self._trade(
+                wallet_id="0xbbb",
+                lifecycle_group_key="0xbbb|0xcond|123|Up",
+                transaction_hash="0xbbb",
+            ),
+            self._trade(
+                wallet_id="0xaaa",
+                lifecycle_group_key="0xaaa|0xcond|123|Up",
+                transaction_hash="0xaaa",
+            ),
+        ]
+        first_positions, first_summary = reconstruct_lifecycle_positions(rows)
+        second_positions, second_summary = reconstruct_lifecycle_positions(list(reversed(rows)))
+        self.assertEqual([p.lifecycle_group_key for p in first_positions], ["0xaaa|0xcond|123|Up", "0xbbb|0xcond|123|Up"])
+        self.assertEqual([p.lifecycle_group_key for p in first_positions], [p.lifecycle_group_key for p in second_positions])
+        self.assertEqual(first_summary["validation"], second_summary["validation"])
+
+    def test_lifecycle_fixture_cli_outputs_are_repeatable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_csv = root / "trade_history.csv"
+            with input_csv.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=TRADE_HISTORY_FIELDS)
+                writer.writeheader()
+                writer.writerow(self._trade())
+                writer.writerow(
+                    self._trade(
+                        side="SELL",
+                        size="10",
+                        price="0.8",
+                        transaction_hash="0x006",
+                        activity_timestamp="1771327300",
+                        entry_or_exit_candidate="exit_candidate",
+                    )
+                )
+            output = root / "lifecycle"
+            first = run_lifecycle_fixture_reconstruction(
+                input_csv,
+                output,
+                generated_at="2026-06-24T00:00:00+00:00",
+            )
+            second = run_lifecycle_fixture_reconstruction(
+                input_csv,
+                output,
+                generated_at="2026-06-24T00:00:00+00:00",
+            )
+            self.assertEqual(first["lifecycle_positions"], 1)
+            self.assertTrue(first["validation"]["repeatable_output"])
+            self.assertEqual(
+                first["reproducibility_hashes"]["lifecycle_positions_csv_sha256"],
+                second["reproducibility_hashes"]["lifecycle_positions_csv_sha256"],
+            )
+            self.assertTrue((output / "lifecycle_positions.csv").exists())
+            self.assertTrue((output / "lifecycle_summary.json").exists())
+
+    def test_lifecycle_module_has_no_execution_methods(self):
+        import polymarket.wallet_intelligence.lifecycle as lifecycle
+
+        names = dir(lifecycle)
+        forbidden_fragments = ("private_key", "place_order", "copy_trade", "execute_trade", "wallet_connect")
+        for fragment in forbidden_fragments:
+            self.assertFalse(any(fragment in name.lower() for name in names))
 
 
 if __name__ == "__main__":

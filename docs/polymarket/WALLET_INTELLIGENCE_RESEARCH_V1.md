@@ -566,3 +566,60 @@ Next research task: Wallet Trade Lifecycle Reconstruction Design v1. It should
 design grouping and validation rules for entry/exit candidates, partial exits,
 holding-time estimates, and join prerequisites before any lifecycle inference
 is implemented.
+
+## Wallet Trade Lifecycle Reconstruction Fixture Prototype v1
+
+Wallet Trade Lifecycle Reconstruction Fixture Prototype v1 is complete.
+
+Code and CLI:
+
+- lifecycle reconstruction logic lives in
+  `polymarket/wallet_intelligence/lifecycle.py`;
+- lifecycle schema fields live in `polymarket/wallet_intelligence/schema.py`;
+- the fixture CLI command is:
+  `python -m polymarket.wallet_intelligence trade-lifecycle-fixture`.
+
+Outputs:
+
+- `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/lifecycle_positions.csv`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/lifecycle_summary.json`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/lifecycle_validation.json`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/reproducibility_hashes.json`
+
+Scope and result:
+
+- input: 600 normalized public smoke trade rows from
+  `polymarket/data/wallet_intelligence/trade_history_smoke_v1/trade_history_normalized.csv`;
+- grouping key: `wallet_id`, `condition_id`, `token_id`, and `outcome`;
+- lifecycle position candidates reconstructed: 112;
+- fast crypto lifecycle candidates: 75;
+- asset counts: 78 BTC, 6 ETH, 2 SOL, and 26 other;
+- status counts: 74 still-open candidates, 36 partial-exit candidates, 2
+  bounded-history oversold candidates, and 0 full-exit candidates in the
+  bounded smoke window.
+
+Validation:
+
+- deterministic ordering: passed;
+- repeatable CSV output: passed;
+- position-size conservation: passed;
+- unexpected negative position groups: 0;
+- bounded-history missing-prior-buy groups: 2;
+- Wallet Intelligence tests: 18 passing;
+- full automated suite: 112 passing.
+
+Interpretation limits:
+
+- oversold groups are treated as one-page bounded-history gaps, not strategy
+  claims;
+- no expiry joins, mark-to-market PnL, Binance/reference alignment,
+  copyability-delay estimation, queue-priority modelling, broad public
+  ingestion, automatic trade copying, live trading, wallet/private-key use,
+  order placement, holdout inspection, or holdout evaluation was implemented;
+- holding time remains unavailable until expiry/metadata and deeper history
+  joins are separately designed and authorized.
+
+Next research task: Wallet Lifecycle Reconstruction Review v1. It should
+review the lifecycle candidates, quantify which groups are interpretable from
+bounded public history, and decide whether a next bounded metrics task is
+justified without adding execution or copy-trading logic.

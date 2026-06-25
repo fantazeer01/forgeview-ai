@@ -719,3 +719,25 @@ bounded public endpoint responses across all seed wallets while staying inside
 the design caps. It also exposed the next data-engineering need: lifecycle
 reconstruction must be designed before interpreting entries, exits, holding
 time, copyability delay, queue/fill uncertainty, or Binance-lag alignment.
+
+## D-048: Wallet lifecycle reconstruction remains bounded and descriptive
+
+Status: Accepted
+Decision: Wallet Trade Lifecycle Reconstruction Fixture Prototype v1 is
+accepted as a small deterministic reconstruction layer over existing
+normalized public smoke trade history only. It may group rows by
+`wallet_id`, `condition_id`, `token_id`, and `outcome`; classify BUY/SELL
+groups as still-open, partial-exit, full-exit, or bounded-history oversold
+candidates; and validate deterministic ordering, repeatable CSV export,
+position-size conservation, and no unexpected negative position size. It must
+not perform expiry joins, mark-to-market PnL, Binance/reference alignment,
+copyability-delay estimation, queue-priority modelling, live trading,
+automatic trade copying, wallet/private-key use, order placement, broad
+public ingestion, capture campaigns, sealed holdout inspection, or holdout
+evaluation.
+
+Reason: The bounded public smoke contains useful entry/exit candidate
+structure, but a one-page wallet activity window can omit earlier buys or
+later sells. Treating oversold groups as bounded-history gaps preserves
+reproducibility while preventing overclaims about strategy intent,
+copyability, holding time, or executable edge.

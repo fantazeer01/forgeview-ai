@@ -1,6 +1,6 @@
 # Polymarket Project State
 
-Last updated: June 24, 2026  
+Last updated: June 25, 2026  
 Canonical objective: [MASTER_OBJECTIVE.md](MASTER_OBJECTIVE.md)  
 Active task: [NEXT_TASK.md](NEXT_TASK.md)  
 Decision log: [DECISIONS.md](DECISIONS.md)
@@ -125,7 +125,21 @@ rows, with asset counts 359 BTC, 97 ETH, 11 SOL, and 133 other; YES-like /
 NO-like outcomes were 249 / 351. It did not run broad public ingestion, live
 trading, trade copying, wallet/private-key use, order placement, capture
 campaigns, holdout inspection, or holdout evaluation.
-The active successor task is Wallet Trade Lifecycle Reconstruction Design v1.
+Wallet Trade Lifecycle Reconstruction Fixture Prototype v1 is complete under
+`polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/`.
+It added a deterministic lifecycle reconstruction module and the CLI command
+`python -m polymarket.wallet_intelligence trade-lifecycle-fixture`, grouped
+the existing 600 normalized public smoke trade rows by wallet, condition ID,
+token ID, and outcome, and produced 112 lifecycle position candidates. The
+prototype found 74 still-open candidates, 36 partial-exit candidates, and 2
+bounded-history oversold candidates where a prior buy is missing from the
+one-page public smoke window. Validation passed for deterministic ordering,
+repeatable output, position-size conservation, and no unexpected negative
+position size. It does not perform expiry joins, mark-to-market PnL,
+Binance/reference alignment, copyability-delay estimation, queue-priority
+modelling, live trading, order placement, wallet/private-key use, holdout
+inspection, or holdout evaluation.
+The active successor task is Wallet Lifecycle Reconstruction Review v1.
 
 ## Completed milestones
 
@@ -423,12 +437,13 @@ Polymarket Wallet Intelligence Research.
 
 Wallet Intelligence Research v1 now has bounded public-data ingestion,
 behavior metrics, a deep-history feasibility review, a public trade-history
-ingestion design, a fixture-only trade-history ingester, and a bounded public
-trade-history smoke for the six seed profiles. The active successor task is
-Wallet Trade Lifecycle Reconstruction Design v1: design how normalized trade
-rows should be grouped into entry/exit/holding-time candidates without
-overclaiming copyability, queue position, fill priority, Binance-lag
-alignment, or strategy intent.
+ingestion design, a fixture-only trade-history ingester, a bounded public
+trade-history smoke for the six seed profiles, and a small deterministic
+lifecycle reconstruction fixture prototype. The active successor task is
+Wallet Lifecycle Reconstruction Review v1: review the prototype outputs and
+decide whether lifecycle metrics can be interpreted from the bounded public
+history without overclaiming holding time, copyability, queue position, fill
+priority, Binance-lag alignment, or strategy intent.
 
 Current measured baseline:
 
@@ -510,14 +525,14 @@ optimization, and trading remain unauthorized.
 
 ## Next actions
 
-The single active task is Wallet Trade Lifecycle Reconstruction Design v1.
+The single active task is Wallet Lifecycle Reconstruction Review v1.
 Its scope and acceptance criteria are defined in `NEXT_TASK.md`.
 
 ## Latest metrics
 
-Measured June 24, 2026:
+Measured June 25, 2026:
 
-- automated tests: 106 passing;
+- automated tests: 112 passing;
 - Wallet Intelligence Research v1 module path:
   `polymarket/wallet_intelligence/`;
 - Wallet Intelligence Research v1 document:
@@ -583,6 +598,20 @@ Measured June 24, 2026:
 - Wallet Intelligence public smoke BTC / ETH / SOL / other rows:
   359 / 97 / 11 / 133;
 - Wallet Intelligence public smoke YES-like / NO-like outcomes: 249 / 351;
+- Wallet Intelligence lifecycle fixture output path:
+  `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/`;
+- Wallet Intelligence lifecycle fixture input rows: 600;
+- Wallet Intelligence lifecycle positions reconstructed: 112;
+- Wallet Intelligence lifecycle status counts: 74 still open, 36 partial
+  exits, 2 bounded-history oversold candidates, 0 full exits in the bounded
+  smoke window;
+- Wallet Intelligence lifecycle asset counts: 78 BTC, 6 ETH, 2 SOL, 26 other;
+- Wallet Intelligence lifecycle fast crypto position candidates: 75;
+- Wallet Intelligence lifecycle deterministic ordering: true;
+- Wallet Intelligence lifecycle position-size conservation: true;
+- Wallet Intelligence lifecycle repeatable CSV output: true;
+- Wallet Intelligence lifecycle unexpected negative position groups: 0;
+- Wallet Intelligence lifecycle bounded-history missing-prior-buy groups: 2;
 - Wallet Intelligence copyability overclaim allowed: false;
 - Wallet Intelligence holdout outcomes read: false;
 - Wallet Intelligence capture campaigns launched: 0;

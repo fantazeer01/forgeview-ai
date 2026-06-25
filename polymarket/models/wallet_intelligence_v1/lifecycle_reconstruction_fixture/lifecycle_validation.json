@@ -1,0 +1,12 @@
+{
+  "bounded_history_negative_position_groups": [
+    "0xd0d6053c3c37e727402d84c14069780d360993aa|0x8fe2ec3961b5151878793f5ee9f3386462ab2cffa341f521ea4af3c943f4f1e1|106321015771996003843951031116798387360396092381038356576150508114564342386617|Up",
+    "0xd0d6053c3c37e727402d84c14069780d360993aa|0x8fe2ec3961b5151878793f5ee9f3386462ab2cffa341f521ea4af3c943f4f1e1|63871622315168997250449926595191905329567685141975937804940439076331565817724|Down"
+  ],
+  "deterministic_ordering": true,
+  "no_unexpected_negative_position_size": true,
+  "position_size_conservation": true,
+  "position_size_conservation_failures": [],
+  "repeatable_output": true,
+  "unexpected_negative_position_groups": []
+}

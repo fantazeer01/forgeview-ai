@@ -87,6 +87,40 @@ TRADE_HISTORY_FIELDS = [
 ]
 
 
+LIFECYCLE_POSITION_FIELDS = [
+    "wallet_id",
+    "profile_url",
+    "condition_id",
+    "token_id",
+    "outcome",
+    "lifecycle_group_key",
+    "market_slug",
+    "event_slug",
+    "market_title",
+    "market_type",
+    "asset_class",
+    "up_down_market",
+    "first_activity_timestamp",
+    "first_activity_datetime_utc",
+    "last_activity_timestamp",
+    "last_activity_datetime_utc",
+    "buy_trade_count",
+    "sell_trade_count",
+    "total_bought_size",
+    "total_sold_size",
+    "remaining_size",
+    "oversold_size",
+    "weighted_average_entry_price",
+    "weighted_average_exit_price",
+    "status",
+    "negative_position_detected",
+    "negative_position_reason",
+    "position_size_conserved",
+    "transaction_hashes",
+    "data_quality_flags",
+]
+
+
 @dataclass(frozen=True)
 class WatchedWallet:
     wallet_id: str
@@ -164,4 +198,38 @@ class TradeHistoryRecord:
     raw_payload_hash: str
     raw_page_hash: str
     normalization_version: str
+    data_quality_flags: str
+
+
+@dataclass(frozen=True)
+class LifecyclePositionRecord:
+    wallet_id: str
+    profile_url: str
+    condition_id: str
+    token_id: str
+    outcome: str
+    lifecycle_group_key: str
+    market_slug: str
+    event_slug: str
+    market_title: str
+    market_type: str
+    asset_class: str
+    up_down_market: str
+    first_activity_timestamp: str
+    first_activity_datetime_utc: str
+    last_activity_timestamp: str
+    last_activity_datetime_utc: str
+    buy_trade_count: str
+    sell_trade_count: str
+    total_bought_size: str
+    total_sold_size: str
+    remaining_size: str
+    oversold_size: str
+    weighted_average_entry_price: str
+    weighted_average_exit_price: str
+    status: str
+    negative_position_detected: str
+    negative_position_reason: str
+    position_size_conserved: str
+    transaction_hashes: str
     data_quality_flags: str
