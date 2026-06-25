@@ -948,3 +948,57 @@ Interpretation:
 Next research task: Wallet Score Fixture Review v1. It should review the
 fixture outputs, component behavior, ordering, validation gates, and
 interpretation language before any score expansion or deeper-history use.
+
+## Wallet Score Fixture Review v1
+
+Wallet Score Fixture Review v1 is complete.
+
+Output:
+
+- `polymarket/models/wallet_intelligence_v1/wallet_score_fixture_review/wallet_score_fixture_review_report.md`
+
+Scope:
+
+- reviewed the Wallet Score Design v1 document;
+- reviewed `wallet_score.py`, `lifecycle_metrics.py`, and Wallet Intelligence
+  tests;
+- reviewed `wallet_scores.csv`, `wallet_scores_summary.json`,
+  `wallet_score_validation.json`, and `wallet_score_report.md`;
+- did not expand scoring, add new metrics, launch public ingestion, join expiry
+  data, compute PnL/ROI/Sharpe, estimate copyability, model execution quality,
+  connect wallets, place orders, inspect sealed holdout outcomes, or run
+  holdout evaluation.
+
+Confirmed invariants:
+
+- approved structural score inputs remain the only scoring inputs;
+- forbidden inputs are absent;
+- score bounds are enforced at 0 to 100;
+- priority buckets and output ordering are deterministic;
+- missing required structural metrics fail validation instead of being guessed;
+- generated score language remains structural research-priority only and does
+  not claim profitability, alpha, execution quality, copyability, or trading
+  suitability.
+
+Score behavior reviewed:
+
+- `medium_priority`: 1;
+- `low_priority`: 3;
+- `insufficient_visible_structure`: 2;
+- `high_priority`: 0.
+
+Threshold and penalty assessment:
+
+- the current score behavior is acceptable for a six-wallet fixture;
+- zero `high_priority` wallets is conservative rather than a defect;
+- no thresholds or penalties should be changed before a broader evidence
+  collection design;
+- the top wallet remains below `high_priority` because concentration and
+  near-flat residual ambiguity penalties are active.
+
+Recommended next research task: Wallet Score Broader Evidence Collection
+Design v1. It should design bounded, public, read-only evidence expansion for
+applying the existing score to more wallets. It must not launch ingestion, add
+score inputs, change thresholds, compute PnL/ROI/Sharpe, infer copyability,
+join mark-to-market values, connect wallets/private keys, place orders,
+inspect sealed holdout outcomes, or run holdout evaluation.

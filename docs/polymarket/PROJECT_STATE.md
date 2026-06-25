@@ -1168,6 +1168,66 @@ Measured June 25, 2026:
 - total milestone progress: 36.8%;
 - project training authorization: false because sample-size gates are unmet.
 
+## Wallet Score Fixture Review v1
+
+Wallet Score Fixture Review v1 is complete.
+
+Output:
+
+- `polymarket/models/wallet_intelligence_v1/wallet_score_fixture_review/wallet_score_fixture_review_report.md`
+
+Files inspected:
+
+- `polymarket/wallet_intelligence/wallet_score.py`
+- `polymarket/wallet_intelligence/lifecycle_metrics.py`
+- `tests/polymarket/test_wallet_intelligence.py`
+- `polymarket/models/wallet_intelligence_v1/wallet_score_design/wallet_score_design_v1.md`
+- `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_scores.csv`
+- `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_scores_summary.json`
+- `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_score_validation.json`
+- `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_score_report.md`
+
+Review findings:
+
+- no bounded correctness bugs were found;
+- approved structural score inputs remain the only scoring inputs;
+- forbidden inputs remain absent;
+- score bounds, deterministic calculation, deterministic ordering, missing
+  metric handling, repeatable export, component bounds, penalty bounds, output
+  schema completeness, and source provenance remain valid;
+- interpretation language remains limited to structural research-priority
+  labels only.
+
+Score distribution reviewed:
+
+- 1 `medium_priority`;
+- 3 `low_priority`;
+- 2 `insufficient_visible_structure`;
+- 0 `high_priority`.
+
+Threshold assessment:
+
+- the current behavior is acceptable for the six-wallet fixture;
+- the absence of `high_priority` wallets is conservative rather than a defect;
+- no thresholds or penalties should be adjusted before a broader evidence
+  collection design.
+
+Strict exclusions remain active:
+
+- no new score inputs;
+- no threshold or penalty change;
+- no public ingestion;
+- no PnL, ROI, realized profit, Sharpe, execution quality, copyability, alpha
+  claims, mark-to-market values, final resolved win/loss outcomes, sealed
+  holdout labels, private wallet data, order-placement data, authenticated
+  trading data, live trading, automatic trade copying, wallet/private-key use,
+  order placement, capture campaign, production model training, sealed holdout
+  inspection, or holdout evaluation.
+
+Next research task: Wallet Score Broader Evidence Collection Design v1. It
+should design a bounded, public, read-only evidence expansion plan before any
+broader ingestion, score expansion, or threshold adjustment.
+
 ## State update protocol
 
 At the end of every completed active task:

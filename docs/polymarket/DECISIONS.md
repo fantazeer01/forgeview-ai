@@ -852,3 +852,25 @@ Reason: The implementation proves the score can be calculated and exported
 deterministically from approved structural metrics while preserving the
 research-only boundary. A review task should inspect the fixture before any
 score expansion or deeper-history use.
+
+## D-054: Wallet Score fixture thresholds remain frozen pending broader evidence design
+
+Status: Accepted
+Decision: Wallet Score Fixture Review v1 accepts the current six-wallet score
+behavior as design-compliant and conservative. The reviewed distribution is 1
+`medium_priority`, 3 `low_priority`, 2 `insufficient_visible_structure`, and 0
+`high_priority`. The strongest structural wallet scores 73, below the
+`high_priority` threshold, because concentration and near-flat residual
+ambiguity penalties remain active. This is acceptable for the bounded fixture
+and does not require threshold or penalty adjustment.
+
+The project will not tune Wallet Score v1 thresholds, penalties, or allowed
+inputs from the six-wallet fixture alone. The next step must be a design task
+for bounded, public, read-only broader evidence collection before any broader
+ingestion, score expansion, threshold change, or deeper-history use.
+
+Reason: Adjusting thresholds to create a high-priority wallet from six bounded
+public seed wallets would overfit the fixture and weaken the interpretation
+safety boundary. A conservative zero-high distribution is preferable until a
+broader sample can test whether the score bands generalize without adding
+profitability, copyability, execution, or live-trading claims.

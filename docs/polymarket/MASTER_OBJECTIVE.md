@@ -391,33 +391,32 @@ insufficient. No model or alpha claim is currently justified.
 
 ## 14. Next milestone
 
-### Wallet Score Fixture Review v1
+### Wallet Score Broader Evidence Collection Design v1
 
-The next milestone is to review the first bounded structural Wallet Score
-fixture before any score expansion, deeper-history weighting, expiry joins, or
-copyability modelling. This milestone must not treat the score as
-profitability, alpha, ROI, PnL, Sharpe, execution quality, copyability, or
-live-trading evidence.
+The next milestone is to design a bounded, public, read-only evidence expansion
+plan for applying the existing Wallet Score v1 to a broader wallet sample. The
+score remains a structural research-priority tool only. This milestone must not
+treat the score as profitability, alpha, ROI, PnL, Sharpe, execution quality,
+copyability, or live-trading evidence.
 
 Exit criteria:
 
-- read Wallet Intelligence ingestion, behavior metrics, deep-history
-  feasibility, trade-history ingestion design, fixture-ingester, bounded
-  public smoke, lifecycle reconstruction fixture outputs, lifecycle review,
-  lifecycle metrics outputs, Wallet Metrics Readiness Review v1, and Wallet
-  Score Design v1, and Wallet Score Fixture Implementation v1 outputs;
-- review `wallet_scores.csv`, `wallet_scores_summary.json`,
-  `wallet_score_validation.json`, and `wallet_score_report.md`;
-- confirm score bounds, deterministic ordering, forbidden-input exclusion,
-  missing metric handling, repeatable export, component bounds, output schema,
-  and source provenance remain valid;
-- check that score bands are interpreted only as structural research-priority
-  labels and not as wallet-quality, profitability, execution, or copyability
-  labels;
+- read Wallet Score Design v1, Wallet Score Fixture Implementation v1 outputs,
+  and Wallet Score Fixture Review v1;
+- define wallet selection criteria for a broader public sample without
+  creating wallet rankings or recommendations;
+- define per-wallet/page/row limits, retry limits, public endpoint posture,
+  provenance, and reproducibility requirements;
+- define validation gates for applying the existing score to the broader
+  sample;
+- define review criteria for whether current thresholds remain acceptable
+  after broader evidence collection;
+- produce the broader evidence collection design artifact;
 - recommend exactly one successor task;
-- do not launch new public ingestion or add new score inputs, PnL, reference
-  alignment, expiry joins, mark-to-market, copyability delay, queue modelling,
-  trading ranking, or execution logic;
+- do not launch new public ingestion or add new score inputs, change
+  thresholds, compute PnL, add reference alignment, expiry joins,
+  mark-to-market, copyability delay, queue modelling, trading ranking, or
+  execution logic;
 - keep outputs separate from canonical outcome-prediction datasets,
   repricing datasets, validation data, and sealed holdout data.
 
