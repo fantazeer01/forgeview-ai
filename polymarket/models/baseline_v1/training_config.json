@@ -1,0 +1,40 @@
+{
+  "asset_features": [
+    "asset_ETH",
+    "asset_SOL"
+  ],
+  "authorized_inputs": [
+    "train.csv",
+    "validation.csv",
+    "protocol_manifest.json"
+  ],
+  "logistic_l2_penalty": 1.0,
+  "logistic_max_iterations": 100,
+  "logistic_tolerance": 1e-09,
+  "missing_value_policy": "training median",
+  "model_search": "none",
+  "numeric_features": [
+    "return_5s",
+    "return_15s",
+    "return_30s",
+    "return_60s",
+    "momentum_short",
+    "momentum_medium",
+    "volatility_30s",
+    "volatility_60s",
+    "yes_price",
+    "yes_no_spread",
+    "probability_change_15s",
+    "probability_change_30s",
+    "lag_score",
+    "confidence_score",
+    "detection_delay",
+    "early_window_flag",
+    "late_window_flag"
+  ],
+  "optional_tree_model": "not evaluated; dependency-free fixed baseline scope",
+  "prohibited_input": "sealed holdout labels",
+  "protocol_id": "time_ordered_holdout_v1",
+  "scaling_policy": "training mean and population standard deviation",
+  "threshold": 0.5
+}

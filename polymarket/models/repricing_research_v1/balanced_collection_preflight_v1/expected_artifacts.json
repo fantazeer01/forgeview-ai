@@ -1,0 +1,61 @@
+{
+  "capture_outputs": [
+    "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\session.jsonl",
+    "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\evidence_report.json",
+    "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\report.md",
+    "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\markets.csv",
+    "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\skipped_markets.csv",
+    "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\lifecycle_events.csv",
+    "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\campaign.stdout.log",
+    "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\campaign.stderr.log"
+  ],
+  "dedicated_data_copy_path": "D:\\ForgeViewAI\\polymarket\\data\\repricing_research_balanced_batch_001",
+  "expected_file_sizes": {
+    "evidence_report_json_mb": {
+      "basis": "two 6h reports were about 0.02-0.03 MB each",
+      "estimate": 0.06
+    },
+    "lifecycle_events_csv_mb": {
+      "basis": "two 6h runs were about 0.59 MB each; 12h doubles that",
+      "estimate": 1.2
+    },
+    "markets_csv_mb": {
+      "basis": "two 6h runs were about 0.097 MB each; 12h doubles that",
+      "estimate": 0.2
+    },
+    "recommended_free_space_mb": {
+      "basis": "5x cushion above expected artifacts",
+      "estimate": 1024
+    },
+    "repricing_labels_csv_mb": {
+      "basis": "about 47 expected signals, small CSV",
+      "estimate": 0.05
+    },
+    "session_jsonl_mb": {
+      "basis": "two complete 6h schema-v1 sessions were about 87 MB each; 12h doubles that",
+      "estimate": 175
+    },
+    "skipped_markets_csv_mb": {
+      "basis": "two 6h runs were about 7.8 MB each; 12h doubles that",
+      "estimate": 16
+    },
+    "total_planned_artifacts_mb": {
+      "basis": "session plus sidecar files and replay/dataset outputs with cushion",
+      "estimate": 205
+    }
+  },
+  "forbidden_paths": [
+    "D:\\ForgeViewAI\\polymarket\\data\\validation_protocol",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_002",
+    "D:\\ForgeViewAI\\polymarket\\data\\training.csv"
+  ],
+  "future_session_directory_template": "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>",
+  "replay_outputs": [
+    "D:\\ForgeViewAI\\polymarket\\models\\repricing_research_v1\\balanced_collection_batch_001\\capture_replay"
+  ],
+  "repricing_dataset_outputs": [
+    "D:\\ForgeViewAI\\polymarket\\models\\repricing_research_v1\\balanced_collection_batch_001\\repricing_dataset\\repricing_labels.csv",
+    "D:\\ForgeViewAI\\polymarket\\models\\repricing_research_v1\\balanced_collection_batch_001\\repricing_dataset\\simulation_summary.json"
+  ]
+}

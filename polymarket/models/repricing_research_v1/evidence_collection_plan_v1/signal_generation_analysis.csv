@@ -1,0 +1,13 @@
+metric,value,interpretation
+total_repricing_signals,28,Small smoke sample only; below weak evidence floor.
+observed_hours,13.1255,Only two independent schema-v1 sessions; temporal coverage is narrow.
+realized_signals_per_hour,2.1333,Baseline accumulation rate under current replay rules.
+signals_by_asset_BTC_ETH_SOL,5/8/15,BTC and ETH are underrepresented relative to SOL.
+signals_by_side_YES_NO,5/23,YES is the binding balance bottleneck.
+exit_reasons_target_stop_timeout,16/8/4,Stop and timeout exits remain material and require stress tracking.
+lag_events_total_existing_sessions,63891,Most lag measurements are rejected before signal construction.
+external_move_below_threshold_share,0.5923,External move threshold suppresses most observations.
+already_repriced_share,0.3062,Polymarket often reprices before the current lag detector admits entry.
+near_expiry_insufficient_time_share,0.1001,Existing windows frequently lack full forward horizon coverage.
+confidence_below_threshold_events,87,Only this rejected-but-lagged bucket produced current repricing entries.
+non_overlap_compression_ratio,0.3218,Open-position de-overlap compressed 87 lag events to 28 paper entries.

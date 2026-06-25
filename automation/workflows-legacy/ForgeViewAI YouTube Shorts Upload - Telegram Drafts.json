@@ -1,0 +1,192 @@
+{
+  "name": "ForgeViewAI YouTube Shorts Upload - Telegram Drafts",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message",
+          "channel_post"
+        ],
+        "additionalFields": {
+          "download": false
+        }
+      },
+      "id": "f0b44db3-0f2c-4b62-b6cb-1e72f2715401",
+      "name": "Telegram Trigger - Draft Channel Video",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -860,
+        120
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "__REPLACE_WITH_TELEGRAM_CREDENTIAL_ID__",
+          "name": "ForgeView Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const DRAFT_CHAT_ID = '-1003839420608';\nconst updateType = $json.channel_post ? 'channel_post' : ($json.message ? 'message' : 'unknown');\nconst msg = $json.channel_post || $json.message || $json;\n\nconst incomingChatId = String(msg.chat?.id || '');\nconst senderChatId = String(msg.sender_chat?.id || '');\nconst forwardFromChatId = String(msg.forward_from_chat?.id || '');\nconst fromUserId = String(msg.from?.id || '');\n\nconsole.log('ForgeView YouTube upload chat validation', {\n  updateType,\n  incomingChatId,\n  senderChatId,\n  forwardFromChatId,\n  fromUserId,\n  expectedDraftChatId: DRAFT_CHAT_ID,\n});\n\nconst acceptedChatIds = [incomingChatId, senderChatId, forwardFromChatId].filter(Boolean);\nif (!acceptedChatIds.includes(DRAFT_CHAT_ID)) {\n  throw new Error(`Ignoring Telegram update not intended for drafts. incoming chat_id=${incomingChatId || 'missing'}, sender_chat_id=${senderChatId || 'missing'}, forward_from_chat_id=${forwardFromChatId || 'missing'}, from_user_id=${fromUserId || 'missing'}, expected=${DRAFT_CHAT_ID}`);\n}\n\nconst video = msg.video || msg.document || {};\nconst fileId = video.file_id;\nif (!fileId) {\n  throw new Error('No Telegram MP4 video/document file_id found. Send short.mp4 as a video or document to the draft channel.');\n}\n\nconst caption = msg.caption || '';\n\nfunction extractBlock(label) {\n  const pattern = new RegExp(`${label}\\\\s*:\\\\s*([\\\\s\\\\S]*?)(?=\\\\n[A-Z_ ]{3,}\\\\s*:|$)`, 'i');\n  const match = caption.match(pattern);\n  return match ? match[1].trim() : '';\n}\n\nlet title = extractBlock('TITLE') || extractBlock('YOUTUBE TITLE') || 'ForgeView Bot Reliability Lesson #Shorts';\ntitle = title.replace(/\\s+/g, ' ').trim();\nif (!/#Shorts/i.test(title)) title = `${title} #Shorts`;\nif (title.length > 100) title = title.slice(0, 97).trimEnd() + '...';\n\nlet description = extractBlock('DESCRIPTION') || extractBlock('YOUTUBE DESCRIPTION') || caption.trim();\nif (!description) {\n  description = 'A practical ForgeView lesson from building AI automation systems, trading bots, and workflows in public.';\n}\n\nconst requiredLines = [\n  '#Shorts',\n  '',\n  'Telegram:',\n  'https://t.me/ForgeViewCom',\n  '',\n  'X:',\n  'https://x.com/ForgeViewX'\n];\n\nfor (const line of requiredLines) {\n  if (line && !description.includes(line)) {\n    description += `\\n${line}`;\n  } else if (!line) {\n    description += '\\n';\n  }\n}\n\ndescription = description.replace(/\\n{3,}/g, '\\n\\n').trim();\n\nreturn [{\n  json: {\n    draft_chat_id: DRAFT_CHAT_ID,\n    update_type: updateType,\n    incoming_chat_id: incomingChatId,\n    sender_chat_id: senderChatId,\n    forward_from_chat_id: forwardFromChatId,\n    from_user_id: fromUserId,\n    source_message_id: msg.message_id,\n    video_file_id: fileId,\n    title,\n    description,\n    privacyStatus: 'private',\n    categoryId: '28'\n  }\n}];"
+      },
+      "id": "0dd7d4cf-c0d8-4eda-aa03-c7129afe761d",
+      "name": "Extract MP4 Metadata",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -620,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "download",
+        "fileId": "={{ $json.video_file_id }}",
+        "binaryPropertyName": "video"
+      },
+      "id": "22333a0d-7919-46a9-9a42-b2f5291af368",
+      "name": "Telegram - Extract MP4",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -380,
+        120
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "__REPLACE_WITH_TELEGRAM_CREDENTIAL_ID__",
+          "name": "ForgeView Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $json.title }}",
+        "description": "={{ $json.description }}",
+        "categoryId": "={{ $json.categoryId }}",
+        "privacyStatus": "={{ $json.privacyStatus }}",
+        "binaryProperty": "video"
+      },
+      "id": "393d5bbd-e04e-4027-aeec-1d4ff1fcb860",
+      "name": "YouTube - Upload Private Short",
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        120
+      ],
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "__REPLACE_WITH_YOUTUBE_CREDENTIAL_ID__",
+          "name": "ForgeView YouTube OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const upload = $json;\nconst videoId = upload.id || upload.videoId || upload.snippet?.resourceId?.videoId || '';\nconst url = videoId ? `https://www.youtube.com/watch?v=${videoId}` : 'URL unavailable';\n\nreturn [{\n  json: {\n    draft_chat_id: '-1003839420608',\n    video_id: videoId,\n    video_url: url,\n    confirmation_text: `UPLOAD SUCCESS\\n\\nVideo ID:\\n${videoId || 'unknown'}\\n\\nURL:\\n${url}`\n  }\n}];"
+      },
+      "id": "ce1650b6-c4ec-45b2-b22f-7b18053e4671",
+      "name": "Format Upload Confirmation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        100,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.draft_chat_id }}",
+        "text": "={{ $json.confirmation_text }}",
+        "additionalFields": {
+          "disable_web_page_preview": true
+        }
+      },
+      "id": "224d1313-2c22-468a-8e14-8445dc400055",
+      "name": "Telegram - Send Upload Confirmation",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        340,
+        120
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "__REPLACE_WITH_TELEGRAM_CREDENTIAL_ID__",
+          "name": "ForgeView Telegram Bot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Trigger - Draft Channel Video": {
+      "main": [
+        [
+          {
+            "node": "Extract MP4 Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract MP4 Metadata": {
+      "main": [
+        [
+          {
+            "node": "Telegram - Extract MP4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram - Extract MP4": {
+      "main": [
+        [
+          {
+            "node": "YouTube - Upload Private Short",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YouTube - Upload Private Short": {
+      "main": [
+        [
+          {
+            "node": "Format Upload Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Upload Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Telegram - Send Upload Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-06-04T00:00:00.000Z",
+  "versionId": "forgeview-youtube-shorts-upload-telegram-drafts-v1"
+}

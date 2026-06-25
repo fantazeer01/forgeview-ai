@@ -1,0 +1,26 @@
+{
+  "accepted_reasons": [
+    "qualified_external_move_not_repriced",
+    "confidence_below_threshold"
+  ],
+  "allow_mock_fallback": false,
+  "assets": [
+    "BTC",
+    "ETH",
+    "SOL"
+  ],
+  "discovery_interval_seconds": 5,
+  "duration_seconds": 43200,
+  "expected_signals_per_hour": 3.9183651867384115,
+  "external_move_threshold_bps": 6.0,
+  "frozen": true,
+  "max_holding_seconds": 180.0,
+  "min_confidence": 0.45,
+  "min_dataset_seconds_to_expiry": 60.0,
+  "mock": false,
+  "name": "balanced",
+  "poll_interval_seconds": 2,
+  "repricing_ratio": 0.65,
+  "selection_objective": "statistical_evidence_collection_quality_not_historical_profitability",
+  "version": "balanced_repricing_collection_stratum_v1"
+}

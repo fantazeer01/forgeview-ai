@@ -1,0 +1,7 @@
+{
+  "csv_repeat_export_hash_match": true,
+  "fixture_ingestion_report_json_sha256": "1a971bd59123f80f9265f8734b620e08928186291ff7d41e030a735adb102cd5",
+  "normalized_trades_fixture_csv_sha256": "2e0ebdfda8b2909ab5622caf9d8c94ee5a78c96fa94de6a36abfe7f315ec2897",
+  "raw_trades_fixture_jsonl_sha256": "705afb668d34515616942304ef4085d98768c0e1d30d34ae3538c2dc658a515d",
+  "validation_gate_results_json_sha256": "5ba85a83d043a5f9324ad82507fd8eada672406ca0d75ca934c31e3235c34d63"
+}

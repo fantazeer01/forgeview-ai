@@ -1,0 +1,87 @@
+{
+  "mode": "public",
+  "fallback_reason": "",
+  "verdict": "INSUFFICIENT_DATA",
+  "metrics": {
+    "total_markets_observed": 15,
+    "completed_market_windows": 9,
+    "opportunities_detected": 0,
+    "opportunity_rate": 0.0,
+    "shadow_trades": 0,
+    "simulated_pnl": 0,
+    "win_rate": 0.0,
+    "avg_win": 0.0,
+    "avg_loss": 0.0,
+    "max_drawdown": 0.0,
+    "edge_decay": 0.0,
+    "latency_sensitivity": 0.0,
+    "reference_coverage_percentage": 99.7778,
+    "data_gap_percentage": 0.9694
+  },
+  "campaign_completeness": {
+    "actual_utc_completion_timestamp": "2026-06-23T12:01:35.399263+00:00",
+    "actual_utc_start_timestamp": "2026-06-23T11:46:35.390761+00:00",
+    "coverage_percentage": 100.0,
+    "expected_duration_seconds": 900.0,
+    "material_shortfall_seconds": 0.0,
+    "monotonic_elapsed_runtime_seconds": 900.0,
+    "observed_utc_span_seconds": 900.008502,
+    "rejection_reasons": [],
+    "status": "complete",
+    "wall_clock_discontinuities": [],
+    "wall_clock_discontinuity_count": 0
+  },
+  "observation_continuity": {
+    "status": "continuous",
+    "expected_checkpoint_count": 450,
+    "actual_checkpoint_count": 450,
+    "checkpoint_coverage_percentage": 100.0,
+    "max_checkpoint_gap_seconds": 2.012861,
+    "gaps_over_10_seconds": 0,
+    "gaps_over_60_seconds": 0,
+    "gaps_over_300_seconds": 0,
+    "effective_observed_duration_seconds": 898.001169,
+    "first_observation_timestamp": "2026-06-23T11:46:35.392762+00:00",
+    "last_observation_timestamp": "2026-06-23T12:01:33.393931+00:00",
+    "terminal_gap_seconds": 2.005332,
+    "session_completed_present": true,
+    "fatal_capture_error_count": 0,
+    "rejection_reasons": []
+  },
+  "discovery_failures": [
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "The read operation timed out",
+      "exception_type": "TimeoutError",
+      "timestamp": "2026-06-23T11:59:53.397318+00:00"
+    }
+  ],
+  "microstructure_coverage": {
+    "by_asset": {
+      "BTC": 443,
+      "ETH": 443,
+      "SOL": 442
+    },
+    "events": 1328,
+    "field_coverage_percentage": {
+      "bid_ask_spread": 100.0,
+      "book_imbalance": 100.0,
+      "cross_asset_relative_yes": 99.9247,
+      "cross_asset_yes_dispersion": 99.9247,
+      "quote_age_seconds": 100.0,
+      "quote_timestamp": 100.0,
+      "refresh_latency_seconds": 100.0,
+      "repricing_acceleration": 98.1928,
+      "repricing_velocity": 99.0964,
+      "spread_change": 99.0964,
+      "spread_compression": 99.0964,
+      "spread_velocity": 99.0964,
+      "total_ask_depth": 100.0,
+      "total_bid_depth": 100.0,
+      "yes_ask_size": 100.0,
+      "yes_bid_size": 100.0
+    },
+    "schema_version": 1
+  },
+  "no_trading_guarantee": true
+}

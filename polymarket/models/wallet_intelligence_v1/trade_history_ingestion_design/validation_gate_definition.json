@@ -1,0 +1,67 @@
+{
+  "version": "wallet_trade_history_validation_gates_v1",
+  "generated_at_utc": "2026-06-24T20:35:38.024305+00:00",
+  "gates": [
+    {
+      "gate": "required_field_coverage",
+      "threshold": "100% for wallet_id, source_endpoint, activity_timestamp, transaction_hash, condition_id, token_id, side, price, size, source_fetch_timestamp, raw_payload_hash",
+      "action_on_fail": "fail normalized export; quarantine bad rows"
+    },
+    {
+      "gate": "duplicate_rate",
+      "threshold": "<= 1% duplicate dedupe_key rows before dedupe and 0 duplicate dedupe_key rows after dedupe",
+      "action_on_fail": "fail report and inspect endpoint/page overlap"
+    },
+    {
+      "gate": "timestamp_parse_rate",
+      "threshold": ">= 99% parseable activity_timestamp to UTC datetime",
+      "action_on_fail": "fail export if required timestamps cannot be parsed"
+    },
+    {
+      "gate": "market_classification_coverage",
+      "threshold": ">= 95% market_type not unknown for normalized rows",
+      "action_on_fail": "warn below 98%; fail below 95%"
+    },
+    {
+      "gate": "fast_crypto_classification_coverage",
+      "threshold": "100% classification for rows whose slug/title contains BTC, ETH, SOL, Up, Down, or updown",
+      "action_on_fail": "fail classification report"
+    },
+    {
+      "gate": "provenance_completeness",
+      "threshold": "100% rows have source_endpoint, source_fetch_timestamp, raw_payload_hash, raw_page_hash, normalization_version",
+      "action_on_fail": "fail export"
+    },
+    {
+      "gate": "deterministic_export",
+      "threshold": "two rebuilds from raw JSONL produce identical CSV hash and identical JSON report hash",
+      "action_on_fail": "fail handoff"
+    },
+    {
+      "gate": "bounded_scope",
+      "threshold": "wallet count, rows per wallet, pages per wallet, retries, and endpoint names remain within ingestion_limits.json",
+      "action_on_fail": "abort fetch before writing normalized outputs"
+    },
+    {
+      "gate": "safety_boundary",
+      "threshold": "no authenticated requests, wallet/private-key code, order endpoints, capture campaigns, holdout files, or live execution paths touched",
+      "action_on_fail": "abort task and record violation"
+    },
+    {
+      "gate": "join_quality_reporting",
+      "threshold": "report coverage for market metadata, closed/current positions, price-history, and Binance/reference joins; do not impute missing joins",
+      "action_on_fail": "warn and retain explicit unavailable flags"
+    }
+  ],
+  "recommended_fixture_tests": [
+    "normalizes bounded activity TRADE rows from saved probe fixture",
+    "deduplicates overlapping activity/trades rows by dedupe_key",
+    "classifies btc-updown slug as fast_crypto_up_down with BTC asset_class",
+    "marks weather/non-crypto rows as non-fast and does not force crypto classification",
+    "computes notional_value from usdcSize when present and price*size otherwise with source flag",
+    "creates deterministic raw_payload_hash from canonical JSON",
+    "groups BUY/SELL rows into lifecycle candidates without claiming copyability",
+    "fails when requested max_pages_per_wallet exceeds ingestion_limits.json",
+    "runs without network using fixtures/mocked client only"
+  ]
+}

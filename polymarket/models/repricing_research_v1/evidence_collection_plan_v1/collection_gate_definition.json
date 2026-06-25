@@ -1,0 +1,47 @@
+{
+  "asset_balance": {
+    "moderate": ">=75 signals per BTC/ETH/SOL",
+    "strong_development": ">=250 signals per BTC/ETH/SOL and no single asset dominates P&L",
+    "weak": ">=25 signals per BTC/ETH/SOL and no asset below 25% of signals when feasible"
+  },
+  "continuity_requirements": [
+    "fatal capture errors = 0",
+    "checkpoint coverage >= 95% hard floor",
+    "no checkpoint gap > 300 seconds",
+    "temporal coverage >= 99% preferred",
+    "campaign completeness recorded before processing"
+  ],
+  "forbidden_actions": [
+    "sealed holdout outcome inspection",
+    "holdout evaluation",
+    "production model training",
+    "wallet/private-key connection",
+    "live trading",
+    "canonical outcome-training merge",
+    "validation protocol modification"
+  ],
+  "horizon_requirements": {
+    "120s": ">=90% coverage",
+    "180s": ">=80% where time-to-expiry permits; otherwise tag as short-horizon stratum",
+    "30s": ">=95% coverage",
+    "60s": ">=95% coverage"
+  },
+  "minimum_signal_density": {
+    "healthy_baseline": ">= 2.0 signals/hour under strict baseline lane",
+    "pause_and_review": "< 1.0 signal/hour after any 24 observed hours",
+    "preferred_after_threshold_audit": ">= 3.0 signals/hour with frozen threshold stratum"
+  },
+  "replay_requirements": [
+    "session_completed event required",
+    "deterministic replay required",
+    "deterministic export required",
+    "paper-only simulator reproducible from stored public evidence"
+  ],
+  "side_balance": {
+    "moderate": ">=100 signals per YES/NO and no side below 35%",
+    "strong_development": ">=350 signals per YES/NO and positive stressed expectancy on both sides",
+    "weak": ">=35 signals per YES/NO and no side below 30% of signals"
+  },
+  "status": "precommitted_plan_only_no_capture_launched",
+  "version": "repricing_evidence_collection_gates_v1"
+}

@@ -1,0 +1,13 @@
+{
+  "measurement": "deterministic 30-observation fixture; no public campaign launched",
+  "raw_quote_and_depth_coverage_percentage": 100.0,
+  "quote_age_coverage_percentage": 100.0,
+  "market_refresh_latency_coverage_percentage": 100.0,
+  "book_imbalance_coverage_percentage": 100.0,
+  "repricing_velocity_coverage_percentage": 90.0,
+  "repricing_acceleration_coverage_percentage": 80.0,
+  "cross_asset_yes_dispersion_coverage_percentage": 96.6667,
+  "historical_session_coverage_percentage": 0.0,
+  "historical_reason": "Sessions captured before schema v1 contain no microstructure_snapshot events.",
+  "real_public_coverage_status": "UNMEASURED_PENDING_SEPARATE_AUTHORIZATION"
+}

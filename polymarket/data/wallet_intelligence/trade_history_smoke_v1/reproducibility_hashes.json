@@ -1,0 +1,8 @@
+{
+  "bounded_smoke_report_json_sha256": "94b28a7ce0479fe7a028c01718d296d9680ac658065781bccb4872477dd910aa",
+  "csv_repeat_export_hash_match": true,
+  "trade_history_normalized_csv_sha256": "242dbab56c9d1391ada6b43306e2a124aea2e5a3cf03f9d6fd7b1339e38b808d",
+  "trade_history_raw_jsonl_sha256": "92866a7325298d26c88c07139af63f14e50b2c18a2a935fa0cc872972212a525",
+  "trade_history_summary_json_sha256": "94b28a7ce0479fe7a028c01718d296d9680ac658065781bccb4872477dd910aa",
+  "validation_gate_results_json_sha256": "ee877cec57e82f84c6f28b348b298dcc363d2c90ef3f31a0a0822b78315e68b9"
+}

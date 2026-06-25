@@ -1,0 +1,11 @@
+{
+  "episode_id": "S1E02",
+  "narrative_hook": "The market had its own prediction. The model beat it.",
+  "breakdown": "The model was trained on earlier markets and tested on later markets it had never seen.",
+  "partial_resolution": "The prediction edge survived the smaller evidence pool at all five tested moments.",
+  "belief_state": "A predictive edge is now plausible, but better predictions still may not produce real profit.",
+  "open_loop": "Will the prediction edge survive buying costs and produce simulated profit?",
+  "last_result": "The combined model beat the market prediction across all five tested moments.",
+  "next_trigger": "Run the simulated money test using the documented thresholds and costs."
+}
+

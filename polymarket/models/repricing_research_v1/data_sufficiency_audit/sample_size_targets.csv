@@ -1,0 +1,4 @@
+evidence_level,minimum_signals,minimum_hours,minimum_independent_sessions,minimum_signals_per_asset,minimum_signals_per_side,minimum_expectancy_after_slippage,maximum_drawdown_to_pnl_ratio,stability_requirement
+weak_development_evidence,100,40,3,25,35,0.005,2.5,positive expectancy overall and in at least 2 of 3 assets; no side worse than -0.005 expectancy
+moderate_development_evidence,300,120,6,75,100,0.008,1.5,positive expectancy in all assets and both sides; positive in at least 4 chronological folds
+strong_development_evidence,1000,400,20,250,350,0.01,1.0,"positive expectancy after stress in all assets, both sides, and at least 80% of chronological folds"

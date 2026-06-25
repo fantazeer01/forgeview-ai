@@ -1,0 +1,62 @@
+{
+  "version": "wallet_trade_history_ingestion_design_v1",
+  "generated_at_utc": "2026-06-24T20:35:38.024305+00:00",
+  "first_ingestion_scope": {
+    "wallet_allowlist_source": "polymarket/wallet_intelligence/watched_wallets.example.csv",
+    "seed_wallets_only": true,
+    "max_wallets": 6,
+    "primary_endpoint": "https://data-api.polymarket.com/activity?user={wallet}&type=TRADE&limit=100&offset={offset}&sortBy=TIMESTAMP&sortDirection=DESC",
+    "cross_check_endpoint": "https://data-api.polymarket.com/trades?user={wallet}&limit=100&offset={offset}",
+    "page_size": 100,
+    "max_pages_per_wallet_primary_activity": 3,
+    "max_rows_per_wallet_primary_activity": 300,
+    "max_pages_per_wallet_trades_cross_check": 1,
+    "max_rows_per_wallet_trades_cross_check": 100,
+    "max_total_activity_rows": 1800,
+    "max_total_cross_check_rows": 600,
+    "metadata_join_scope": "only markets observed in bounded wallet activity rows",
+    "price_history_join_scope": "design-only now; future implementation may fetch narrow windows around normalized activity rows only",
+    "binance_reference_join_scope": "design-only now; future implementation must use existing/as-of reference snapshots or bounded public reference queries"
+  },
+  "rate_limits_and_retries": {
+    "per_wallet_min_delay_seconds_between_pages": 2.0,
+    "global_min_delay_seconds_between_requests": 1.0,
+    "max_retries_per_page": 2,
+    "retry_backoff_seconds": [
+      5,
+      15
+    ],
+    "retryable_statuses": [
+      429,
+      500,
+      502,
+      503,
+      504
+    ],
+    "non_retryable_policy": "record fetch failure in manifest and continue to next bounded wallet/page",
+    "timeout_seconds": 20,
+    "user_agent_policy": "identify as ForgeViewAI research if a custom user agent is later added; never impersonate browsers or evade limits"
+  },
+  "storage_plan": {
+    "future_output_root": "polymarket/data/wallet_intelligence/trade_history_v1/",
+    "raw_jsonl": "raw/activity_pages.jsonl and raw/trades_cross_check_pages.jsonl",
+    "fetch_manifest": "fetch_manifest.json",
+    "normalized_csv": "wallet_trade_history.csv",
+    "normalized_parquet": "wallet_trade_history.parquet if pyarrow/pandas support is available locally; otherwise record unavailable",
+    "lifecycle_csv": "wallet_trade_lifecycle_candidates.csv",
+    "quality_report_json": "trade_history_ingestion_report.json",
+    "quality_report_md": "trade_history_ingestion_report.md"
+  },
+  "hard_safety_rules": [
+    "public read-only endpoints only",
+    "no wallet connection or private keys",
+    "no order placement",
+    "no automatic trade copying",
+    "no market capture campaigns",
+    "no sealed holdout inspection",
+    "no holdout evaluation",
+    "no production model training",
+    "no unbounded history ingestion",
+    "seed-wallet allowlist only in first implementation"
+  ]
+}

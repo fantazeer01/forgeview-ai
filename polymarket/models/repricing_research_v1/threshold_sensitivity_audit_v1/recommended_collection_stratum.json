@@ -1,0 +1,38 @@
+{
+  "asset_counts": {
+    "BTC": 17,
+    "ETH": 20,
+    "SOL": 24
+  },
+  "candidate_retention_pct": 0.0057695306408857006,
+  "estimated_signals_per_hour": 3.9183651867384115,
+  "horizon_coverage": {
+    "120s": 0.8032786885245902,
+    "180s": 0.0,
+    "30s": 1.0,
+    "60s": 0.9836065573770492
+  },
+  "not_optimized_for": "paper_pnl_or_future_outcomes",
+  "parameters": {
+    "accepted_reasons": [
+      "qualified_external_move_not_repriced",
+      "confidence_below_threshold"
+    ],
+    "external_move_threshold_bps": 6.0,
+    "max_holding_seconds": 180.0,
+    "min_confidence": 0.45,
+    "min_dataset_seconds_to_expiry": 60.0,
+    "repricing_ratio": 0.65
+  },
+  "rationale": [
+    "Improves expected signal density versus current strict baseline while preserving a no-already-repriced interpretation.",
+    "Requires 60 seconds to expiry for cleaner 30s/60s coverage and tags weaker 120s/180s coverage.",
+    "Avoids the aggressive stratum as default because it admits many lower-confidence events before prospective stability is known."
+  ],
+  "recommended_frozen_collection_stratum": "balanced",
+  "selection_objective": "statistical_evidence_collection_quality_not_historical_profitability",
+  "side_counts": {
+    "NO": 47,
+    "YES": 14
+  }
+}

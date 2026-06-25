@@ -1,0 +1,124 @@
+{
+  "after_filter": {
+    "feature_cells": 120,
+    "feature_completeness_percentage": 100.0,
+    "microstructure_available_cells": 114,
+    "microstructure_feature_cells": 114,
+    "microstructure_missing_by_feature": {
+      "bid_ask_spread": 0,
+      "book_imbalance": 0,
+      "consecutive_quote_stability": 0,
+      "cross_asset_relative_yes": 0,
+      "cross_asset_yes_dispersion": 0,
+      "market_refresh_latency": 0,
+      "no_change_frequency_30s": 0,
+      "quote_age_seconds": 0,
+      "repricing_acceleration": 0,
+      "repricing_velocity": 0,
+      "spread_change": 0,
+      "spread_compression": 0,
+      "spread_velocity": 0,
+      "time_since_quote_update_seconds": 0,
+      "total_ask_depth": 0,
+      "total_bid_depth": 0,
+      "yes_ask_size": 0,
+      "yes_bid_size": 0,
+      "yes_change_frequency_30s": 0
+    },
+    "missing_by_feature": {
+      "confidence_score": 0,
+      "detection_delay": 0,
+      "early_window_flag": 0,
+      "lag_score": 0,
+      "late_window_flag": 0,
+      "market_age_seconds": 0,
+      "momentum_medium": 0,
+      "momentum_short": 0,
+      "no_price": 0,
+      "probability_change_15s": 0,
+      "probability_change_30s": 0,
+      "return_15s": 0,
+      "return_30s": 0,
+      "return_5s": 0,
+      "return_60s": 0,
+      "seconds_to_expiry": 0,
+      "volatility_30s": 0,
+      "volatility_60s": 0,
+      "yes_no_spread": 0,
+      "yes_price": 0
+    },
+    "missing_by_session": {
+      "20260623_114635\\session.jsonl": {
+        "missing_feature_cells": 0,
+        "rows": 6
+      }
+    },
+    "missing_feature_cells": 0,
+    "rows": 6
+  },
+  "before_filter": {
+    "feature_cells": 120,
+    "feature_completeness_percentage": 100.0,
+    "microstructure_available_cells": 114,
+    "microstructure_feature_cells": 114,
+    "microstructure_missing_by_feature": {
+      "bid_ask_spread": 0,
+      "book_imbalance": 0,
+      "consecutive_quote_stability": 0,
+      "cross_asset_relative_yes": 0,
+      "cross_asset_yes_dispersion": 0,
+      "market_refresh_latency": 0,
+      "no_change_frequency_30s": 0,
+      "quote_age_seconds": 0,
+      "repricing_acceleration": 0,
+      "repricing_velocity": 0,
+      "spread_change": 0,
+      "spread_compression": 0,
+      "spread_velocity": 0,
+      "time_since_quote_update_seconds": 0,
+      "total_ask_depth": 0,
+      "total_bid_depth": 0,
+      "yes_ask_size": 0,
+      "yes_bid_size": 0,
+      "yes_change_frequency_30s": 0
+    },
+    "missing_by_feature": {
+      "confidence_score": 0,
+      "detection_delay": 0,
+      "early_window_flag": 0,
+      "lag_score": 0,
+      "late_window_flag": 0,
+      "market_age_seconds": 0,
+      "momentum_medium": 0,
+      "momentum_short": 0,
+      "no_price": 0,
+      "probability_change_15s": 0,
+      "probability_change_30s": 0,
+      "return_15s": 0,
+      "return_30s": 0,
+      "return_5s": 0,
+      "return_60s": 0,
+      "seconds_to_expiry": 0,
+      "volatility_30s": 0,
+      "volatility_60s": 0,
+      "yes_no_spread": 0,
+      "yes_price": 0
+    },
+    "missing_by_session": {
+      "20260623_114635\\session.jsonl": {
+        "missing_feature_cells": 0,
+        "rows": 6
+      }
+    },
+    "missing_feature_cells": 0,
+    "rows": 6
+  },
+  "configuration": {
+    "asof_max_age_seconds": 15.0,
+    "max_missing_features_per_row": 2
+  },
+  "excluded_rows": [],
+  "recovery": {
+    "detection_delay_derived_from_first_seen": 0
+  }
+}

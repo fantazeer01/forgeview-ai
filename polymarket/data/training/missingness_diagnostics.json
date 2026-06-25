@@ -1,0 +1,4510 @@
+{
+  "after_filter": {
+    "feature_cells": 21280,
+    "feature_completeness_percentage": 99.1776,
+    "missing_by_feature": {
+      "confidence_score": 0,
+      "detection_delay": 0,
+      "early_window_flag": 0,
+      "lag_score": 0,
+      "late_window_flag": 0,
+      "market_age_seconds": 0,
+      "momentum_medium": 39,
+      "momentum_short": 9,
+      "no_price": 0,
+      "probability_change_15s": 2,
+      "probability_change_30s": 35,
+      "return_15s": 0,
+      "return_30s": 33,
+      "return_5s": 9,
+      "return_60s": 39,
+      "seconds_to_expiry": 0,
+      "volatility_30s": 9,
+      "volatility_60s": 0,
+      "yes_no_spread": 0,
+      "yes_price": 0
+    },
+    "missing_by_session": {
+      "20260618_231216\\session.jsonl": {
+        "missing_feature_cells": 0,
+        "rows": 33
+      },
+      "20260619_125221\\session.jsonl": {
+        "missing_feature_cells": 10,
+        "rows": 23
+      },
+      "20260619_174322\\session.jsonl": {
+        "missing_feature_cells": 12,
+        "rows": 18
+      },
+      "20260619_223637\\session.jsonl": {
+        "missing_feature_cells": 39,
+        "rows": 156
+      },
+      "20260620_213414\\session.jsonl": {
+        "missing_feature_cells": 66,
+        "rows": 138
+      },
+      "20260621_101326\\session.jsonl": {
+        "missing_feature_cells": 48,
+        "rows": 60
+      },
+      "20260621_220439\\session.jsonl": {
+        "missing_feature_cells": 0,
+        "rows": 211
+      },
+      "20260622_110942\\session.jsonl": {
+        "missing_feature_cells": 0,
+        "rows": 213
+      },
+      "20260622_211037\\session.jsonl": {
+        "missing_feature_cells": 0,
+        "rows": 212
+      }
+    },
+    "missing_feature_cells": 175,
+    "rows": 1064
+  },
+  "before_filter": {
+    "feature_cells": 26780,
+    "feature_completeness_percentage": 92.3114,
+    "missing_by_feature": {
+      "confidence_score": 0,
+      "detection_delay": 0,
+      "early_window_flag": 0,
+      "lag_score": 0,
+      "late_window_flag": 0,
+      "market_age_seconds": 0,
+      "momentum_medium": 275,
+      "momentum_short": 245,
+      "no_price": 0,
+      "probability_change_15s": 191,
+      "probability_change_30s": 208,
+      "return_15s": 188,
+      "return_30s": 206,
+      "return_5s": 209,
+      "return_60s": 149,
+      "seconds_to_expiry": 0,
+      "volatility_30s": 254,
+      "volatility_60s": 134,
+      "yes_no_spread": 0,
+      "yes_price": 0
+    },
+    "missing_by_session": {
+      "20260618_230910\\session.jsonl": {
+        "missing_feature_cells": 10,
+        "rows": 1
+      },
+      "20260618_231216\\session.jsonl": {
+        "missing_feature_cells": 30,
+        "rows": 36
+      },
+      "20260619_125221\\session.jsonl": {
+        "missing_feature_cells": 38,
+        "rows": 27
+      },
+      "20260619_173205\\session.jsonl": {
+        "missing_feature_cells": 54,
+        "rows": 6
+      },
+      "20260619_174322\\session.jsonl": {
+        "missing_feature_cells": 102,
+        "rows": 36
+      },
+      "20260619_223637\\session.jsonl": {
+        "missing_feature_cells": 210,
+        "rows": 186
+      },
+      "20260620_213414\\session.jsonl": {
+        "missing_feature_cells": 408,
+        "rows": 192
+      },
+      "20260621_101326\\session.jsonl": {
+        "missing_feature_cells": 1195,
+        "rows": 216
+      },
+      "20260621_220439\\session.jsonl": {
+        "missing_feature_cells": 0,
+        "rows": 211
+      },
+      "20260622_110942\\session.jsonl": {
+        "missing_feature_cells": 0,
+        "rows": 213
+      },
+      "20260622_211037\\session.jsonl": {
+        "missing_feature_cells": 12,
+        "rows": 215
+      }
+    },
+    "missing_feature_cells": 2059,
+    "rows": 1339
+  },
+  "configuration": {
+    "asof_max_age_seconds": 15.0,
+    "max_missing_features_per_row": 2
+  },
+  "excluded_rows": [
+    {
+      "asset": "SOL",
+      "market_id": "0x702219109d8eaefe49b27c01333d86572a7522def3039b1e370558aa948efe87",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260618_230910\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x42d05becaab3bd3065f4ce4cf4063e014c356f194ef100e7a57d911005145a32",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260618_231216\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xfbe47f4e94e2f501b767eecbdaa2a6a3e261c99acd97632d9afcca481e2643a1",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260618_231216\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xb834a17d7617b9292069df5917e5a046b7d69b05fefc19553ce576d4942b81b5",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260618_231216\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x216c9b97448fcdd23fbcb423c59b4f0ac89051726cc2f5de44c804c44520a4e0",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_125221\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x963f6be77f62f18cb3be5fe00424189086ab4518b251726f9325623d54c574d8",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_125221\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xf6b3e0aacb32920b93e3c862d368334928657332e455a9a24317345689e08db3",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_125221\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xe7fd069fe075c4ab7e62677fb8e9fe3ea0ee21f341c16fb0751ddc4412c424bd",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_125221\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xd42e720619898af45efd135612fcc57dd21b7473f49be5d12b7113149cf3dfe3",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_173205\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x42d5a2cd5c889422921dcbe0352daa3804d80189c532aa33ef4863822d56e527",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_173205\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x1a440cc7c5b9e818333221803f0c32505820a72f7ed09786c058f10f0be45fff",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_173205\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x7d288ac61b261daf811fff1da501b96044eb396d77ba4fb74da0fb81c8ab9522",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_173205\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x1535ee89607609e9728783faa451a814a3f346c1eb7be68e455448c795b4e5dc",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_173205\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x45f8b1ad5bcd219eb26279b685bdc5934ed2a827651f1108d8342b7148b563a3",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_173205\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x6460d7847efc799efbc563f5d77c0a91fa2fed7e23c5053f48afd9c5a88148b1",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xdf6c3e291412bd2734449b3ba2e7f0f13e546f7c48ac27ed4833338f02640424",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x4a4bbb31e57b95cb824d13cdc0b70ee467f15fb6ad067e64521a3e5559f6ac74",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x8322e488d973788d5b16ba4e3c24107d8d4b9f2b178895e33a08a97b9f285566",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x27bc310432f086d5e9427470bd71ea3bffa609d73396fea657984516e78088e1",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x1d67a84b71202175bd0a1ae0b3da12ca3aa2a8d9135742c2857b39e7123ee179",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xa5e66a0e2f06ed3b0d7309d353688dedf27539d29b988edc6a8bdf6780c24e30",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xaa981ef8c90f901c8963e450b2b80edc0d457d170595910b051f3b325f10c1cf",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x059d3fc82089fe9fbd350dab7db8864142a4c918a134837f72548982fb09d08a",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x74ef458f608e9abff57142afdea3eb5dabeb1355f439242b52d58b30c58323d3",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xdad82262ace3c38779360806465528ef4744d7f585c3c9d6c30495e11a7c8607",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x52d283a258fb588be37c6c3cee27b10323d495b33fca04889d72bccac5c72f75",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xe3ac4accfe0990fc53c70d2146432012eef32e81e4d689efeb5ededf9ca01730",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x44f4204ae50ac4bf2f24b752ebbccc3d8d66df2d3110d268a4a82eae8988bb7a",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xaa55025f5eb8b0c3c1d61cda36cf8a012e798ee0a38a52998216ad5abcd4e987",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xa83c9c684e3080f3a5863f386e9bf21b07324a1a3a0865284c25c1b0ed60109f",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_30s",
+        "volatility_30s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x1039709b9792890cd9759b909e14504179fe766fe89b4a6e511b36868ca3d170",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_30s",
+        "volatility_30s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x5d550bd82d61d047bc218173d4cdbe770b560340eb52769b8220e8140c54cb83",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_30s",
+        "volatility_30s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_174322\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xed81cf4b30442c3747de34d94f06dd670ecc80d3c56bd204daff43933a1da775",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xb31149fbb6192384957b005000543fc9e6b49774e1f639e0bb243e1fc09e42b7",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x49d778f5ea3eafd58227c9b532fc7a701219e596a7cf496229e952e701bbf2ee",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x54ad458c74f1f10ba520ef38e2c0c99dd390e3ad47893a81f3f937324a8ab49f",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xde5df24072989d46e5d19cf45c734417b2f51a09d196bdf7c9291797e2b1f2a7",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xe8316b88de2d180e217b4acbfd31e18db235ab05f7f4df8c6e3d4682dccf91ac",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x68281f201518450a43bebf42338799672f3a117050e9904c49132df8fab4e910",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xb630b4203e0e6b7f27e8080150051a2bdad859cde2987737401bd4f76ec0c9eb",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xb9028f35f52c7dec61145b070de055b2b37eec72c8a7445c6852b6063b1bb62b",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x648e970f877027caad7f2743dbee87df98dde444efb28d677bcac8af28e9313f",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x1eb24ab7a0f6db80b2ebbc51dfba7fc6d74a897ff5e837d7b429f7414a4f9b51",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xfa70a94cc88d0431f02740a0b7a7d8cd733d45f6502b7bafaffbcb72c7811f00",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xf2dcbe81a3131fdf3b69acd99370bdea4701e1de7333483aa3f9ab636266af44",
+      "missing_feature_count": 7,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xc8b9931c60a1f46f538794c17f15d6525ea19cef9b00c0a09237491c8b6a4ff2",
+      "missing_feature_count": 7,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xa7ec40eb8304d2e554fa96707f26165ce9d244f65f894e5015c13b7cfe3e6f12",
+      "missing_feature_count": 7,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x9758176a28f8dd7d8af2b8c96549b4065be576280d91f9ce9e24fa7fd288f51e",
+      "missing_feature_count": 7,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x5e12d07211310d20db92b60d726590bb28f7146919bb5b1eb61d336e1f4198b0",
+      "missing_feature_count": 7,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xe3451152a64ed8cf4a4f2659fc95cd071ab3820e82447bc5754a1dbc1e133887",
+      "missing_feature_count": 7,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x42778ca4f5db72b383c7d50714026e084c16d17febc3b99f0a34d446d1b18ff4",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_5s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x56e71b2d0f4789db50cab2e917d16082c4dce78dec99751ad5ccef44f8fd34da",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_5s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x8ec8d0d72fe99938f37614892b7fbb146a81f14e5cfc29cb7ecf0ab3031f66b3",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_5s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x681306be4a73bc2c6ccde147bc6e3b327afeaa191505140fd4b6602e6e165887",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xfbee52264f6fb02b184733272bd9325683abf1a8d955fa05a613eb88266bac8c",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x2443f22f8d99a6f51879c87afe5ba38f9baf3096fff5c848a0f5ef7fe75ffb59",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xf648e879d1cf57fe7bab90ecc77001579b206d44e2ca29e9a8d75e117a21610a",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xe598cf1b0fe66ef5c380b6a52aa830387743a7b9ab01c73b1bd3de29467c1548",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x95e658b254c9c8a619a31e78e364d069c9c1428a88c143b0c4f3db1715cfa9d8",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x8a7b6a86563a32d55fedf1c24a1769b6083786878ce11d39bacf34c2e652cabc",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_5s",
+        "return_30s",
+        "momentum_short",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xec8ab16e2bf67335c055c950bb29d977cbda604cea6b384ccd71683568915ef3",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_5s",
+        "return_30s",
+        "momentum_short",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xf93e43b7f1b0587ae70fc77c49822329cbcb47d9f05c853328a1cc37f3ab08e6",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_5s",
+        "return_30s",
+        "momentum_short",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260619_223637\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x76ccf9dc94bce645908d17e3217c13535b2695f65390f6ad6b8726cd01cc2464",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x3e97d77cbf3d34dd643bc4a3dcc12384193b0310d3cbb077d90cd2cde828d13c",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xaa5e7934d6947958d34689c5edd06ecc1904493104c940fc5428a56b5eb16fe8",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xebf116f59e3cdcd3a27a8fd090af4844b3d17892e6cc5023496e749f40009cf3",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x67bfdd540bc89ae0a5b48099007b19440bb6eb77d8e4aa21dd3fc51fc7c1dbd8",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xef29b9fc30fcfacbf99b307efcae355283994a344e4d3bc64ad5675d5a11db66",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xbfd4ae55610ffcf2ae7a4f3c5af8b6b465f637c75a8a72267203f723c862e1a7",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x79c178f14e0a3080c50f8e89757b1b7b714c1e4e384c9e1d2b2a8e7c00c8fdc8",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x164dbdefaa12f4a5b422df3c6c8728345223e739d004262a2445b2aa06fcdd5b",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x6d2393514fbc2d7d6e7d6cb6efabf36ea0eb48ec164089302787417699bba8be",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x56b9cc546188aa2281edea717ea4e805e66db11a29d33603b9682d8276ecad93",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x3a46d337850e4bfa5c82e9d16dc70612a968a24c9e5422e015389f5a6ab07729",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xeb3b85cf7711012ce66fc06fc72441a2d74a5d994bddb1def624cf0f374bd944",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xbc8d46b1c615f7d5a8ed3cdc62a7e8023e2fca286b6cd6d9cc9a6ac7206a2716",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xe048292919c588dede591c1c87a626fa2c9ed90f832dec82718739e2e774c05f",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xd48e48f06e98bd64bc6a2f62d81de0c268aeb503409dc29ac8e2b081b78d20d7",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x7ef37f248f59eba0bd2bc28548d0f81d5a48b422a8607d4734adf91f85950585",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x557773945ad1a2f3629cd98d7571b8b5619dbeef8a7620f740097085460970f2",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xe94e597ce591908f8c9b84af01a14a3f1d2aeb716f937f8dfa756b289246fb96",
+      "missing_feature_count": 7,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x4810d2455db9a11b837acdaefc33f9fdfa68bafb5032cd50bb673171e86e4d36",
+      "missing_feature_count": 7,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x6bc9c59da2b4b95a14f72d109e86d87410bcfc02288f32946e9c1f231de6ff30",
+      "missing_feature_count": 7,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x579748d683791c66428cb53bf1dee9cf7ef6656553e79fa88e3601159738d79d",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xc3d8752bf2c70ef2575d5208421e6d949c7357bcd0456f8738dd9c0ab1e43930",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xb6e2fb1731bfe676f10853e0118c1037f3bde6259533afbd6b55b18140c77669",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x9aa2d3792beb05b23150a556e6ce432a54244207773c3a888a81705123eda4b7",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x8dfdd87f8ea54947c505519757cae31f58f2eac2539361b9100cbe4de288d0e6",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x7b05d1a036573e1e90fe285f083cf896ffd288ffe619003817e09fd051420273",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x34f9de876e54ddc731a38b7fc7d816481a369f3b3674f1e1d4448eed70d38dad",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x520f197e93daa56661f42fca38f017ba1a5465112fd0d9fa5acb5971eb81545e",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x703e2ceab3e93f3a882c628ce2d202364ee0681044b4abb6b6934f7efd104a4b",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xef4a66e066bf109532a9d1d1aff7b08f9ae70121c0c45d4dc20af62678ea8c10",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xcdbc081c966a1fb070bba7e9c5ce36fcbe218ff15a5dde4dbac4eff92e039962",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xcc5c6ec48bcebb5a2d1972c1dd4d311d5a2f5548cbaa4d9147f6ac1200521e1c",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x00dff7529d69403dcac8afec49084e373a0f1999dc31f2751842c01cc4b69dcd",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x1b4339a3a000981d1db9cb02be20359774841ca29ab28eda90b8d4df6b32837f",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xf3a9907e625c109619610cc18c085d9adbb6c54287523c27200ac0f574f43fe2",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x2d173210c8e52bcec8ae503608dfa346ec26d08b8f8e451d7889b195bc0a53dd",
+      "missing_feature_count": 7,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xcd88882e372e4013f0120a009dabb8ef7bf7d60dc033ec4eed4bbb53be9f8303",
+      "missing_feature_count": 7,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x0fd8708251c90b9785ac1f5c667fcdec739db54a49f14e6b3d6112fddc003a8e",
+      "missing_feature_count": 7,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xe0cb45417bcf375a1c311c1e1e3172625f734827c4cf9ae49beb8024170bf135",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xa03db790e71e0a2259e9e7743bcf590efd2b850a4434c1c5dec5da43cb5d21b5",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x3af5d2ca9c36cf9266210485341177ff68ff88f428ed2bb67a12cfef87fc67da",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xc660de6f37bbc2814d87067a9058870e554cd05103571a1eae3902b0d52088c5",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x8662a13d498029d61e8368a45de157d302226bd2cdc8b77f895d445e874d246f",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xcde068daed5f1d7a98048cc835c3f3e44d08cac15fd996755a8d142b8bf9c7f4",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x18530f3d7738dc8ee0c73629c6d82dfe180d0ff71566a3cb9a29c441cc6b89da",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_5s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x8b5f4825939d371f3d1fc50f3193f76b82c57d15c73e866abc52131d898a7c3b",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_5s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x89cc8ecf16a346d7d446fffdca884481c3719898af36286a38215be693d138b3",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_5s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x6a2ff301e64a9bb6d05d0bbe078e4fe8a80bf98f5eb784953bc8a562e812e3e6",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x3f3b32621ea236b307821c4a2f114516253de29fe0edfeb711169d603841d785",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x7267715f90d3c653698c2a1c108258ce105a2abb6bb6d5a2cc13a664bf2ed05d",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xfcb3ce72042fb6fecd9ce2c9317d499be222f227320c66d63becc64cfb504bac",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x113d6894f36ac36c62fdd6e146f63ee02787f9e1cee9534cf3486f0851e6a30b",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xdaeadfdfe815b707affbfd39f574b57a43ee07dca9b7507a7befd7ba54020259",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260620_213414\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xced8b5fdfbe12d8c5d366164ee27f70443a41d70c295b6c9cab458c42a6005ed",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x380843291acf043aa4ecd50818c4d191ba265a598c0a3cef6f24ff0b4c49bdd9",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x58cd4ade7c25dd4f54d539c1b4b64d1dedbf69c5dc8258ce992549dbc16bddf5",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xb6dd435ac37947aa200c074a0262320e0c2022db5266bc1c45f9f58ed5423924",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xc69af28aa924ea6604d167afe1480ffeeb1d07e85a091771059ec94d21d3d949",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x1c9c8831c97186fa974383429b61583f69f92fa874e12dcc9d8d01e7b38f2db7",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x992a6f4c3c8602d56ff9c54a34aa46c712847b16ebfccd7528b561411e035874",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_5s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xd2c686c9997d81786b982ab7625815b602246f7c5f78e95d948d8ca1dea4a05e",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_5s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xe055cd65f88c89f2bb129901ee2ab010d90c763f4139a80ae3c2ab19095aa964",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_5s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x1729d794ae4b790ba44ffb9284a3882e8dbed7c0faa8998281345e1838e43edf",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x143e2bc9100ad976920bfbf19ea9c282dbf6f63e2c05e89e2ffbff5e11767912",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x93c45cbee4e669b2de3097a0ae29b0a5151e46e1ca1f02e889def1ba2e8be35d",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x0b3b8c88c63ffbd9835d9e13c4a48aa01816da5f3f45bb35e0e5d7287a98eeb0",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x1ef34758ad130f36f2c7f846f13489239b1d3044f5d05d4fd03dc6fb2dfda62f",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x5a084d307996ad0ad1fcc42b406d8060849386add6f75e8baf60eb4653db5d2a",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x731de57ebab2f752b2ae1151d00b763e06d27123af2976d4a8907ddc2c9f20ae",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xd21237e3f9c4c75e410503b0e2af6181cddf3fa43ff4b05dfaae85118e0f6d4d",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x00a64a8b081727389d188db9d90bfb0aae3cf7ea410ca1429107949d7cf303f6",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xc77c4d54553729ccc68469e89134850583ecae431546be391b36579d1f2afd84",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xa1d60f3b7c417fe5c59706a11c83f275985e326dd9aacdd5b801bd167c1fdc5c",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x0a7a3b08fa75aa03f89a5603c9784ff929459376652bcf3529487dfd5efcfbac",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x63b8c55bcac55fcbe05db43509d1c6119a81978fbab8149bf136bf480285e918",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x31ad240d95d1954ea56d2c77d2d494be3c01c52ec9969a5e7c46de62960cb250",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x669dc4c6ce9656ec9980fcc66c5c25979db9102b652a0a4fd0bfb3433f452174",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x75ecb129759220da67a1d5a65bbd67ed89b45d87a4d1f752484dd601ad376d81",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xd5fd50f559dc9d3748862d5cce8016f2ac6c0132692f037e58bd73118ae7182f",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xb13446b0c55a088a87efa683669543d0f9ca4b796501b77119204c3e34800cd7",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xcd83863c91f185b59caf4b5e4ab19828ddfe5e90894f934acda21107292d2718",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x94819845f2cd12f38fb28c3377a170e6e4b68ee08773242e51499723683944e5",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x1525a309b29fc993ded88d5271f628f368d03b74ab4670cd5b082abf1eb68c8c",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x30b0596aadd11ac7e7f0b0f671a3bd4a1a6d65020e4498ec112353d860bf632d",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xf6af75d981e1fa70d5934e5861ca0e9e1b8338dd59414485855a6cf582ef2754",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x242c45d644d30a27d123e9f3a0b3d389cb47f6c8864b5d6b36742284f2dcadae",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x21bbb1c7c56711e8c2534b36ebc22bef51c82e022983ffeb86bd155180b8c35c",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xf7d7d507fae716cf460b09d05bd52a8ff64116f6b8a2cc2c275a2edeb48f8653",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x608b9489799cff5d4f9ebdd0b2d5f5970369cdec9a2c52d8a565786fe470c6b5",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xd3f4f9b6b9f32bd65f008a7aeb77c81dd99335197fc8b329f3cd2436aca708b0",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x9ef35ef3e40cf0a2ebcd331c69e95b8cf2dfa389de1f4acbb1315b67f55f3113",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x0df7c28a9c228dae6c5c931d374d8228fa962551e09c86168f571803211bdafd",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xe9fd0178d4382135de3fcb36f554ec06dd887603ba390bbc48109c9fea1d6f52",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xd41b10086dd3213eb96f9e2e2784bf24be67d7b4d7773151bd79453a1e10c291",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x4c35f3f4381ad3d157625727c7efd1284b02c02f210972f0093dfd67bf010b9f",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xfcb0f25bd9bc60acac8e0d7df7c843f053cfbea81d46fe6c786ab5e37ee4afb1",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x6117fb4d9a22945b12e1f0a0ec93ff981ffe2e277fc530883183a91f2da38789",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xe6fafb9709639bb911a9c24662c5134cab47109904c19da5b93d9df8fa22be9a",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xbde7bef4726d51319bc84cdd6c40366a422bf9a52ef4e0d755ef2b8e8cd72ee8",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x8432f78824a2da44c7169315389ba9e783a8fd64643d112e3d4372d4799f16f5",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x21ec595a4cf01b4fd57ff418b3a435e92424c17252c5784003ff9d3f0cdee3bf",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x36ddf5c9bddfdcaf51c3cd7d174b0bf8b81792ccfadc4105ba3281179cd51d34",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x06d07981b8493da3b14713031f759e617460b97426e6e1f436ad87656d68a41d",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xf8a8d4563288a5c8501a43f06abd7319b16fb2bd9dcb17862f839c70e0093420",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x580184dcb78785d2b82add2e12e99cfc8592cca1d7863b3b6877bfb8dc9e90be",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_60s",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xe3c633039a17a2c881dd078eba833be35058d1824f1a3f9fd6c63a7957ec725b",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_60s",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x72d86d05df0a7cc10817858b31384f150936da885a4673cba0af10ef30045d63",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_60s",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xebaab34c4bec475f72e5c7627377b10ae55886c19ea9491ac547616fbd2d15e4",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x9843879f40e6a516f4fc41cc43c930d51e8310a3a3f6980643fa61c2ad0e84aa",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xcbb08734547547aee80e583fb5ccd819e4101acd10ad11460c843b32bfb7b152",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xe64bbc212f3d922b57e7374032aee0e248705b117c627d7c412cf5b4f91a3905",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x1f03bd414ba3dd8202f91afbab7786997da736aea313ce89b5abd62e618feb49",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x951f2f42e20a780aa1c0dca014a1a2d244ef061704762bc3fff8a874a367ced1",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x27db294a327839bddaf808530c192afcf29511c18fdacae7feb39bcf0360e86b",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x3bf79c1bfa17fbf0f0f35526f59709e67ab54904aff8236f122ef528b5c3a772",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xa0ae218a49af76d06f9fdf296c97547b1c53c2fe980caa0014ea62e730794821",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xa8c6ade3388037ddd69652d776c48fd5524d05b4a28ab95614af71b04e1a0b3d",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_60s",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xc5d77ff5e136abd4183be72d518df2e60fb54a53c88f916ecb1f5940ce1f7779",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_60s",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xd51a739b779588aa3c5516443d1b6b9c7d672da6635f53085cd895faad0c47f0",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_60s",
+        "momentum_medium",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x1f28ea2a3a44e3daf09eb75c59fe184034fbb068999e35dcd03beb9791e9b082",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xf3bf0c03c230eff9f87255d9f02dbe4e82870d1160bbd0f791e811982cf7d66c",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xcae8cd18452a8bb651295b1ffa4e6f9075e2c3f8df8cd06259ab0de072c1bd24",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xc50cd3dfd2022a3e7420018adf5fcde149263069a15c5664812fab754bdd2782",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x0a9fb10d60846e70921625eb9485c4c4c8b4b15778e9ed4e5c7aa125f9e8eb32",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x9b4fe3aa34d15b62a032f29c4a1b28d7d218423b193b16b68e07820d7b17f368",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xe282c26ee6a7bb5cb40bf814f2f793eebd41f9c97d24f26b29cfd0d7a2b1d054",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xdcad39b89a3cbec9138a5f1cbb48472fa981ff924922b9c71449ecd400660fda",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x13e1f890080cc8390b1e03aa58047751c8e59c178b51e99fd1025658a12425bc",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x8cf896c66386c5f536d4fa4f8989cd2ec1ce19d61ddc3c6d0a3718b3ea7d4023",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x0108bb08989b619e12d931f18aa681c3b93fc2471ea8124b71fe9d440185de2d",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x146a6d9b4f94031e5696438d79a139e1de3bc61e439f2c5399a389d142b8f9fb",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xd522127c00a074bf974d206b6f0ad41555636bf6d74a3006ab8906e96fdf77f2",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xc6ee99559d6ffd6565324ae9d96c82262d0500f3c6bee8119d8af9e6ccb2aa63",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x69a282b7ea1710bb82a7c7157e337836d67dd9063d85fa2e89578efeb1369f95",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x3e17d74edfcd6e7e9f1bec5f43798c82df5781e7a7a26c3891dd2edfc41b42ff",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x5340af9f2a6cc611c57300e570a0643b3d962aa05ef194a62673f5b0692d28b3",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x17adc96da3ef7261af0da7617ba26c6b92ea7073f904628f77badc5ca502c6c2",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x98623f54330872b362075ba614aa6284c8d85df9f0c650c6256879fd6dfbd1e8",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x865e300190441523cee63537147021566b2d929fe1049f478cbf082f12a56089",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x691a50e3379c95a1496efdf1bf83969f00bfb77192de9201efa4d4c3d9b84c2b",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x6b646f864b67443eb3156f36687beb38b2c5cdbea3d8595016666b7f4b65fdb0",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x5a6d23606a0003bf6c87e52d11803e7f76039609347dc83c38b8a9fbd5fbb315",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x54cfa376a2df14fb9e40bdabe85236fc2f0c5bf428b058cfd76c3958e054b7b1",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xc714592a54f984de1e62b5cedb01ec869a223b4eaf4ee89dcce3a59a3897d08b",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x6532331baa8c1f229d8fa1a2b2799503ab8c8e6f1b40a457a96f8cba913dedb4",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x088a07f06f5938dbd9b2c9af8ae849d73c780dc83ce0e0b10447b177f9f45444",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xce0cf5c26087c505092cebac1e74ed6ed32c81c930b120cc9da558711526a118",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x55cc9331e046b50a0a427a2f691c0bab386b1f33823684ce2d82d009fe93692b",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x3d516daab378720dac4d26d4cf840e5825fd7ad5dd41ef9cbd5adfbcf4af69cf",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xf99d439c0618a1afc4a49a4d39bd248f88ea6644507319982adcbebe69ce239e",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_15s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xe6a24765b06757c39171adc8f51cc6379147935a8ffaea39c52b7f1c86f402a3",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_15s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x506f5651d6e36469b44c442502ead67b2867be8ebf230b09699b0640232831f3",
+      "missing_feature_count": 6,
+      "missing_features": [
+        "return_15s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xd7abeebed71a73930e64281a63e0767ee4092f06e9518fe15c78d83bb98c660c",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x008fa97d42fc3a1d1b41246b3d7d6f4181e6c107cb83a4a61ea222e4701f7714",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x3a8c3117482b56adfb845d857db84af744746324d4c7920fe0d684af83b92524",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xae55570b66e7e36b9bd0b1c174ab3dd2faa50a262977cd8642f8fa1eabebda8e",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x20c367b7cc71c5ad73ecd7c26f30a9151cc7c656d7605f423f15ad23e0109b22",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x758fd0b8326aa1820814ecc26d2a95810e0f342b78a4f45bedb75aafd7280b8f",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xb930f08c42a4c604351d7e1e573cb480d9d39a030bd88ae8fa30b55fd93ca496",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x9865935af63e861d4d01d9462f7d7596f3288c179376cc91adf7631dd7eb3b56",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xe68d598eff57bcfbaa0e891b1553dea811cbce69692eca7048cfa55ecbce434b",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xe94ec6c5224a02c163876932f4022a0b37a9e5e8bc9e28163808589161e322bb",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xfd4fe0b0d55709fdd3a1096b3beb4075dd3a5e27caff45c696578a29fa30c3ab",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xb1adc808e14ff319887e296e49e48d7c311dceef1a4497580413bc8ce99bd053",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xa3484d170c492b65acd6e78c76054a0fbc68ff671aec7d63f39ca64b4316f8f9",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xd4ad20829c4fbe28218f3ba2adb239191fb2879a04681c2745dc1cb5c66ad2b6",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xedf02664692bc105d995b6fd3bb1a9f8d2e7741b1d3bf380d241710147b8e561",
+      "missing_feature_count": 10,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x6c9c39090d8e536d3d2472311093043aabbe44f0587da0894e0aeb6ee21094f3",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x5052ecbbdd23e1d45e3d6e7546b641a95abefb9cce8d2176aa2e19bae18d9dc7",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xd3c4572921c7627b1449f73bf8d8783887783ce3ef4d8b0f35139f102d3f9c39",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x93011ce623f337761eec0e1ddb32c981a540509aa510fb4bf194481b12caa2b0",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x497cfdede56de3ef337dc41345e0291c61594c9200f6364652c17717a10cc20a",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xbc6dac69a90281716644bdff88367d13e35fd6ace15c0e4724c4c1c7cf3e653a",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xfe19fbe8b0d48dd9368253f1fdec07d2be4b8f528af0e7aa14ba3a85959d3798",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x3f31125cdddab779338cba9cd7f5fdcf54bb442b42816d6f69d2341e05009ce0",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xc34d74dc59736c50e55d797ffc9788e49cec8aa9e67fa122ff2363b2a9eed4cb",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x4c43d799ac464c817e17ba8be94e48149a18d0b39a707cd900f332fd58f2287f",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x06cc7d1446768bf85ed41b5ff81ba1a301d143ae9f34250af92c6af0c1eebc0d",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xcea88e0e8fb3d215d9a31732fd2b6b58a7079ec878aa839de3379494792157e1",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x16a929ba3a3523f1f76b310ac14c14fa68b8eaf0cbfec1652e1d4f8f55975652",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xc591b517af58beb40c3d6abab4873885786990af2c15e8f3443b756d2512fe0f",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x802145d2cd7d568a61383175935ed1511808fbb9b847a85ea30982ec276c9926",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x5a5b76967fb45809580ca37218d003994d8fa13a064f38a65575e0655d837182",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x3a60c8414489bc7aba6d95e61499e63155563f3228cbb5fa4fc2184c8c01d191",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x1cecd5be90b9598ab76f97070fb6a3561b433e9628c8d9162484de2b6d488a88",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xe8fcf7f65dbc48fb5fb99ac9222a4b89708f1487bfd292c9b1c017e2bb068a9b",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xad1d80705f8d1b01de52aff041ef37ae58e912c1a915603934353137f01e4e48",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xea002da7babe305d4dd95d16593f96fc241cd66357223e56a369833f5c846998",
+      "missing_feature_count": 5,
+      "missing_features": [
+        "return_15s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "probability_change_15s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x1590f13641782a4c4c1540e342e6a550fcf13989bc4128ea39da16d0d9586f3d",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_5s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x13fcad082deaf9edc1d62b21f09cf5f817190f81a2bd1db94f80d3dc9e358169",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_5s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x0bdc98e2bc006a2f4c231a705112b104b74a8edd049c406c04a3df1a68971fb9",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_5s",
+        "return_30s",
+        "return_60s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x7e3bb3866ea14ad12f36393f696afd22a5871a97b0345dcb5874a1e9b683ada7",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x0f570eb60ba1efbe5f257ef1b925431a05e677f43236cb39afd3fa1e421a7e41",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x6e48f38b3b98652e459a179c5e19f689509e5db91778014490815deed9600d30",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x955dd789bdc12549aeb02f381e44c4b91a1184f028e5cea1a21e9a26da4a0b94",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xc087f117bae512ec472889e6e4904795638b9eadfaf1ffe7d1197a6a7256b2c1",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xfce411e1fd9ace8086e43b6e91adbc79810b784f200816761f8d2a7b11fa498d",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xccd993b7be9c0e2c3af6efc0747a9e740bfcefab4088998d7465840a161235ab",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x9a23626c79e7b5c2dd43d3f1374a9a88fc944cd87f897300990cd3034437bf8f",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xec8e26f544d6f4358970b4be13d143f98f5bd75108adbfd41e1354bd54f3f7d4",
+      "missing_feature_count": 3,
+      "missing_features": [
+        "return_5s",
+        "momentum_short",
+        "volatility_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xd024266bc3d874fcae06a7041f3cfe98fd1fbef7b74284dc2f42d0068eaf2182",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x384d6a8736635d253b6c95219726edb15349a9b117256ffd34a20b987b2f8ab4",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x424840c1bb466908bbb5eb7e9a00285f91f6f61109bfb6989c1b67f603bf62c1",
+      "missing_feature_count": 8,
+      "missing_features": [
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xd93cefac3047e533b60feb59b66adec93528931bd2c46991288b9c51edc8de47",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xc6d70fac12c21a4b5b0ccd2de023eaa8d2e36a1359c9c70d462329f820a513b2",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0xf6b28ab9f9d853136eaf1aae8f099bd06c50ee483bc587583f7531d78cfec0f8",
+      "missing_feature_count": 9,
+      "missing_features": [
+        "return_5s",
+        "return_15s",
+        "return_30s",
+        "momentum_short",
+        "momentum_medium",
+        "volatility_30s",
+        "volatility_60s",
+        "probability_change_15s",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0xd194aeb92f1d66ebf9a8e6749fe365c0f8bc253377c64850f88d67178bde836c",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0x12519cf0ecef13a85b0b7092129adbee101f92cf057ab83a1ccc80e0c0bd4b83",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x003b09eb758e68b1b6048c8539e2acbb70bcf6a60439150c0bfbab760793534e",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260621_101326\\session.jsonl"
+    },
+    {
+      "asset": "BTC",
+      "market_id": "0x24ad9032da564b378a48ebeae0d325bd742278661ef947b9c94d679201cf18a4",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260622_211037\\session.jsonl"
+    },
+    {
+      "asset": "ETH",
+      "market_id": "0xfe96850d4de32e6e495e7f29fbe3f9ea6d9729ea4ebcdd18d1fa43189209fc22",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260622_211037\\session.jsonl"
+    },
+    {
+      "asset": "SOL",
+      "market_id": "0x84acf76aa084cdecf5fc4105ca3f24a65c037a55ad8c711f38aa08619f558938",
+      "missing_feature_count": 4,
+      "missing_features": [
+        "return_30s",
+        "return_60s",
+        "momentum_medium",
+        "probability_change_30s"
+      ],
+      "reason": "feature_completeness_policy",
+      "source_session": "20260622_211037\\session.jsonl"
+    }
+  ],
+  "recovery": {
+    "detection_delay_derived_from_first_seen": 100
+  }
+}

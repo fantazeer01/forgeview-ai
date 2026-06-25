@@ -1,0 +1,225 @@
+{
+  "balanced_stratum_config": {
+    "accepted_reasons": [
+      "qualified_external_move_not_repriced",
+      "confidence_below_threshold"
+    ],
+    "allow_mock_fallback": false,
+    "assets": [
+      "BTC",
+      "ETH",
+      "SOL"
+    ],
+    "discovery_interval_seconds": 5,
+    "duration_seconds": 43200,
+    "expected_signals_per_hour": 3.9183651867384115,
+    "external_move_threshold_bps": 6.0,
+    "frozen": true,
+    "max_holding_seconds": 180.0,
+    "min_confidence": 0.45,
+    "min_dataset_seconds_to_expiry": 60.0,
+    "mock": false,
+    "name": "balanced",
+    "poll_interval_seconds": 2,
+    "repricing_ratio": 0.65,
+    "selection_objective": "statistical_evidence_collection_quality_not_historical_profitability",
+    "version": "balanced_repricing_collection_stratum_v1"
+  },
+  "campaign_launch_authorized_by_this_task": false,
+  "cli_support": {
+    "capture_balanced_args_parse": true,
+    "capture_external_move_threshold_bps": 6.0,
+    "capture_min_confidence": 0.45,
+    "capture_min_entry_seconds": 60.0,
+    "capture_no_mock_fallback": true,
+    "capture_repricing_ratio": 0.65,
+    "repricing_min_seconds_to_expiry": 60.0,
+    "repricing_signal_reasons": [
+      "qualified_external_move_not_repriced",
+      "confidence_below_threshold"
+    ]
+  },
+  "competing_capture_processes": [],
+  "created_utc": "2026-06-24T15:36:30.950123+00:00",
+  "dataset_build_command": "python -m polymarket.repricing_research --session polymarket/runs/repricing_balanced_v1/<YYYYMMDD_HHMMSS>/session.jsonl --output polymarket/models/repricing_research_v1/balanced_collection_batch_001/repricing_dataset --timeout 180 --min-seconds-to-expiry 60 --signal-reason qualified_external_move_not_repriced --signal-reason confidence_below_threshold",
+  "disk_free_gb": 391.469,
+  "estimated_file_sizes": {
+    "evidence_report_json_mb": {
+      "basis": "two 6h reports were about 0.02-0.03 MB each",
+      "estimate": 0.06
+    },
+    "lifecycle_events_csv_mb": {
+      "basis": "two 6h runs were about 0.59 MB each; 12h doubles that",
+      "estimate": 1.2
+    },
+    "markets_csv_mb": {
+      "basis": "two 6h runs were about 0.097 MB each; 12h doubles that",
+      "estimate": 0.2
+    },
+    "recommended_free_space_mb": {
+      "basis": "5x cushion above expected artifacts",
+      "estimate": 1024
+    },
+    "repricing_labels_csv_mb": {
+      "basis": "about 47 expected signals, small CSV",
+      "estimate": 0.05
+    },
+    "session_jsonl_mb": {
+      "basis": "two complete 6h schema-v1 sessions were about 87 MB each; 12h doubles that",
+      "estimate": 175
+    },
+    "skipped_markets_csv_mb": {
+      "basis": "two 6h runs were about 7.8 MB each; 12h doubles that",
+      "estimate": 16
+    },
+    "total_planned_artifacts_mb": {
+      "basis": "session plus sidecar files and replay/dataset outputs with cushion",
+      "estimate": 205
+    }
+  },
+  "estimated_signals": 47.02,
+  "expected_artifacts": {
+    "capture_outputs": [
+      "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\session.jsonl",
+      "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\evidence_report.json",
+      "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\report.md",
+      "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\markets.csv",
+      "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\skipped_markets.csv",
+      "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\lifecycle_events.csv",
+      "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\campaign.stdout.log",
+      "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>\\campaign.stderr.log"
+    ],
+    "dedicated_data_copy_path": "D:\\ForgeViewAI\\polymarket\\data\\repricing_research_balanced_batch_001",
+    "expected_file_sizes": {
+      "evidence_report_json_mb": {
+        "basis": "two 6h reports were about 0.02-0.03 MB each",
+        "estimate": 0.06
+      },
+      "lifecycle_events_csv_mb": {
+        "basis": "two 6h runs were about 0.59 MB each; 12h doubles that",
+        "estimate": 1.2
+      },
+      "markets_csv_mb": {
+        "basis": "two 6h runs were about 0.097 MB each; 12h doubles that",
+        "estimate": 0.2
+      },
+      "recommended_free_space_mb": {
+        "basis": "5x cushion above expected artifacts",
+        "estimate": 1024
+      },
+      "repricing_labels_csv_mb": {
+        "basis": "about 47 expected signals, small CSV",
+        "estimate": 0.05
+      },
+      "session_jsonl_mb": {
+        "basis": "two complete 6h schema-v1 sessions were about 87 MB each; 12h doubles that",
+        "estimate": 175
+      },
+      "skipped_markets_csv_mb": {
+        "basis": "two 6h runs were about 7.8 MB each; 12h doubles that",
+        "estimate": 16
+      },
+      "total_planned_artifacts_mb": {
+        "basis": "session plus sidecar files and replay/dataset outputs with cushion",
+        "estimate": 205
+      }
+    },
+    "forbidden_paths": [
+      "D:\\ForgeViewAI\\polymarket\\data\\validation_protocol",
+      "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001",
+      "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_002",
+      "D:\\ForgeViewAI\\polymarket\\data\\training.csv"
+    ],
+    "future_session_directory_template": "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1\\<YYYYMMDD_HHMMSS>",
+    "replay_outputs": [
+      "D:\\ForgeViewAI\\polymarket\\models\\repricing_research_v1\\balanced_collection_batch_001\\capture_replay"
+    ],
+    "repricing_dataset_outputs": [
+      "D:\\ForgeViewAI\\polymarket\\models\\repricing_research_v1\\balanced_collection_batch_001\\repricing_dataset\\repricing_labels.csv",
+      "D:\\ForgeViewAI\\polymarket\\models\\repricing_research_v1\\balanced_collection_batch_001\\repricing_dataset\\simulation_summary.json"
+    ]
+  },
+  "expected_checkpoint_count": 21600,
+  "expected_runtime": {
+    "hours": 12,
+    "seconds": 43200
+  },
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "launch_command": "python -m polymarket.edge_engine_v5 capture --assets BTC ETH SOL --duration 43200 --poll-interval 2 --discovery-interval 5 --output-root polymarket/runs/repricing_balanced_v1 --no-mock-fallback --min-completed-windows 1 --min-shadow-trades 1 --min-entry-seconds 60 --external-move-threshold-bps 6 --repricing-ratio 0.65 --min-confidence 0.45",
+  "operational_preflight_result": "READY_FOR_AUTHORIZED_LAUNCH",
+  "power_check": {
+    "hibernate_ac_seconds": 0,
+    "platform": "Windows",
+    "recommended_commands": [
+      "powercfg /change standby-timeout-ac 0",
+      "powercfg /change hibernate-timeout-ac 0",
+      "powercfg /setacvalueindex SCHEME_CURRENT SUB_BUTTONS LIDACTION 0",
+      "powercfg /S SCHEME_CURRENT",
+      "powercfg /getactivescheme",
+      "powercfg /query SCHEME_CURRENT SUB_SLEEP"
+    ],
+    "safe_for_overnight": true,
+    "sleep_ac_seconds": 0,
+    "warnings": []
+  },
+  "preflight_checks": {
+    "balanced_stratum_config_present": true,
+    "cli_support_present": true,
+    "correct_project_root": true,
+    "enough_disk_space": true,
+    "mock_fallback_disabled_planned": true,
+    "no_competing_capture_process": true,
+    "no_stale_lock": true,
+    "no_wallet_or_private_key_required": true,
+    "output_paths_separate": true,
+    "public_only_mode_planned": true,
+    "windows_sleep_hibernate_safe": true
+  },
+  "preflight_name": "Balanced Repricing Evidence Collection Preflight v1",
+  "process_check_pattern": "python(\\.exe)?\\s+-m\\s+polymarket\\.edge_engine_v5\\s+capture",
+  "project_root": "D:\\ForgeViewAI",
+  "replay_command": "python -m polymarket.edge_engine_v5 replay --session polymarket/runs/repricing_balanced_v1/<YYYYMMDD_HHMMSS>/session.jsonl --output polymarket/models/repricing_research_v1/balanced_collection_batch_001/capture_replay",
+  "stale_locks": [],
+  "strict_rules_satisfied": {
+    "balanced_stratum_not_changed_for_pnl": true,
+    "campaign_not_launched": true,
+    "holdout_evaluation_not_run": true,
+    "live_trading_not_implemented": true,
+    "production_models_not_trained": true,
+    "sealed_holdout_not_inspected": true,
+    "wallet_private_keys_not_connected": true
+  },
+  "validation_gates": {
+    "asset_balance": {
+      "single_session_monitor_only": true,
+      "weak_gate_min_per_asset": 25
+    },
+    "campaign_completeness": {
+      "coverage_percentage_minimum": 99.0,
+      "required_status": "complete",
+      "session_completed_required": true
+    },
+    "deterministic_export": {
+      "repricing_dataset_export_twice_and_hash_match": true
+    },
+    "observation_continuity": {
+      "checkpoint_coverage_minimum": 95.0,
+      "expected_checkpoint_count": 21600,
+      "fatal_capture_error_count": 0,
+      "max_checkpoint_gap_seconds_maximum": 300
+    },
+    "replay_compatibility": {
+      "edge_engine_v5_replay_required": true,
+      "replay_exit_code_required": 0
+    },
+    "side_balance": {
+      "single_session_monitor_only": true,
+      "weak_gate_min_per_side": 35
+    },
+    "signal_count": {
+      "pause_if_density_below_per_hour_after_24h": 1.0,
+      "single_12h_expected_signals": 47.02,
+      "weak_evidence_target": 100
+    }
+  }
+}

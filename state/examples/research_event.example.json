@@ -1,0 +1,6 @@
+{
+  "research_event": "Probability Lab v3 prediction comparison",
+  "result": "The combined model predicted later markets more accurately than the market price at all five tested moments.",
+  "contradiction": "The market price was expected to contain every useful clue, but the model still improved the prediction."
+}
+

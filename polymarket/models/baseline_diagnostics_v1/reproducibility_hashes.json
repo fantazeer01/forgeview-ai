@@ -1,0 +1,16 @@
+{
+  "inputs": {
+    "baseline_validation_report.json": "cefc685e4580d2309c198d44b8d4e9d562236f812a28460e8d50c4cdbff01fa3",
+    "train.csv": "cfcca2faa0358d6e6f099f6a678cf7f54997766be23c4159425682e7b0a83e25",
+    "validation.csv": "1ec0ca09e5833c9678d27477b794a185be0b37d00ee79345e8a1d6b2b76bac35"
+  },
+  "outputs": {
+    "calibration_analysis.csv": "04ebef101d2474d795423daffcf9c31cff0b61d87bd347aed8ac8dff04608bd8",
+    "diagnostics_report.json": "119f86765ef35e8b87a5feb8decc335e5b772f2d20b6a275e398a3036c766a07",
+    "diagnostics_report.md": "0b38a90a7bd76f38095fac894627ca85de07f1f8685fbdc64e954bb90d650fce",
+    "feature_diagnostics.csv": "e7fe33ca1d75f85c9000d009675646aee28e7a807ad95b78efbd653f80aa7e17",
+    "regime_analysis.csv": "50afa93a6c60cdb3916984092c597ba214444acbedbda53779d33564f3bd4b99",
+    "segment_metrics.csv": "f8d92bbdc6f31d82784064fff4373c3bf57baa8f1615bbc8ca31832e3ed3de21"
+  },
+  "sealed_holdout_commitment_from_manifest": "9ea0faa072dd9c74146011da9cd6599e643fb7f40c2f8ce9643bb17f0394ca2b"
+}

@@ -1,0 +1,721 @@
+# Polymarket Architectural Decisions
+
+Last updated: June 24, 2026
+
+This append-only log records durable project choices and their rationale.
+Future sessions should add a decision when work changes architecture, data
+semantics, validation policy, safety boundaries, or milestone gates. Existing
+decisions should be superseded explicitly rather than silently rewritten.
+
+## D-001: Research and execution remain separated
+
+Status: Accepted  
+Decision: This repository contains research, simulation, capture, replay, and
+shadow validation only. It contains no wallet, private-key, authenticated
+trading client, or order-placement code.
+
+Reason: Research results must not accidentally authorize capital deployment.
+Any future execution system requires a separately scoped approval and risk
+review.
+
+## D-002: Product-area isolation is mandatory
+
+Status: Accepted  
+Decision: Polymarket code, docs, tests, data, and runs remain under the approved
+Polymarket paths and do not import or modify Content Machine.
+
+Reason: Independent ownership and failure domains prevent unrelated product
+changes from contaminating research evidence.
+
+## D-003: Raw sessions are replayable evidence
+
+Status: Accepted  
+Decision: Capture systems store timestamped raw events, and replay recomputes
+decisions instead of trusting generated reports.
+
+Reason: Reproducibility and forensic inspection are prerequisites for any edge
+claim.
+
+## D-004: Public and mock data are explicitly distinguished
+
+Status: Accepted  
+Decision: Every dataset row carries `market_source`; public and mock data are
+never silently mixed. Model validation must use public-only holdouts.
+
+Reason: Mock behavior can validate software but cannot prove market alpha.
+
+## D-005: Feature rows are anchored before resolution
+
+Status: Accepted  
+Decision: Feature Engine v1 anchors rows at the first saved snapshot at or
+after 60 seconds from market open.
+
+Reason: This leaves a forward prediction horizon and reduces accidental
+end-of-window label leakage.
+
+## D-006: Dataset quality gates precede modelling
+
+Status: Accepted  
+Decision: Probability model development is blocked until the dataset reaches
+the public-sample, completeness, class-balance, duplicate, label-integrity, and
+quality-score gates in `MASTER_OBJECTIVE.md`.
+
+Reason: Modelling a weak dataset creates convincing overfit faster than it
+creates evidence.
+
+## D-007: Current proxy labels are not authoritative
+
+Status: Accepted  
+Decision: `reference_window_return` labels are permitted for pipeline
+engineering and must retain explicit provenance. They are insufficient for a
+proven-edge or production-readiness claim.
+
+Reason: The external reference direction may differ from Polymarket's formal
+resolution source or rules.
+
+## D-008: Quality scoring includes hard gates
+
+Status: Accepted  
+Decision: Dataset Quality Engine uses a weighted 0-100 score plus independent
+hard gates for public ratio, minority class, feature completeness, duplicate
+rate, and total score.
+
+Reason: An average score must not hide a fatal weakness such as no public data
+or a missing outcome class.
+
+## D-009: Time-ordered validation is required
+
+Status: Accepted  
+Decision: Future model evaluation uses chronological purged walk-forward
+testing and an untouched final holdout. Random shuffled splits are invalid.
+
+Reason: Adjacent five-minute windows and market regimes create temporal
+dependence and leakage risk.
+
+## D-010: Project management has one active task
+
+Status: Accepted  
+Decision: `NEXT_TASK.md` contains exactly one active task. Future ideas remain
+in `RESEARCH_BACKLOG.md`.
+
+Reason: A single explicit priority makes autonomous sessions predictable and
+prevents roadmap ideas from becoming uncoordinated implementation work.
+
+## D-011: Authoritative outcomes require strict terminal settlement
+
+Status: Accepted  
+Decision: Resolution Engine accepts a label only when the saved condition ID
+matches exactly, the market is closed and resolved, outcomes are exactly
+`Up`/`Down`, and terminal outcome prices are 1/0 within 0.001. Ambiguous,
+unresolved, cancelled, malformed, and missing markets remain unlabelled.
+
+Reason: Market closure or a near-terminal quote alone is not sufficient
+evidence of Polymarket's formal outcome.
+
+## D-012: Raw resolution responses are evidence and replay input
+
+Status: Accepted  
+Decision: Public Gamma event responses are saved before normalization.
+Resolution replay uses those saved responses and original retrieval timestamps,
+not the current API.
+
+Reason: Outcome parsing must remain reproducible if Gamma data changes or
+becomes unavailable.
+
+## D-013: Proxy labels are opt-in and reconciled independently
+
+Status: Accepted  
+Decision: Feature Engine defaults to authoritative labels only. External
+reference-return labels require `--allow-proxy-labels`. Reconciliation rebuilds
+a dedicated proxy-only dataset so it cannot accidentally compare authoritative
+labels against themselves.
+
+Reason: The initial public sample showed 9 proxy disagreements among 75
+comparable markets. Silent proxy fallback would corrupt label provenance.
+
+## D-014: First-seen market evidence defines legacy detection delay
+
+Status: Accepted  
+Decision: When explicit lifecycle tracking is absent, Feature Engine derives
+`detection_delay` from the earliest saved `market_lifecycle` timestamp minus
+window start, floored at zero for markets discovered before opening.
+
+Reason: The value is recoverable from immutable evidence and does not require
+imputation or future information.
+
+## D-015: As-of feature values have a maximum age
+
+Status: Accepted  
+Decision: Return and probability-change lookbacks use only observations at or
+before the requested timestamp and reject observations more than 15 seconds
+old. Future observations are never eligible.
+
+Reason: Unlimited last-observation carry-forward hides data gaps and creates
+misleading short-horizon features.
+
+## D-016: Sparse rows are excluded instead of filled
+
+Status: Accepted  
+Decision: A training row may retain at most two unavailable modelling
+features. Rows with more missing features are excluded and listed in
+`missingness_diagnostics.json`. No zero, mean, future, or synthetic fill is
+used.
+
+Reason: The 29 excluded windows began too late or contained polling gaps that
+made the required history irrecoverable. Exclusion preserves feature semantics
+and raises clean-dataset completeness to 98.71%.
+
+## D-017: Evidence batches are immutable as-of snapshots
+
+Status: Accepted  
+Decision: A resumed batch copies and hashes sessions whose final saved event is
+no later than the selected source session's completion timestamp. Later or
+still-active captures are excluded.
+
+Reason: Global run directories can change while capture continues. An explicit
+cutoff is required for deterministic reports and comparable batch deltas.
+
+## D-018: Batch stages are fail-closed and single-writer
+
+Status: Accepted  
+Decision: Resolution, feature, and quality stages execute in order under an
+exclusive repository-local lock. A failed stage stops the pipeline, records the
+failure, and cannot reuse a stale downstream artifact as a new result.
+
+Reason: Canonical resolution and training artifacts are shared outputs.
+Concurrent or partial writers would invalidate lineage.
+
+## D-019: Master sample gates override component recommendations
+
+Status: Accepted  
+Decision: The evidence batch verdict remains
+`INSUFFICIENT_PUBLIC_SAMPLE` until at least 1,000 clean public rows and 200 rows
+per asset exist, even if Dataset Quality Engine recommends training.
+
+Reason: Completeness and class balance do not compensate for inadequate sample
+size or an unusable holdout.
+
+## D-020: Batch refresh maps to resolution reconciliation
+
+Status: Accepted  
+Decision: Evidence Batch `resolution_mode=refresh` invokes Resolution Engine's
+public `reconcile` command; `resolution_mode=replay` invokes its saved-fixture
+`replay` command.
+
+Reason: The batch vocabulary describes workflow intent, while Resolution
+Engine retains its existing command names. An explicit adapter and regression
+test prevent refresh requests from failing at the CLI boundary.
+
+## D-021: Campaign completeness is an independent evidence gate
+
+Status: Accepted  
+Decision: Public capture duration is measured with a monotonic clock and
+reported alongside actual UTC start, actual UTC completion, and observed UTC
+span. A campaign with more than the greater of five seconds or one percent
+temporal shortfall is marked `incomplete_temporal_coverage`. Post-processing
+may continue for forensic and dataset recovery, but its evidence-batch verdict
+is `INCOMPLETE_CAMPAIGN` and it cannot authorize training. Wall-clock
+discontinuities and every discovery endpoint failure are immutable session
+events. Individual discovery request failures do not discard successful
+responses from other endpoints.
+
+Reason: A terminal marker alone cannot prove that the requested market period
+was observed. Separating campaign integrity from strategy metrics prevents
+clock changes and transport failures from silently overstating evidence while
+retaining valid partial observations.
+
+## D-022: Raw checkpoint continuity overrides endpoint duration
+
+Status: Accepted  
+Decision: Campaign acceptance is recomputed from immutable
+`capture_checkpoint` events. A complete campaign requires at least 99%
+temporal coverage, at least 95% of the configured checkpoint count, no
+checkpoint or terminal boundary gap over 300 seconds, a terminal
+`session_completed` event, and zero fatal capture errors. Failure produces
+`INCOMPLETE_CAMPAIGN`, preserves usable rows, and blocks training
+authorization. Embedded legacy completeness metadata cannot override this
+calculation.
+
+Reason: Host sleep can advance UTC and monotonic clocks together while no
+observations are collected. Endpoint duration therefore cannot establish
+continuous evidence coverage; only the saved checkpoint stream can.
+
+## D-023: Heartbeat cadence is isolated from network I/O
+
+Status: Accepted  
+Decision: Public capture uses fixed monotonic deadlines for checkpoint
+heartbeats. Discovery, reference, and quote requests execute in bounded
+background workers; discovery uses a cached market set and quote results are
+cached per market. Gamma and reference requests are parallelized internally.
+Network completion may affect data availability metrics, but it may not block
+checkpoint creation.
+
+Reason: Batch 003 proved that serialized HTTP requests made a two-second
+heartbeat physically impossible even while the host was awake. Evidence
+continuity and data-source availability must be measured independently.
+
+## D-024: Overnight campaigns require safe Windows power state
+
+Status: Accepted  
+Decision: Evidence Batch `run` fails before capture when AC sleep or hibernate
+timeouts are enabled or cannot be inspected. During an accepted run, the
+process also holds a Windows `ES_SYSTEM_REQUIRED` execution-state request.
+Operators must pass the repository preflight and keep the machine on AC power;
+lid-close policy must not suspend the host.
+
+Reason: Windows sleep caused a verified 25,687-second evidence gap in Batch
+003. Application-level inhibition plus fail-closed configuration inspection
+provides defense in depth.
+
+## D-025: Five-minute windows are atomic and the final holdout is sealed
+
+Status: Accepted  
+Decision: Validation Protocol v1 assigns complete `window_start` groups, not
+individual asset rows, to chronological train, validation, or final holdout
+sets. The split targets are 70% / 15% / 15% by window group. One complete
+five-minute group before each boundary is purged and one group after it is
+embargoed. Holdout features and labels are stored separately; development
+loaders expose train and validation labels only. The holdout label file is
+committed by SHA-256 and may be opened once after the candidate, preprocessing,
+thresholds, and stress assumptions are frozen.
+
+Reason: BTC, ETH, and SOL rows from the same market interval share time and
+external conditions. Splitting them independently or allowing adjacent
+boundary windows would leak regime information. Separating and committing
+holdout labels prevents accidental model selection against the final test.
+
+## D-026: Primary probability metrics and advancement rules are precommitted
+
+Status: Accepted  
+Decision: Log loss and Brier score are the primary metrics. The mandatory
+baselines are training-frequency probability, Polymarket YES probability,
+existing deterministic lag score, and interpretable logistic regression. A
+candidate advances from validation only under the rules frozen in
+`TIME_ORDERED_HOLDOUT_PROTOCOL_V1.md`; final holdout success requires at least
+1% improvement over Polymarket on both primary metrics plus cross-asset and
+cost-stress controls. Holdout reuse is prohibited.
+
+Reason: Defining metrics and thresholds before fitting or reading holdout
+outcomes prevents post-hoc metric selection and optimistic alpha claims.
+
+## D-027: Baseline v1 is a fixed dependency-free linear evaluation
+
+Status: Accepted  
+Decision: Baseline Probability Model v1 evaluates exactly four predictors:
+constant prior, asset prior, Polymarket YES price, and one fixed-feature
+L2-regularized logistic regression. Missing-value medians and scaling are
+learned from train only. No hyperparameter search, shallow tree, P&L
+optimization, or validation-driven feature selection is performed.
+
+Reason: A single interpretable specification provides an honest first test
+with minimal researcher degrees of freedom. Baseline v1 failed to beat
+Polymarket YES price on validation, so the holdout remains sealed and the
+negative result is preserved rather than tuned away.
+
+## D-028: Current snapshot features are insufficient; next work targets microstructure
+
+Status: Accepted  
+Decision: Baseline Failure Diagnostics v1 concludes
+`FEATURE_SET_INCOMPLETE`. None of the eight predeclared feature groups beats
+Polymarket YES price on both validation log loss and Brier score. The project
+will not open the holdout or search larger models. Exactly one follow-up signal
+family is authorized for engineering: market microstructure features covering
+depth, quote age, order-flow proxy, repricing velocity, probability
+acceleration, and synchronized cross-asset lead/lag.
+
+Reason: Current features beat class priors but are dominated by YES price
+across all three assets and every meaningful validation regime. They also
+contain exact redundancy and material train/validation drift. New information,
+not model complexity, is the defensible next hypothesis.
+
+## D-029: Microstructure evidence is additive, versioned, and optional
+
+Status: Accepted  
+Decision: Every successful new public quote retains the legacy
+`polymarket_snapshot` event and adds a schema-v1 `microstructure_snapshot`.
+Raw CLOB timestamps, sizes, and depth are preserved; derived values are
+strictly as-of. Missing fields remain null. Microstructure columns are optional
+for legacy Feature Engine rows and have a separate coverage report, so they do
+not retroactively fail historical core-feature quality gates or alter the
+frozen validation protocol.
+
+Reason: Additive events preserve replay compatibility and evidence lineage.
+Separating core completeness from new-feature coverage prevents unavailable
+historical data from being silently imputed or from invalidating prior
+research.
+
+## D-030: Public microstructure schema v1 is ready for research capture
+
+Status: Accepted  
+Decision: The bounded 900-second public smoke is classified
+`READY_FOR_PRODUCTION_CAPTURE`, meaning production-quality research capture,
+not live trading. A longer independent development campaign may be authorized
+separately because raw quote timestamp, latency, top size, total depth, and
+book imbalance each achieved 100% population; warm-up-dependent velocity and
+acceleration exceeded 98%; checkpoint coverage was 100%; replay and disposable
+Feature Engine exports were deterministic.
+
+Reason: The public CLOB supplies the schema reliably across BTC, ETH, and SOL.
+The smoke establishes capture fitness only. It provides no predictive-edge,
+holdout, P&L, or production-trading evidence.
+
+## D-031: Batch 001 microstructure diagnostics do not advance a candidate
+
+Status: Accepted  
+Decision: Independent Microstructure Development Dataset Batch 001 is
+classified `DATASET_TOO_SMALL_OR_UNSTABLE` for signal-development purposes.
+The 213-row proxy-labelled development dataset has complete microstructure
+feature coverage, but the fixed chronological diagnostic evaluation contains
+only 64 rows, YES price remains the best diagnostic predictor, and neither the
+microstructure-only nor YES-plus-microstructure diagnostic model beats YES
+price on both primary development metrics. The project will not open the
+sealed holdout, modify the frozen validation protocol, or merge Batch 001 into
+canonical training data on this evidence.
+
+Reason: Batch 001 is valuable operational and feature-lineage evidence, but
+it is too small and temporally narrow to distinguish weak incremental
+microstructure signal from sample noise. Additional independent development
+evidence is required before any candidate specification can be frozen.
+
+## D-032: Async discovery exceptions are nonfatal structured diagnostics
+
+Status: Accepted  
+Decision: Public capture treats asynchronous market-discovery worker
+exceptions as structured `discovery_failure` diagnostics instead of fatal
+capture errors. The async wrapper normalizes raw worker exceptions to the same
+timestamp, endpoint, exception type, and message shape already emitted by the
+underlying discovery feed.
+
+Reason: A Batch 002 capture attempt encountered a raw `IncompleteRead`
+exception from the async discovery worker. The exception carried no
+`DiscoveryFailure` fields and crashed the campaign before completion. Network
+transport failures should remain observable evidence, but they must not stop
+checkpoint cadence or invalidate otherwise recoverable public capture.
+
+## D-033: Combined Batch 001-002 microstructure diagnostics do not advance a candidate
+
+Status: Accepted  
+Decision: Combined development-only diagnostics over Independent
+Microstructure Development Dataset Batches 001 and 002 are classified
+`DATASET_STILL_TOO_SMALL_OR_UNSTABLE`. The combined 426-row proxy-labelled
+dataset has complete microstructure feature coverage, but YES price remains
+the best diagnostic predictor overall and independently for BTC, ETH, and SOL.
+No microstructure feature is both incrementally useful beyond YES price and
+stable across both batches under the fixed diagnostic rules.
+
+Reason: The YES-plus-microstructure diagnostic model loses to YES price on
+both primary development metrics, and apparent feature effects are batch
+dependent. This evidence is useful for data engineering and hypothesis
+generation, but it does not justify opening the sealed holdout, modifying the
+validation protocol, merging microstructure rows into canonical training data,
+or freezing a candidate specification.
+
+## D-034: Repricing research is separate from outcome prediction
+
+Status: Accepted  
+Decision: Polymarket Repricing Research v1 is implemented as a separate
+development-only module under `polymarket/repricing_research/`. It studies
+whether external BTC, ETH, and SOL moves predict favorable YES/NO contract
+repricing over the next 30-180 seconds. It does not predict final UP/DOWN
+outcomes, does not write to canonical training/validation/holdout paths, and
+does not modify the frozen validation protocol.
+
+Reason: The current outcome-prediction path has not beaten Polymarket YES
+price. Observed strategy descriptions and profitable-wallet behavior appear
+closer to short-term probability repricing than final settlement prediction.
+Separating the repricing module preserves the negative outcome-prediction
+result while allowing a distinct hypothesis to be tested without contaminating
+sealed holdout evidence or canonical outcome datasets.
+
+## D-035: Repricing simulation remains paper-only
+
+Status: Accepted  
+Decision: Repricing Research v1 includes only deterministic labels and a
+shadow strategy simulator. It may simulate entries, repricing-target exits,
+timeout exits, stop-loss exits, conservative slippage, drawdown, and
+expectancy. It must not implement real orders, wallet access, private keys,
+authenticated clients, position sizing for deployment, or production model
+training.
+
+Reason: Short-horizon repricing research can create more execution-like
+metrics than final outcome prediction. Keeping the implementation paper-only
+maintains the repository's research boundary and prevents a promising
+development smoke result from being mistaken for trading authorization.
+
+## D-036: Repricing evidence gates precede model development and edge claims
+
+Status: Accepted  
+Decision: Repricing Research v1 Data Sufficiency Audit classifies the current
+28-signal short replay as `INSUFFICIENT_SMOKE_ONLY`. Current data may support
+diagnostics and label engineering only. It does not authorize model
+development, shadow strategy validation, holdout evaluation, production
+training, or any repricing edge claim. Repricing weak evidence requires at
+least 100 signals, 40 observed hours, 3 independent sessions, 25 signals per
+asset, 35 signals per side, and after-slippage expectancy of at least 0.005.
+Moderate evidence requires 300 signals, 120 hours, 6 sessions, 75 signals per
+asset, 100 per side, and expectancy at least 0.008. Strong development
+evidence requires 1,000 signals, 400 hours, 20 sessions, 250 signals per
+asset, 350 per side, expectancy at least 0.010 after stress, stable
+chronological folds, and no single asset or session contributing more than
+40% of P&L.
+
+Reason: The current aggregate repricing smoke result is positive after the
+simple slippage haircut, but it is based on only 28 signals, 13.1255 observed
+hours, 5 BTC / 8 ETH / 15 SOL signals, and 5 YES / 23 NO signals. The result
+is unstable across side and asset: NO-side expectancy is negative and ETH
+expectancy is negative. Precommitted gates prevent a small favorable smoke
+sample from becoming an implicit strategy claim.
+
+## D-037: Repricing collection must be threshold-gated before new capture
+
+Status: Accepted  
+Decision: Repricing-Focused Public Evidence Collection Plan v1 is accepted as
+a planning-only roadmap. The current strict replay rate is 2.1333 signals/hour
+over 28 signals, but YES-side scarcity is the binding balance constraint. At
+current rates, count-only evidence floors would require about 4 / 12 / 40
+independent 12-hour sessions for weak / moderate / strong signal counts, while
+balance-adjusted gates require about 8 / 22 / 77 sessions. Before launching any
+new repricing-focused public campaign, the project must run a no-capture
+threshold sensitivity audit on existing public sessions and freeze any future
+collection stratum based on signal density, asset balance, side balance, and
+horizon coverage, not on maximizing historical paper P&L.
+
+Reason: The strongest current bottleneck is not capture infrastructure but
+candidate admission. Existing lag measurements show most observations are
+filtered as external move below threshold, already repriced, or near expiry,
+with only 87 confidence-below-threshold lag events compressed to 28
+non-overlapping paper entries. Running a threshold audit first is faster and
+safer than spending new public capture time under thresholds that may remain
+too sparse or too imbalanced.
+
+## D-038: Balanced repricing stratum is selected for collection preflight
+
+Status: Accepted  
+Decision: Repricing Threshold Sensitivity Audit v1 selects the `balanced`
+stratum as the recommended frozen collection stratum for future public
+repricing evidence, subject to explicit preflight and collection authorization.
+The balanced stratum uses external move threshold 6 bps, repricing ratio 0.65,
+minimum confidence 0.45, minimum dataset expiry 60 seconds, 180-second maximum
+hold, and accepted reasons `qualified_external_move_not_repriced` plus
+`confidence_below_threshold`. The selection criterion is statistical evidence
+collection quality: signal density, BTC/ETH/SOL balance, YES/NO balance, and
+horizon coverage. Paper P&L is not an optimization target.
+
+Reason: The persisted current smoke dataset has 28 signals at 2.1333
+signals/hour and remains too small and imbalanced. The audit found
+`external_move_below_threshold` is the dominant detector-level removal filter,
+with 36,465 of 64,130 recomputed candidate observations. Requiring full
+180-second horizon coverage removes every current signal, while among
+entry-admission thresholds the external move threshold has the largest
+signal-density effect. The balanced stratum improves estimated density to
+3.9184 outcome-free overlap-adjusted signals/hour while keeping a cleaner
+no-already-repriced interpretation than the aggressive stratum. This is not an
+edge claim, does not change evidence gates, and does not authorize live
+trading or holdout evaluation.
+
+## D-039: Balanced repricing campaign preflight is operationally ready
+
+Status: Accepted  
+Decision: Balanced Repricing Evidence Collection Preflight v1 classifies the
+future 12-hour public-only balanced repricing campaign as
+`READY_FOR_AUTHORIZED_LAUNCH` from an operational preflight perspective. The
+planned run uses BTC, ETH, and SOL; duration 43,200 seconds; poll interval 2
+seconds; discovery interval 5 seconds; no mock fallback; external move
+threshold 6 bps; repricing ratio 0.65; minimum confidence 0.45; minimum
+dataset expiry 60 seconds; and 180-second max holding window. Future artifacts
+must remain separated under `polymarket/runs/repricing_balanced_v1/`,
+`polymarket/models/repricing_research_v1/balanced_collection_batch_001/`, and
+`polymarket/data/repricing_research_balanced_batch_001/`. The preflight did
+not launch the campaign.
+
+Reason: The preflight verified CLI/config support, disabled Windows AC sleep
+and hibernate, no competing `python -m polymarket.edge_engine_v5 capture`
+process, no stale lock, enough disk space, and separated output paths. The
+single-session expectation is approximately 21,600 checkpoints, 47.02 signals,
+and 205 MB of artifacts. Operational readiness does not imply a repricing edge
+claim, does not change evidence gates, and does not authorize live trading,
+wallet/private-key use, production training, or sealed holdout evaluation.
+
+## D-040: Balanced repricing Batch 001 is positive but below weak evidence
+
+Status: Accepted  
+Decision: Balanced Repricing Evidence Collection Batch 001 is accepted as a
+complete continuous public-only balanced-stratum evidence session, but it does
+not satisfy weak development evidence. The batch produced 130 deterministic
+repricing signals with BTC / ETH / SOL counts of 37 / 29 / 64 and YES / NO
+counts of 59 / 71. It achieved 58.46% target-before-stop win rate, +0.012331
+after-slippage expectancy per signal, +1.603 simulated P&L after conservative
+slippage, and 0.875 max drawdown. However, weak evidence still requires at
+least 40 observed hours and at least 3 independent sessions; this batch is one
+12-hour session.
+
+Reason: The signal, asset, side, expectancy, and drawdown gates passed for the
+single batch, and deterministic replay/export passed. Treating it as weak
+evidence would violate the precommitted hours and independent-session gates.
+No holdout evaluation, production model training, live trading, wallet access,
+or balanced-stratum change is authorized by this result.
+
+## D-040: Wallet intelligence is descriptive research only
+
+Status: Accepted
+Decision: Wallet Intelligence Research v1 is a separate research-only branch
+under `polymarket/wallet_intelligence/`, documented in
+`docs/polymarket/WALLET_INTELLIGENCE_RESEARCH_V1.md`. It studies public
+Polymarket wallet/profile behavior for repeatable timing, sizing,
+market-selection, side-selection, holding-period, and drawdown patterns in
+fast BTC/ETH/SOL Up or Down markets. It must not inspect sealed holdout
+outcomes, run holdout evaluation, implement live trading, connect wallets or
+private keys, copy trades automatically, launch capture campaigns, train
+production models, or write to canonical outcome-prediction or repricing
+validation paths.
+
+Reason: Public wallet behavior may generate useful hypotheses about whether
+successful participants trade repricing, final resolution, cheap outcomes,
+late entries, or repeatable sizing rules. Those observations are not evidence
+of a ForgeViewAI edge by themselves. Keeping the branch descriptive and
+separate prevents survivorship bias, copy-trading temptation, and accidental
+contamination of the sealed validation and holdout workflow.
+
+## D-041: Open-source intelligence is reference material, not dependency adoption
+
+Status: Accepted
+Decision: Polymarket Open Source Intelligence Audit v1 is accepted as a
+read-only research input under
+`polymarket/models/open_source_intelligence_audit_v1/`. The audit may inform
+future Wallet Intelligence, Repricing Research, API normalization, and
+execution-realism tasks. It does not approve importing third-party code,
+installing global dependencies, connecting wallets, using private keys,
+running live trading bots, launching campaigns, training production models, or
+modifying the frozen validation/holdout protocol.
+
+Reason: Several inspected repositories contain useful research ideas but also
+execution-heavy code paths, private-key configuration, live order placement,
+copy-trading, market-making, or hosted trading surfaces. Treating them as
+reference material preserves ForgeView's research-only boundary while allowing
+safe reuse of concepts such as wallet snapshots, replication scoring, L2
+execution-realism assumptions, read-only API normalization, depth guards, and
+dry-run gates.
+
+## D-042: Wallet ingestion uses bounded public snapshots only
+
+Status: Accepted
+Decision: Wallet Intelligence Data Ingestion v1 uses read-only public
+Polymarket profile/data endpoints and bounded first-page snapshots for the
+seed watched-wallet list. Normalized outputs live under
+`polymarket/data/wallet_intelligence/v1/` and remain separated from canonical
+outcome-prediction, repricing validation, holdout, live-run, and execution
+paths. Unavailable fields such as complete trade/fill history, linked
+entry/exit timestamps, average holding time, drawdown, Binance-lag timing, and
+observation-delay risk must be recorded explicitly rather than inferred.
+
+Reason: Public profile snapshots are useful for market-type, side, sizing,
+cheap-entry, and resolved-price evidence, but they are not sufficient to prove
+late-entry behavior, hold-to-expiry behavior, copyability, or executable
+repricing edge. Keeping ingestion bounded prevents accidental scraping,
+survivorship-biased copy-trading claims, and contamination of validation or
+holdout workflows.
+
+## D-043: Wallet behavior metrics are descriptive and non-executable
+
+Status: Accepted
+Decision: Wallet Intelligence Behavior Metrics v1 may classify seed wallets,
+compute market exposure, side distribution, entry-price buckets, sizing
+concentration, similarity, clusters, and copyability risk from existing
+ingested public snapshots only. It must not treat any metric as a trade signal
+or copy-trading instruction. Copyability scores remain capped and conservative
+while complete trade/fill history, observation delay, liquidity consumption,
+linked entry/exit timing, drawdown, and Binance-lag alignment are unavailable.
+
+Reason: The behavior metrics found repeatable fast-market patterns, but the
+same public snapshots are incomplete on the variables that determine whether
+the behavior could be observed and replicated. Descriptive clustering is useful
+for hypothesis triage; it is not evidence of executable edge or authorization
+for trading automation.
+
+## D-044: Public wallet trade history is feasible only as bounded research
+
+Status: Accepted
+Decision: Wallet Intelligence Deep History Feasibility v1 establishes that
+public Polymarket Data API activity/trade endpoints can support bounded,
+read-only wallet-history research. Future work may design a cached ingestion
+path around public `activity?user=<wallet>&type=TRADE` rows, cross-checked
+with public `/trades`, `/positions`, `/closed-positions`, CLOB
+`/prices-history`, and external BTC/ETH/SOL reference prices. This does not
+authorize live trading, automatic trade copying, wallet/private-key use,
+orders, broad scraping, market capture campaigns, production model training,
+sealed holdout inspection, or holdout evaluation.
+
+Reason: A one-wallet, 50-row read-only probe for
+`0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a` returned public trade rows with
+timestamps, transaction hashes, token IDs, condition IDs, sides, prices, sizes,
+outcomes, slugs, and event slugs. These fields can support linked entry/exit
+and time-to-expiry research after careful joins, but they still do not expose
+private intent, queue position, fill priority, guaranteed maker/taker
+completeness, full copyability, or Binance-lag conclusions from wallet
+endpoints alone.
+
+## D-045: Wallet trade-history ingestion must be schema-first and bounded
+
+Status: Accepted
+Decision: Wallet Public Trade History Ingestion Design v1 defines the only
+authorized path for future wallet trade-history implementation. The first
+future implementation must use the 35-field normalized schema, raw JSONL page
+storage, source-fetch manifests, raw row/page SHA-256 hashes, deterministic
+CSV/optional Parquet rebuilds, explicit dedupe keys, and validation gates
+defined under
+`polymarket/models/wallet_intelligence_v1/trade_history_ingestion_design/`.
+The first collection scope remains seed-wallet only, with 100 rows per page,
+at most three primary activity pages per wallet, at most one `/trades`
+cross-check page per wallet, at most 1,800 primary activity rows total, and at
+most 600 cross-check rows total. The next implementation task is limited to
+fixtures and mocked tests before any bounded public fetch is authorized.
+
+Reason: Public activity/trade rows can support useful lifecycle research only
+if provenance, deduplication, endpoint completeness, and unavailable fields
+are preserved from the start. Free-form fetching would quickly become hard to
+reproduce and could drift toward copy-trading or aggressive scraping. A
+schema-first, cache-first, fixture-tested design keeps wallet intelligence
+descriptive and separated from live execution, repricing validation,
+canonical outcome modelling, and the sealed holdout.
+
+## D-046: Wallet trade-history fixture ingester is non-executable
+
+Status: Accepted
+Decision: Wallet Public Trade History Ingester Fixture Implementation v1
+implements schema constants, deterministic normalization, raw payload/page
+hashing, dedupe-key generation, timestamp parsing, market classification,
+bounded-limit checks, fixture exports, validation gates, and the
+`python -m polymarket.wallet_intelligence trade-history-fixture` CLI command
+for saved fixtures only. This implementation is accepted as a local
+normalization scaffold. It does not authorize network-enabled wallet-history
+collection, live trading, automatic trade copying, wallet/private-key use,
+order placement, market capture campaigns, production model training, sealed
+holdout inspection, or holdout evaluation.
+
+Reason: The fixture run normalized 50 saved public `TRADE` rows from the
+prior bounded probe, preserved 35-field provenance, removed zero duplicates,
+passed all ten validation gates, and produced deterministic CSV repeat
+exports. Keeping the first implementation fixture-only proves the schema and
+quality gates before any separately authorized bounded public smoke touches
+public endpoints again.
+
+## D-047: Wallet public trade-history smoke is bounded descriptive evidence
+
+Status: Accepted
+Decision: Wallet Public Trade History Bounded Public Smoke v1 is accepted as a
+small public read-only data availability smoke under
+`polymarket/data/wallet_intelligence/trade_history_smoke_v1/`. It fetched at
+most one public `activity?type=TRADE` page for each of the six seed wallets,
+normalized 600 rows into the 35-field schema, preserved raw JSONL provenance,
+passed all ten validation gates, and verified deterministic CSV repeat export.
+The smoke output may inform a future lifecycle reconstruction design task, but
+it does not authorize broad wallet-history ingestion, automatic trade copying,
+live trading, wallet/private-key use, order placement, market capture
+campaigns, production model training, sealed holdout inspection, or holdout
+evaluation.
+
+Reason: The smoke proved that the fixture ingester can operate against
+bounded public endpoint responses across all seed wallets while staying inside
+the design caps. It also exposed the next data-engineering need: lifecycle
+reconstruction must be designed before interpreting entries, exits, holding
+time, copyability delay, queue/fill uncertainty, or Binance-lag alignment.

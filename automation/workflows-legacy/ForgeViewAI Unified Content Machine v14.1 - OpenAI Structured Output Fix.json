@@ -1,0 +1,1311 @@
+{
+  "name": "ForgeViewAI Unified Content Machine v14.1 - OpenAI Structured Output Fix",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "a3edd4f6-02f1-40aa-8f14-e73e7d2161af",
+      "name": "Schedule Trigger - Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -784,
+        320
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "project_start",
+              "name": "PROJECT_START_DATE",
+              "value": "2026-05-30",
+              "type": "string"
+            },
+            {
+              "id": "brand_name",
+              "name": "BRAND_NAME",
+              "value": "ForgeViewAI",
+              "type": "string"
+            },
+            {
+              "id": "telegram_public_channel",
+              "name": "TELEGRAM_PUBLIC_CHANNEL",
+              "value": "@ForgeViewCom",
+              "type": "string"
+            },
+            {
+              "id": "x_drafts_chat",
+              "name": "X_DRAFTS_TELEGRAM_CHAT_ID",
+              "value": "-1003839420608",
+              "type": "string"
+            },
+            {
+              "id": "x_account",
+              "name": "X_ACCOUNT",
+              "value": "@ForgeViewX",
+              "type": "string"
+            },
+            {
+              "id": "todays_event",
+              "name": "TODAYS_EVENT",
+              "value": "Created a dedicated Telegram channel for X drafts and separated it from the main Telegram content channel.",
+              "type": "string"
+            },
+            {
+              "id": "brand_context",
+              "name": "BRAND_CONTEXT",
+              "value": "ForgeViewAI is a build-in-public AI automation and trading systems project. Current focus: AI content workflows, Telegram distribution, X draft generation, n8n automations, Spot Bot v87, Futures Bot v21, and building reliable systems before scaling.",
+              "type": "string"
+            },
+            {
+              "id": "topic_pool",
+              "name": "TOPIC_POOL",
+              "value": "AI automation for solo founders; n8n workflows; build-in-public execution; trading bot testing; content systems; Telegram automation; reliable workflows; simple products before complex SaaS; zero-budget AI execution; risk controls; exit safety; RSI filters; workflow reliability",
+              "type": "string"
+            },
+            {
+              "id": "latest_bug",
+              "name": "LATEST_BUG",
+              "value": "Cooldown logic could block exits.",
+              "type": "string"
+            },
+            {
+              "id": "latest_fix",
+              "name": "LATEST_FIX",
+              "value": "Futures v22 Exit Safety.",
+              "type": "string"
+            },
+            {
+              "id": "latest_lesson",
+              "name": "LATEST_LESSON",
+              "value": "Risk controls should block weak entries, not exits.",
+              "type": "string"
+            },
+            {
+              "id": "latest_result",
+              "name": "LATEST_RESULT",
+              "value": "Futures v23 RSI Anti Late Short deployed.",
+              "type": "string"
+            },
+            {
+              "id": "latest_experiment",
+              "name": "LATEST_EXPERIMENT",
+              "value": "Testing RSI filters against late short entries.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "23eb8ee9-dae4-4b6e-a19d-cf7e35e05321",
+      "name": "Set ForgeView Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -496,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const start = new Date($json.PROJECT_START_DATE + 'T00:00:00+02:00');\nconst now = new Date();\nconst projectDay = Math.floor((now - start) / (24 * 60 * 60 * 1000)) + 1;\n\nreturn [{\n  json: {\n    ...$json,\n    PROJECT_DAY: projectDay\n  }\n}];"
+      },
+      "id": "33c6eeca-3407-4f0f-a083-4f67ec670d21",
+      "name": "Compute Project Day",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -256,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const story = $json.STORY_ENGINE || {\n  category: $json.STORY_CATEGORY,\n  topic: $json.STORY_TOPIC,\n  problem: $json.STORY_PROBLEM,\n  discovery: $json.STORY_DISCOVERY,\n  solution: $json.STORY_SOLUTION,\n  lesson: $json.STORY_LESSON,\n};\n\nconst prompt = `\nTELEGRAM POST GENERATOR\n\nBrand: ${$json.BRAND_NAME}\nProject day: Day ${$json.PROJECT_DAY}\nChannel: ${$json.TELEGRAM_PUBLIC_CHANNEL}\n\nUse this Story Engine output as the only content source:\n${JSON.stringify(story, null, 2)}\n\nBrand context:\n${$json.BRAND_CONTEXT}\n\nWrite like a founder telling a real story from the ForgeView journey.\n\nTarget structure:\n1. Hook\n2. Mistake\n3. Discovery\n4. Decision\n5. Result\n6. Lesson\n\nStyle rules:\n- English first, then Russian.\n- Mix sentence styles: short sentences, longer sentences, questions, surprises, contrasts.\n- Do not repeat the same sentence opening.\n- Do not make every sentence start with \"We thought\", \"We discovered\", or \"We changed\".\n- You may use those phrases once if natural, but vary the rhythm.\n- Avoid labels like Hook:, Mistake:, Discovery:, Decision:, Result:, Lesson:.\n- Avoid labels like Takeaway:, Context:, Lesson:.\n- Avoid corporate tone and documentation tone.\n- No generic internet advice.\n- Do not invent metrics, customers, revenue, trading results, or launches.\n- Do not drift back to cooldown bugs, exit safety, or RSI filters unless the Story Engine selected Trading Bot Lessons.\n- Maximum 140 words per language before links.\n- No hashtags.\n- Formatter appends cross-platform links.\n\nExample rhythm to imitate, but do not copy:\n\"Our YouTube uploads kept failing.\n\nAt first we blamed the upload script.\n\nWrong.\n\nThe script was not the real problem.\n\nThe real problem was local publishing itself.\n\nSometimes the fix is not fixing the bug.\n\nIt is changing the architecture.\"\n\nReturn only final Telegram post text.\n`;\n\nreturn [{ json: { ...$json, TELEGRAM_PROMPT: prompt } }];"
+      },
+      "id": "d3020557-cfb4-4797-a5f8-84b1cb82e3af",
+      "name": "Build Telegram Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { model: 'gpt-4.1-mini', messages: [{ role: 'system', content: 'You write concise bilingual Telegram posts for a build-in-public AI automation project. Never invent facts.' }, { role: 'user', content: $json.TELEGRAM_PROMPT }], temperature: 0.45, max_tokens: 500 } }}",
+        "options": {}
+      },
+      "id": "d8352f3e-73c7-43d0-b139-4e045cde6293",
+      "name": "OpenAI - Generate Telegram Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        272,
+        0
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "__REPLACE_WITH_OPENAI_CREDENTIAL_ID__",
+          "name": "ForgeView OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let text = ($json.choices?.[0]?.message?.content || '').trim();\n\nconst followBlock = `Follow ForgeView:\n\nX:\nhttps://x.com/ForgeViewX\n\nYouTube:\nhttps://youtube.com/@ForgeViewGrowth`;\n\nif (!text.includes('https://x.com/ForgeViewX') || !text.includes('https://youtube.com/@ForgeViewGrowth')) {\n  text = text.replace(/Follow ForgeView:[\\s\\S]*$/i, '').trim();\n  text = `${text}\\n\\n${followBlock}`;\n}\n\nreturn [{\n  json: {\n    telegram_public_channel: $('Set ForgeView Config').item.json.TELEGRAM_PUBLIC_CHANNEL,\n    telegram_post: text\n  }\n}];"
+      },
+      "id": "eb2503c5-c326-40e9-a69e-caae0b4e5c8b",
+      "name": "Format Telegram Post",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        528,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.telegram_public_channel }}",
+        "text": "={{ $json.telegram_post }}",
+        "additionalFields": {
+          "disable_web_page_preview": true
+        }
+      },
+      "id": "a4c284f1-67bb-41d1-902d-d60e65c443b5",
+      "name": "Telegram - Send Public Post",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        784,
+        0
+      ],
+      "webhookId": "45c1c1c3-0276-4cf3-baf2-bb622e397759",
+      "credentials": {
+        "telegramApi": {
+          "id": "__REPLACE_WITH_TELEGRAM_CREDENTIAL_ID__",
+          "name": "ForgeView Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const storyNode = $('Story Engine - Select ForgeView Story').item.json;\nconst story = storyNode.STORY_ENGINE || {\n  category: storyNode.STORY_CATEGORY,\n  topic: storyNode.STORY_TOPIC,\n  problem: storyNode.STORY_PROBLEM,\n  discovery: storyNode.STORY_DISCOVERY,\n  solution: storyNode.STORY_SOLUTION,\n  lesson: storyNode.STORY_LESSON,\n};\nconst upload = $('Format YouTube Upload Confirmation').item.json;\n\nconst prompt = `\nX POST GENERATOR\n\nYou are writing for @ForgeViewX.\n\nUse this Story Engine output as the only content source:\n${JSON.stringify(story, null, 2)}\n\nA YouTube Short has already been uploaded.\nReal YouTube Shorts URL:\n${upload.video_url}\n\nWrite one short founder-style X post in English.\n\nTarget structure:\nHook -> Mistake -> Discovery -> Decision -> Result -> Lesson.\n\nStyle rules:\n- Mix sentence styles.\n- Short sentence allowed.\n- Question allowed.\n- Contrast allowed.\n- Surprise allowed.\n- Do not repeat \"We thought\", \"We discovered\", or \"We changed\" as a pattern.\n- No labels like Hook:, Mistake:, Discovery:, Decision:, Result:, Lesson:.\n- No Takeaway: or Context:.\n- No corporate documentation style.\n- No generic internet advice.\n- No fake facts.\n- Include the real YouTube Shorts URL naturally.\n- Include Telegram link: https://t.me/ForgeViewCom\n- Maximum 260 characters before links if possible.\n- No hype.\n\nReturn only the X post text.\n`;\n\nreturn [{ json: { ...storyNode, video_url: upload.video_url, X_PROMPT: prompt } }];"
+      },
+      "id": "52b078fb-49dd-4dfc-8b1f-7a32d38c532b",
+      "name": "Build Strict X Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { model: 'gpt-4.1-mini', messages: [{ role: 'system', content: 'You write concise build-in-public X posts. You never invent facts.' }, { role: 'user', content: $json.X_PROMPT }], temperature: 0.3, max_tokens: 120 } }}",
+        "options": {}
+      },
+      "id": "ede4cdf4-edeb-4048-8af8-ef814f61d051",
+      "name": "OpenAI - Generate X Draft",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        272,
+        224
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "__REPLACE_WITH_OPENAI_CREDENTIAL_ID__",
+          "name": "ForgeView OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let post = ($json.choices?.[0]?.message?.content || '').trim();\npost = post.replace(/^[`'\"“”]+|[`'\"“”]+$/g, '').trim();\n\nconst upload = $('Format YouTube Upload Confirmation').item.json;\nconst config = $('Set ForgeView Config').item.json;\nconst youtubeUrl = upload.video_url;\n\npost = post.replace(/Follow ForgeView:[\\s\\S]*$/i, '').trim();\nif (youtubeUrl && youtubeUrl !== 'URL unavailable' && !post.includes(youtubeUrl)) {\n  post = `${post}\\n\\n${youtubeUrl}`;\n}\nif (!post.includes('https://t.me/ForgeViewCom')) {\n  post = `${post}\\n\\nTelegram: https://t.me/ForgeViewCom`;\n}\n\nconst message = `X DRAFT - POST MANUALLY\\n\\n${post}\\n\\nAccount: ${config.X_ACCOUNT}`;\n\nreturn [{\n  json: {\n    x_post: post,\n    x_draft_message: message,\n    x_drafts_chat_id: config.X_DRAFTS_TELEGRAM_CHAT_ID,\n    youtube_url: youtubeUrl\n  }\n}];"
+      },
+      "id": "38be7efd-10b5-42e4-9fa2-1b1c7805cae7",
+      "name": "Format X Draft",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        528,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.x_drafts_chat_id }}",
+        "text": "={{ $json.x_draft_message }}",
+        "additionalFields": {
+          "disable_web_page_preview": true
+        }
+      },
+      "id": "1b3f3a96-760f-4a6e-bda5-9186965e5f2f",
+      "name": "Telegram - Send X Draft",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        784,
+        224
+      ],
+      "webhookId": "7547f3a4-709e-498e-b377-cac40e2e32df",
+      "credentials": {
+        "telegramApi": {
+          "id": "__REPLACE_WITH_TELEGRAM_CREDENTIAL_ID__",
+          "name": "ForgeView Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const story = $json.STORY_ENGINE || {\n  category: $json.STORY_CATEGORY,\n  topic: $json.STORY_TOPIC,\n  problem: $json.STORY_PROBLEM,\n  discovery: $json.STORY_DISCOVERY,\n  solution: $json.STORY_SOLUTION,\n  lesson: $json.STORY_LESSON,\n};\n\nconst prompt = `\nCINEMATIC SHORTS PACKAGE GENERATOR v13\n\nUse this Story Engine output as the only content source:\n${JSON.stringify(story, null, 2)}\n\nCreate one ForgeView cinematic Shorts package.\n\nGeneration order is mandatory:\n1. Generate the full narration script first.\n2. Split narration into exactly 7 scene narrations.\n3. Generate scene captions from the scene narrations.\n4. Generate matching scene video prompts from the scene narrations.\n\nReturn data through the required structured JSON schema.\nSchema fields:\n{\n  \"title\": \"...\",\n  \"description\": \"...\",\n  \"narration_script\": \"...\",\n  \"scene_narrations\": [\"...\", \"...\", \"...\", \"...\", \"...\", \"...\", \"...\"],\n  \"tags\": [\"...\"],\n  \"scene1\": \"...\",\n  \"scene2\": \"...\",\n  \"scene3\": \"...\",\n  \"scene4\": \"...\",\n  \"scene5\": \"...\",\n  \"scene6\": \"...\",\n  \"scene7\": \"...\",\n  \"video_prompts\": [\"...\", \"...\", \"...\", \"...\", \"...\", \"...\", \"...\"]\n}\n\nNarration rules:\n- Founder storytelling style.\n- Serious, clear, human, direct.\n- 7 scene narrations exactly.\n- Each scene narration must be 1 natural spoken sentence.\n- The full narration_script must be those 7 scene narrations joined in order.\n- Do not use corporate labels like Hook:, Mistake:, Lesson:, Context:, Takeaway:.\n\nVisual rules for every video_prompt:\n- Must directly reference that scene's narration content.\n- Must use one consistent visual style across all 7 scenes.\n- Dark cinematic.\n- Black / charcoal environment.\n- Yellow ForgeView accent lighting.\n- Yellow ForgeView accent must appear as the recurring brand color cue.\n- Anonymous founder protagonist.\n- Same consistent character in every scene.\n- High production value, film still, dramatic lighting, slow camera movement.\n- No readable text, no letters, no logos, no UI screenshots, no watermarks, no fake interface text.\n\nDescription must include:\nTelegram:\nhttps://t.me/ForgeViewCom\n\nX:\nhttps://x.com/ForgeViewX\n\n#Shorts\n\nRules:\n- Title max 100 characters.\n- Tags must be 4 to 8 grounded tags.\n- Each scene caption: 2 to 7 words.\n- No fake metrics, customers, revenue, trading results, or launches.\n\nReturn only schema-compliant structured data.\n`;\n\nreturn [{ json: { ...$json, SHORTS_PROMPT: prompt } }];"
+      },
+      "id": "d024e911-4a4f-4f25-8bf3-d859e5808252",
+      "name": "Build YouTube Shorts Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        464
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst config = $('Set ForgeView Config').item.json;\nconst parsed = $json.shorts_json;\nif (!$json.valid || !parsed) {\n  throw new Error('STRUCTURED SHORTS JSON VALIDATION FAILED BEFORE KLING GENERATION');\n}\nconst requiredDescriptionBlock = `#Shorts\\n\\nTelegram:\\nhttps://t.me/ForgeViewCom\\n\\nX:\\nhttps://x.com/ForgeViewX`;\nparsed.description = String(parsed.description || '').trim();\nfor (const line of requiredDescriptionBlock.split('\\n')) {\n  if (line && !parsed.description.includes(line)) parsed.description += `\\n${line}`;\n}\nparsed.description = parsed.description.replace(/\\n{3,}/g, '\\n\\n').trim();\nparsed.narration_script = parsed.scene_narrations.join('\\n');\n\nconst raw = JSON.stringify(parsed, null, 2);\nconst message = `STRUCTURED CINEMATIC SHORTS PACKAGE\\n\\n${raw}\\n\\nProject: ${config.BRAND_NAME}${$json.fallback_used ? '\\n\\nFallback: previous valid package used' : ''}`;\nreturn [{\n  json: {\n    shorts_raw: raw,\n    shorts_json: parsed,\n    shorts_message: message,\n    validation_errors: $json.validation_errors || [],\n    fallback_used: !!$json.fallback_used,\n    x_drafts_chat_id: config.X_DRAFTS_TELEGRAM_CHAT_ID\n  }\n}];\n"
+      },
+      "id": "e9f6f4eb-3d5f-499f-84df-34fef0e49f00",
+      "name": "Format Structured Shorts Draft",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2640,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.x_drafts_chat_id }}",
+        "text": "={{ $json.shorts_message }}",
+        "additionalFields": {
+          "disable_web_page_preview": true
+        }
+      },
+      "id": "44c548dc-9717-4725-9935-5a036f262f81",
+      "name": "Telegram - Send Shorts Draft",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        784,
+        464
+      ],
+      "webhookId": "104c1639-0f71-4d2e-8bd0-d2e1037202ef",
+      "credentials": {
+        "telegramApi": {
+          "id": "__REPLACE_WITH_TELEGRAM_CREDENTIAL_ID__",
+          "name": "ForgeView Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $('Set ForgeView Config').item.json;\nconst draft = $('Format Structured Shorts Draft').item.json;\n\nconst shortsJson = draft.shorts_json;\nif (!shortsJson) {\n  throw new Error('STRUCTURED SHORTS JSON MISSING BEFORE KLING GENERATION');\n}\n\nlet title = String(shortsJson.title || 'ForgeView Automation Lesson #Shorts').replace(/\\s+/g, ' ').trim();\nif (!/#Shorts/i.test(title)) title = `${title} #Shorts`;\nif (title.length > 100) title = title.slice(0, 97).trimEnd() + '...';\n\nlet description = String(shortsJson.description || '').trim();\nif (!description) {\n  description = 'A ForgeView build-in-public lesson from AI automation, trading bots, and workflow reliability.';\n}\nconst requiredDescriptionBlock = `#Shorts\\n\\nTelegram:\\nhttps://t.me/ForgeViewCom\\n\\nX:\\nhttps://x.com/ForgeViewX`;\nfor (const line of requiredDescriptionBlock.split('\\n')) {\n  if (line && !description.includes(line)) description += `\\n${line}`;\n}\ndescription = description.replace(/\\n{3,}/g, '\\n\\n').trim();\n\nconst tags = Array.isArray(shortsJson.tags)\n  ? shortsJson.tags.map(String).filter(Boolean)\n  : ['AI automation', 'trading bots', 'n8n', 'build in public', 'ForgeViewAI'];\nconst narrationScript = String(shortsJson.narration_script || '').trim();\nconst sceneNarrations = Array.isArray(shortsJson.scene_narrations) ? shortsJson.scene_narrations.slice(0, 7).map(String) : [];\nconst videoPrompts = Array.isArray(shortsJson.video_prompts) ? shortsJson.video_prompts.slice(0, 7) : [];\n\nreturn [{\n  json: {\n    draft_chat_id: config.X_DRAFTS_TELEGRAM_CHAT_ID,\n    youtube_channel_handle: '@ForgeViewGrowth',\n    privacyStatus: 'public',\n    publish_mode: 'draft_only',\n    kling_preview_mode: true,\n    video_provider: 'kling_text_to_video',\n    estimated_cost_usd: 2.94,\n    categoryId: '28',\n    title,\n    description,\n    tags,\n    tags_text: tags.join(', '),\n    narration_script: narrationScript,\n    scene_narrations: sceneNarrations,\n    video_prompts: videoPrompts,\n    shorts_json: shortsJson,\n    video_provider_config_path: 'D:\\\\ForgeViewAI\\\\content\\\\config\\\\video_provider_config.json',\n    local_project_root: 'D:\\\\ForgeViewAI',\n    shorts_generator_dir: 'D:\\\\ForgeViewAI\\\\content\\\\video\\\\shorts-generator',\n    output_path: 'D:\\\\ForgeViewAI\\\\output\\\\media\\\\videos\\\\draft.mp4'\n  }\n}];"
+      },
+      "id": "6ea1a013-c070-43e6-bb62-7b380f3a53cf",
+      "name": "Prepare Shorts Generator Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2820,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.bridge_url }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"shorts_json\": \"={{ $json.shorts_json }}\",\n  \"project_root\": \"={{ $json.local_project_root }}\",\n  \"generator_dir\": \"={{ $json.shorts_generator_dir }}\",\n  \"output_path\": \"={{ $json.output_path }}\",\n  \"title\": \"={{ $json.title }}\",\n  \"description\": \"={{ $json.description }}\",\n  \"narration_script\": \"={{ $json.narration_script }}\",\n  \"scene_narrations\": \"={{ $json.scene_narrations }}\",\n  \"tags\": \"={{ $json.tags }}\",\n  \"video_prompts\": \"={{ $json.video_prompts }}\",\n  \"video_provider_config_path\": \"={{ $json.video_provider_config_path }}\"\n}",
+        "options": {
+          "timeout": 600000
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-ForgeView-Secret",
+              "value": "forgeview123"
+            }
+          ]
+        }
+      },
+      "id": "8f3d9c63-0672-49c0-8f43-6637b4d98b1c",
+      "name": "HTTP - Trigger Local Shorts Generator Bridge",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3180,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const prepared = $('Prepare Shorts Generator Payload').item.json;\nconst bridgeConfig = $('Validate Bridge URL').item.json;\nconst bridge = $json || {};\nlet videoUrl = bridge.video_url || bridge.download_url || bridge.mp4_url;\n\nif (!bridge.ok && bridge.error) {\n  throw new Error(bridge.error);\n}\n\nif (!videoUrl) {\n  throw new Error('Local Shorts Generator bridge did not return video_url/download_url/mp4_url for the generated MP4.');\n}\n\nif (/^http:\\/\\/(localhost|127\\.0\\.0\\.1):/i.test(videoUrl)) {\n  const bridgeUrl = bridgeConfig.bridge_url;\n  if (!bridgeUrl || bridgeUrl.includes('FORGEVIEW_BRIDGE_URL')) {\n    throw new Error('BRIDGE URL NOT CONFIGURED');\n  }\n  videoUrl = bridgeUrl.replace(/\\/forgeview\\/render-short\\/?$/, '/files/draft.mp4');\n}\n\nreturn [{\n  json: {\n    ...prepared,\n    bridge_status: bridge.status || (bridge.ok ? 'ok' : 'unknown'),\n    bridge_message: bridge.message || '',\n    bridge_video_path: bridge.video_path || '',\n    generated_video_url: videoUrl,\n    video_provider: bridge.video_provider || prepared.video_provider || 'unknown',\n    configured_video_provider: bridge.configured_video_provider || 'unknown',\n    provider_warnings: bridge.provider_warnings || [],\n    estimated_cost_usd: Number(bridge.estimated_cost_usd || prepared.estimated_cost_usd || 0),\n    publish_mode: bridge.publish_mode || prepared.publish_mode || 'draft_only',\n    kling_preview_mode: bridge.kling_preview_mode !== undefined ? !!bridge.kling_preview_mode : true,\n    kling_task_ids: bridge.kling_task_ids || [],\n    kling_clip_paths: bridge.kling_clip_paths || [],\n    narration_used: !!bridge.narration_used,\n    background_music_used: !!bridge.background_music_used,\n    subtitles_burned_in: !!bridge.subtitles_burned_in\n  }\n}];"
+      },
+      "id": "a6e7aa04-d472-4e23-886f-0b18db196508",
+      "name": "Verify Bridge Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3360,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.generated_video_url }}",
+        "responseFormat": "file",
+        "dataPropertyName": "video",
+        "options": {
+          "timeout": 600000
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-ForgeView-Secret",
+              "value": "forgeview123"
+            }
+          ]
+        }
+      },
+      "id": "edda1890-4be4-4334-a6fc-e868e6a01726",
+      "name": "HTTP - Download Generated MP4",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3540,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sendVideo",
+        "chatId": "={{ $('Prepare Shorts Generator Payload').item.json.draft_chat_id }}",
+        "binaryData": true,
+        "binaryPropertyName": "video",
+        "additionalFields": {
+          "caption": "={{ 'CINEMATIC SHORTS PREVIEW\\n\\nProvider:\\n' + ($('Verify Bridge Result').item.json.video_provider || $('Prepare Shorts Generator Payload').item.json.video_provider || 'kling_text_to_video') + '\\n\\nTitle:\\n' + $('Prepare Shorts Generator Payload').item.json.title + '\\n\\nEstimated cost:\\n$' + String($('Verify Bridge Result').item.json.estimated_cost_usd || $('Prepare Shorts Generator Payload').item.json.estimated_cost_usd || '2.94') + '\\n\\nNarration:\\nvoice-over generated\\n\\nMusic:\\nbackground layer included\\n\\nCaptions:\\nburned into video\\n\\nDescription:\\n' + $('Prepare Shorts Generator Payload').item.json.description + '\\n\\nVideo:\\nattached draft.mp4' }}"
+        }
+      },
+      "id": "b41c49aa-d8a7-49f2-9f4d-e2ca080f2e89",
+      "name": "Telegram - Send MP4 Draft With Metadata",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3720,
+        520
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "__REPLACE_WITH_TELEGRAM_CREDENTIAL_ID__",
+          "name": "ForgeView Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('Prepare Shorts Generator Payload').item.json.title }}",
+        "description": "={{ $('Prepare Shorts Generator Payload').item.json.description }}",
+        "categoryId": "={{ $('Prepare Shorts Generator Payload').item.json.categoryId }}",
+        "privacyStatus": "public",
+        "binaryProperty": "video",
+        "tags": "={{ $('Prepare Shorts Generator Payload').item.json.tags }}"
+      },
+      "id": "459804e2-e212-49c2-b4d7-0255803166cb",
+      "name": "YouTube - Upload Public Short",
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        464
+      ],
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "__REPLACE_WITH_YOUTUBE_CREDENTIAL_ID__",
+          "name": "ForgeView YouTube OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const upload = $json;\nconst prepared = $('Prepare Shorts Generator Payload').item.json;\nconst videoId = upload.id || upload.videoId || upload.snippet?.resourceId?.videoId || '';\nconst url = videoId ? `https://www.youtube.com/shorts/${videoId}` : 'URL unavailable';\n\nreturn [{\n  json: {\n    draft_chat_id: prepared.draft_chat_id,\n    video_id: videoId,\n    video_url: url,\n    privacyStatus: 'public',\n    title: prepared.title,\n    description: prepared.description,\n    tags: prepared.tags,\n    tags_text: prepared.tags_text,\n    confirmation_text: `UPLOAD SUCCESS\\n\\nVideo ID:\\n${videoId || 'unknown'}\\n\\nURL:\\n${url}\\n\\nPrivacy:\\npublic`\n  }\n}];"
+      },
+      "id": "d2c54e93-cfd1-4334-a047-3e5a4106d499",
+      "name": "Format YouTube Upload Confirmation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2480,
+        464
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.draft_chat_id }}",
+        "text": "={{ $json.confirmation_text }}",
+        "additionalFields": {
+          "disable_web_page_preview": true
+        }
+      },
+      "id": "79ca433c-6c9b-4aa5-9c11-e87d39a5b866",
+      "name": "Telegram - Send Upload Confirmation",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2720,
+        464
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "__REPLACE_WITH_TELEGRAM_CREDENTIAL_ID__",
+          "name": "ForgeView Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const categories = [\n  'Build In Public',\n  'Engineering Lessons',\n  'Founder Lessons',\n  'Trading Bot Lessons',\n  'AI Automation Lessons',\n  'Systems & Growth',\n];\n\nconst forgeViewTopics = {\n  'Build In Public': [\n    ['Local YouTube uploads failed, so publishing moved into n8n Cloud', 'We thought the upload script was the problem.', 'We discovered the real failure was local publishing reliability.', 'We moved publishing into the orchestration layer and kept local rendering separate.', 'When the same local step keeps failing, redesign the operation instead of retrying forever.'],\n    ['Cloudflare quick tunnels returned 530 while the local bridge worked', 'We had a working local bridge but n8n still could not reach it.', 'We discovered the route between cloud and local was the weak point.', 'We documented persistent tunnel setup instead of trusting random quick URLs.', 'Automation is only reliable when every system boundary is reliable.'],\n    ['The MP4 branch looked connected but n8n needed nested connection arrays', 'We thought the workflow was connected because the nodes existed.', 'We discovered the JSON shape was wrong even though the UI looked close.', 'We rebuilt the branch with exact nested n8n connection arrays.', 'In automation, structure is behavior. A tiny connection shape can stop the whole system.'],\n    ['Telegram draft delivery became the review layer before public posting', 'We wanted full automation, but publishing directly was too risky.', 'We discovered the draft channel was the safest control point.', 'We routed Shorts video, title, description, and tags into the draft channel.', 'Manual review is not failure in an MVP. It is the safety layer before scale.'],\n  ],\n  'Engineering Lessons': [\n    ['Fixing one branch exposed another hidden workflow dependency', 'We fixed one visible break and expected the pipeline to work.', 'We discovered the next node depended on a different data shape.', 'We traced the whole path instead of patching one node at a time.', 'The last step usually fails because earlier assumptions were never tested end to end.'],\n    ['Binary MP4 download had to match Telegram binary property names', 'We had an MP4 response, but Telegram could not send it.', 'We discovered the binary property name did not match what Telegram expected.', 'We forced the download node to output binary property video.', 'Automation breaks when data contracts are almost right but not exact.'],\n    ['The bridge needed fail-fast behavior instead of silently using a placeholder URL', 'We left a placeholder bridge URL in the workflow.', 'We discovered that silent placeholders create confusing downstream failures.', 'We added a validation node that throws BRIDGE URL NOT CONFIGURED.', 'A clear error is better than a workflow pretending it can continue.'],\n    ['Audio looked rendered but the final MP4 track ended early', 'We thought the render was done because the MP4 existed.', 'We discovered the audio duration did not cover the full video.', 'We validated narration, music, video, and final audio duration separately.', 'Media automation needs duration checks, not just a success status.'],\n  ],\n  'Founder Lessons': [\n    ['Midjourney was delayed because the local generator had to work first', 'We wanted better visuals immediately.', 'We discovered the bottleneck was not the image tool, it was the workflow.', 'We improved the local generator before adding another paid service.', 'Before buying another tool, prove the system can ship with what already exists.'],\n    ['Manual YouTube upload was chosen before full auto-publishing', 'We wanted YouTube upload fully automated.', 'We discovered private upload added more risk than value at this stage.', 'We stopped the workflow at draft delivery for manual upload.', 'The best MVP is the smallest reliable publishing path, not maximum automation.'],\n    ['ForgeView prioritized output over perfect infrastructure', 'We kept finding infrastructure improvements to make.', 'We discovered the system only matters if it produces real content.', 'We shipped draft videos while improving the pipeline around them.', 'Speed beats perfection when every shipped artifact reveals the next constraint.'],\n    ['The first product direction stayed no-SaaS and AI-generated', 'We could have started by building software.', 'We discovered the fastest first sale was a useful AI-generated deliverable.', 'We designed services and lead magnets before building SaaS.', 'A first customer usually needs a solved problem, not a platform.'],\n  ],\n  'Trading Bot Lessons': [\n    ['Spot Bot rarely opened trades because filters were too strict', 'We thought more filters meant a safer bot.', 'We discovered too much safety can make a bot inactive.', 'We analyzed scoring, thresholds, cooldowns, and phantom positions separately.', 'Risk filters need balance: protection matters, but over-filtering removes opportunity.'],\n    ['Loss cooldown had to block entries but never exits', 'We thought cooldown was just a risk-control feature.', 'We discovered it could block recovery actions too.', 'We changed cooldown logic so it only blocks new entries.', 'Risk controls should stop weak new trades, not trap existing positions.'],\n    ['RSI anti-late-short filters were added after exit safety was fixed', 'We wanted to improve short entries quickly.', 'We discovered entry filters only matter after exits are protected.', 'We fixed exit safety first, then added anti-late-short filtering.', 'Trading systems should protect downside before optimizing selectivity.'],\n    ['Phantom positions came from committing state before confirmed orders', 'We thought local state could update immediately.', 'We discovered state was being trusted before execution confirmation.', 'We moved state commitment after confirmed Binance orders.', 'Trading systems must treat execution confirmation as the source of truth.'],\n  ],\n  'AI Automation Lessons': [\n    ['AI-generated images created fake UI text until prompts banned readable symbols', 'We thought asking for tech visuals would be enough.', 'We discovered AI kept inventing unreadable interface text.', 'We banned text, letters, labels, UI screens, and fake symbols in prompts.', 'AI needs medium-specific constraints or it creates details that break trust.'],\n    ['The Shorts generator improved when visuals became metaphors instead of fake screenshots', 'We tried making visuals look like real tools.', 'We discovered fake screens made the video feel less credible.', 'We switched to visual metaphors for risk, exits, gates, and verification.', 'AI assets work better when they express the idea instead of imitating UI.'],\n    ['Voice, subtitles, images, and music had to be validated separately', 'We thought one successful render meant the video worked.', 'We discovered each layer could fail independently.', 'We validated image source, narration duration, audio stream count, and Telegram delivery.', 'Multimodal automation needs checkpoints for every layer.'],\n    ['The Story Engine was added because latest-context prompts became repetitive', 'We kept feeding the machine the latest bug and fix.', 'We discovered the content kept circling cooldowns, exits, and RSI filters.', 'We added category rotation and story memory from the ForgeView journey.', 'AI content systems need narrative memory, not just the latest context.'],\n  ],\n  'Systems & Growth': [\n    ['ForgeView moved from scripts to one unified content workflow', 'We had useful scripts but no single operating pipeline.', 'We discovered separate tools created coordination friction.', 'We stitched generation, rendering, draft delivery, and manual upload into one workflow.', 'Growth systems scale when the work flows through one reliable path.'],\n    ['Draft channels became the bottleneck control point for growth content', 'We wanted automation to remove manual work.', 'We discovered human review was still needed at the publishing boundary.', 'We made the draft channel the place where content becomes publishable.', 'Good systems place human judgment where it has the most leverage.'],\n    ['The bridge connected local rendering with cloud orchestration', 'We wanted n8n Cloud to run the whole pipeline.', 'We discovered the best renderer still lived on the local machine.', 'We built a bridge so cloud orchestration could trigger local execution.', 'Hybrid systems are normal early: cloud coordinates, local tools execute.'],\n    ['ForgeView content needed a journey engine, not a topic generator', 'We did not want random AI topics.', 'We discovered generic prompts could not preserve the project story.', 'We built Story Engine around real ForgeView events and lessons.', 'A growth system should turn real work into narrative, not invent content.'],\n  ],\n};\n\nfunction normalizeTopic(topic) {\n  return String(topic || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();\n}\n\nlet staticData = {};\ntry {\n  staticData = $getWorkflowStaticData('global');\n} catch (error) {\n  staticData = {};\n}\n\nconst previousCount = Number(staticData.story_post_count || 0);\nconst categoryIndex = previousCount % categories.length;\nconst category = categories[categoryIndex];\nconst recentTopics = Array.isArray(staticData.recent_story_topics) ? staticData.recent_story_topics : [];\nconst recentNormalized = recentTopics.map(normalizeTopic);\nconst candidates = forgeViewTopics[category] || [];\n\nlet selected = candidates.find(item => !recentNormalized.includes(normalizeTopic(item[0])));\nif (!selected) {\n  selected = candidates[previousCount % Math.max(1, candidates.length)] || [\n    'ForgeView workflow reliability work',\n    'We thought the system was finished.',\n    'We discovered another operational edge case.',\n    'We fixed the weakest link before moving on.',\n    'Real systems improve through real failures.',\n  ];\n}\n\nconst story = {\n  category,\n  topic: selected[0],\n  problem: selected[1],\n  discovery: selected[2],\n  solution: selected[3],\n  lesson: selected[4],\n};\n\ntry {\n  staticData.story_post_count = previousCount + 1;\n  staticData.recent_story_topics = [story.topic, ...recentTopics.filter(topic => normalizeTopic(topic) !== normalizeTopic(story.topic))].slice(0, 12);\n  staticData.last_story_engine_output = story;\n} catch (error) {}\n\nreturn [{\n  json: {\n    ...$json,\n    STORY_ENGINE: story,\n    STORY_CATEGORY: story.category,\n    STORY_TOPIC: story.topic,\n    STORY_PROBLEM: story.problem,\n    STORY_DISCOVERY: story.discovery,\n    STORY_SOLUTION: story.solution,\n    STORY_LESSON: story.lesson,\n    STORY_ENGINE_JSON: JSON.stringify(story, null, 2),\n    STORY_ROTATION_INDEX: categoryIndex,\n    STORY_POST_COUNT: previousCount + 1,\n    RECENT_STORY_TOPICS: [story.topic, ...recentTopics].slice(0, 12),\n  }\n}];"
+      },
+      "id": "27ab63b1-355a-4d88-bc75-5694ec2c3014",
+      "name": "Story Engine - Select ForgeView Story",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -120,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const bridgeUrl = 'https://FORGEVIEW_BRIDGE_URL/forgeview/render-short';\n\nif (bridgeUrl.includes('FORGEVIEW_BRIDGE_URL')) {\n  throw new Error('BRIDGE URL NOT CONFIGURED');\n}\n\nreturn [{\n  json: {\n    ...$json,\n    bridge_url: bridgeUrl,\n  }\n}];"
+      },
+      "id": "039e8953-55c1-43fe-8177-7b8eaee073fc",
+      "name": "Validate Bridge URL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3000,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "if (!$binary || !$binary.video) {\n  throw new Error('SHORT MP4 NOT FOUND');\n}\n\nconst prepared = $('Prepare Shorts Generator Payload').item.json;\nreturn [{\n  json: {\n    ...$json,\n    draft_chat_id: prepared.draft_chat_id,\n    title: prepared.title,\n    description: prepared.description,\n    tags: prepared.tags,\n    tags_text: prepared.tags_text,\n    privacyStatus: 'public'\n  },\n  binary: $binary\n}];"
+      },
+      "id": "forgeview-validate-mp4-youtube-v11",
+      "name": "Validate MP4 For YouTube",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2240,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ $('Verify Bridge Result').item.json.publish_mode }}",
+              "rightValue": "auto_youtube",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "leftValue": "={{ $('Verify Bridge Result').item.json.kling_preview_mode }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false"
+              }
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          }
+        }
+      },
+      "id": "forgeview-if-auto-youtube-v12",
+      "name": "IF - Auto YouTube Allowed",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2060,
+        464
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst attempt = 1;\nconst rawResponse = $json;\nconst logsDir = 'D:\\\\ForgeViewAI\\\\state\\\\logs';\nconst rawPath = logsDir + '\\\\openai_raw_response.json';\nconst logPath = logsDir + '\\\\shorts_json_validation.log';\nconst previousPath = logsDir + '\\\\previous_valid_shorts_package.json';\n\nfunction writeLog(message) {\n  try {\n    const fs = require('fs');\n    fs.mkdirSync(logsDir, { recursive: true });\n    fs.appendFileSync(logPath, `[${new Date().toISOString()}] ${message}\\n`, 'utf8');\n  } catch (error) {}\n}\n\nfunction writeJson(path, value) {\n  try {\n    const fs = require('fs');\n    fs.mkdirSync(logsDir, { recursive: true });\n    fs.writeFileSync(path, JSON.stringify(value, null, 2), 'utf8');\n  } catch (error) {}\n}\n\nfunction cleanString(value) {\n  return String(value || '').replace(/\\s+/g, ' ').trim();\n}\n\nfunction selectStructuredCandidate(raw) {\n  const candidates = [raw.output, raw.text, raw.response, raw.result, raw.data, raw];\n  for (const candidate of candidates) {\n    if (candidate && typeof candidate === 'object' && !Array.isArray(candidate)) return candidate;\n  }\n  return null;\n}\n\nfunction validatePackage(value) {\n  const errors = [];\n  if (!value || typeof value !== 'object' || Array.isArray(value)) errors.push('Package must be a structured object, not free-form text');\n  const pkg = value || {};\n  for (const key of ['title', 'description', 'narration_script']) {\n    if (typeof pkg[key] !== 'string' || !pkg[key].trim()) errors.push(`${key} must be a non-empty string`);\n  }\n  if (!Array.isArray(pkg.scene_narrations) || pkg.scene_narrations.length !== 7) errors.push('scene_narrations must contain exactly 7 strings');\n  if (!Array.isArray(pkg.video_prompts) || pkg.video_prompts.length !== 7) errors.push('video_prompts must contain exactly 7 strings');\n  if (!Array.isArray(pkg.tags) || pkg.tags.length < 1) errors.push('tags must contain at least 1 string');\n  for (const [name, arr] of [['scene_narrations', pkg.scene_narrations], ['video_prompts', pkg.video_prompts], ['tags', pkg.tags]]) {\n    if (Array.isArray(arr)) {\n      arr.forEach((item, index) => {\n        if (typeof item !== 'string' || !item.trim()) errors.push(`${name}[${index}] must be a non-empty string`);\n      });\n    }\n  }\n  if (typeof pkg.title === 'string' && pkg.title.length > 100) errors.push('title must be <= 100 characters');\n  return errors;\n}\n\nwriteJson(rawPath, rawResponse);\nconst parsed = selectStructuredCandidate(rawResponse);\nif (!parsed) {\n  const msg = `retry ${attempt}: native OpenAI node did not return a structured object`;\n  writeLog(msg);\n  return [{ json: { valid: false, attempt, validation_errors: [msg], raw_response_saved_to: rawPath } }];\n}\n\nconst errors = validatePackage(parsed);\nif (errors.length) {\n  writeLog(`retry ${attempt}: schema validation failed: ${errors.join('; ')}`);\n  return [{ json: { valid: false, attempt, validation_errors: errors, raw_response_saved_to: rawPath } }];\n}\n\nconst pkg = {\n  title: cleanString(parsed.title),\n  description: String(parsed.description || '').trim(),\n  narration_script: String(parsed.narration_script || '').trim(),\n  scene_narrations: parsed.scene_narrations.map(cleanString),\n  video_prompts: parsed.video_prompts.map(cleanString),\n  tags: parsed.tags.map(cleanString).filter(Boolean),\n};\n\ntry {\n  const staticData = $getWorkflowStaticData('global');\n  staticData.last_valid_shorts_package = pkg;\n} catch (error) {}\nwriteJson(previousPath, pkg);\nwriteLog(`retry ${attempt}: native structured output validation PASS`);\nreturn [{ json: { valid: true, attempt, shorts_json: pkg, shorts_raw: JSON.stringify(pkg, null, 2), validation_errors: [], raw_response_saved_to: rawPath } }];\n"
+      },
+      "id": "forgeview-validate-structured-shorts-1-v14",
+      "name": "Validate Structured Shorts JSON Retry 1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          }
+        }
+      },
+      "id": "forgeview-if-structured-shorts-valid-1-v14",
+      "name": "IF Structured Shorts Valid Retry 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1500,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst attempt = 2;\nconst rawResponse = $json;\nconst logsDir = 'D:\\\\ForgeViewAI\\\\state\\\\logs';\nconst rawPath = logsDir + '\\\\openai_raw_response.json';\nconst logPath = logsDir + '\\\\shorts_json_validation.log';\nconst previousPath = logsDir + '\\\\previous_valid_shorts_package.json';\n\nfunction writeLog(message) {\n  try {\n    const fs = require('fs');\n    fs.mkdirSync(logsDir, { recursive: true });\n    fs.appendFileSync(logPath, `[${new Date().toISOString()}] ${message}\\n`, 'utf8');\n  } catch (error) {}\n}\n\nfunction writeJson(path, value) {\n  try {\n    const fs = require('fs');\n    fs.mkdirSync(logsDir, { recursive: true });\n    fs.writeFileSync(path, JSON.stringify(value, null, 2), 'utf8');\n  } catch (error) {}\n}\n\nfunction cleanString(value) {\n  return String(value || '').replace(/\\s+/g, ' ').trim();\n}\n\nfunction selectStructuredCandidate(raw) {\n  const candidates = [raw.output, raw.text, raw.response, raw.result, raw.data, raw];\n  for (const candidate of candidates) {\n    if (candidate && typeof candidate === 'object' && !Array.isArray(candidate)) return candidate;\n  }\n  return null;\n}\n\nfunction validatePackage(value) {\n  const errors = [];\n  if (!value || typeof value !== 'object' || Array.isArray(value)) errors.push('Package must be a structured object, not free-form text');\n  const pkg = value || {};\n  for (const key of ['title', 'description', 'narration_script']) {\n    if (typeof pkg[key] !== 'string' || !pkg[key].trim()) errors.push(`${key} must be a non-empty string`);\n  }\n  if (!Array.isArray(pkg.scene_narrations) || pkg.scene_narrations.length !== 7) errors.push('scene_narrations must contain exactly 7 strings');\n  if (!Array.isArray(pkg.video_prompts) || pkg.video_prompts.length !== 7) errors.push('video_prompts must contain exactly 7 strings');\n  if (!Array.isArray(pkg.tags) || pkg.tags.length < 1) errors.push('tags must contain at least 1 string');\n  for (const [name, arr] of [['scene_narrations', pkg.scene_narrations], ['video_prompts', pkg.video_prompts], ['tags', pkg.tags]]) {\n    if (Array.isArray(arr)) {\n      arr.forEach((item, index) => {\n        if (typeof item !== 'string' || !item.trim()) errors.push(`${name}[${index}] must be a non-empty string`);\n      });\n    }\n  }\n  if (typeof pkg.title === 'string' && pkg.title.length > 100) errors.push('title must be <= 100 characters');\n  return errors;\n}\n\nwriteJson(rawPath, rawResponse);\nconst parsed = selectStructuredCandidate(rawResponse);\nif (!parsed) {\n  const msg = `retry ${attempt}: native OpenAI node did not return a structured object`;\n  writeLog(msg);\n  return [{ json: { valid: false, attempt, validation_errors: [msg], raw_response_saved_to: rawPath } }];\n}\n\nconst errors = validatePackage(parsed);\nif (errors.length) {\n  writeLog(`retry ${attempt}: schema validation failed: ${errors.join('; ')}`);\n  return [{ json: { valid: false, attempt, validation_errors: errors, raw_response_saved_to: rawPath } }];\n}\n\nconst pkg = {\n  title: cleanString(parsed.title),\n  description: String(parsed.description || '').trim(),\n  narration_script: String(parsed.narration_script || '').trim(),\n  scene_narrations: parsed.scene_narrations.map(cleanString),\n  video_prompts: parsed.video_prompts.map(cleanString),\n  tags: parsed.tags.map(cleanString).filter(Boolean),\n};\n\ntry {\n  const staticData = $getWorkflowStaticData('global');\n  staticData.last_valid_shorts_package = pkg;\n} catch (error) {}\nwriteJson(previousPath, pkg);\nwriteLog(`retry ${attempt}: native structured output validation PASS`);\nreturn [{ json: { valid: true, attempt, shorts_json: pkg, shorts_raw: JSON.stringify(pkg, null, 2), validation_errors: [], raw_response_saved_to: rawPath } }];\n"
+      },
+      "id": "forgeview-validate-structured-shorts-2-v14",
+      "name": "Validate Structured Shorts JSON Retry 2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1820,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          }
+        }
+      },
+      "id": "forgeview-if-structured-shorts-valid-2-v14",
+      "name": "IF Structured Shorts Valid Retry 2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1960,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst attempt = 3;\nconst rawResponse = $json;\nconst logsDir = 'D:\\\\ForgeViewAI\\\\state\\\\logs';\nconst rawPath = logsDir + '\\\\openai_raw_response.json';\nconst logPath = logsDir + '\\\\shorts_json_validation.log';\nconst previousPath = logsDir + '\\\\previous_valid_shorts_package.json';\n\nfunction writeLog(message) {\n  try {\n    const fs = require('fs');\n    fs.mkdirSync(logsDir, { recursive: true });\n    fs.appendFileSync(logPath, `[${new Date().toISOString()}] ${message}\\n`, 'utf8');\n  } catch (error) {}\n}\n\nfunction writeJson(path, value) {\n  try {\n    const fs = require('fs');\n    fs.mkdirSync(logsDir, { recursive: true });\n    fs.writeFileSync(path, JSON.stringify(value, null, 2), 'utf8');\n  } catch (error) {}\n}\n\nfunction cleanString(value) {\n  return String(value || '').replace(/\\s+/g, ' ').trim();\n}\n\nfunction selectStructuredCandidate(raw) {\n  const candidates = [raw.output, raw.text, raw.response, raw.result, raw.data, raw];\n  for (const candidate of candidates) {\n    if (candidate && typeof candidate === 'object' && !Array.isArray(candidate)) return candidate;\n  }\n  return null;\n}\n\nfunction validatePackage(value) {\n  const errors = [];\n  if (!value || typeof value !== 'object' || Array.isArray(value)) errors.push('Package must be a structured object, not free-form text');\n  const pkg = value || {};\n  for (const key of ['title', 'description', 'narration_script']) {\n    if (typeof pkg[key] !== 'string' || !pkg[key].trim()) errors.push(`${key} must be a non-empty string`);\n  }\n  if (!Array.isArray(pkg.scene_narrations) || pkg.scene_narrations.length !== 7) errors.push('scene_narrations must contain exactly 7 strings');\n  if (!Array.isArray(pkg.video_prompts) || pkg.video_prompts.length !== 7) errors.push('video_prompts must contain exactly 7 strings');\n  if (!Array.isArray(pkg.tags) || pkg.tags.length < 1) errors.push('tags must contain at least 1 string');\n  for (const [name, arr] of [['scene_narrations', pkg.scene_narrations], ['video_prompts', pkg.video_prompts], ['tags', pkg.tags]]) {\n    if (Array.isArray(arr)) {\n      arr.forEach((item, index) => {\n        if (typeof item !== 'string' || !item.trim()) errors.push(`${name}[${index}] must be a non-empty string`);\n      });\n    }\n  }\n  if (typeof pkg.title === 'string' && pkg.title.length > 100) errors.push('title must be <= 100 characters');\n  return errors;\n}\n\nwriteJson(rawPath, rawResponse);\nconst parsed = selectStructuredCandidate(rawResponse);\nif (!parsed) {\n  const msg = `retry ${attempt}: native OpenAI node did not return a structured object`;\n  writeLog(msg);\n  return [{ json: { valid: false, attempt, validation_errors: [msg], raw_response_saved_to: rawPath } }];\n}\n\nconst errors = validatePackage(parsed);\nif (errors.length) {\n  writeLog(`retry ${attempt}: schema validation failed: ${errors.join('; ')}`);\n  return [{ json: { valid: false, attempt, validation_errors: errors, raw_response_saved_to: rawPath } }];\n}\n\nconst pkg = {\n  title: cleanString(parsed.title),\n  description: String(parsed.description || '').trim(),\n  narration_script: String(parsed.narration_script || '').trim(),\n  scene_narrations: parsed.scene_narrations.map(cleanString),\n  video_prompts: parsed.video_prompts.map(cleanString),\n  tags: parsed.tags.map(cleanString).filter(Boolean),\n};\n\ntry {\n  const staticData = $getWorkflowStaticData('global');\n  staticData.last_valid_shorts_package = pkg;\n} catch (error) {}\nwriteJson(previousPath, pkg);\nwriteLog(`retry ${attempt}: native structured output validation PASS`);\nreturn [{ json: { valid: true, attempt, shorts_json: pkg, shorts_raw: JSON.stringify(pkg, null, 2), validation_errors: [], raw_response_saved_to: rawPath } }];\n"
+      },
+      "id": "forgeview-validate-structured-shorts-3-v14",
+      "name": "Validate Structured Shorts JSON Retry 3",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2280,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          }
+        }
+      },
+      "id": "forgeview-if-structured-shorts-valid-3-v14",
+      "name": "IF Structured Shorts Valid Retry 3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2420,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst logsDir = 'D:\\\\ForgeViewAI\\\\state\\\\logs';\nconst previousPath = logsDir + '\\\\previous_valid_shorts_package.json';\nconst logPath = logsDir + '\\\\shorts_json_validation.log';\nfunction writeLog(message) {\n  try {\n    const fs = require('fs');\n    fs.mkdirSync(logsDir, { recursive: true });\n    fs.appendFileSync(logPath, `[${new Date().toISOString()}] ${message}\\n`, 'utf8');\n  } catch (error) {}\n}\nfunction validatePackage(pkg) {\n  return pkg && typeof pkg.title === 'string' && Array.isArray(pkg.scene_narrations) && pkg.scene_narrations.length === 7 && Array.isArray(pkg.video_prompts) && pkg.video_prompts.length === 7;\n}\nlet pkg = null;\ntry {\n  const staticData = $getWorkflowStaticData('global');\n  pkg = staticData.last_valid_shorts_package || null;\n} catch (error) {}\nif (!validatePackage(pkg)) {\n  try {\n    const fs = require('fs');\n    pkg = JSON.parse(fs.readFileSync(previousPath, 'utf8'));\n  } catch (error) {}\n}\nif (!validatePackage(pkg)) {\n  const message = 'STRUCTURED SHORTS JSON FAILED AFTER 3 RETRIES AND NO PREVIOUS VALID PACKAGE FOUND';\n  writeLog(message);\n  throw new Error(message);\n}\nwriteLog('all 3 retries failed; using previous valid Shorts package fallback');\nreturn [{ json: { valid: true, fallback_used: true, shorts_json: pkg, shorts_raw: JSON.stringify(pkg, null, 2), validation_errors: ['Used previous valid Shorts package after 3 failed retries'] } }];\n"
+      },
+      "id": "forgeview-fallback-previous-valid-shorts-v14",
+      "name": "Fallback Previous Valid Shorts Package",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2460,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.SHORTS_PROMPT }}",
+        "hasOutputParser": true,
+        "batching": {}
+      },
+      "id": "forgeview-native-openai-chain-retry-1-v141",
+      "name": "OpenAI - Generate Shorts Draft Retry 1",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.8,
+      "position": [
+        1180,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "responsesApiEnabled": true,
+        "options": {
+          "temperature": 0.35,
+          "maxTokens": 1800,
+          "timeout": 120000,
+          "maxRetries": 0,
+          "textFormat": {
+            "textOptions": [
+              {
+                "type": "json_schema",
+                "name": "forgeview_shorts_package",
+                "schema": "{\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"title\",\n    \"description\",\n    \"narration_script\",\n    \"scene_narrations\",\n    \"video_prompts\",\n    \"tags\"\n  ],\n  \"properties\": {\n    \"title\": {\n      \"type\": \"string\",\n      \"minLength\": 1,\n      \"maxLength\": 100\n    },\n    \"description\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"narration_script\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"scene_narrations\": {\n      \"type\": \"array\",\n      \"minItems\": 7,\n      \"maxItems\": 7,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    },\n    \"video_prompts\": {\n      \"type\": \"array\",\n      \"minItems\": 7,\n      \"maxItems\": 7,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    },\n    \"tags\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"maxItems\": 8,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    }\n  }\n}",
+                "description": "ForgeView cinematic Shorts package for Kling preview generation",
+                "strict": true,
+                "verbosity": "medium"
+              }
+            ]
+          }
+        }
+      },
+      "id": "forgeview-openai-chat-model-retry-1-v141",
+      "name": "OpenAI Chat Model - Shorts Retry 1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1180,
+        780
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "__REPLACE_WITH_OPENAI_CREDENTIAL_ID__",
+          "name": "ForgeView OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"title\",\n    \"description\",\n    \"narration_script\",\n    \"scene_narrations\",\n    \"video_prompts\",\n    \"tags\"\n  ],\n  \"properties\": {\n    \"title\": {\n      \"type\": \"string\",\n      \"minLength\": 1,\n      \"maxLength\": 100\n    },\n    \"description\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"narration_script\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"scene_narrations\": {\n      \"type\": \"array\",\n      \"minItems\": 7,\n      \"maxItems\": 7,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    },\n    \"video_prompts\": {\n      \"type\": \"array\",\n      \"minItems\": 7,\n      \"maxItems\": 7,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    },\n    \"tags\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"maxItems\": 8,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    }\n  }\n}"
+      },
+      "id": "forgeview-structured-output-parser-retry-1-v141",
+      "name": "Structured Output Parser - Shorts Retry 1",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1340,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.SHORTS_PROMPT }}",
+        "hasOutputParser": true,
+        "batching": {}
+      },
+      "id": "forgeview-native-openai-chain-retry-2-v141",
+      "name": "OpenAI - Generate Shorts Draft Retry 2",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.8,
+      "position": [
+        1640,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "responsesApiEnabled": true,
+        "options": {
+          "temperature": 0.35,
+          "maxTokens": 1800,
+          "timeout": 120000,
+          "maxRetries": 0,
+          "textFormat": {
+            "textOptions": [
+              {
+                "type": "json_schema",
+                "name": "forgeview_shorts_package",
+                "schema": "{\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"title\",\n    \"description\",\n    \"narration_script\",\n    \"scene_narrations\",\n    \"video_prompts\",\n    \"tags\"\n  ],\n  \"properties\": {\n    \"title\": {\n      \"type\": \"string\",\n      \"minLength\": 1,\n      \"maxLength\": 100\n    },\n    \"description\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"narration_script\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"scene_narrations\": {\n      \"type\": \"array\",\n      \"minItems\": 7,\n      \"maxItems\": 7,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    },\n    \"video_prompts\": {\n      \"type\": \"array\",\n      \"minItems\": 7,\n      \"maxItems\": 7,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    },\n    \"tags\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"maxItems\": 8,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    }\n  }\n}",
+                "description": "ForgeView cinematic Shorts package for Kling preview generation",
+                "strict": true,
+                "verbosity": "medium"
+              }
+            ]
+          }
+        }
+      },
+      "id": "forgeview-openai-chat-model-retry-2-v141",
+      "name": "OpenAI Chat Model - Shorts Retry 2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1640,
+        780
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "__REPLACE_WITH_OPENAI_CREDENTIAL_ID__",
+          "name": "ForgeView OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"title\",\n    \"description\",\n    \"narration_script\",\n    \"scene_narrations\",\n    \"video_prompts\",\n    \"tags\"\n  ],\n  \"properties\": {\n    \"title\": {\n      \"type\": \"string\",\n      \"minLength\": 1,\n      \"maxLength\": 100\n    },\n    \"description\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"narration_script\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"scene_narrations\": {\n      \"type\": \"array\",\n      \"minItems\": 7,\n      \"maxItems\": 7,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    },\n    \"video_prompts\": {\n      \"type\": \"array\",\n      \"minItems\": 7,\n      \"maxItems\": 7,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    },\n    \"tags\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"maxItems\": 8,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    }\n  }\n}"
+      },
+      "id": "forgeview-structured-output-parser-retry-2-v141",
+      "name": "Structured Output Parser - Shorts Retry 2",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1800,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.SHORTS_PROMPT }}",
+        "hasOutputParser": true,
+        "batching": {}
+      },
+      "id": "forgeview-native-openai-chain-retry-3-v141",
+      "name": "OpenAI - Generate Shorts Draft Retry 3",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.8,
+      "position": [
+        2100,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "responsesApiEnabled": true,
+        "options": {
+          "temperature": 0.35,
+          "maxTokens": 1800,
+          "timeout": 120000,
+          "maxRetries": 0,
+          "textFormat": {
+            "textOptions": [
+              {
+                "type": "json_schema",
+                "name": "forgeview_shorts_package",
+                "schema": "{\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"title\",\n    \"description\",\n    \"narration_script\",\n    \"scene_narrations\",\n    \"video_prompts\",\n    \"tags\"\n  ],\n  \"properties\": {\n    \"title\": {\n      \"type\": \"string\",\n      \"minLength\": 1,\n      \"maxLength\": 100\n    },\n    \"description\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"narration_script\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"scene_narrations\": {\n      \"type\": \"array\",\n      \"minItems\": 7,\n      \"maxItems\": 7,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    },\n    \"video_prompts\": {\n      \"type\": \"array\",\n      \"minItems\": 7,\n      \"maxItems\": 7,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    },\n    \"tags\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"maxItems\": 8,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    }\n  }\n}",
+                "description": "ForgeView cinematic Shorts package for Kling preview generation",
+                "strict": true,
+                "verbosity": "medium"
+              }
+            ]
+          }
+        }
+      },
+      "id": "forgeview-openai-chat-model-retry-3-v141",
+      "name": "OpenAI Chat Model - Shorts Retry 3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        2100,
+        780
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "__REPLACE_WITH_OPENAI_CREDENTIAL_ID__",
+          "name": "ForgeView OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"title\",\n    \"description\",\n    \"narration_script\",\n    \"scene_narrations\",\n    \"video_prompts\",\n    \"tags\"\n  ],\n  \"properties\": {\n    \"title\": {\n      \"type\": \"string\",\n      \"minLength\": 1,\n      \"maxLength\": 100\n    },\n    \"description\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"narration_script\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"scene_narrations\": {\n      \"type\": \"array\",\n      \"minItems\": 7,\n      \"maxItems\": 7,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    },\n    \"video_prompts\": {\n      \"type\": \"array\",\n      \"minItems\": 7,\n      \"maxItems\": 7,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    },\n    \"tags\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"maxItems\": 8,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      }\n    }\n  }\n}"
+      },
+      "id": "forgeview-structured-output-parser-retry-3-v141",
+      "name": "Structured Output Parser - Shorts Retry 3",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2260,
+        780
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger - Every 6 Hours": {
+      "main": [
+        [
+          {
+            "node": "Set ForgeView Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set ForgeView Config": {
+      "main": [
+        [
+          {
+            "node": "Compute Project Day",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compute Project Day": {
+      "main": [
+        [
+          {
+            "node": "Story Engine - Select ForgeView Story",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Story Engine - Select ForgeView Story": {
+      "main": [
+        [
+          {
+            "node": "Build Telegram Prompt",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Build YouTube Shorts Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Telegram Prompt": {
+      "main": [
+        [
+          {
+            "node": "OpenAI - Generate Telegram Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - Generate Telegram Post": {
+      "main": [
+        [
+          {
+            "node": "Format Telegram Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Telegram Post": {
+      "main": [
+        [
+          {
+            "node": "Telegram - Send Public Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build YouTube Shorts Prompt": {
+      "main": [
+        [
+          {
+            "node": "OpenAI - Generate Shorts Draft Retry 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - Generate Shorts Draft Retry 1": {
+      "main": [
+        [
+          {
+            "node": "Validate Structured Shorts JSON Retry 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Structured Shorts JSON Retry 1": {
+      "main": [
+        [
+          {
+            "node": "IF Structured Shorts Valid Retry 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Structured Shorts Valid Retry 1": {
+      "main": [
+        [
+          {
+            "node": "Format Structured Shorts Draft",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OpenAI - Generate Shorts Draft Retry 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - Generate Shorts Draft Retry 2": {
+      "main": [
+        [
+          {
+            "node": "Validate Structured Shorts JSON Retry 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Structured Shorts JSON Retry 2": {
+      "main": [
+        [
+          {
+            "node": "IF Structured Shorts Valid Retry 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Structured Shorts Valid Retry 2": {
+      "main": [
+        [
+          {
+            "node": "Format Structured Shorts Draft",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OpenAI - Generate Shorts Draft Retry 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - Generate Shorts Draft Retry 3": {
+      "main": [
+        [
+          {
+            "node": "Validate Structured Shorts JSON Retry 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Structured Shorts JSON Retry 3": {
+      "main": [
+        [
+          {
+            "node": "IF Structured Shorts Valid Retry 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Structured Shorts Valid Retry 3": {
+      "main": [
+        [
+          {
+            "node": "Format Structured Shorts Draft",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fallback Previous Valid Shorts Package",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fallback Previous Valid Shorts Package": {
+      "main": [
+        [
+          {
+            "node": "Format Structured Shorts Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Structured Shorts Draft": {
+      "main": [
+        [
+          {
+            "node": "Prepare Shorts Generator Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Shorts Generator Payload": {
+      "main": [
+        [
+          {
+            "node": "Validate Bridge URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Bridge URL": {
+      "main": [
+        [
+          {
+            "node": "HTTP - Trigger Local Shorts Generator Bridge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP - Trigger Local Shorts Generator Bridge": {
+      "main": [
+        [
+          {
+            "node": "Verify Bridge Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Bridge Result": {
+      "main": [
+        [
+          {
+            "node": "HTTP - Download Generated MP4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP - Download Generated MP4": {
+      "main": [
+        [
+          {
+            "node": "Telegram - Send MP4 Draft With Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model - Shorts Retry 1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "OpenAI - Generate Shorts Draft Retry 1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser - Shorts Retry 1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "OpenAI - Generate Shorts Draft Retry 1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model - Shorts Retry 2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "OpenAI - Generate Shorts Draft Retry 2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser - Shorts Retry 2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "OpenAI - Generate Shorts Draft Retry 2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model - Shorts Retry 3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "OpenAI - Generate Shorts Draft Retry 3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser - Shorts Retry 3": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "OpenAI - Generate Shorts Draft Retry 3",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "forgeview-unified-content-machine-v10-3-story-engine-v3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b07b54e5a5a60c0d77cfe6d4e3c24a66938a3af67d80e35c0a08b2915d3aa996"
+  },
+  "id": "9V9XdcrMQYR52c5t",
+  "tags": []
+}

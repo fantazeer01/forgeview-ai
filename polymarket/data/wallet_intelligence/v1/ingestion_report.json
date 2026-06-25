@@ -1,0 +1,117 @@
+{
+  "biggest_data_gaps": [
+    "Full trade/fill history is not captured by first-page public profile snapshots.",
+    "Average holding time is unavailable without linked entry and exit timestamps.",
+    "Late-entry and Binance-lag behavior require timestamped trade history plus external price series.",
+    "Copyability cannot be treated as executable because observation delay, liquidity, and fill priority are unknown."
+  ],
+  "data_availability_by_wallet": {
+    "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86": {
+      "active_positions_count": 7,
+      "closed_positions_count": 50,
+      "copyability_score": 35,
+      "data_availability_notes": "wallet_resolution=seed_wallet_id; average_holding_time and drawdown unavailable from positions/closed-positions snapshots; late-entry behavior requires deeper trade/activity history; closed_positions may be truncated at public snapshot limit 50",
+      "fast_crypto_positions_count": 44,
+      "market_types": "{\"fast_crypto\": 44, \"other\": 13}",
+      "profile_url": "https://polymarket.com/0x1f0ebc543b2d411f66947041625c0aa1ce61cf86",
+      "resolved_wallet_address": "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86"
+    },
+    "0x594edB9112f526Fa6A80b8F858A6379C8A2c1C11": {
+      "active_positions_count": 50,
+      "closed_positions_count": 50,
+      "copyability_score": 15,
+      "data_availability_notes": "wallet_resolution=seed_wallet_id; average_holding_time and drawdown unavailable from positions/closed-positions snapshots; late-entry behavior requires deeper trade/activity history; closed_positions may be truncated at public snapshot limit 50",
+      "fast_crypto_positions_count": 0,
+      "market_types": "{\"other\": 12, \"weather\": 88}",
+      "profile_url": "https://polymarket.com/@0x594edB9112f526Fa6A80b8F858A6379C8A2c1C11",
+      "resolved_wallet_address": "0x594edB9112f526Fa6A80b8F858A6379C8A2c1C11"
+    },
+    "0x63ce342161250d705dc0b16df89036c8e5f9ba9a": {
+      "active_positions_count": 0,
+      "closed_positions_count": 50,
+      "copyability_score": 35,
+      "data_availability_notes": "wallet_resolution=seed_wallet_id; average_holding_time and drawdown unavailable from positions/closed-positions snapshots; late-entry behavior requires deeper trade/activity history; closed_positions may be truncated at public snapshot limit 50",
+      "fast_crypto_positions_count": 45,
+      "market_types": "{\"fast_crypto\": 45, \"other\": 5}",
+      "profile_url": "https://polymarket.com/0x63ce342161250d705dc0b16df89036c8e5f9ba9a",
+      "resolved_wallet_address": "0x63ce342161250d705dc0b16df89036c8e5f9ba9a"
+    },
+    "0xd0d6053c3c37e727402d84c14069780d360993aa": {
+      "active_positions_count": 3,
+      "closed_positions_count": 50,
+      "copyability_score": 35,
+      "data_availability_notes": "wallet_resolution=profile_page_embedded_address; average_holding_time and drawdown unavailable from positions/closed-positions snapshots; late-entry behavior requires deeper trade/activity history; closed_positions may be truncated at public snapshot limit 50",
+      "fast_crypto_positions_count": 38,
+      "market_types": "{\"fast_crypto\": 38, \"other\": 15}",
+      "profile_url": "https://polymarket.com/@k9Q2mX4L8A7ZP3R",
+      "resolved_wallet_address": "0xd0d6053c3c37e727402d84c14069780d360993aa"
+    },
+    "0xde17f7144fbd0eddb2679132c10ff5e74b120988": {
+      "active_positions_count": 50,
+      "closed_positions_count": 50,
+      "copyability_score": 5,
+      "data_availability_notes": "wallet_resolution=seed_wallet_id; average_holding_time and drawdown unavailable from positions/closed-positions snapshots; late-entry behavior requires deeper trade/activity history; closed_positions may be truncated at public snapshot limit 50",
+      "fast_crypto_positions_count": 0,
+      "market_types": "{\"crypto_other\": 100}",
+      "profile_url": "https://polymarket.com/0xde17f7144fbd0eddb2679132c10ff5e74b120988",
+      "resolved_wallet_address": "0xde17f7144fbd0eddb2679132c10ff5e74b120988"
+    },
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a": {
+      "active_positions_count": 50,
+      "closed_positions_count": 50,
+      "copyability_score": 35,
+      "data_availability_notes": "wallet_resolution=seed_wallet_id; average_holding_time and drawdown unavailable from positions/closed-positions snapshots; late-entry behavior requires deeper trade/activity history; closed_positions may be truncated at public snapshot limit 50",
+      "fast_crypto_positions_count": 100,
+      "market_types": "{\"fast_crypto\": 100}",
+      "profile_url": "https://polymarket.com/0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a",
+      "resolved_wallet_address": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    }
+  },
+  "fast_market_crypto_wallets": [
+    "0x63ce342161250d705dc0b16df89036c8e5f9ba9a",
+    "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86",
+    "0xd0d6053c3c37e727402d84c14069780d360993aa",
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+  ],
+  "input_path": "polymarket\\wallet_intelligence\\watched_wallets.example.csv",
+  "output_dir": "polymarket\\data\\wallet_intelligence\\v1",
+  "position_rows": 460,
+  "public_source_endpoints": {
+    "activity": "https://data-api.polymarket.com/activity",
+    "closed_positions": "https://data-api.polymarket.com/closed-positions",
+    "positions": "https://data-api.polymarket.com/positions",
+    "traded": "https://data-api.polymarket.com/traded",
+    "value": "https://data-api.polymarket.com/value"
+  },
+  "recommended_next_task": "Wallet Intelligence Behavior Metrics v1",
+  "research_only_copyable_wallets": [
+    "0x63ce342161250d705dc0b16df89036c8e5f9ba9a",
+    "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86",
+    "0xd0d6053c3c37e727402d84c14069780d360993aa",
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+  ],
+  "retrieved_at": "2026-06-24T20:00:17+00:00",
+  "task": "Wallet Intelligence Data Ingestion v1",
+  "wallets_attempted": 6,
+  "wallets_requiring_deeper_transaction_or_history_data": [
+    "0x63ce342161250d705dc0b16df89036c8e5f9ba9a",
+    "0xde17f7144fbd0eddb2679132c10ff5e74b120988",
+    "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86",
+    "0xd0d6053c3c37e727402d84c14069780d360993aa",
+    "0x594edB9112f526Fa6A80b8F858A6379C8A2c1C11",
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+  ],
+  "wallets_resolved": 6,
+  "wallets_with_enough_visible_data_for_strategy_inference": [
+    "0x63ce342161250d705dc0b16df89036c8e5f9ba9a",
+    "0xde17f7144fbd0eddb2679132c10ff5e74b120988",
+    "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86",
+    "0xd0d6053c3c37e727402d84c14069780d360993aa",
+    "0x594edB9112f526Fa6A80b8F858A6379C8A2c1C11",
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+  ],
+  "wallets_with_positions": 6,
+  "weather_or_other_wallets": [
+    "0x594edB9112f526Fa6A80b8F858A6379C8A2c1C11"
+  ]
+}

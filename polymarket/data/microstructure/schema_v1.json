@@ -1,0 +1,36 @@
+{
+  "event": "microstructure_snapshot",
+  "schema_version": 1,
+  "source": "Polymarket public CLOB /book plus deterministic as-of derivation",
+  "raw_fields": [
+    "quote_timestamp",
+    "yes_price",
+    "no_price",
+    "yes_bid",
+    "yes_ask",
+    "yes_bid_size",
+    "yes_ask_size",
+    "total_bid_depth",
+    "total_ask_depth",
+    "refresh_latency_seconds"
+  ],
+  "derived_fields": [
+    "quote_age_seconds",
+    "time_since_last_quote_update_seconds",
+    "bid_ask_spread",
+    "book_imbalance",
+    "repricing_velocity",
+    "repricing_acceleration",
+    "yes_change_frequency_30s",
+    "no_change_frequency_30s",
+    "consecutive_quote_stability",
+    "spread_change",
+    "spread_velocity",
+    "spread_compression",
+    "cross_asset_yes_dispersion",
+    "cross_asset_relative_yes"
+  ],
+  "missing_value_policy": "null; never imputed during capture",
+  "time_policy": "only observations at or before event timestamp",
+  "no_trading_guarantee": true
+}

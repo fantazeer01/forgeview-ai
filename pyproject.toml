@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "forgeviewai-polymarket"
+version = "5.0.0"
+description = "Isolated Polymarket simulation, validation, live signals, and evidence engines"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+live = ["websockets>=14,<17"]
+
+[project.scripts]
+edge-engine = "polymarket.edge_engine.cli:main"
+edge-engine-v2 = "polymarket.edge_engine_v2.cli:main"
+edge-engine-v3 = "polymarket.edge_engine_v3.cli:main"
+edge-engine-v4 = "polymarket.edge_engine_v4.cli:main"
+edge-engine-v5 = "polymarket.edge_engine_v5.cli:main"
+feature-engine = "polymarket.feature_engine.cli:main"
+dataset-quality = "polymarket.dataset_quality.cli:main"
+resolution-engine = "polymarket.resolution_engine.cli:main"
+evidence-batch = "polymarket.evidence_batch.cli:main"
+validation-protocol = "polymarket.validation_protocol.cli:main"
+baseline-model = "polymarket.baseline_model.cli:main"
+baseline-diagnostics = "polymarket.baseline_diagnostics.cli:main"
+wallet-intelligence = "polymarket.wallet_intelligence.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["polymarket*"]

@@ -1,0 +1,33 @@
+{
+  "canonical_training_data_modified": false,
+  "holdout_evaluation_run": false,
+  "holdout_outcomes_read": false,
+  "inputs": {
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\coverage_report.json": "1812c87461566cb0d1e55852e2cee28be3b2cb0076190552128544b0fa72e88b",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\export\\dataset.csv": "4e790466fe24238a7dde282d1412a8aa771f1897c4b7f1d979bda21fbebef8a2",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\export\\dataset.parquet": "434376318dbe4acea954af1a895fa01e7d023c27329d628381fea3e123f0b553",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\export_repeat\\dataset.csv": "4e790466fe24238a7dde282d1412a8aa771f1897c4b7f1d979bda21fbebef8a2",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\export_repeat\\dataset.parquet": "434376318dbe4acea954af1a895fa01e7d023c27329d628381fea3e123f0b553",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\feature_population.csv": "e8938b742a015b492150bfc4d386a877044173b07ad257bdd07b335acc51a72a",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\missingness_report.csv": "75e4d99b2d31d1e650eca58ec005411bd00affa768e5645a09c13ba08ec2cb23",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\replay_validation.json": "a57b627e9f688f9b9674502584a0801340f6bd7ec93a864928f4a5006880c033",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_002\\coverage_report.json": "d804345de8a70e0cd28c2d5ac27164f495623f7a6f1c5291f7441b4d4b751381",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_002\\export\\dataset.csv": "4a9b5ea0628bef82e2202cfdbf12efe3759f92609f0f822a624aa414f01ce318",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_002\\export\\dataset.parquet": "74004dadba89d3230674008ca74e35d730e1b471b6fbba017902818800766f4f",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_002\\export_repeat\\dataset.csv": "4a9b5ea0628bef82e2202cfdbf12efe3759f92609f0f822a624aa414f01ce318",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_002\\export_repeat\\dataset.parquet": "74004dadba89d3230674008ca74e35d730e1b471b6fbba017902818800766f4f",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_002\\feature_population.csv": "1f33881b30b9d18925231feb335405d04e49d1befd7dd5286be93a9739a00025",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_002\\missingness_report.csv": "28625f13387a550947ac9fcedbd628e20d788124213dd6785b09b5e493fdbcac",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_002\\replay_validation.json": "a57b627e9f688f9b9674502584a0801340f6bd7ec93a864928f4a5006880c033"
+  },
+  "outputs": {
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batches_001_002\\batch_stability_report.csv": "9f2bbea70c73692da9dec3921fb112b7d1a19c63db934c2ae3ea7faa8e017ae4",
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batches_001_002\\combined_feature_diagnostics.csv": "e95f76812f2b0167def4153b22b8c6f30e8573fc603235aff0eee63b7753d7c2",
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batches_001_002\\combined_predictions.csv": "842f36988f983bb9e788369b9b1e4dd944ceb61dd3ceb18210e44513bbecb4b6",
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batches_001_002\\combined_segment_metrics.csv": "32e1c4b3fc3042f9ca9a490f4803b873ac9ba2f86e83bef2fe0ef5bc31273259",
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batches_001_002\\correlation_matrix.csv": "798e0b6fa32d3b9ffb4e7ab0dedb1b1fe9a30903fe6cd90af32834241bf8eb8e",
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batches_001_002\\diagnostics_report.json": "4688ff590ca4b627cfc3ca9aa61146b808fc480e00824dfd222a0656748780ea",
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batches_001_002\\diagnostics_report.md": "3e329093b624b445afd2bf189c36d662d402fc18a8fa4a0e5befa3b65ee860db"
+  },
+  "validation_protocol_modified": false
+}

@@ -1,0 +1,82 @@
+{
+  "classifications": {
+    "fast_crypto_focused": 4,
+    "mixed": 1,
+    "weather_focused": 1
+  },
+  "common_behavior_patterns": [
+    "4 wallets are fast-crypto focused.",
+    "Primary clusters: {'fast_crypto_directional': 4, 'cheap_side_buyer': 2}.",
+    "3 wallets show repeated cheap-side buying at >=20% of visible entries.",
+    "Repeated late-window behavior remains unavailable from this snapshot."
+  ],
+  "copyability_risks": [
+    "All scores are research-only and capped because public snapshots lack full trade/fill history.",
+    "Likely delay risk is high for fast crypto wallets because entry windows can be short.",
+    "Liquidity/fill uncertainty is material where visible position sizes are large or concentrated.",
+    "Unknown exit timing prevents claims about hold-to-resolution versus exit-before-expiry."
+  ],
+  "entry_price_patterns": {
+    "aggregate_bucket_counts": {
+      "0_10c": 105,
+      "10_20c": 34,
+      "20_40c": 67,
+      "40_60c": 84,
+      "60_80c": 59,
+      "80_100c": 111
+    },
+    "dominant_bucket": "80_100c:111/460:0.241304",
+    "mean_wallet_average_entry_price": "0.468473"
+  },
+  "generated_at": "2026-06-24T20:12:02+00:00",
+  "input_dir": "polymarket\\data\\wallet_intelligence\\v1",
+  "most_similar_wallet_pairs": [
+    {
+      "similarity": "0.939721",
+      "wallet_a": "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86",
+      "wallet_b": "0xd0d6053c3c37e727402d84c14069780d360993aa"
+    },
+    {
+      "similarity": "0.92329",
+      "wallet_a": "0x63ce342161250d705dc0b16df89036c8e5f9ba9a",
+      "wallet_b": "0xd0d6053c3c37e727402d84c14069780d360993aa"
+    },
+    {
+      "similarity": "0.884211",
+      "wallet_a": "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86",
+      "wallet_b": "0x63ce342161250d705dc0b16df89036c8e5f9ba9a"
+    },
+    {
+      "similarity": "0.862035",
+      "wallet_a": "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86",
+      "wallet_b": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "similarity": "0.826248",
+      "wallet_a": "0xd0d6053c3c37e727402d84c14069780d360993aa",
+      "wallet_b": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    }
+  ],
+  "output_dir": "polymarket\\models\\wallet_intelligence_v1\\behavior_metrics",
+  "recommended_next_task": "Wallet Intelligence Deep History Feasibility v1",
+  "strict_boundaries": [
+    "no live trading",
+    "no trade copying",
+    "no wallet/private-key connection",
+    "no order placement",
+    "no sealed holdout inspection",
+    "no holdout evaluation",
+    "no market capture campaign",
+    "no copyability overclaim"
+  ],
+  "strongest_fast_market_wallet": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a",
+  "strongest_fast_market_wallet_fast_positions": 100,
+  "task": "Wallet Intelligence Behavior Metrics v1",
+  "wallets_analyzed": 6,
+  "yes_no_patterns": {
+    "dominant_side": "YES",
+    "no_count": 225,
+    "yes_count": 234,
+    "yes_no_balance": "0.980392"
+  }
+}

@@ -1,0 +1,36 @@
+field_name,data_type,requirement,description,source,normalization_rule
+wallet_id,string,required,normalized wallet/proxy address,source profile allowlist or row.proxyWallet,lowercase hex when address; preserve resolved profile mapping
+profile_url,string,required,Polymarket profile URL from seed list,watched_wallets.example.csv / wallet_profiles.csv,preserve original profile URL including @ handles
+source_endpoint,string,required,full public endpoint URL used for the raw row,fetch manifest,must include query params except volatile cache path
+source_endpoint_name,enum,required,activity or trades endpoint label,fetch manifest,activity_primary or trades_cross_check
+activity_type,enum,required,Polymarket activity type,row.type,TRADE for first scope; record other values only if explicitly requested later
+activity_timestamp,integer,required,public activity/trade timestamp in Unix seconds,row.timestamp,parse to UTC datetime in derived fields; reject null for normalized trade rows
+activity_datetime_utc,datetime,required,UTC ISO timestamp derived from activity_timestamp,derived,deterministic conversion from Unix seconds
+transaction_hash,string,required,public transaction hash for provenance and dedupe,row.transactionHash,lowercase when hex; may not uniquely identify split fills alone
+condition_id,string,required,Polymarket condition ID / market resolution key,row.conditionId,lowercase when hex
+token_id,string,required,outcome token / CLOB asset identifier,row.asset,store as string to avoid integer precision loss
+asset_id,string,required,alias for token_id used by CLOB prices-history,row.asset,same value as token_id in v1 normalized export
+market_slug,string,required,market slug for classification and metadata joins,row.slug,e.g. btc-updown-15m-1771326900
+event_slug,string,recommended,event slug when present,row.eventSlug,nullable but coverage must be reported
+market_title,string,recommended,human-readable market title,row.title,used only for review/classification
+outcome,string,required,"outcome label, typically Up/Down/Yes/No",row.outcome,preserve raw case plus normalized side fields
+outcome_index,integer,recommended,outcome index from Polymarket,row.outcomeIndex,nullable
+side,enum,required,trade side from endpoint perspective,row.side,BUY or SELL; do not infer if missing
+price,decimal,required,contract price at row timestamp,row.price,"normalized to 0-1 decimal; reject outside [0,1] unless raw anomaly is quarantined"
+size,decimal,required,token/share size,row.size,non-negative decimal
+notional_value,decimal,recommended,USDC notional if supplied or deterministically computed,row.usdcSize or price*size,flag whether endpoint or computed
+notional_source,enum,required,notional provenance,derived,"endpoint_usdcSize, computed_price_times_size, unavailable"
+market_type,enum,required,normalized market family,derived from slug/title,"fast_crypto_up_down, crypto_other, weather, politics, sports, other, unknown"
+asset_class,enum,required,underlying asset classification,derived from slug/title,"BTC, ETH, SOL, other, unknown"
+up_down_market,boolean,required,whether market is an Up/Down market,derived from slug/title/outcome,true for recognized BTC/ETH/SOL Up/Down markets
+time_to_expiry_seconds,integer,optional,expiry minus activity timestamp,join market metadata/endDate or slug epoch,nullable until metadata join succeeds
+expiry_timestamp,integer,optional,market expiry/end timestamp,market metadata or slug parse,record source in expiry_source
+expiry_source,enum,required,how expiry was obtained,derived,"market_metadata, slug_epoch, unavailable"
+entry_or_exit_candidate,enum,required,lifecycle role candidate,derived from side/type,"entry_candidate, exit_candidate, resolution_candidate, rebate_or_other, unknown"
+lifecycle_group_key,string,required,key for grouping lifecycle rows,derived,wallet_id|condition_id|token_id|outcome
+dedupe_key,string,required,stable row dedupe key,derived,wallet_id|source_endpoint_name|transaction_hash|condition_id|token_id|timestamp|side|price|size
+source_fetch_timestamp,datetime,required,UTC timestamp of raw endpoint fetch,fetch manifest,same for all rows in a raw page
+raw_payload_hash,string,required,SHA-256 hash of canonical raw row JSON,derived,hash before normalization after stable key ordering
+raw_page_hash,string,required,SHA-256 hash of raw page payload,derived,supports deterministic rebuild and provenance
+normalization_version,string,required,normalizer version,pipeline constant,wallet_trade_history_v1
+data_quality_flags,string,required,semicolon-separated explicit quality flags,derived,e.g. missing_event_slug;computed_notional;metadata_join_missing

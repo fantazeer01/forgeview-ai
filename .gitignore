@@ -1,19 +1,39 @@
 # Local secrets and credentials
-ForgeViewAIContent/*config.json
-ForgeViewAIContent/youtube_token.json
-ForgeViewAIContent/youtube_client_secret.json
-ForgeViewAIContent/telegram_config*.json
+content/config/*config.json
+content/config/youtube_token.json
+content/config/youtube_client_secret.json
+content/config/telegram_config*.json
 
 # Generated media and working files
-ForgeViewAIVideos/
-Logs/
-**/__pycache__/
-**/*.pyc
+output/
+state/logs/
 **/.venv/
 **/work/
 **/output/
 
 # Runtime logs and API responses
-Exports/*_response.json
-Exports/*_stdout.log
-Exports/*_stderr.log
+output/automation/*_response.json
+output/automation/*_stdout.log
+output/automation/*_stderr.log
+
+# Python caches
+__pycache__/
+**/__pycache__/
+.pytest_cache/
+**/.pytest_cache/
+*.pyc
+**/*.pyc
+
+# Standardized ForgeView runtime data
+state/*.json
+!state/*.example.json
+
+# Large runtime artifacts
+polymarket/runs/
+polymarket/data/**/input_sessions/
+*.jsonl
+*.parquet
+*.log
+**/*.jsonl
+**/*.parquet
+**/*.log

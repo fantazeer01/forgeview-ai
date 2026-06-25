@@ -1,0 +1,35 @@
+{
+  "asset_counts": {
+    "BTC": 353,
+    "ETH": 355,
+    "SOL": 356
+  },
+  "class_imbalance_percentage": 0.9398,
+  "dataset_quality_score": 99.52,
+  "down_count": 537,
+  "duplicate_market_ids": 0,
+  "duplicate_rate_percentage": 0.0,
+  "duplicate_rows": 0,
+  "feature_completeness_percentage": 99.1776,
+  "minority_class_percentage": 49.5301,
+  "missing_values": 175,
+  "missing_values_percentage": 0.5482,
+  "mock_samples": 0,
+  "public_class_balance": {
+    "DOWN": 537,
+    "UP": 527
+  },
+  "public_only_sample_count": 1064,
+  "public_samples": 1064,
+  "reason": "Dataset meets the v1 training quality gates.",
+  "score_components": {
+    "class_balance": 99.0602,
+    "duplicate_control": 100.0,
+    "feature_completeness": 99.1776,
+    "missing_value_control": 99.4518,
+    "public_sample_ratio": 100.0
+  },
+  "total_samples": 1064,
+  "training_recommended": true,
+  "up_count": 527
+}

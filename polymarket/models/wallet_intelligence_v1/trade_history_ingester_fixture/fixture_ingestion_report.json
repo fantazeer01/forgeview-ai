@@ -1,0 +1,73 @@
+{
+  "duplicate_rows_removed": 0,
+  "fixture_pages": 1,
+  "fixture_path": "polymarket\\models\\wallet_intelligence_v1\\deep_history_feasibility\\bounded_probe_sample.jsonl",
+  "generated_at_utc": "2026-06-24T20:45:39+00:00",
+  "input_rows": 50,
+  "normalized_rows": 50,
+  "output_dir": "polymarket\\models\\wallet_intelligence_v1\\trade_history_ingester_fixture",
+  "pages_by_wallet": {
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a": 1
+  },
+  "parquet_status": "not_written_no_project_parquet_dependency",
+  "recommended_next_task": "Wallet Public Trade History Bounded Public Smoke v1",
+  "rows_by_wallet": {
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a": 50
+  },
+  "schema_fields": 35,
+  "strict_rules_observed": [
+    "fixture-only normalization",
+    "no broad public ingestion",
+    "no live trading",
+    "no wallet/private-key connection",
+    "no order placement",
+    "no capture campaign",
+    "no holdout inspection",
+    "no holdout evaluation"
+  ],
+  "task": "Wallet Public Trade History Ingester Fixture Implementation v1",
+  "validation_gates": {
+    "bounded_scope_compliance": {
+      "passed": true,
+      "violations": []
+    },
+    "deterministic_export": {
+      "passed": true
+    },
+    "duplicate_rate": {
+      "duplicate_rate_before_dedupe": 0.0,
+      "duplicates_removed": 0,
+      "passed": true
+    },
+    "fast_crypto_classification_coverage": {
+      "coverage": 1.0,
+      "passed": true,
+      "recognizable_fast_crypto_rows": 50
+    },
+    "join_quality_reporting_placeholder": {
+      "notes": "fixture task does not perform joins; future joins must report coverage explicitly",
+      "passed": true
+    },
+    "market_classification_coverage": {
+      "coverage": 1.0,
+      "passed": true
+    },
+    "provenance_completeness": {
+      "coverage": 1.0,
+      "passed": true
+    },
+    "required_field_coverage": {
+      "coverage": 1.0,
+      "passed": true
+    },
+    "safety_boundary_compliance": {
+      "notes": "fixture-only code path; no wallet/private-key/order/live-trading methods invoked",
+      "passed": true
+    },
+    "timestamp_parse_rate": {
+      "coverage": 1.0,
+      "passed": true
+    }
+  },
+  "validation_gates_passed": true
+}

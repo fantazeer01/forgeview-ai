@@ -1,0 +1,615 @@
+﻿{
+    "name":  "BTC Futures Paper Bot - v22 QUALITY FILTERS",
+    "nodes":  [
+                  {
+                      "parameters":  {
+                                         "rule":  {
+                                                      "interval":  [
+                                                                       {
+                                                                           "field":  "minutes",
+                                                                           "minutesInterval":  15
+                                                                       }
+                                                                   ]
+                                                  }
+                                     },
+                      "id":  "e1778037-10ae-4e6d-8ca1-8bd0df7adf47",
+                      "name":  "Every 15 Minutes",
+                      "type":  "n8n-nodes-base.scheduleTrigger",
+                      "typeVersion":  1.2,
+                      "position":  [
+                                       0,
+                                       0
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "url":  "https://api.binance.com/api/v3/klines?symbol=BTCUSDT\u0026interval=15m\u0026limit=500",
+                                         "options":  {
+                                                         "timeout":  20000
+                                                     }
+                                     },
+                      "id":  "95a6ea02-41a3-4f50-9663-3f0ebc0caae8",
+                      "name":  "Fetch BTC 15m Candles",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       672,
+                                       96
+                                   ],
+                      "continueOnFail":  true
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "\n\nfunction analyzeNewsSentiment() {\n  function nodeRaw(name) {\n    try {\n      const j = $(name).first().json || {};\n      if (typeof j === \"string\") return j;\n      if (typeof j.data === \"string\") return j.data;\n      if (typeof j.body === \"string\") return j.body;\n      if (typeof j.response === \"string\") return j.response;\n      return JSON.stringify(j);\n    } catch (e) {\n      return \"\";\n    }\n  }\n\n  function decode(s) {\n    return String(s || \"\")\n      .replace(/\u003c!\\[CDATA\\[/g, \"\")\n      .replace(/\\]\\]\u003e/g, \"\")\n      .replace(/\u0026amp;/g, \"\u0026\")\n      .replace(/\u0026quot;/g, \u0027\"\u0027)\n      .replace(/\u0026#39;/g, \"\u0027\")\n      .replace(/\u0026lt;/g, \"\u003c\")\n      .replace(/\u0026gt;/g, \"\u003e\");\n  }\n\n  function titlesFromXml(xml) {\n    const text = decode(xml);\n    const out = [];\n    const re = /\u003ctitle[^\u003e]*\u003e([\\s\\S]*?)\u003c\\/title\u003e/gi;\n    let m;\n    while ((m = re.exec(text)) !== null) {\n      const title = decode(m[1]).replace(/\u003c[^\u003e]+\u003e/g, \"\").trim();\n      if (title \u0026\u0026 title.length \u003e 8 \u0026\u0026 !/cointelegraph|coindesk/i.test(title)) out.push(title);\n      if (out.length \u003e= 20) break;\n    }\n    return out;\n  }\n\n  const titles = [\n    ...titlesFromXml(nodeRaw(\"Fetch Cointelegraph News HTTP\")),\n    ...titlesFromXml(nodeRaw(\"Fetch CoinDesk News HTTP\"))\n  ].filter((v, i, a) =\u003e v \u0026\u0026 a.indexOf(v) === i).slice(0, 25);\n\n  const btcTitles = titles.filter(t =\u003e {\n    const x = t.toLowerCase();\n    return x.includes(\"bitcoin\") || x.includes(\"btc\") || x.includes(\"crypto\") || x.includes(\"etf\") || x.includes(\"fed\") || x.includes(\"binance\");\n  });\n\n  let score = 0, risk = 0;\n  const bullish = [\"inflow\",\"inflows\",\"blackrock\",\"accumulate\",\"bullish\",\"rally\",\"surge\",\"breakout\",\"institutional\",\"adoption\",\"approved\",\"approval\",\"rate cut\",\"dovish\",\"record high\",\"buys\"];\n  const bearish = [\"outflow\",\"outflows\",\"sell-off\",\"selloff\",\"crash\",\"plunge\",\"drop\",\"bearish\",\"liquidation\",\"liquidations\",\"lawsuit\",\"sec\",\"ban\",\"hack\",\"exploit\",\"fraud\",\"probe\",\"investigation\",\"regulation\",\"hawkish\",\"rate hike\",\"falls\",\"slump\"];\n  const highRisk = [\"hack\",\"exploit\",\"lawsuit\",\"sec\",\"ban\",\"fraud\",\"liquidation\",\"liquidations\",\"crash\",\"probe\",\"investigation\",\"bankruptcy\"];\n\n  for (const title of btcTitles) {\n    const x = title.toLowerCase();\n    for (const w of bullish) if (x.includes(w)) score += 4;\n    for (const w of bearish) if (x.includes(w)) score -= 4;\n    for (const w of highRisk) if (x.includes(w)) risk += 1;\n  }\n\n  score = Math.max(-30, Math.min(30, score));\n\n  let sentiment = \"NEUTRAL\";\n  if (score \u003e= 12) sentiment = \"BULLISH\";\n  if (score \u003c= -12) sentiment = \"BEARISH\";\n  if (risk \u003e= 2) sentiment = \"HIGH_RISK\";\n  if (titles.length === 0) sentiment = \"NO_NEWS\";\n  else if (btcTitles.length === 0) sentiment = \"NO_BTC_NEWS\";\n\n  return {\n    newsScore: score,\n    newsSentiment: sentiment,\n    newsRiskCount: risk,\n    newsItemsCount: btcTitles.length,\n    newsTotalTitles: titles.length,\n    topNews: btcTitles.slice(0, 3)\n  };\n}\n\nfunction getKlines() {\n  const first = $input.first().json;\n  if (Array.isArray(first) \u0026\u0026 Array.isArray(first[0])) return first;\n  if (Array.isArray(first) \u0026\u0026 first.length \u003e= 6) {\n    return $input.all().map(i =\u003e i.json).filter(k =\u003e Array.isArray(k) \u0026\u0026 k.length \u003e= 6);\n  }\n  return [];\n}\n\nfunction aggregate(klines, group) {\n  const out = [];\n  for (let i = 0; i + group \u003c= klines.length; i += group) {\n    const c = klines.slice(i, i + group);\n    out.push([\n      c[0][0],\n      c[0][1],\n      Math.max(...c.map(x =\u003e Number(x[2]))).toString(),\n      Math.min(...c.map(x =\u003e Number(x[3]))).toString(),\n      c[c.length - 1][4],\n      c.reduce((s, x) =\u003e s + Number(x[5]), 0).toString()\n    ]);\n  }\n  return out;\n}\n\nfunction nums(klines, idx) {\n  return klines.map(k =\u003e Number(k[idx])).filter(Number.isFinite);\n}\n\nfunction ema(arr, p) {\n  if (!arr.length) return 0;\n  const k = 2 / (p + 1);\n  let e = arr[0];\n  for (let i = 1; i \u003c arr.length; i++) e = arr[i] * k + e * (1 - k);\n  return e;\n}\n\nfunction sma(arr, p) {\n  const s = arr.slice(-p);\n  return s.reduce((a,b)=\u003ea+b,0) / Math.max(1, s.length);\n}\n\nfunction rsi(arr, p = 14) {\n  if (arr.length \u003c= p + 1) return 50;\n  let gains = 0, losses = 0;\n  for (let i = arr.length - p; i \u003c arr.length - 1; i++) {\n    const d = arr[i + 1] - arr[i];\n    if (d \u003e 0) gains += d; else losses -= d;\n  }\n  const avgGain = gains / p;\n  const avgLoss = losses / p || 0.000001;\n  const rs = avgGain / avgLoss;\n  return 100 - (100 / (1 + rs));\n}\n\nfunction atr(highs, lows, closes, p = 14) {\n  if (closes.length \u003c= p + 1) return 0;\n  const trs = [];\n  for (let i = 1; i \u003c closes.length; i++) {\n    trs.push(Math.max(\n      highs[i] - lows[i],\n      Math.abs(highs[i] - closes[i-1]),\n      Math.abs(lows[i] - closes[i-1])\n    ));\n  }\n  const s = trs.slice(-p);\n  return s.reduce((a,b)=\u003ea+b,0) / Math.max(1, s.length);\n}\n\nfunction trend(closes) {\n  if (closes.length \u003c 30) return \"UNKNOWN\";\n  const e9 = ema(closes, 9);\n  const e21 = ema(closes, 21);\n  const e50 = closes.length \u003e= 50 ? ema(closes, 50) : ema(closes, Math.max(10, Math.floor(closes.length / 2)));\n  if (e9 \u003e e21 \u0026\u0026 e21 \u003e e50) return \"BULLISH\";\n  if (e9 \u003c e21 \u0026\u0026 e21 \u003c e50) return \"BEARISH\";\n  return \"SIDEWAYS\";\n}\n\nconst klines15 = getKlines();\n\nif (klines15.length \u003c 100) {\n  return [{ json: {\n    canAnalyze: false,\n    price: \"NO_DATA\",\n    rsi: \"N/A\",\n    trend15m: \"UNKNOWN\",\n    trend1h: \"UNKNOWN\",\n    trend2h: \"UNKNOWN\",\n    trend4h: \"UNKNOWN\",\n    longScore: 0,\n    shortScore: 0,\n    signalScore: 0,\n    technicalSignal: \"HOLD\",\n    technicalReason: \"Not enough candles\",\n    timeframeSource: \"DERIVED_FROM_15M\",\n    binanceChart: \"https://www.binance.com/en/futures/BTCUSDT\"\n  }}];\n}\n\nconst klines1h = aggregate(klines15, 4);\nconst klines2h = aggregate(klines15, 8);\nconst klines4h = aggregate(klines15, 16);\n\nconst closes15 = nums(klines15, 4);\nconst highs15 = nums(klines15, 2);\nconst lows15 = nums(klines15, 3);\nconst volumes15 = nums(klines15, 5);\n\nconst closes1h = nums(klines1h, 4);\nconst closes2h = nums(klines2h, 4);\nconst closes4h = nums(klines4h, 4);\n\nconst price = closes15.at(-1);\nconst rsi14 = rsi(closes15);\nconst trend15m = trend(closes15);\nconst trend1h = trend(closes1h);\nconst trend2h = trend(closes2h);\nconst trend4h = trend(closes4h);\n\nconst ema9 = ema(closes15, 9);\nconst ema21 = ema(closes15, 21);\nconst macd = ema(closes15, 12) - ema(closes15, 26);\nconst a = atr(highs15, lows15, closes15, 14);\nconst volatility = (a / price) * 100;\nconst volRatio = volumes15.at(-1) / (sma(volumes15, 50) || 1);\nconst news = analyzeNewsSentiment();\n\nlet longScore = 50;\nlet shortScore = 50;\n\nif (trend15m === \"BULLISH\") { longScore += 8; shortScore -= 8; }\nif (trend1h === \"BULLISH\") { longScore += 12; shortScore -= 12; }\nif (trend2h === \"BULLISH\") { longScore += 16; shortScore -= 16; }\nif (trend4h === \"BULLISH\") { longScore += 18; shortScore -= 18; }\n\nif (trend15m === \"BEARISH\") { shortScore += 8; longScore -= 8; }\nif (trend1h === \"BEARISH\") { shortScore += 12; longScore -= 12; }\nif (trend2h === \"BEARISH\") { shortScore += 16; longScore -= 16; }\nif (trend4h === \"BEARISH\") { shortScore += 18; longScore -= 18; }\n\nif (price \u003e ema9 \u0026\u0026 ema9 \u003e ema21) { longScore += 10; shortScore -= 6; }\nif (price \u003c ema9 \u0026\u0026 ema9 \u003c ema21) { shortScore += 10; longScore -= 6; }\n\nif (macd \u003e 0) { longScore += 8; shortScore -= 6; }\nif (macd \u003c 0) { shortScore += 8; longScore -= 6; }\n\nif (rsi14 \u003e= 38 \u0026\u0026 rsi14 \u003c= 72) longScore += 6;\nif (rsi14 \u003e= 28 \u0026\u0026 rsi14 \u003c= 62) shortScore += 6;\n\nif (volRatio \u003e 1) { longScore += 4; shortScore += 4; }\nif (volRatio \u003c 0.7) { longScore -= 5; shortScore -= 5; }\nif (volatility \u003c 0.08) { longScore -= 10; shortScore -= 10; }\nif (volatility \u003e 4) { longScore -= 15; shortScore -= 15; }\n\n// RSS news adjustment futures\nif (news.newsSentiment === \"BULLISH\") { longScore += Math.max(5, Math.round(news.newsScore / 2)); shortScore -= 10; }\nif (news.newsSentiment === \"BEARISH\") { shortScore += Math.max(5, Math.round(Math.abs(news.newsScore) / 2)); longScore -= 10; }\nif (news.newsSentiment === \"HIGH_RISK\") {\n  longScore -= 8; shortScore -= 8;\n  if (trend1h === \"BEARISH\" \u0026\u0026 trend2h === \"BEARISH\") shortScore += 10;\n  if (trend1h === \"BULLISH\" \u0026\u0026 trend2h === \"BULLISH\") longScore += 10;\n}\n\nlongScore = Math.max(0, Math.min(100, Math.round(longScore)));\nshortScore = Math.max(0, Math.min(100, Math.round(shortScore)));\n\nlet signal = \"HOLD\";\nlet reason = \"No quality futures setup\";\n\nif (\n  longScore \u003e= 45 \u0026\u0026\n  longScore \u003e= shortScore + 8 \u0026\u0026\n  trend1h !== \"BEARISH\" \u0026\u0026\n  trend2h !== \"BEARISH\" \u0026\u0026\n  price \u003e ema9 \u0026\u0026\n  macd \u003e 0\n) {\n  signal = \"LONG\";\n  reason = \"Auto LONG: longScore dominant\";\n}\n\nif (\n  shortScore \u003e= 45 \u0026\u0026\n  shortScore \u003e= longScore + 8 \u0026\u0026\n  trend1h !== \"BULLISH\" \u0026\u0026\n  trend2h !== \"BULLISH\" \u0026\u0026\n  price \u003c ema9 \u0026\u0026\n  macd \u003c 0\n) {\n  signal = \"SHORT\";\n  reason = \"Auto SHORT: shortScore dominant\";\n}\n\nconst signalScore = signal === \"LONG\" ? longScore : signal === \"SHORT\" ? shortScore : Math.max(longScore, shortScore);\n\nreturn [{ json: {\n  canAnalyze: true,\n  symbol: \"BTCUSDT\",\n  price: Number(price.toFixed(2)),\n  rsi: Number(rsi14.toFixed(2)),\n  atr: Number(a.toFixed(2)),\n  volatilityPercent: Number(volatility.toFixed(2)),\n  volumeRatio: Number(volRatio.toFixed(2)),\n  trend15m,\n  trend1h,\n  trend2h,\n  trend4h,\n  timeframeSource: \"DERIVED_FROM_15M\",\n  signalScore,\n  longScore,\n  shortScore,\n  technicalSignal: signal,\n  technicalReason: reason,\n  binanceChart: \"https://www.binance.com/en/futures/BTCUSDT\"\n}}];"
+                                     },
+                      "id":  "817a8ccb-8060-44a3-9175-abf1c52d8711",
+                      "name":  "Analyze Futures Market",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       896,
+                                       96
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "const crypto = require(\u0027crypto\u0027);\n\nconst apiKey = \u0027cUOMm2OGxKw9i0rniVEMeRg2sg2aY0kI3rMdKHR6EJ6QzbQlATQCLkXtFXNL9Fhp\u0027;\nconst secret = \u00276pCK4wT6vWk9YnILkU0AXuLoaF1NcONX5VlGnvJvHesuQhlmlJ4WI4Ym47WGp90U\u0027;\n\nconst market = $input.first().json;\nconst state = $getWorkflowStaticData(\u0027global\u0027);\nconst now = Date.now();\n\nif (!state.mode) state.mode = \u0027ACTIVE\u0027;\nstate.venue = \u0027FUTURES_PAPER\u0027;\nif (typeof state.paused !== \u0027boolean\u0027) state.paused = false;\nif (!state.position) state.position = { side: \u0027FLAT\u0027, entry: 0, qty: 0 };\nif (!state.stats) {\n  state.stats = { trades: 0, wins: 0, losses: 0, pnl: 0, errors: 0, lastError: \u0027\u0027 };\n}\nif (!state.lastTradeAt) state.lastTradeAt = 0;\nif (!state.lastLossAt) state.lastLossAt = 0;\n\nconst settings = {\n  SAFE: { minScore: 75, qty: 0.001, cooldownMin: 60, minHoldMin: 30, maxHoldMin: 120, leverage: 2 },\n  ACTIVE: { minScore: 55, qty: 0.001, cooldownMin: 25, minHoldMin: 15, maxHoldMin: 90, leverage: 3 },\n  AGGRESSIVE: { minScore: 60, qty: 0.001, cooldownMin: 10, minHoldMin: 15, maxHoldMin: 60, leverage: 5 }\n};\n\nconst cfg = settings[state.mode] || settings.ACTIVE;\n\nfunction prettyDateTime(ts) {\n  if (!ts) return \u0027N/A\u0027;\n  const d = new Date(new Date(ts).getTime() + 3 * 60 * 60 * 1000);\n  const y = d.getUTCFullYear();\n  const m = String(d.getUTCMonth() + 1).padStart(2, \u00270\u0027);\n  const day = String(d.getUTCDate()).padStart(2, \u00270\u0027);\n  const h = String(d.getUTCHours()).padStart(2, \u00270\u0027);\n  const min = String(d.getUTCMinutes()).padStart(2, \u00270\u0027);\n  const s = String(d.getUTCSeconds()).padStart(2, \u00270\u0027);\n  return `${y}-${m}-${day}  ${h}:${min}Рј ${s}СЃ`;\n}\n\nfunction chooseCooldownMinutes(market, cfg) {\n  const longScore = Number(market.longScore || market.signalScore || 0);\n  const shortScore = Number(market.shortScore || 0);\n  const signalScore = Math.max(longScore, shortScore);\n  const spread = Math.abs(longScore - shortScore);\n  const vol = Number(market.volatilityPercent || 0);\n  const vr = Number(market.volumeRatio || 1);\n  const strongTrend = signalScore \u003e= 90 \u0026\u0026 spread \u003e= 50 \u0026\u0026 ((market.trend1h === \u0027BEARISH\u0027 \u0026\u0026 market.trend2h === \u0027BEARISH\u0027) || (market.trend1h === \u0027BULLISH\u0027 \u0026\u0026 market.trend2h === \u0027BULLISH\u0027));\n  const normalTrend = signalScore \u003e= 70 \u0026\u0026 spread \u003e= 25 \u0026\u0026 market.trend1h !== \u0027SIDEWAYS\u0027 \u0026\u0026 market.trend2h !== \u0027SIDEWAYS\u0027;\n  const sideways = market.trend1h === \u0027SIDEWAYS\u0027 || market.trend2h === \u0027SIDEWAYS\u0027 || spread \u003c 20 || signalScore \u003c 60;\n  let cd = Number(cfg.cooldownMin || 25);\n  if (strongTrend) cd = 5;\n  else if (normalTrend) cd = 10;\n  else if (sideways) cd = 45;\n  else cd = 20;\n  if (vol \u003e= 2.0) cd = Math.max(cd, 20);\n  if (vr \u003c 0.8) cd = Math.max(cd, 30);\n  return Math.max(5, Math.min(60, cd));\n}\n\n\nfunction prettyTime() {\n  const d = new Date(Date.now() + 3 * 60 * 60 * 1000);\n  const y = d.getUTCFullYear();\n  const m = String(d.getUTCMonth() + 1).padStart(2, \u00270\u0027);\n  const day = String(d.getUTCDate()).padStart(2, \u00270\u0027);\n  const h = String(d.getUTCHours()).padStart(2, \u00270\u0027);\n  const min = String(d.getUTCMinutes()).padStart(2, \u00270\u0027);\n  const s = String(d.getUTCSeconds()).padStart(2, \u00270\u0027);\n  return `${y}-${m}-${day}  ${h}:${min}Рј ${s}СЃ`;\n}\n\nfunction chooseHoldMinutes(market, cfg) {\n  const score = Number(market.signalScore || 0);\n  const vol = Number(market.volatilityPercent || 0);\n  const vr = Number(market.volumeRatio || 1);\n\n  let hold = 30;\n\n  if (score \u003e= 80) hold = 120;\n  else if (score \u003e= 70) hold = 90;\n  else if (score \u003e= 60) hold = 60;\n  else if (score \u003e= 50) hold = 30;\n  else hold = 15;\n\n  if (vol \u003e= 1.2) hold = Math.min(hold, 45);\n  if (vol \u003e= 2.0) hold = Math.min(hold, 30);\n  if (vr \u003c 0.8) hold = Math.min(hold, 30);\n\n  hold = Math.max(cfg.minHoldMin || 15, Math.min(cfg.maxHoldMin || 120, hold));\n  return Math.max(15, Math.min(120, hold));\n}\n\nconst position = state.position;\nlet plannedPosition = null;\nlet plannedClose = false;\n\nlet pnl = 0;\nif (position.side === \u0027LONG\u0027 \u0026\u0026 position.entry \u003e 0) {\n  pnl = (Number(market.price) - Number(position.entry)) * Number(position.qty || 0);\n}\nif (position.side === \u0027SHORT\u0027 \u0026\u0026 position.entry \u003e 0) {\n  pnl = (Number(position.entry) - Number(market.price)) * Number(position.qty || 0);\n}\n\nlet desired = market.technicalSignal || \u0027HOLD\u0027;\nlet reason = market.technicalReason || \u0027No setup\u0027;\n\n// Paper v9 risk-manager direct signal override.\n// If Analyze Market leaves HOLD but score is strong,\n// Risk Manager opens paper LONG/SHORT directly.\nif (\n  desired === \u0027HOLD\u0027 \u0026\u0026\n  state.position \u0026\u0026\n  state.position.side === \u0027FLAT\u0027 \u0026\u0026\n  Number(market.shortScore || 0) \u003e= cfg.minScore \u0026\u0026\n  Number(market.shortScore || 0) \u003e= Number(market.longScore || 0) + 20 \u0026\u0026\n  market.trend1h === \u0027BEARISH\u0027 \u0026\u0026\n  market.trend2h === \u0027BEARISH\u0027 \u0026\u0026\n  market.trend4h !== \u0027BULLISH\u0027\n) {\n  desired = \u0027SHORT\u0027;\n  reason = \u0027Paper SHORT override: shortScore strong + 1h/2h bearish\u0027;\n}\n\nif (\n  desired === \u0027HOLD\u0027 \u0026\u0026\n  state.position \u0026\u0026\n  state.position.side === \u0027FLAT\u0027 \u0026\u0026\n  Number(market.longScore || 0) \u003e= cfg.minScore \u0026\u0026\n  Number(market.longScore || 0) \u003e= Number(market.shortScore || 0) + 20 \u0026\u0026\n  market.trend1h === \u0027BULLISH\u0027 \u0026\u0026\n  market.trend2h === \u0027BULLISH\u0027 \u0026\u0026\n  market.trend4h !== \u0027BEARISH\u0027\n) {\n  desired = \u0027LONG\u0027;\n  reason = \u0027Paper LONG override: longScore strong + 1h/2h bullish\u0027;\n}\n\nlet action = \u0027HOLD\u0027;\nlet orderSide = \u0027HOLD\u0027;\nlet positionAction = \u0027NONE\u0027;\n\n// Paper v7 force signal mapping.\nif (position.side === \u0027FLAT\u0027 \u0026\u0026 desired === \u0027LONG\u0027) {\n  action = \u0027LONG\u0027;\n  orderSide = \u0027BUY\u0027;\n  positionAction = \u0027OPEN_LONG\u0027;\n}\nif (position.side === \u0027FLAT\u0027 \u0026\u0026 desired === \u0027SHORT\u0027) {\n  action = \u0027SHORT\u0027;\n  orderSide = \u0027SELL\u0027;\n  positionAction = \u0027OPEN_SHORT\u0027;\n}\n\nif (position.side === \u0027LONG\u0027 \u0026\u0026 desired === \u0027SHORT\u0027) {\n  action = \u0027CLOSE_LONG\u0027;\n  orderSide = \u0027SELL\u0027;\n  positionAction = \u0027CLOSE_LONG\u0027;\n  reason = \u0027Opposite SHORT signal: close LONG\u0027;\n}\nif (position.side === \u0027SHORT\u0027 \u0026\u0026 desired === \u0027LONG\u0027) {\n  action = \u0027CLOSE_SHORT\u0027;\n  orderSide = \u0027BUY\u0027;\n  positionAction = \u0027CLOSE_SHORT\u0027;\n  reason = \u0027Opposite LONG signal: close SHORT\u0027;\n}\n\nif (position.side !== \u0027FLAT\u0027 \u0026\u0026 position.closeAt \u0026\u0026 now \u003e= new Date(position.closeAt).getTime()) {\n  if (position.side === \u0027LONG\u0027) {\n    action = \u0027CLOSE_LONG\u0027;\n    orderSide = \u0027SELL\u0027;\n    positionAction = \u0027CLOSE_LONG\u0027;\n    reason = \u0027Timed exit LONG\u0027;\n  }\n  if (position.side === \u0027SHORT\u0027) {\n    action = \u0027CLOSE_SHORT\u0027;\n    orderSide = \u0027BUY\u0027;\n    positionAction = \u0027CLOSE_SHORT\u0027;\n    reason = \u0027Timed exit SHORT\u0027;\n  }\n}\n\nif (position.side === \u0027LONG\u0027) {\n  if (position.stopLoss \u0026\u0026 Number(market.price) \u003c= position.stopLoss) { action = \u0027CLOSE_LONG\u0027; orderSide = \u0027SELL\u0027; positionAction = \u0027CLOSE_LONG\u0027; reason = \u0027LONG stop loss hit\u0027; }\n  if (position.takeProfit \u0026\u0026 Number(market.price) \u003e= position.takeProfit) { action = \u0027CLOSE_LONG\u0027; orderSide = \u0027SELL\u0027; positionAction = \u0027CLOSE_LONG\u0027; reason = \u0027LONG take profit hit\u0027; }\n}\nif (position.side === \u0027SHORT\u0027) {\n  if (position.stopLoss \u0026\u0026 Number(market.price) \u003e= position.stopLoss) { action = \u0027CLOSE_SHORT\u0027; orderSide = \u0027BUY\u0027; positionAction = \u0027CLOSE_SHORT\u0027; reason = \u0027SHORT stop loss hit\u0027; }\n  if (position.takeProfit \u0026\u0026 Number(market.price) \u003c= position.takeProfit) { action = \u0027CLOSE_SHORT\u0027; orderSide = \u0027BUY\u0027; positionAction = \u0027CLOSE_SHORT\u0027; reason = \u0027SHORT take profit hit\u0027; }\n}\n\nconst dynamicCooldownMin = chooseCooldownMinutes(market, cfg);\nconst lastTradeTs = Number(state.lastPaperTradeAt || state.lastTradeAt || 0);\nconst cooldownStartTs = lastTradeTs || 0;\nconst cooldownEndTs = cooldownStartTs ? cooldownStartTs + dynamicCooldownMin * 60 * 1000 : 0;\nconst isEntry = [\u0027OPEN_LONG\u0027,\u0027OPEN_SHORT\u0027].includes(positionAction);\nconst isExit = [\u0027CLOSE_LONG\u0027,\u0027CLOSE_SHORT\u0027].includes(positionAction);\n\nconst QUALITY_MIN_SCORE = 85;\nconst STRONG_SIGNAL_SCORE = 95;\nconst longScore = Number(market.longScore || 0);\nconst shortScore = Number(market.shortScore || 0);\nconst trendsForQuality = [market.trend15m, market.trend1h, market.trend2h, market.trend4h];\nconst bearishTrendConfirmationCount = trendsForQuality.filter(t =\u003e t === \u0027BEARISH\u0027).length;\nconst bullishTrendConfirmationCount = trendsForQuality.filter(t =\u003e t === \u0027BULLISH\u0027).length;\nconst entryScore = positionAction === \u0027OPEN_LONG\u0027 ? longScore : positionAction === \u0027OPEN_SHORT\u0027 ? shortScore : 0;\nconst requiredMinScore = isEntry ? QUALITY_MIN_SCORE : 0;\nconst trendConfirmationCount = positionAction === \u0027OPEN_LONG\u0027\n  ? bullishTrendConfirmationCount\n  : positionAction === \u0027OPEN_SHORT\u0027\n    ? bearishTrendConfirmationCount\n    : 0;\nconst entryQualityMode = !isEntry\n  ? \u0027NONE\u0027\n  : entryScore \u003e= STRONG_SIGNAL_SCORE\n    ? \u0027STRONG\u0027\n    : entryScore \u003e= QUALITY_MIN_SCORE\n      ? \u0027MEDIUM\u0027\n      : \u0027WEAK\u0027;\n\nlet block = \u0027\u0027;\nlet qualityBlockReason = \u0027\u0027;\n\nif (state.paused) block = \u0027Bot paused\u0027;\nif (!market.canAnalyze) block = market.technicalReason || \u0027Market data unavailable\u0027;\n\n// FUTURES v22 QUALITY FILTERS\n// Entry-only filter: exits must never be blocked by score quality rules.\nif (isEntry) {\n  if (positionAction === \u0027OPEN_SHORT\u0027) {\n    if (shortScore \u003c QUALITY_MIN_SCORE) {\n      qualityBlockReason = \u0027Blocked: weak signal score\u0027;\n    } else if (shortScore \u003c STRONG_SIGNAL_SCORE \u0026\u0026 bearishTrendConfirmationCount \u003c 2) {\n      qualityBlockReason = \u0027SHORT blocked: medium signal requires at least 2 bearish timeframes\u0027;\n    }\n  }\n\n  if (positionAction === \u0027OPEN_LONG\u0027) {\n    if (longScore \u003c QUALITY_MIN_SCORE) {\n      qualityBlockReason = \u0027Blocked: weak signal score\u0027;\n    } else if (longScore \u003c STRONG_SIGNAL_SCORE) {\n      qualityBlockReason = \u0027LONG blocked: temporary safety requires Long Score \u003e= 95\u0027;\n    }\n  }\n\n  if (qualityBlockReason) block = qualityBlockReason;\n}\n\n// Existing SHORT safety filters stay entry-only and do not affect exits.\nif (\n  positionAction === \u0027OPEN_SHORT\u0027 \u0026\u0026\n  Number(market.shortScore || 0) \u003c 95 \u0026\u0026\n  market.trend15m === \u0027BULLISH\u0027 \u0026\u0026\n  Number(market.rsi || 0) \u003e 65\n) {\n  block = \u0027SHORT blocked: 15m bullish + RSI \u003e 65\u0027;\n}\n\nif (\n  positionAction === \u0027OPEN_SHORT\u0027 \u0026\u0026\n  Number(market.longScore || 0) \u003e 40 \u0026\u0026\n  Number(market.shortScore || 0) \u003c 70\n) {\n  block = \u0027SHORT blocked: weak edge, Long Score \u003e 40 and Short Score \u003c 70\u0027;\n}\n\n// Paper v7: cooldown only applies after confirmed paper opens/closes, not after old rejected real orders.\nif (isEntry \u0026\u0026 cooldownStartTs \u0026\u0026 now \u003c cooldownEndTs) {\n  block = `Cooldown active until ${prettyDateTime(cooldownEndTs)}`;\n}\nif (isEntry \u0026\u0026 state.lastLossAt \u0026\u0026 now - state.lastLossAt \u003c 60 * 60 * 1000) {\n  block = \u0027Cooldown after loss\u0027;\n}\n\n\n// FUTURES v21 LOSS COOLDOWN DISPLAY\nif (\n  isEntry \u0026\u0026\n  state.lastLossAt \u0026\u0026\n  now - state.lastLossAt \u003c 60 * 60 * 1000\n) {\n  block = \u0027Cooldown after loss: 60 min\u0027;\n}\n\nif (isExit \u0026\u0026 block \u0026\u0026 block.toLowerCase().includes(\u0027cooldown\u0027)) {\n  block = \u0027\u0027;\n}\n\nif (action === \u0027HOLD\u0027) block = block || \u0027Waiting for valid Futures setup\u0027;\n\nconst base = {\n  canTrade: false,\n  action: \u0027HOLD\u0027,\n  desired,\n  orderSide: \u0027HOLD\u0027,\n  positionAction: \u0027NONE\u0027,\n  reason: block || reason,\n  price: market.price,\n  rsi: market.rsi,\n  trend15m: market.trend15m,\n  trend1h: market.trend1h,\n  trend2h: market.trend2h,\n  trend4h: market.trend4h,\n  timeframeSource: market.timeframeSource || \u0027DERIVED_FROM_15M\u0027,\n  newsScore: market.newsScore || 0,\n  newsSentiment: market.newsSentiment || \u0027NO_NEWS\u0027,\n  newsRiskCount: market.newsRiskCount || 0,\n  newsItemsCount: market.newsItemsCount || 0,\n  newsTotalTitles: market.newsTotalTitles || 0,\n  topNews: market.topNews || [],\n  signalScore: Number(market.signalScore || 0),\n  longScore: Number(market.longScore || 0),\n  shortScore: Number(market.shortScore || 0),\n  minScore: QUALITY_MIN_SCORE,\n  entryScore,\n  requiredMinScore,\n  trendConfirmationCount,\n  bearishTrendConfirmationCount,\n  bullishTrendConfirmationCount,\n  entryQualityMode,\n  blockReason: block || \u0027\u0027,\n  mode: state.mode,\n  venue: \u0027FUTURES_PAPER\u0027,\n  leverage: cfg.leverage,\n  paused: state.paused,\n  position: state.position,\n  plannedPosition,\n    plannedClose,\n    previousPosition: position,\n    pnl: Number(pnl.toFixed(4)),\n  stats: state.stats,\n  binanceChart: market.binanceChart,\n  finalUrl: \u0027\u0027,\n  cooldownMinutes: dynamicCooldownMin,\n  cooldownStartedAt: cooldownStartTs ? prettyDateTime(cooldownStartTs) : \u0027N/A\u0027,\n  cooldownEndsAt: cooldownEndTs ? prettyDateTime(cooldownEndTs) : \u0027N/A\u0027,\n  cooldownActive: !!(cooldownEndTs \u0026\u0026 now \u003c cooldownEndTs),\n  apiKey,\n  prettyTime: prettyTime(),\n  cooldownMinutes: dynamicCooldownMin,\n  cooldownStartedAt: cooldownStartTs ? prettyDateTime(cooldownStartTs) : \u0027N/A\u0027,\n  cooldownEndsAt: cooldownEndTs ? prettyDateTime(cooldownEndTs) : \u0027N/A\u0027,\n  cooldownActive: !!(cooldownEndTs \u0026\u0026 now \u003c cooldownEndTs)\n};\n\nif (block) return [{ json: base }];\n\nconst qty = cfg.qty;\nconst symbol = \u0027BTCUSDT\u0027;\nconst timestamp = Date.now();\nconst recvWindow = 60000;\nconst endpoint = \u0027https://demo-fapi.binance.com/fapi/v1/order\u0027;\n\nlet qs = `symbol=${symbol}\u0026side=${orderSide}\u0026type=MARKET\u0026quantity=${qty}\u0026timestamp=${timestamp}\u0026recvWindow=${recvWindow}`;\n\nif ([\u0027CLOSE_LONG\u0027, \u0027CLOSE_SHORT\u0027].includes(positionAction)) {\n  qs += \u0027\u0026reduceOnly=true\u0027;\n}\n\nconst signature = crypto.createHmac(\u0027sha256\u0027, secret).update(qs).digest(\u0027hex\u0027);\nconst finalUrl = `${endpoint}?${qs}\u0026signature=${signature}`;\n\nlet stopLoss = \u0027\u0027;\nlet takeProfit = \u0027\u0027;\nlet closeAt = \u0027\u0027;\nlet holdMinutes = \u0027\u0027;\n\nif (positionAction === \u0027OPEN_LONG\u0027) {\n  holdMinutes = chooseHoldMinutes(market, cfg);\n  stopLoss = Number((Number(market.price) - Number(market.atr || 0) * 1.1).toFixed(2));\n  takeProfit = Number((Number(market.price) + Number(market.atr || 0) * 2.4).toFixed(2));\n  closeAt = new Date(now + holdMinutes * 60 * 1000).toISOString();\n  plannedPosition = { side: \u0027LONG\u0027, entry: Number(market.price), qty, stopLoss, takeProfit, closeAt,\n    plannedCloseAt: closeAt ? prettyDateTime(closeAt) : \u0027N/A\u0027, holdMinutes, venue: \u0027FUTURES_PAPER\u0027, leverage: cfg.leverage };\n}\n\nif (positionAction === \u0027OPEN_SHORT\u0027) {\n  holdMinutes = chooseHoldMinutes(market, cfg);\n  stopLoss = Number((Number(market.price) + Number(market.atr || 0) * 1.1).toFixed(2));\n  takeProfit = Number((Number(market.price) - Number(market.atr || 0) * 2.4).toFixed(2));\n  closeAt = new Date(now + holdMinutes * 60 * 1000).toISOString();\n  plannedPosition = { side: \u0027SHORT\u0027, entry: Number(market.price), qty, stopLoss, takeProfit, closeAt, holdMinutes, venue: \u0027FUTURES_PAPER\u0027, leverage: cfg.leverage };\n}\n\nplannedClose = [\u0027CLOSE_LONG\u0027,\u0027CLOSE_SHORT\u0027].includes(positionAction) \u0026\u0026 position.side !== \u0027FLAT\u0027;\n\nstate.lastTradeAt = now;\n\nreturn [{\n  json: {\n    ...base,\n    canTrade: true,\n    action,\n    orderSide,\n    positionAction,\n    reason,\n    quantity: qty,\n    entry: [\u0027OPEN_LONG\u0027,\u0027OPEN_SHORT\u0027].includes(positionAction) ? market.price : position.entry,\n    exitPrice: [\u0027CLOSE_LONG\u0027,\u0027CLOSE_SHORT\u0027].includes(positionAction) ? market.price : \u0027\u0027,\n    stopLoss,\n    takeProfit,\n    closeAt,\n    holdMinutes: holdMinutes || position.holdMinutes || \u0027\u0027,\n    finalUrl,\n    apiKey,\n    plannedPosition,\n    plannedClose,\n    previousPosition: position,\n    pnl: Number(pnl.toFixed(4))\n  }\n}];"
+                                     },
+                      "id":  "c6e0da6d-7ad9-4903-9433-20d81bb5ab83",
+                      "name":  "Risk Manager Futures",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       1120,
+                                       96
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "const r = $input.first().json || {};\n\nconst hasPaperAction = [\u0027OPEN_LONG\u0027, \u0027OPEN_SHORT\u0027, \u0027CLOSE_LONG\u0027, \u0027CLOSE_SHORT\u0027].includes(r.positionAction);\n\nif (r.canTrade || hasPaperAction) {\n  return [{\n    json: {\n      ...r,\n      canTrade: true,\n      route: \u0027TRADE\u0027,\n      paperTrading: true\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    ...r,\n    route: \u0027HOLD\u0027,\n    paperTrading: true\n  }\n}];"
+                                     },
+                      "id":  "2729ec81-f113-4097-87ac-8fb67b320275",
+                      "name":  "Route Futures Trade Or Hold",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       1344,
+                                       96
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "rules":  {
+                                                       "values":  [
+                                                                      {
+                                                                          "conditions":  {
+                                                                                             "options":  {
+                                                                                                             "caseSensitive":  true,
+                                                                                                             "leftValue":  "",
+                                                                                                             "typeValidation":  "strict",
+                                                                                                             "version":  2
+                                                                                                         },
+                                                                                             "conditions":  [
+                                                                                                                {
+                                                                                                                    "leftValue":  "={{ $json.route }}",
+                                                                                                                    "rightValue":  "TRADE",
+                                                                                                                    "operator":  {
+                                                                                                                                     "type":  "string",
+                                                                                                                                     "operation":  "equals"
+                                                                                                                                 }
+                                                                                                                }
+                                                                                                            ],
+                                                                                             "combinator":  "and"
+                                                                                         },
+                                                                          "renameOutput":  true,
+                                                                          "outputKey":  "TRADE"
+                                                                      }
+                                                                  ]
+                                                   },
+                                         "options":  {
+                                                         "fallbackOutput":  "extra",
+                                                         "renameFallbackOutput":  "HOLD"
+                                                     }
+                                     },
+                      "id":  "031eaeba-f73a-4cc2-8e16-237603967759",
+                      "name":  "Switch Futures Route",
+                      "type":  "n8n-nodes-base.switch",
+                      "typeVersion":  3.3,
+                      "position":  [
+                                       1568,
+                                       96
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "method":  "POST",
+                                         "url":  "={{ $json.safeUrl }}",
+                                         "sendHeaders":  true,
+                                         "headerParameters":  {
+                                                                  "parameters":  [
+                                                                                     {
+                                                                                         "name":  "X-MBX-APIKEY",
+                                                                                         "value":  "={{ $json.apiKey }}"
+                                                                                     }
+                                                                                 ]
+                                                              },
+                                         "options":  {
+                                                         "timeout":  20000
+                                                     }
+                                     },
+                      "id":  "0a151a6f-08d6-4319-9451-7be33788173a",
+                      "name":  "Execute Futures Demo Order",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       0,
+                                       416
+                                   ],
+                      "continueOnFail":  true
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "\nfunction fmtBotTime(ts) {\n  if (!ts) return \u0027N/A\u0027;\n  const d = new Date(new Date(ts).getTime() + 3 * 60 * 60 * 1000);\n  const y = d.getUTCFullYear();\n  const m = String(d.getUTCMonth() + 1).padStart(2, \u00270\u0027);\n  const day = String(d.getUTCDate()).padStart(2, \u00270\u0027);\n  const h = String(d.getUTCHours()).padStart(2, \u00270\u0027);\n  const min = String(d.getUTCMinutes()).padStart(2, \u00270\u0027);\n  const s = String(d.getUTCSeconds()).padStart(2, \u00270\u0027);\n  return `${y}-${m}-${day}  ${h}:${min}Рј ${s}СЃ`;\n}\n\nfunction prettyTime() {\n  const d = new Date(Date.now() + 3 * 60 * 60 * 1000);\n  const y = d.getUTCFullYear();\n  const m = String(d.getUTCMonth() + 1).padStart(2, \u00270\u0027);\n  const day = String(d.getUTCDate()).padStart(2, \u00270\u0027);\n  const h = String(d.getUTCHours()).padStart(2, \u00270\u0027);\n  const min = String(d.getUTCMinutes()).padStart(2, \u00270\u0027);\n  const s = String(d.getUTCSeconds()).padStart(2, \u00270\u0027);\n  return `${y}-${m}-${day}  ${h}:${min}Рј ${s}СЃ`;\n}\n\nconst r = $input.first().json || {};\nconst state = $getWorkflowStaticData(\u0027global\u0027);\n\nif (!state.stats) state.stats = { trades: 0, wins: 0, losses: 0, pnl: 0, errors: 0, lastError: \u0027\u0027 };\nif (!state.position) state.position = { side: \u0027FLAT\u0027, entry: 0, qty: 0 };\n\nstate.stats.errors = 0;\nstate.stats.lastError = \u0027\u0027;\n\n// Paper order confirmation\nconst paperOrderId = \u0027PAPER-\u0027 + Date.now();\nconst paperStatus = \u0027SIMULATED_FILLED\u0027;\nstate.lastPaperTradeAt = Date.now();\n\nif ([\u0027OPEN_LONG\u0027, \u0027OPEN_SHORT\u0027].includes(r.positionAction) \u0026\u0026 r.plannedPosition) {\n  state.position = r.plannedPosition;\n}\n\nif ([\u0027CLOSE_LONG\u0027, \u0027CLOSE_SHORT\u0027].includes(r.positionAction)) {\n  const pnl = Number(r.pnl || 0);\n\n  if (pnl \u003e= 0) state.stats.wins = Number(state.stats.wins || 0) + 1;\n  else {\n    state.stats.losses = Number(state.stats.losses || 0) + 1;\n    state.lastLossAt = Date.now();\n  }\n\n  state.stats.trades = Number(state.stats.trades || 0) + 1;\n  state.stats.pnl = Number((Number(state.stats.pnl || 0) + pnl).toFixed(4));\n  state.position = { side: \u0027FLAT\u0027, entry: 0, qty: 0 };\n}\n\nconst winrate = Number(state.stats.trades || 0) \u003e 0\n  ? ((Number(state.stats.wins || 0) / Number(state.stats.trades || 1)) * 100).toFixed(2)\n  : \u00270.00\u0027;\n\nreturn [{\n  json: {\n    text:\n`рџ¤– Futures Paper Bot Alert\n\nвњ… Paper Action: ${r.action}\nрџ“Њ Position Action: ${r.positionAction}\nрџ’° Price: $${r.price}\nрџ“¦ Qty: ${r.quantity} BTC\nвљ–пёЏ Leverage: x${r.leverage}\nрџЋЇ Entry: $${r.entry || \u0027N/A\u0027}\nрџ’µ Current PnL: $${r.pnl || 0} (${r.newsScore || 0})\n\nрџџў Long Score: ${r.longScore || 0}%\nрџ”ґ Short Score: ${r.shortScore || 0}%\nEntry Score: ${r.entryScore || 0}%\nRequired Min Score: ${r.requiredMinScore || 0}%\nTrend Confirmation Count: ${r.trendConfirmationCount || 0}\nBlock Reason: ${r.blockReason || \u0027N/A\u0027}\nвЏі Hold Time: ${r.holdMinutes || \u0027AUTO\u0027} min\nрџ•’ Planned Close: ${r.plannedCloseAt || fmtBotTime(r.closeAt)}\nвЏі Cooldown After Entry: ${r.cooldownMinutes || 0} min\nрџ• Next Entry After: ${r.cooldownEndsAt || \u0027after cooldown starts\u0027}\n\nрџ§ѕ Paper Order ID: ${paperOrderId}\nрџ“Њ Status: ${paperStatus}\n\nрџ“Њ Internal Position: ${state.position.side || \u0027FLAT\u0027}\nрџ“€ Total PnL: $${state.stats.pnl || 0}\nрџЏ† Winrate: ${winrate}%\nрџ“Љ Trades: ${state.stats.trades || 0}\n\nвљ™пёЏ Mode: ${r.mode}\nрџЏ¦ Venue: FUTURES_PAPER\nвЏ° ${prettyTime()}`\n  }\n}];"
+                                     },
+                      "id":  "3bd0c295-2ced-4f28-9393-7015df68173e",
+                      "name":  "Format Futures Trade Alert",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       1792,
+                                       0
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "\nfunction fmtBotTime(ts) {\n  if (!ts) return \u0027N/A\u0027;\n  const d = new Date(new Date(ts).getTime() + 3 * 60 * 60 * 1000);\n  const y = d.getUTCFullYear();\n  const m = String(d.getUTCMonth() + 1).padStart(2, \u00270\u0027);\n  const day = String(d.getUTCDate()).padStart(2, \u00270\u0027);\n  const h = String(d.getUTCHours()).padStart(2, \u00270\u0027);\n  const min = String(d.getUTCMinutes()).padStart(2, \u00270\u0027);\n  const s = String(d.getUTCSeconds()).padStart(2, \u00270\u0027);\n  return `${y}-${m}-${day}  ${h}:${min}Рј ${s}СЃ`;\n}\n\nfunction prettyTime() {\n  const d = new Date(Date.now() + 3 * 60 * 60 * 1000);\n  const y = d.getUTCFullYear();\n  const m = String(d.getUTCMonth() + 1).padStart(2, \u00270\u0027);\n  const day = String(d.getUTCDate()).padStart(2, \u00270\u0027);\n  const h = String(d.getUTCHours()).padStart(2, \u00270\u0027);\n  const min = String(d.getUTCMinutes()).padStart(2, \u00270\u0027);\n  const s = String(d.getUTCSeconds()).padStart(2, \u00270\u0027);\n  return `${y}-${m}-${day}  ${h}:${min}Рј ${s}СЃ`;\n}\n\nconst r = $input.first().json;\nreturn [{\n  json: {\n    text:\n`рџ¤– Futures Paper Bot Alert\n\nвЏёпёЏ Action: HOLD\nрџ’° Price: $${r.price}\nрџ“Љ RSI: ${r.rsi}\nрџ“€ 15m: ${r.trend15m}\nрџ§­ 1h: ${r.trend1h}\nрџ§­ 2h: ${r.trend2h}\nрџ§­ 4h: ${r.trend4h}\nрџ›°пёЏ Source: ${r.timeframeSource || \u0027DERIVED_FROM_15M\u0027} (${r.newsScore || 0}) / Total: ${r.newsTotalTitles || 0}\n\nрџџў Long Score: ${r.longScore || 0}% / Min ${r.minScore}%\nрџ”ґ Short Score: ${r.shortScore || 0}% / Min ${r.minScore}%\nEntry Score: ${r.entryScore || 0}%\nRequired Min Score: ${r.requiredMinScore || 0}%\nTrend Confirmation Count: ${r.trendConfirmationCount || 0}\nBlock Reason: ${r.blockReason || r.reason || \u0027N/A\u0027}\nрџ“ќ Reason: ${r.reason || \u0027Waiting for valid Futures setup\u0027}\nвЏі Cooldown Duration: ${r.cooldownMinutes || 0} min\nрџ•’ Cooldown Start: ${r.cooldownStartedAt || \u0027N/A\u0027}\nрџ• Cooldown End: ${r.cooldownEndsAt || \u0027N/A\u0027}\n\nрџ“Њ Position: ${r.position?.side || \u0027FLAT\u0027}\nрџ’µ Current PnL: $${r.pnl || 0}\nрџ“€ Total PnL: $${r.stats?.pnl || 0}\nвљ™пёЏ Mode: ${r.mode}\nрџЏ¦ Venue: FUTURES_PAPER\nвљ–пёЏ Leverage: x${r.leverage}\nвЏёпёЏ Paused: ${r.paused}\n\nрџ“Љ ${r.binanceChart}\nвЏ° ${prettyTime()}`\n  }\n}];"
+                                     },
+                      "id":  "c3a189d8-67a1-47fd-8357-35b77083ef15",
+                      "name":  "Format Futures HOLD Alert",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       1792,
+                                       192
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "method":  "POST",
+                                         "url":  "https://api.telegram.org/bot8742702931:AAE3trVZnKF3KsqVsJ0PGQkWnOEDXY8yft0/sendMessage",
+                                         "sendHeaders":  true,
+                                         "headerParameters":  {
+                                                                  "parameters":  [
+                                                                                     {
+                                                                                         "name":  "Content-Type",
+                                                                                         "value":  "application/json"
+                                                                                     }
+                                                                                 ]
+                                                              },
+                                         "sendBody":  true,
+                                         "specifyBody":  "json",
+                                         "jsonBody":  "={{ { \n  \"chat_id\": \"1320369182\", \n  \"text\": $json.text || \"Bot message\",\n  \"reply_markup\": { \"inline_keyboard\": [\n  [\n    { \"text\": \"рџ“Љ STATUS\", \"callback_data\": \"STATUS\" },\n    { \"text\": \"рџ’° BALANCE\", \"callback_data\": \"BALANCE\" },\n    { \"text\": \"рџ§ѕ LAST ERROR\", \"callback_data\": \"LAST_ERROR\" }\n  ],\n  [\n    { \"text\": \"вЏёпёЏ PAUSE\", \"callback_data\": \"PAUSE\" },\n    { \"text\": \"в–¶пёЏ RESUME\", \"callback_data\": \"RESUME\" }\n  ],\n  [\n    { \"text\": \"SAFE\", \"callback_data\": \"MODE_SAFE\" },\n    { \"text\": \"ACTIVE\", \"callback_data\": \"MODE_ACTIVE\" },\n    { \"text\": \"AGGRESSIVE\", \"callback_data\": \"MODE_AGGRESSIVE\" }\n  ],\n  [\n    { \"text\": \"в™»пёЏ RESET STATS\", \"callback_data\": \"RESET_STATS\" }\n  ]\n] }\n} }}",
+                                         "options":  {
+                                                         "timeout":  10000
+                                                     }
+                                     },
+                      "id":  "74c39c99-174e-4a3f-81f5-406abde938b0",
+                      "name":  "Send Futures Trade Telegram",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       2016,
+                                       0
+                                   ],
+                      "continueOnFail":  true
+                  },
+                  {
+                      "parameters":  {
+                                         "method":  "POST",
+                                         "url":  "https://api.telegram.org/bot8742702931:AAE3trVZnKF3KsqVsJ0PGQkWnOEDXY8yft0/sendMessage",
+                                         "sendHeaders":  true,
+                                         "headerParameters":  {
+                                                                  "parameters":  [
+                                                                                     {
+                                                                                         "name":  "Content-Type",
+                                                                                         "value":  "application/json"
+                                                                                     }
+                                                                                 ]
+                                                              },
+                                         "sendBody":  true,
+                                         "specifyBody":  "json",
+                                         "jsonBody":  "={{ { \n  \"chat_id\": \"1320369182\", \n  \"text\": $json.text || \"Bot message\",\n  \"reply_markup\": { \"inline_keyboard\": [\n  [\n    { \"text\": \"рџ“Љ STATUS\", \"callback_data\": \"STATUS\" },\n    { \"text\": \"рџ’° BALANCE\", \"callback_data\": \"BALANCE\" },\n    { \"text\": \"рџ§ѕ LAST ERROR\", \"callback_data\": \"LAST_ERROR\" }\n  ],\n  [\n    { \"text\": \"вЏёпёЏ PAUSE\", \"callback_data\": \"PAUSE\" },\n    { \"text\": \"в–¶пёЏ RESUME\", \"callback_data\": \"RESUME\" }\n  ],\n  [\n    { \"text\": \"SAFE\", \"callback_data\": \"MODE_SAFE\" },\n    { \"text\": \"ACTIVE\", \"callback_data\": \"MODE_ACTIVE\" },\n    { \"text\": \"AGGRESSIVE\", \"callback_data\": \"MODE_AGGRESSIVE\" }\n  ],\n  [\n    { \"text\": \"в™»пёЏ RESET STATS\", \"callback_data\": \"RESET_STATS\" }\n  ]\n] }\n} }}",
+                                         "options":  {
+                                                         "timeout":  10000
+                                                     }
+                                     },
+                      "id":  "fd63cc1d-bc14-4366-b2bc-28407d599e90",
+                      "name":  "Send Futures HOLD Telegram",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       2016,
+                                       192
+                                   ],
+                      "continueOnFail":  true
+                  },
+                  {
+                      "parameters":  {
+                                         "httpMethod":  "POST",
+                                         "path":  "telegram-futures-paper-bot-v21",
+                                         "responseMode":  "responseNode",
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "1ed787dc-57c3-4677-b6c9-0394a01f8731",
+                      "name":  "Telegram Futures Paper Button Webhook v21",
+                      "type":  "n8n-nodes-base.webhook",
+                      "typeVersion":  2,
+                      "position":  [
+                                       0,
+                                       640
+                                   ],
+                      "webhookId":  "telegram-futures-paper-bot-v21"
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "function prettyTime() {\n  const d = new Date(Date.now() + 3 * 60 * 60 * 1000);\n  const y = d.getUTCFullYear();\n  const m = String(d.getUTCMonth() + 1).padStart(2, \u00270\u0027);\n  const day = String(d.getUTCDate()).padStart(2, \u00270\u0027);\n  const h = String(d.getUTCHours()).padStart(2, \u00270\u0027);\n  const min = String(d.getUTCMinutes()).padStart(2, \u00270\u0027);\n  const s = String(d.getUTCSeconds()).padStart(2, \u00270\u0027);\n  return `${y}-${m}-${day}  ${h}:${min}Рј ${s}СЃ`;\n}\n\nconst input = $input.first().json || {};\nconst body = input.body || input;\nconst cb = body.callback_query;\nconst state = $getWorkflowStaticData(\u0027global\u0027);\n\nif (!state.mode) state.mode = \u0027ACTIVE\u0027;\nstate.venue = \u0027FUTURES_PAPER\u0027;\nif (typeof state.paused !== \u0027boolean\u0027) state.paused = false;\nif (!state.position) state.position = { side: \u0027FLAT\u0027, entry: 0, qty: 0 };\nif (!state.stats) state.stats = { trades: 0, wins: 0, losses: 0, pnl: 0, errors: 0, lastError: \u0027\u0027 };\n\nif (!cb) return [{ json: { callbackId: \u0027\u0027, text: \u0027No callback_query received\u0027 } }];\n\nconst data = cb.data || \u0027\u0027;\nlet text = \u0027\u0027;\n\nif (data === \u0027PAUSE\u0027) { state.paused = true; text = \u0027вЏёпёЏ Futures bot paused\u0027; }\nelse if (data === \u0027RESUME\u0027) { state.paused = false; text = \u0027в–¶пёЏ Futures bot resumed\u0027; }\nelse if (data === \u0027MODE_SAFE\u0027) { state.mode = \u0027SAFE\u0027; text = \u0027рџ›ЎпёЏ Mode SAFE\u0027; }\nelse if (data === \u0027MODE_ACTIVE\u0027) { state.mode = \u0027ACTIVE\u0027; text = \u0027вљ™пёЏ Mode ACTIVE\u0027; }\nelse if (data === \u0027MODE_AGGRESSIVE\u0027) { state.mode = \u0027AGGRESSIVE\u0027; text = \u0027рџ”Ґ Mode AGGRESSIVE\u0027; }\nelse if (data === \u0027RESET_STATS\u0027) { state.stats = { trades: 0, wins: 0, losses: 0, pnl: 0, errors: 0, lastError: \u0027\u0027 }; state.position = { side: \u0027FLAT\u0027, entry: 0, qty: 0 }; text = \u0027в™»пёЏ Stats and internal position reset\u0027; }\nelse if (data === \u0027LAST_ERROR\u0027) { text = `рџ§ѕ LAST ERROR\\n\\nErrors: ${state.stats.errors || 0}\\nLast Error: ${state.stats.lastError || \u0027No stored error\u0027}`; }\nelse if (data === \u0027BALANCE\u0027) { text = `рџ’° INTERNAL FUTURES PAPER STATUS\\n\\nPosition: ${state.position.side}\\nQty: ${state.position.qty || 0}\\nEntry: ${state.position.entry || 0}\\nPnL total: $${state.stats.pnl || 0}`; }\nelse if (data === \u0027STATUS\u0027) { text = `рџ“Љ FUTURES PAPER STATUS\\n\\nPosition: ${state.position.side}\\nEntry: ${state.position.entry || 0}\\nQty: ${state.position.qty || 0}\\nSL: ${state.position.stopLoss || \u0027N/A\u0027}\\nTP: ${state.position.takeProfit || \u0027N/A\u0027}\\nAuto Close: ${state.position.closeAt || \u0027N/A\u0027}\\nMode: ${state.mode}\\nVenue: FUTURES_PAPER\\nPaused: ${state.paused}\\nTrades: ${state.stats.trades || 0}\\nPnL: $${state.stats.pnl || 0}\\nErrors: ${state.stats.errors || 0}`; }\nelse { text = \u0027Unknown command: \u0027 + data; }\n\nreturn [{\n  json: {\n    callbackId: cb.id || \u0027\u0027,\n    text:\n`рџ¤– Futures Bot Command\n\nCommand: ${data}\n${text}\n\nMode: ${state.mode}\nVenue: FUTURES_PAPER\nPaused: ${state.paused}\nTime: ${prettyTime()}`\n  }\n}];"
+                                     },
+                      "id":  "3c925d62-a5c2-4ca6-9741-74e058234ca4",
+                      "name":  "Process Futures Button",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       224,
+                                       640
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "method":  "POST",
+                                         "url":  "https://api.telegram.org/bot8742702931:AAE3trVZnKF3KsqVsJ0PGQkWnOEDXY8yft0/answerCallbackQuery",
+                                         "sendHeaders":  true,
+                                         "headerParameters":  {
+                                                                  "parameters":  [
+                                                                                     {
+                                                                                         "name":  "Content-Type",
+                                                                                         "value":  "application/json"
+                                                                                     }
+                                                                                 ]
+                                                              },
+                                         "sendBody":  true,
+                                         "specifyBody":  "json",
+                                         "jsonBody":  "={{ { \"callback_query_id\": $json.callbackId || \"\", \"text\": \"Command processed\", \"show_alert\": false } }}",
+                                         "options":  {
+                                                         "timeout":  10000
+                                                     }
+                                     },
+                      "id":  "a1daad19-6428-4d09-9ee4-6a073cec1d5d",
+                      "name":  "Answer Futures Callback",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       448,
+                                       640
+                                   ],
+                      "continueOnFail":  true
+                  },
+                  {
+                      "parameters":  {
+                                         "method":  "POST",
+                                         "url":  "https://api.telegram.org/bot8742702931:AAE3trVZnKF3KsqVsJ0PGQkWnOEDXY8yft0/sendMessage",
+                                         "sendHeaders":  true,
+                                         "headerParameters":  {
+                                                                  "parameters":  [
+                                                                                     {
+                                                                                         "name":  "Content-Type",
+                                                                                         "value":  "application/json"
+                                                                                     }
+                                                                                 ]
+                                                              },
+                                         "sendBody":  true,
+                                         "specifyBody":  "json",
+                                         "jsonBody":  "={{ { \n  \"chat_id\": \"1320369182\", \n  \"text\": $(\u0027Process Futures Button\u0027).item.json.text || \"Command processed\",\n  \"reply_markup\": { \"inline_keyboard\": [\n  [\n    { \"text\": \"рџ“Љ STATUS\", \"callback_data\": \"STATUS\" },\n    { \"text\": \"рџ’° BALANCE\", \"callback_data\": \"BALANCE\" },\n    { \"text\": \"рџ§ѕ LAST ERROR\", \"callback_data\": \"LAST_ERROR\" }\n  ],\n  [\n    { \"text\": \"вЏёпёЏ PAUSE\", \"callback_data\": \"PAUSE\" },\n    { \"text\": \"в–¶пёЏ RESUME\", \"callback_data\": \"RESUME\" }\n  ],\n  [\n    { \"text\": \"SAFE\", \"callback_data\": \"MODE_SAFE\" },\n    { \"text\": \"ACTIVE\", \"callback_data\": \"MODE_ACTIVE\" },\n    { \"text\": \"AGGRESSIVE\", \"callback_data\": \"MODE_AGGRESSIVE\" }\n  ],\n  [\n    { \"text\": \"в™»пёЏ RESET STATS\", \"callback_data\": \"RESET_STATS\" }\n  ]\n] }\n} }}",
+                                         "options":  {
+                                                         "timeout":  10000
+                                                     }
+                                     },
+                      "id":  "0235e300-4b44-4be2-9b7a-f27ba24d8882",
+                      "name":  "Send Futures Command Telegram",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       672,
+                                       640
+                                   ],
+                      "continueOnFail":  true
+                  },
+                  {
+                      "parameters":  {
+                                         "respondWith":  "json",
+                                         "responseBody":  "={{ { \"ok\": true } }}",
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "c9cd1877-2bf6-4e87-bba2-5e0f410f6a5c",
+                      "name":  "Futures Webhook Response",
+                      "type":  "n8n-nodes-base.respondToWebhook",
+                      "typeVersion":  1.1,
+                      "position":  [
+                                       896,
+                                       640
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "url":  "https://cointelegraph.com/rss",
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "a6114724-fa0f-46e9-bbdb-5db2cd1bd24d",
+                      "name":  "Fetch Cointelegraph RSS",
+                      "type":  "n8n-nodes-base.rssFeedRead",
+                      "typeVersion":  1,
+                      "position":  [
+                                       224,
+                                       192
+                                   ],
+                      "continueOnFail":  true
+                  },
+                  {
+                      "parameters":  {
+                                         "url":  "https://www.coindesk.com/arc/outboundfeeds/rss/",
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "84f61939-d546-4c68-abcf-a7cb170a98e3",
+                      "name":  "Fetch CoinDesk RSS",
+                      "type":  "n8n-nodes-base.rssFeedRead",
+                      "typeVersion":  1,
+                      "position":  [
+                                       448,
+                                       192
+                                   ],
+                      "continueOnFail":  true
+                  },
+                  {
+                      "parameters":  {
+                                         "url":  "https://cointelegraph.com/rss",
+                                         "options":  {
+                                                         "timeout":  15000
+                                                     }
+                                     },
+                      "id":  "e5f7a8b3-54f3-40a2-a440-6eccb0eaeccf",
+                      "name":  "Fetch Cointelegraph News HTTP",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       224,
+                                       0
+                                   ],
+                      "continueOnFail":  true
+                  },
+                  {
+                      "parameters":  {
+                                         "url":  "https://www.coindesk.com/arc/outboundfeeds/rss/",
+                                         "options":  {
+                                                         "timeout":  15000
+                                                     }
+                                     },
+                      "id":  "c629776d-8bc3-48df-8bfe-ed6bbcceebc2",
+                      "name":  "Fetch CoinDesk News HTTP",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       448,
+                                       0
+                                   ],
+                      "continueOnFail":  true
+                  }
+              ],
+    "pinData":  {
+
+                },
+    "connections":  {
+                        "Every 15 Minutes":  {
+                                                 "main":  [
+                                                              [
+                                                                  {
+                                                                      "node":  "Fetch Cointelegraph News HTTP",
+                                                                      "type":  "main",
+                                                                      "index":  0
+                                                                  }
+                                                              ]
+                                                          ]
+                                             },
+                        "Fetch BTC 15m Candles":  {
+                                                      "main":  [
+                                                                   [
+                                                                       {
+                                                                           "node":  "Analyze Futures Market",
+                                                                           "type":  "main",
+                                                                           "index":  0
+                                                                       }
+                                                                   ]
+                                                               ]
+                                                  },
+                        "Analyze Futures Market":  {
+                                                       "main":  [
+                                                                    [
+                                                                        {
+                                                                            "node":  "Risk Manager Futures",
+                                                                            "type":  "main",
+                                                                            "index":  0
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                   },
+                        "Risk Manager Futures":  {
+                                                     "main":  [
+                                                                  [
+                                                                      {
+                                                                          "node":  "Route Futures Trade Or Hold",
+                                                                          "type":  "main",
+                                                                          "index":  0
+                                                                      }
+                                                                  ]
+                                                              ]
+                                                 },
+                        "Route Futures Trade Or Hold":  {
+                                                            "main":  [
+                                                                         [
+                                                                             {
+                                                                                 "node":  "Switch Futures Route",
+                                                                                 "type":  "main",
+                                                                                 "index":  0
+                                                                             }
+                                                                         ]
+                                                                     ]
+                                                        },
+                        "Switch Futures Route":  {
+                                                     "main":  [
+                                                                  [
+                                                                      {
+                                                                          "node":  "Format Futures Trade Alert",
+                                                                          "type":  "main",
+                                                                          "index":  0
+                                                                      }
+                                                                  ],
+                                                                  [
+                                                                      {
+                                                                          "node":  "Format Futures HOLD Alert",
+                                                                          "type":  "main",
+                                                                          "index":  0
+                                                                      }
+                                                                  ]
+                                                              ]
+                                                 },
+                        "Format Futures Trade Alert":  {
+                                                           "main":  [
+                                                                        [
+                                                                            {
+                                                                                "node":  "Send Futures Trade Telegram",
+                                                                                "type":  "main",
+                                                                                "index":  0
+                                                                            }
+                                                                        ]
+                                                                    ]
+                                                       },
+                        "Format Futures HOLD Alert":  {
+                                                          "main":  [
+                                                                       [
+                                                                           {
+                                                                               "node":  "Send Futures HOLD Telegram",
+                                                                               "type":  "main",
+                                                                               "index":  0
+                                                                           }
+                                                                       ]
+                                                                   ]
+                                                      },
+                        "Process Futures Button":  {
+                                                       "main":  [
+                                                                    [
+                                                                        {
+                                                                            "node":  "Answer Futures Callback",
+                                                                            "type":  "main",
+                                                                            "index":  0
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                   },
+                        "Answer Futures Callback":  {
+                                                        "main":  [
+                                                                     [
+                                                                         {
+                                                                             "node":  "Send Futures Command Telegram",
+                                                                             "type":  "main",
+                                                                             "index":  0
+                                                                         }
+                                                                     ]
+                                                                 ]
+                                                    },
+                        "Send Futures Command Telegram":  {
+                                                              "main":  [
+                                                                           [
+                                                                               {
+                                                                                   "node":  "Futures Webhook Response",
+                                                                                   "type":  "main",
+                                                                                   "index":  0
+                                                                               }
+                                                                           ]
+                                                                       ]
+                                                          },
+                        "Fetch Cointelegraph RSS":  {
+                                                        "main":  [
+                                                                     [
+                                                                         {
+                                                                             "node":  "Fetch CoinDesk RSS",
+                                                                             "type":  "main",
+                                                                             "index":  0
+                                                                         }
+                                                                     ]
+                                                                 ]
+                                                    },
+                        "Fetch CoinDesk RSS":  {
+                                                   "main":  [
+                                                                [
+                                                                    {
+                                                                        "node":  "Fetch BTC 15m Candles",
+                                                                        "type":  "main",
+                                                                        "index":  0
+                                                                    }
+                                                                ]
+                                                            ]
+                                               },
+                        "Fetch Cointelegraph News HTTP":  {
+                                                              "main":  [
+                                                                           [
+                                                                               {
+                                                                                   "node":  "Fetch CoinDesk News HTTP",
+                                                                                   "type":  "main",
+                                                                                   "index":  0
+                                                                               }
+                                                                           ]
+                                                                       ]
+                                                          },
+                        "Fetch CoinDesk News HTTP":  {
+                                                         "main":  [
+                                                                      [
+                                                                          {
+                                                                              "node":  "Fetch BTC 15m Candles",
+                                                                              "type":  "main",
+                                                                              "index":  0
+                                                                          }
+                                                                      ]
+                                                                  ]
+                                                     },
+                        "Telegram Futures Paper Button Webhook v21":  {
+                                                                          "main":  [
+                                                                                       [
+                                                                                           {
+                                                                                               "node":  "Process Futures Button",
+                                                                                               "type":  "main",
+                                                                                               "index":  0
+                                                                                           }
+                                                                                       ]
+                                                                                   ]
+                                                                      }
+                    },
+    "active":  true,
+    "settings":  {
+                     "executionOrder":  "v1",
+                     "binaryMode":  "separate"
+                 },
+    "versionId":  "2044758e-a664-45fc-a487-5878d3778815",
+    "meta":  {
+                 "instanceId":  "b07b54e5a5a60c0d77cfe6d4e3c24a66938a3af67d80e35c0a08b2915d3aa996"
+             },
+    "id":  "Afgey3S6Dn7ohG3d",
+    "tags":  [
+
+             ]
+}

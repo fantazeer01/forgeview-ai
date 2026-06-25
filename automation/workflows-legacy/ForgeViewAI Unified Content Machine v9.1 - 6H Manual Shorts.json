@@ -1,0 +1,745 @@
+{
+    "name":  "ForgeViewAI Unified Content Machine v9.1 - 6H Manual Shorts",
+    "nodes":  [
+                  {
+                      "parameters":  {
+                                         "rule":  {
+                                                      "interval":  [
+                                                                       {
+                                                                           "field":  "hours",
+                                                                           "hoursInterval":  6
+                                                                       }
+                                                                   ]
+                                                  }
+                                     },
+                      "id":  "a3edd4f6-02f1-40aa-8f14-e73e7d2161af",
+                      "name":  "Schedule Trigger - Every 6 Hours",
+                      "type":  "n8n-nodes-base.scheduleTrigger",
+                      "typeVersion":  1.2,
+                      "position":  [
+                                       -784,
+                                       320
+                                   ],
+                      "disabled":  true
+                  },
+                  {
+                      "parameters":  {
+                                         "assignments":  {
+                                                             "assignments":  [
+                                                                                 {
+                                                                                     "id":  "project_start",
+                                                                                     "name":  "PROJECT_START_DATE",
+                                                                                     "value":  "2026-05-30",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "brand_name",
+                                                                                     "name":  "BRAND_NAME",
+                                                                                     "value":  "ForgeViewAI",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "telegram_public_channel",
+                                                                                     "name":  "TELEGRAM_PUBLIC_CHANNEL",
+                                                                                     "value":  "@ForgeViewCom",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "x_drafts_chat",
+                                                                                     "name":  "X_DRAFTS_TELEGRAM_CHAT_ID",
+                                                                                     "value":  "-1003839420608",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "x_account",
+                                                                                     "name":  "X_ACCOUNT",
+                                                                                     "value":  "@ForgeViewX",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "todays_event",
+                                                                                     "name":  "TODAYS_EVENT",
+                                                                                     "value":  "Created a dedicated Telegram channel for X drafts and separated it from the main Telegram content channel.",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "brand_context",
+                                                                                     "name":  "BRAND_CONTEXT",
+                                                                                     "value":  "ForgeViewAI is a build-in-public AI automation and trading systems project. Current focus: AI content workflows, Telegram distribution, X draft generation, n8n automations, Spot Bot v87, Futures Bot v21, and building reliable systems before scaling.",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "topic_pool",
+                                                                                     "name":  "TOPIC_POOL",
+                                                                                     "value":  "AI automation for solo founders; n8n workflows; build-in-public execution; trading bot testing; content systems; Telegram automation; reliable workflows; simple products before complex SaaS; zero-budget AI execution; risk controls; exit safety; RSI filters; workflow reliability",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "latest_bug",
+                                                                                     "name":  "LATEST_BUG",
+                                                                                     "value":  "Cooldown logic could block exits.",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "latest_fix",
+                                                                                     "name":  "LATEST_FIX",
+                                                                                     "value":  "Futures v22 Exit Safety.",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "latest_lesson",
+                                                                                     "name":  "LATEST_LESSON",
+                                                                                     "value":  "Risk controls should block weak entries, not exits.",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "latest_result",
+                                                                                     "name":  "LATEST_RESULT",
+                                                                                     "value":  "Futures v23 RSI Anti Late Short deployed.",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "latest_experiment",
+                                                                                     "name":  "LATEST_EXPERIMENT",
+                                                                                     "value":  "Testing RSI filters against late short entries.",
+                                                                                     "type":  "string"
+                                                                                 }
+                                                                             ]
+                                                         },
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "23eb8ee9-dae4-4b6e-a19d-cf7e35e05321",
+                      "name":  "Set ForgeView Config",
+                      "type":  "n8n-nodes-base.set",
+                      "typeVersion":  3.4,
+                      "position":  [
+                                       -496,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "const start = new Date($json.PROJECT_START_DATE + \u0027T00:00:00+02:00\u0027);\nconst now = new Date();\nconst projectDay = Math.floor((now - start) / (24 * 60 * 60 * 1000)) + 1;\n\nreturn [{\n  json: {\n    ...$json,\n    PROJECT_DAY: projectDay\n  }\n}];"
+                                     },
+                      "id":  "33c6eeca-3407-4f0f-a083-4f67ec670d21",
+                      "name":  "Compute Project Day",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       -256,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "const latestBug = String($json.LATEST_BUG || \u0027\u0027).trim();\nconst latestFix = String($json.LATEST_FIX || \u0027\u0027).trim();\nconst latestLesson = String($json.LATEST_LESSON || \u0027\u0027).trim();\nconst latestResult = String($json.LATEST_RESULT || \u0027\u0027).trim();\nconst latestExperiment = String($json.LATEST_EXPERIMENT || \u0027\u0027).trim();\n\nlet primarySourceLabel = \u0027NONE\u0027;\nlet primarySource = \u0027\u0027;\n\nif (latestBug) {\n  primarySourceLabel = \u0027LATEST_BUG\u0027;\n  primarySource = latestBug;\n} else if (latestFix) {\n  primarySourceLabel = \u0027LATEST_FIX\u0027;\n  primarySource = latestFix;\n} else if (latestLesson) {\n  primarySourceLabel = \u0027LATEST_LESSON\u0027;\n  primarySource = latestLesson;\n} else if (latestResult) {\n  primarySourceLabel = \u0027LATEST_RESULT\u0027;\n  primarySource = latestResult;\n} else if (latestExperiment) {\n  primarySourceLabel = \u0027LATEST_EXPERIMENT\u0027;\n  primarySource = latestExperiment;\n}\n\nconst prompt = `\nTELEGRAM POST GENERATOR\n\nBrand: ${$json.BRAND_NAME}\nProject day: Day ${$json.PROJECT_DAY}\nBrand context:\n${$json.BRAND_CONTEXT}\n\nTopic pool:\n${$json.TOPIC_POOL}\n\nPriority content source selected:\n${primarySourceLabel}: ${primarySource || \u0027No priority source provided\u0027}\n\nPriority content source system:\n1. LATEST_BUG: ${latestBug || \u0027Not provided\u0027}\n2. LATEST_FIX: ${latestFix || \u0027Not provided\u0027}\n3. LATEST_LESSON: ${latestLesson || \u0027Not provided\u0027}\n4. LATEST_RESULT: ${latestResult || \u0027Not provided\u0027}\n5. LATEST_EXPERIMENT: ${latestExperiment || \u0027Not provided\u0027}\n\nCreate ONE Telegram channel post for ${$json.TELEGRAM_PUBLIC_CHANNEL}.\n\nSource priority rule:\n- If LATEST_BUG exists, use it.\n- Else use LATEST_FIX.\n- Else use LATEST_LESSON.\n- Else use LATEST_RESULT.\n- Else use LATEST_EXPERIMENT.\n- Use only the selected priority source as the content source.\n\nCore content rule:\n- Events must never be the hook.\n- The selected source is context or proof, not the main point.\n- Lead with a useful takeaway using this hierarchy: Mistake \u003e Bug \u003e Lesson \u003e Insight \u003e Principle \u003e Event.\n- Prefer trading bot bugs, automation mistakes, workflow failures, n8n lessons, Telegram automation lessons, and operational takeaways.\n- Avoid setup events as hooks: created folder, created channel, connected account, granted access, configured integration.\n- Setup events may be mentioned only if they explain a useful mistake, bug, lesson, insight, principle, or operational takeaway.\n\nTelegram-specific rules:\n- Focus on useful takeaways.\n- Bilingual: English first, then Russian.\n- Maximum 120 words per language before the follow block.\n- No fake metrics.\n- No fake customers.\n- No fake revenue.\n- No fake trading results.\n- No hype.\n- No hashtags.\n- Flags are allowed only for language separation.\n- Tone: practical, founder build-in-public, calm, useful.\n- Mention real project progress only as context after the takeaway is clear.\n- Do not include follow links; the formatter appends them.\n\nRecommended structure:\nForgeView Lesson\nTakeaway: [mistake, bug, lesson, insight, or principle]\nContext: [selected priority source only if useful]\nWhy it matters: [practical operational value]\nAvoid: [one mistake to avoid]\n\nReturn only the final Telegram post text.\n`;\n\nreturn [{\n  json: {\n    ...$json,\n    PRIMARY_CONTENT_SOURCE_LABEL: primarySourceLabel,\n    PRIMARY_CONTENT_SOURCE: primarySource,\n    TELEGRAM_PROMPT: prompt\n  }\n}];"
+                                     },
+                      "id":  "d3020557-cfb4-4797-a5f8-84b1cb82e3af",
+                      "name":  "Build Telegram Prompt",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       0,
+                                       0
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "method":  "POST",
+                                         "url":  "https://api.openai.com/v1/chat/completions",
+                                         "authentication":  "predefinedCredentialType",
+                                         "nodeCredentialType":  "openAiApi",
+                                         "sendBody":  true,
+                                         "specifyBody":  "json",
+                                         "jsonBody":  "={{ { model: \u0027gpt-4.1-mini\u0027, messages: [{ role: \u0027system\u0027, content: \u0027You write concise bilingual Telegram posts for a build-in-public AI automation project. Never invent facts.\u0027 }, { role: \u0027user\u0027, content: $json.TELEGRAM_PROMPT }], temperature: 0.45, max_tokens: 500 } }}",
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "d8352f3e-73c7-43d0-b139-4e045cde6293",
+                      "name":  "OpenAI - Generate Telegram Post",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       272,
+                                       0
+                                   ],
+                      "credentials":  {
+                                          "openAiApi":  {
+                                                            "id":  "__REPLACE_WITH_OPENAI_CREDENTIAL_ID__",
+                                                            "name":  "ForgeView OpenAI"
+                                                        }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "let text = ($json.choices?.[0]?.message?.content || \u0027\u0027).trim();\n\nconst followBlock = `Follow ForgeView:\n\nX:\nhttps://x.com/ForgeViewX\n\nYouTube:\nhttps://youtube.com/@ForgeViewGrowth`;\n\nif (!text.includes(\u0027https://x.com/ForgeViewX\u0027) || !text.includes(\u0027https://youtube.com/@ForgeViewGrowth\u0027)) {\n  text = text.replace(/Follow ForgeView:[\\s\\S]*$/i, \u0027\u0027).trim();\n  text = `${text}\\n\\n${followBlock}`;\n}\n\nreturn [{\n  json: {\n    telegram_public_channel: $(\u0027Set ForgeView Config\u0027).item.json.TELEGRAM_PUBLIC_CHANNEL,\n    telegram_post: text\n  }\n}];"
+                                     },
+                      "id":  "eb2503c5-c326-40e9-a69e-caae0b4e5c8b",
+                      "name":  "Format Telegram Post",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       528,
+                                       0
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "chatId":  "={{ $json.telegram_public_channel }}",
+                                         "text":  "={{ $json.telegram_post }}",
+                                         "additionalFields":  {
+                                                                  "disable_web_page_preview":  true
+                                                              }
+                                     },
+                      "id":  "a4c284f1-67bb-41d1-902d-d60e65c443b5",
+                      "name":  "Telegram - Send Public Post",
+                      "type":  "n8n-nodes-base.telegram",
+                      "typeVersion":  1.2,
+                      "position":  [
+                                       784,
+                                       0
+                                   ],
+                      "webhookId":  "45c1c1c3-0276-4cf3-baf2-bb622e397759",
+                      "credentials":  {
+                                          "telegramApi":  {
+                                                              "id":  "__REPLACE_WITH_TELEGRAM_CREDENTIAL_ID__",
+                                                              "name":  "ForgeView Telegram Bot"
+                                                          }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "const latestBug = String($json.LATEST_BUG || \u0027\u0027).trim();\nconst latestFix = String($json.LATEST_FIX || \u0027\u0027).trim();\nconst latestLesson = String($json.LATEST_LESSON || \u0027\u0027).trim();\nconst latestResult = String($json.LATEST_RESULT || \u0027\u0027).trim();\nconst latestExperiment = String($json.LATEST_EXPERIMENT || \u0027\u0027).trim();\n\nlet primarySourceLabel = \u0027NONE\u0027;\nlet primarySource = \u0027\u0027;\n\nif (latestBug) {\n  primarySourceLabel = \u0027LATEST_BUG\u0027;\n  primarySource = latestBug;\n} else if (latestFix) {\n  primarySourceLabel = \u0027LATEST_FIX\u0027;\n  primarySource = latestFix;\n} else if (latestLesson) {\n  primarySourceLabel = \u0027LATEST_LESSON\u0027;\n  primarySource = latestLesson;\n} else if (latestResult) {\n  primarySourceLabel = \u0027LATEST_RESULT\u0027;\n  primarySource = latestResult;\n} else if (latestExperiment) {\n  primarySourceLabel = \u0027LATEST_EXPERIMENT\u0027;\n  primarySource = latestExperiment;\n}\n\nconst prompt = `\nX POST GENERATOR\n\nYou are writing for the ForgeViewAI X account.\n\nForgeViewAI is being built in public.\nProject start date: ${$json.PROJECT_START_DATE}\nCurrent project day: Day ${$json.PROJECT_DAY}\n\nPriority content source selected:\n${primarySourceLabel}: ${primarySource || \u0027No priority source provided\u0027}\n\nPriority content source system:\n1. LATEST_BUG: ${latestBug || \u0027Not provided\u0027}\n2. LATEST_FIX: ${latestFix || \u0027Not provided\u0027}\n3. LATEST_LESSON: ${latestLesson || \u0027Not provided\u0027}\n4. LATEST_RESULT: ${latestResult || \u0027Not provided\u0027}\n5. LATEST_EXPERIMENT: ${latestExperiment || \u0027Not provided\u0027}\n\nBrand context:\n${$json.BRAND_CONTEXT}\n\nSource priority rule:\n- If LATEST_BUG exists, use it.\n- Else use LATEST_FIX.\n- Else use LATEST_LESSON.\n- Else use LATEST_RESULT.\n- Else use LATEST_EXPERIMENT.\n- Use only the selected priority source as the content source.\n\nCore content rule:\n- Events must never be the hook.\n- Lead with one useful insight.\n- Use this hierarchy: Mistake \u003e Bug \u003e Lesson \u003e Insight \u003e Principle \u003e Event.\n- Prefer trading bot bugs, automation mistakes, workflow failures, n8n lessons, Telegram automation lessons, and operational takeaways.\n- Avoid setup events as hooks: created folder, created channel, connected account, granted access, configured integration.\n- Setup events may appear only as supporting context after the insight is clear.\n\nRules:\n- Write in English only.\n- Maximum 170 characters before the follow block.\n- The formatter appends the ForgeView links after your post.\n- Shorten the generated content first if needed; links must be preserved even if the final draft exceeds a normal X character limit.\n- No hashtags.\n- No emojis.\n- No hype.\n- No motivational quotes.\n- No fake authority.\n- No fake customers.\n- No fake revenue.\n- No fake performance metrics.\n- No fake trading results.\n- No fake experiments.\n- No invented technical issues.\n- No invented product launches.\n- Do not introduce additional events, bugs, experiments, metrics, deployments, integrations, or results.\n- The selected priority source is the source of truth, but it must not be the opening hook.\n- If the source is simple, extract its operational implication without inventing new facts.\n- Write as a founder documenting practical lessons from real progress.\n- Do not include follow links; the formatter appends them.\n\nReturn only the X post text. No title. No explanation.\n`;\n\nreturn [{\n  json: {\n    ...$json,\n    PRIMARY_CONTENT_SOURCE_LABEL: primarySourceLabel,\n    PRIMARY_CONTENT_SOURCE: primarySource,\n    X_PROMPT: prompt\n  }\n}];"
+                                     },
+                      "id":  "52b078fb-49dd-4dfc-8b1f-7a32d38c532b",
+                      "name":  "Build Strict X Prompt",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       0,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "method":  "POST",
+                                         "url":  "https://api.openai.com/v1/chat/completions",
+                                         "authentication":  "predefinedCredentialType",
+                                         "nodeCredentialType":  "openAiApi",
+                                         "sendBody":  true,
+                                         "specifyBody":  "json",
+                                         "jsonBody":  "={{ { model: \u0027gpt-4.1-mini\u0027, messages: [{ role: \u0027system\u0027, content: \u0027You write concise build-in-public X posts. You never invent facts.\u0027 }, { role: \u0027user\u0027, content: $json.X_PROMPT }], temperature: 0.3, max_tokens: 120 } }}",
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "ede4cdf4-edeb-4048-8af8-ef814f61d051",
+                      "name":  "OpenAI - Generate X Draft",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       272,
+                                       224
+                                   ],
+                      "credentials":  {
+                                          "openAiApi":  {
+                                                            "id":  "__REPLACE_WITH_OPENAI_CREDENTIAL_ID__",
+                                                            "name":  "ForgeView OpenAI"
+                                                        }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "let post = ($json.choices?.[0]?.message?.content || \u0027\u0027).trim();\npost = post.replace(/^[`\u0027\"“”]+|[`\u0027\"“”]+$/g, \u0027\u0027).trim();\n\nconst followBlock = `Follow ForgeView:\nTelegram: https://t.me/ForgeViewCom\nYouTube: https://youtube.com/@ForgeViewGrowth`;\n\npost = post.replace(/Follow ForgeView:[\\s\\S]*$/i, \u0027\u0027).trim();\n\nif (post.length \u003e 180) {\n  post = post.slice(0, 177).trimEnd() + \u0027...\u0027;\n}\n\nconst finalPost = `${post}\\n\\n${followBlock}`;\nconst config = $(\u0027Set ForgeView Config\u0027).item.json;\n\nconst message = `X DRAFT - POST MANUALLY\\n\\n${finalPost}\\n\\nAccount: ${config.X_ACCOUNT}`;\n\nreturn [{\n  json: {\n    x_post: finalPost,\n    x_draft_message: message,\n    x_drafts_chat_id: config.X_DRAFTS_TELEGRAM_CHAT_ID\n  }\n}];"
+                                     },
+                      "id":  "38be7efd-10b5-42e4-9fa2-1b1c7805cae7",
+                      "name":  "Format X Draft",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       528,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "chatId":  "={{ $json.x_drafts_chat_id }}",
+                                         "text":  "={{ $json.x_draft_message }}",
+                                         "additionalFields":  {
+                                                                  "disable_web_page_preview":  true
+                                                              }
+                                     },
+                      "id":  "1b3f3a96-760f-4a6e-bda5-9186965e5f2f",
+                      "name":  "Telegram - Send X Draft",
+                      "type":  "n8n-nodes-base.telegram",
+                      "typeVersion":  1.2,
+                      "position":  [
+                                       784,
+                                       224
+                                   ],
+                      "webhookId":  "7547f3a4-709e-498e-b377-cac40e2e32df",
+                      "credentials":  {
+                                          "telegramApi":  {
+                                                              "id":  "__REPLACE_WITH_TELEGRAM_CREDENTIAL_ID__",
+                                                              "name":  "ForgeView Telegram Bot"
+                                                          }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "const latestBug = String($json.LATEST_BUG || \u0027\u0027).trim();\nconst latestFix = String($json.LATEST_FIX || \u0027\u0027).trim();\nconst latestLesson = String($json.LATEST_LESSON || \u0027\u0027).trim();\nconst latestResult = String($json.LATEST_RESULT || \u0027\u0027).trim();\nconst latestExperiment = String($json.LATEST_EXPERIMENT || \u0027\u0027).trim();\n\nlet primarySourceLabel = \u0027NONE\u0027;\nlet primarySource = \u0027\u0027;\n\nif (latestBug) {\n  primarySourceLabel = \u0027LATEST_BUG\u0027;\n  primarySource = latestBug;\n} else if (latestFix) {\n  primarySourceLabel = \u0027LATEST_FIX\u0027;\n  primarySource = latestFix;\n} else if (latestLesson) {\n  primarySourceLabel = \u0027LATEST_LESSON\u0027;\n  primarySource = latestLesson;\n} else if (latestResult) {\n  primarySourceLabel = \u0027LATEST_RESULT\u0027;\n  primarySource = latestResult;\n} else if (latestExperiment) {\n  primarySourceLabel = \u0027LATEST_EXPERIMENT\u0027;\n  primarySource = latestExperiment;\n}\n\nconst prompt = `\nYOUTUBE SHORTS SCRIPT GENERATOR\n\nBrand: ${$json.BRAND_NAME}\nProject day: Day ${$json.PROJECT_DAY}\nBrand context:\n${$json.BRAND_CONTEXT}\n\nTopic pool:\n${$json.TOPIC_POOL}\n\nPriority content source selected:\n${primarySourceLabel}: ${primarySource || \u0027No priority source provided\u0027}\n\nPriority content source system:\n1. LATEST_BUG: ${latestBug || \u0027Not provided\u0027}\n2. LATEST_FIX: ${latestFix || \u0027Not provided\u0027}\n3. LATEST_LESSON: ${latestLesson || \u0027Not provided\u0027}\n4. LATEST_RESULT: ${latestResult || \u0027Not provided\u0027}\n5. LATEST_EXPERIMENT: ${latestExperiment || \u0027Not provided\u0027}\n\nCreate ONE YouTube Shorts script idea.\n\nSource priority rule:\n- If LATEST_BUG exists, use it.\n- Else use LATEST_FIX.\n- Else use LATEST_LESSON.\n- Else use LATEST_RESULT.\n- Else use LATEST_EXPERIMENT.\n- Use only the selected priority source as the content source.\n\nCore content rule:\n- Events must never be the hook.\n- The hook must be a mistake, bug, lesson, automation pattern, workflow failure, trading bot lesson, n8n lesson, or operational takeaway.\n- Use this hierarchy: Mistake \u003e Bug \u003e Lesson \u003e Insight \u003e Principle \u003e Event.\n- Prefer trading bot bugs, automation mistakes, workflow failures, n8n lessons, Telegram automation lessons, and operational takeaways.\n- Avoid setup events as hooks: created folder, created channel, connected account, granted access, configured integration.\n- Setup events may appear only as context after the useful lesson is clear.\n\nShorts-specific rules:\n- English only.\n- Output JSON only.\n- Fields: title, description, scene1, scene2, scene3, scene4, scene5, scene6, scene7.\n- Description must end with this exact block:\nFollow ForgeView:\n\nTelegram:\nt.me/ForgeViewCom\n\nX:\n@ForgeViewX\n\nBuilding AI automation systems, trading bots, and workflows in public.\n- Each scene: 2 to 6 words.\n- scene1 must be a strong hook based on a mistake, bug, or lesson.\n- No emojis.\n- No hashtags.\n- No fake metrics.\n- No fake customers.\n- No fake revenue.\n- No fake trading results.\n- No hype words.\n- Make it suitable for AI automation / founder / systems audience.\n- Do not invent facts about project performance.\n- Mention the selected priority source only as proof or context.\n\nPreferred flow:\nscene1: mistake, bug, or lesson hook\nscene2: what goes wrong\nscene3: why it matters\nscene4: better pattern\nscene5: ForgeView context\nscene6: operational takeaway\nscene7: simple closing principle\n\nReturn valid JSON only.\n`;\n\nreturn [{\n  json: {\n    ...$json,\n    PRIMARY_CONTENT_SOURCE_LABEL: primarySourceLabel,\n    PRIMARY_CONTENT_SOURCE: primarySource,\n    SHORTS_PROMPT: prompt\n  }\n}];"
+                                     },
+                      "id":  "d024e911-4a4f-4f25-8bf3-d859e5808252",
+                      "name":  "Build YouTube Shorts Prompt",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       0,
+                                       464
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "method":  "POST",
+                                         "url":  "https://api.openai.com/v1/chat/completions",
+                                         "authentication":  "predefinedCredentialType",
+                                         "nodeCredentialType":  "openAiApi",
+                                         "sendBody":  true,
+                                         "specifyBody":  "json",
+                                         "jsonBody":  "={{ { model: \u0027gpt-4.1-mini\u0027, messages: [{ role: \u0027system\u0027, content: \u0027You create concise YouTube Shorts script JSON. Return valid JSON only.\u0027 }, { role: \u0027user\u0027, content: $json.SHORTS_PROMPT }], temperature: 0.45, max_tokens: 350 } }}",
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "f6b52f45-0eea-4e6d-91af-9fafede062f9",
+                      "name":  "OpenAI - Generate Shorts Draft",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       272,
+                                       464
+                                   ],
+                      "credentials":  {
+                                          "openAiApi":  {
+                                                            "id":  "__REPLACE_WITH_OPENAI_CREDENTIAL_ID__",
+                                                            "name":  "ForgeView OpenAI"
+                                                        }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "let raw = ($json.choices?.[0]?.message?.content || \u0027\u0027).trim();\nconst config = $(\u0027Set ForgeView Config\u0027).item.json;\n\nconst requiredDescriptionBlock = `#Shorts\\n\\nTelegram:\\nhttps://t.me/ForgeViewCom\\n\\nX:\\nhttps://x.com/ForgeViewX`;\n\nfunction stripJsonFence(value) {\n  return String(value || \u0027\u0027)\n    .replace(/^```json\\s*/i, \u0027\u0027)\n    .replace(/^```\\s*/i, \u0027\u0027)\n    .replace(/```$/i, \u0027\u0027)\n    .trim();\n}\n\nfunction buildNarrationScript(parsed) {\n  if (parsed.narration_script) return String(parsed.narration_script).trim();\n  const scenes = [];\n  for (let i = 1; i \u003c= 7; i++) {\n    if (parsed[`scene${i}`]) scenes.push(String(parsed[`scene${i}`]).trim());\n  }\n  return scenes.map((scene, index) =\u003e `Scene ${index + 1}: ${scene}`).join(\u0027\\n\u0027);\n}\n\nlet parsed;\ntry {\n  parsed = JSON.parse(stripJsonFence(raw));\n} catch (e) {\n  throw new Error(`Shorts draft OpenAI output was not valid JSON: ${e.message}`);\n}\n\nparsed.title = String(parsed.title || \u0027ForgeView Automation Lesson #Shorts\u0027).trim();\nparsed.description = String(parsed.description || \u0027\u0027).replace(/Follow ForgeView:[\\s\\S]*$/i, \u0027\u0027).trim();\nfor (const line of requiredDescriptionBlock.split(\u0027\\n\u0027)) {\n  if (line \u0026\u0026 !parsed.description.includes(line)) parsed.description += `\\n${line}`;\n}\nparsed.description = parsed.description.replace(/\\n{3,}/g, \u0027\\n\\n\u0027).trim();\nparsed.narration_script = buildNarrationScript(parsed);\nif (!Array.isArray(parsed.tags)) {\n  parsed.tags = [\u0027AI automation\u0027, \u0027trading bots\u0027, \u0027n8n\u0027, \u0027build in public\u0027, \u0027ForgeViewAI\u0027];\n}\n\nraw = JSON.stringify(parsed, null, 2);\n\nconst message = `YOUTUBE SHORTS DRAFT - REVIEW MANUALLY\\n\\n${raw}\\n\\nProject: ${config.BRAND_NAME}`;\n\nreturn [{\n  json: {\n    shorts_raw: raw,\n    shorts_json: parsed,\n    shorts_message: message,\n    x_drafts_chat_id: config.X_DRAFTS_TELEGRAM_CHAT_ID\n  }\n}];"
+                                     },
+                      "id":  "e9f6f4eb-3d5f-499f-84df-34fef0e49f00",
+                      "name":  "Format Shorts Draft",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       528,
+                                       464
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "chatId":  "={{ $json.x_drafts_chat_id }}",
+                                         "text":  "={{ $json.shorts_message }}",
+                                         "additionalFields":  {
+                                                                  "disable_web_page_preview":  true
+                                                              }
+                                     },
+                      "id":  "44c548dc-9717-4725-9935-5a036f262f81",
+                      "name":  "Telegram - Send Shorts Draft",
+                      "type":  "n8n-nodes-base.telegram",
+                      "typeVersion":  1.2,
+                      "position":  [
+                                       784,
+                                       464
+                                   ],
+                      "webhookId":  "104c1639-0f71-4d2e-8bd0-d2e1037202ef",
+                      "credentials":  {
+                                          "telegramApi":  {
+                                                              "id":  "__REPLACE_WITH_TELEGRAM_CREDENTIAL_ID__",
+                                                              "name":  "ForgeView Telegram Bot"
+                                                          }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "const config = $(\u0027Set ForgeView Config\u0027).item.json;\nconst draft = $(\u0027Format Shorts Draft\u0027).item.json;\n\nfunction stripJsonFence(value) {\n  return String(value || \u0027\u0027)\n    .replace(/^```json\\s*/i, \u0027\u0027)\n    .replace(/^```\\s*/i, \u0027\u0027)\n    .replace(/```$/i, \u0027\u0027)\n    .trim();\n}\n\nlet shortsJson = draft.shorts_json;\nif (!shortsJson) {\n  try {\n    shortsJson = JSON.parse(stripJsonFence(draft.shorts_raw));\n  } catch (error) {\n    throw new Error(`Shorts draft is not valid JSON: ${error.message}`);\n  }\n}\n\nlet title = String(shortsJson.title || \u0027ForgeView Automation Lesson #Shorts\u0027).replace(/\\s+/g, \u0027 \u0027).trim();\nif (!/#Shorts/i.test(title)) title = `${title} #Shorts`;\nif (title.length \u003e 100) title = title.slice(0, 97).trimEnd() + \u0027...\u0027;\n\nlet description = String(shortsJson.description || \u0027\u0027).trim();\nif (!description) {\n  description = \u0027A ForgeView build-in-public lesson from AI automation, trading bots, and workflow reliability.\u0027;\n}\nconst requiredDescriptionBlock = `#Shorts\\n\\nTelegram:\\nhttps://t.me/ForgeViewCom\\n\\nX:\\nhttps://x.com/ForgeViewX`;\nfor (const line of requiredDescriptionBlock.split(\u0027\\n\u0027)) {\n  if (line \u0026\u0026 !description.includes(line)) description += `\\n${line}`;\n}\ndescription = description.replace(/\\n{3,}/g, \u0027\\n\\n\u0027).trim();\n\nconst tags = Array.isArray(shortsJson.tags)\n  ? shortsJson.tags.map(String).filter(Boolean)\n  : [\u0027AI automation\u0027, \u0027trading bots\u0027, \u0027n8n\u0027, \u0027build in public\u0027, \u0027ForgeViewAI\u0027];\nconst narrationScript = String(shortsJson.narration_script || \u0027\u0027).trim();\n\nreturn [{\n  json: {\n    draft_chat_id: config.X_DRAFTS_TELEGRAM_CHAT_ID,\n    youtube_channel_handle: \u0027@ForgeViewGrowth\u0027,\n    privacyStatus: \u0027private\u0027,\n    categoryId: \u002728\u0027,\n    title,\n    description,\n    tags,\n    tags_text: tags.join(\u0027, \u0027),\n    narration_script: narrationScript,\n    shorts_json: shortsJson,\n    local_project_root: \u0027D:\\\\ForgeViewAI\u0027,\n    shorts_generator_dir: \u0027D:\\\\ForgeViewAI\\\\content\\\\video\\\\shorts-generator\u0027,\n    output_path: \u0027D:\\\\ForgeViewAI\\\\output\\\\media\\\\videos\\\\short.mp4\u0027\n  }\n}];"
+                                     },
+                      "id":  "6ea1a013-c070-43e6-bb62-7b380f3a53cf",
+                      "name":  "Prepare Shorts Generator Payload",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       1040,
+                                       464
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "method":  "POST",
+                                         "url":  "https://FORGEVIEW_BRIDGE_URL/forgeview/render-short",
+                                         "sendBody":  true,
+                                         "specifyBody":  "json",
+                                         "jsonBody":  "={{ { shorts_json: $json.shorts_json, project_root: $json.local_project_root, generator_dir: $json.shorts_generator_dir, output_path: $json.output_path, title: $json.title, description: $json.description, narration_script: $json.narration_script, tags: $json.tags } }}",
+                                         "options":  {
+                                                         "timeout":  600000
+                                                     },
+                                         "sendHeaders":  true,
+                                         "headerParameters":  {
+                                                                  "parameters":  [
+                                                                                     {
+                                                                                         "name":  "X-ForgeView-Secret",
+                                                                                         "value":  "forgeview123"
+                                                                                     }
+                                                                                 ]
+                                                              }
+                                     },
+                      "id":  "8f3d9c63-0672-49c0-8f43-6637b4d98b1c",
+                      "name":  "HTTP - Trigger Local Shorts Generator Bridge",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       1280,
+                                       464
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "const prepared = $(\u0027Prepare Shorts Generator Payload\u0027).item.json;\nconst bridge = $json || {};\nlet videoUrl = bridge.video_url || bridge.download_url || bridge.mp4_url;\n\nif (!videoUrl) {\n  throw new Error(\u0027Local Shorts Generator bridge did not return video_url/download_url/mp4_url for the generated MP4.\u0027);\n}\n\nif (/^http:\\/\\/(localhost|127\\.0\\.0\\.1):/i.test(videoUrl)) {\n  const bridgeUrl = \u0027https://FORGEVIEW_BRIDGE_URL/forgeview/render-short\u0027;\n  videoUrl = bridgeUrl.replace(/\\/forgeview\\/render-short\\/?$/, \u0027/files/short.mp4\u0027);\n}\n\nreturn [{\n  json: {\n    ...prepared,\n    bridge_status: bridge.status || (bridge.ok ? \u0027ok\u0027 : \u0027unknown\u0027),\n    bridge_message: bridge.message || \u0027\u0027,\n    bridge_video_path: bridge.video_path || \u0027\u0027,\n    generated_video_url: videoUrl\n  }\n}];"
+                                     },
+                      "id":  "a6e7aa04-d472-4e23-886f-0b18db196508",
+                      "name":  "Verify Bridge Result",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       1520,
+                                       464
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "url":  "={{ $json.generated_video_url }}",
+                                         "responseFormat":  "file",
+                                         "dataPropertyName":  "video",
+                                         "options":  {
+                                                         "timeout":  600000
+                                                     },
+                                         "sendHeaders":  true,
+                                         "headerParameters":  {
+                                                                  "parameters":  [
+                                                                                     {
+                                                                                         "name":  "X-ForgeView-Secret",
+                                                                                         "value":  "forgeview123"
+                                                                                     }
+                                                                                 ]
+                                                              }
+                                     },
+                      "id":  "edda1890-4be4-4334-a6fc-e868e6a01726",
+                      "name":  "HTTP - Download Generated MP4",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       1760,
+                                       464
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "operation":  "sendVideo",
+                                         "chatId":  "={{ Prepare Shorts Generator Payload.item.json.draft_chat_id }}",
+                                         "binaryData":  true,
+                                         "binaryPropertyName":  "video",
+                                         "additionalFields":  {
+                                                                  "caption":  "={{ \u0027YOUTUBE SHORTS VIDEO DRAFT\\n\\nTitle:\\n\u0027 + Prepare Shorts Generator Payload.item.json.title + \u0027\\n\\nDescription:\\n\u0027 + Prepare Shorts Generator Payload.item.json.description + \u0027\\n\\nTags:\\n\u0027 + Prepare Shorts Generator Payload.item.json.tags_text + \u0027\\n\\nVideo:\\nattached MP4\u0027 }}"
+                                                              }
+                                     },
+                      "id":  "b41c49aa-d8a7-49f2-9f4d-e2ca080f2e89",
+                      "name":  "Telegram - Send MP4 Draft With Metadata",
+                      "type":  "n8n-nodes-base.telegram",
+                      "typeVersion":  1.2,
+                      "position":  [
+                                       2000,
+                                       464
+                                   ],
+                      "credentials":  {
+                                          "telegramApi":  {
+                                                              "id":  "__REPLACE_WITH_TELEGRAM_CREDENTIAL_ID__",
+                                                              "name":  "ForgeView Telegram Bot"
+                                                          }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "resource":  "video",
+                                         "operation":  "upload",
+                                         "title":  "={{ $(\u0027Prepare Shorts Generator Payload\u0027).item.json.title }}",
+                                         "description":  "={{ $(\u0027Prepare Shorts Generator Payload\u0027).item.json.description }}",
+                                         "categoryId":  "={{ $(\u0027Prepare Shorts Generator Payload\u0027).item.json.categoryId }}",
+                                         "privacyStatus":  "private",
+                                         "binaryProperty":  "video",
+                                         "tags":  "={{ Prepare Shorts Generator Payload.item.json.tags }}"
+                                     },
+                      "id":  "459804e2-e212-49c2-b4d7-0255803166cb",
+                      "name":  "YouTube - Upload Private Short",
+                      "type":  "n8n-nodes-base.youTube",
+                      "typeVersion":  1,
+                      "position":  [
+                                       2240,
+                                       464
+                                   ],
+                      "credentials":  {
+                                          "youTubeOAuth2Api":  {
+                                                                   "id":  "__REPLACE_WITH_YOUTUBE_CREDENTIAL_ID__",
+                                                                   "name":  "ForgeView YouTube OAuth2"
+                                                               }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "const upload = $json;\nconst prepared = $(\u0027Prepare Shorts Generator Payload\u0027).item.json;\nconst videoId = upload.id || upload.videoId || upload.snippet?.resourceId?.videoId || \u0027\u0027;\nconst url = videoId ? `https://www.youtube.com/watch?v=${videoId}` : \u0027URL unavailable\u0027;\n\nreturn [{\n  json: {\n    draft_chat_id: prepared.draft_chat_id,\n    video_id: videoId,\n    video_url: url,\n    privacyStatus: \u0027private\u0027,\n    title: prepared.title,\n    confirmation_text: `UPLOAD SUCCESS\\n\\nVideo ID:\\n${videoId || \u0027unknown\u0027}\\n\\nURL:\\n${url}\\n\\nPrivacy:\\nprivate`\n  }\n}];"
+                                     },
+                      "id":  "d2c54e93-cfd1-4334-a047-3e5a4106d499",
+                      "name":  "Format YouTube Upload Confirmation",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       2480,
+                                       464
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "chatId":  "={{ $json.draft_chat_id }}",
+                                         "text":  "={{ $json.confirmation_text }}",
+                                         "additionalFields":  {
+                                                                  "disable_web_page_preview":  true
+                                                              }
+                                     },
+                      "id":  "79ca433c-6c9b-4aa5-9c11-e87d39a5b866",
+                      "name":  "Telegram - Send Upload Confirmation",
+                      "type":  "n8n-nodes-base.telegram",
+                      "typeVersion":  1.2,
+                      "position":  [
+                                       2720,
+                                       464
+                                   ],
+                      "credentials":  {
+                                          "telegramApi":  {
+                                                              "id":  "__REPLACE_WITH_TELEGRAM_CREDENTIAL_ID__",
+                                                              "name":  "ForgeView Telegram Bot"
+                                                          }
+                                      }
+                  }
+              ],
+    "pinData":  {
+
+                },
+    "connections":  {
+                        "Set ForgeView Config":  {
+                                                     "main":  [
+                                                                  [
+                                                                      {
+                                                                          "node":  "Compute Project Day",
+                                                                          "type":  "main",
+                                                                          "index":  0
+                                                                      }
+                                                                  ]
+                                                              ]
+                                                 },
+                        "Compute Project Day":  {
+                                                    "main":  [
+                                                                 [
+                                                                     {
+                                                                         "node":  "Build Telegram Prompt",
+                                                                         "type":  "main",
+                                                                         "index":  0
+                                                                     },
+                                                                     {
+                                                                         "node":  "Build Strict X Prompt",
+                                                                         "type":  "main",
+                                                                         "index":  0
+                                                                     },
+                                                                     {
+                                                                         "node":  "Build YouTube Shorts Prompt",
+                                                                         "type":  "main",
+                                                                         "index":  0
+                                                                     }
+                                                                 ]
+                                                             ]
+                                                },
+                        "Build Telegram Prompt":  {
+                                                      "main":  [
+                                                                   [
+                                                                       {
+                                                                           "node":  "OpenAI - Generate Telegram Post",
+                                                                           "type":  "main",
+                                                                           "index":  0
+                                                                       }
+                                                                   ]
+                                                               ]
+                                                  },
+                        "OpenAI - Generate Telegram Post":  {
+                                                                "main":  [
+                                                                             [
+                                                                                 {
+                                                                                     "node":  "Format Telegram Post",
+                                                                                     "type":  "main",
+                                                                                     "index":  0
+                                                                                 }
+                                                                             ]
+                                                                         ]
+                                                            },
+                        "Format Telegram Post":  {
+                                                     "main":  [
+                                                                  [
+                                                                      {
+                                                                          "node":  "Telegram - Send Public Post",
+                                                                          "type":  "main",
+                                                                          "index":  0
+                                                                      }
+                                                                  ]
+                                                              ]
+                                                 },
+                        "Build Strict X Prompt":  {
+                                                      "main":  [
+                                                                   [
+                                                                       {
+                                                                           "node":  "OpenAI - Generate X Draft",
+                                                                           "type":  "main",
+                                                                           "index":  0
+                                                                       }
+                                                                   ]
+                                                               ]
+                                                  },
+                        "OpenAI - Generate X Draft":  {
+                                                          "main":  [
+                                                                       [
+                                                                           {
+                                                                               "node":  "Format X Draft",
+                                                                               "type":  "main",
+                                                                               "index":  0
+                                                                           }
+                                                                       ]
+                                                                   ]
+                                                      },
+                        "Format X Draft":  {
+                                               "main":  [
+                                                            [
+                                                                {
+                                                                    "node":  "Telegram - Send X Draft",
+                                                                    "type":  "main",
+                                                                    "index":  0
+                                                                }
+                                                            ]
+                                                        ]
+                                           },
+                        "Build YouTube Shorts Prompt":  {
+                                                            "main":  [
+                                                                         [
+                                                                             {
+                                                                                 "node":  "OpenAI - Generate Shorts Draft",
+                                                                                 "type":  "main",
+                                                                                 "index":  0
+                                                                             }
+                                                                         ]
+                                                                     ]
+                                                        },
+                        "OpenAI - Generate Shorts Draft":  {
+                                                               "main":  [
+                                                                            [
+                                                                                {
+                                                                                    "node":  "Format Shorts Draft",
+                                                                                    "type":  "main",
+                                                                                    "index":  0
+                                                                                }
+                                                                            ]
+                                                                        ]
+                                                           },
+                        "Format Shorts Draft":  {
+                                                    "main":  [
+                                                                 [
+                                                                     {
+                                                                         "node":  "Telegram - Send Shorts Draft",
+                                                                         "type":  "main",
+                                                                         "index":  0
+                                                                     }
+                                                                 ]
+                                                             ]
+                                                },
+                        "Schedule Trigger - Every 6 Hours":  {
+                                                                 "main":  [
+                                                                              [
+                                                                                  {
+                                                                                      "node":  "Set ForgeView Config",
+                                                                                      "type":  "main",
+                                                                                      "index":  0
+                                                                                  }
+                                                                              ]
+                                                                          ]
+                                                             },
+                        "Telegram - Send Shorts Draft":  {
+                                                             "main":  [
+                                                                          {
+                                                                              "node":  "Prepare Shorts Generator Payload",
+                                                                              "type":  "main",
+                                                                              "index":  0
+                                                                          }
+                                                                      ]
+                                                         },
+                        "Prepare Shorts Generator Payload":  {
+                                                                 "main":  [
+                                                                              {
+                                                                                  "node":  "HTTP - Trigger Local Shorts Generator Bridge",
+                                                                                  "type":  "main",
+                                                                                  "index":  0
+                                                                              }
+                                                                          ]
+                                                             },
+                        "HTTP - Trigger Local Shorts Generator Bridge":  {
+                                                                             "main":  [
+                                                                                          {
+                                                                                              "node":  "Verify Bridge Result",
+                                                                                              "type":  "main",
+                                                                                              "index":  0
+                                                                                          }
+                                                                                      ]
+                                                                         },
+                        "Verify Bridge Result":  {
+                                                     "main":  [
+                                                                  {
+                                                                      "node":  "HTTP - Download Generated MP4",
+                                                                      "type":  "main",
+                                                                      "index":  0
+                                                                  }
+                                                              ]
+                                                 },
+                        "HTTP - Download Generated MP4":  {
+                                                              "main":  [
+                                                                           {
+                                                                               "node":  "Telegram - Send MP4 Draft With Metadata",
+                                                                               "type":  "main",
+                                                                               "index":  0
+                                                                           }
+                                                                       ]
+                                                          }
+                    },
+    "active":  false,
+    "settings":  {
+                     "executionOrder":  "v1",
+                     "binaryMode":  "separate"
+                 },
+    "versionId":  "forgeview-unified-content-machine-v9-1-6h-manual-shorts",
+    "meta":  {
+                 "templateCredsSetupCompleted":  true,
+                 "instanceId":  "b07b54e5a5a60c0d77cfe6d4e3c24a66938a3af67d80e35c0a08b2915d3aa996"
+             },
+    "id":  "9V9XdcrMQYR52c5t",
+    "tags":  [
+
+             ]
+}

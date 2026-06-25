@@ -1,0 +1,399 @@
+{
+  "mode": "public",
+  "fallback_reason": "",
+  "verdict": "INSUFFICIENT_DATA",
+  "metrics": {
+    "total_markets_observed": 222,
+    "completed_market_windows": 216,
+    "opportunities_detected": 0,
+    "opportunity_rate": 0.0,
+    "shadow_trades": 0,
+    "simulated_pnl": 0,
+    "win_rate": 0.0,
+    "avg_win": 0.0,
+    "avg_loss": 0.0,
+    "max_drawdown": 0.0,
+    "edge_decay": 0.0,
+    "latency_sensitivity": 0.0,
+    "reference_coverage_percentage": 99.7593,
+    "data_gap_percentage": 0.9324
+  },
+  "campaign_completeness": {
+    "actual_utc_completion_timestamp": "2026-06-24T03:40:15.673244+00:00",
+    "actual_utc_start_timestamp": "2026-06-23T21:40:15.659760+00:00",
+    "coverage_percentage": 100.0,
+    "expected_duration_seconds": 21600.0,
+    "material_shortfall_seconds": 0.0,
+    "monotonic_elapsed_runtime_seconds": 21600.016,
+    "observed_utc_span_seconds": 21600.013484,
+    "rejection_reasons": [],
+    "status": "complete",
+    "wall_clock_discontinuities": [],
+    "wall_clock_discontinuity_count": 0
+  },
+  "observation_continuity": {
+    "status": "continuous",
+    "expected_checkpoint_count": 10800,
+    "actual_checkpoint_count": 10800,
+    "checkpoint_coverage_percentage": 100.0,
+    "max_checkpoint_gap_seconds": 2.038265,
+    "gaps_over_10_seconds": 0,
+    "gaps_over_60_seconds": 0,
+    "gaps_over_300_seconds": 0,
+    "effective_observed_duration_seconds": 21598.005487,
+    "first_observation_timestamp": "2026-06-23T21:40:15.661760+00:00",
+    "last_observation_timestamp": "2026-06-24T03:40:13.667247+00:00",
+    "terminal_gap_seconds": 2.005997,
+    "session_completed_present": true,
+    "fatal_capture_error_count": 0,
+    "rejection_reasons": []
+  },
+  "discovery_failures": [
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782253500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:32:39.663321+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782254400",
+      "exception_message": "The read operation timed out",
+      "exception_type": "TimeoutError",
+      "timestamp": "2026-06-23T22:49:03.670009+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782255300",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:54:27.666499+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782254700",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:54:27.666499+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782255000",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:54:27.666499+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782255300",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:54:39.668803+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782255000",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:54:39.668803+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782254700",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:54:51.669533+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782255300",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:54:51.669533+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782255300",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:54:51.669533+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782254700",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:54:51.669533+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782255300",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:54:51.669533+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782255000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:55:03.673770+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782255600",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:55:03.673770+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782255000",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:55:15.671873+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782255000",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:55:27.670301+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782255300",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:55:27.670301+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782255600",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:55:27.670301+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:55:39.672088+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:55:57.661013+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782255600",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T22:55:57.661013+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782255900",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T23:12:03.664844+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782257100",
+      "exception_message": "The read operation timed out",
+      "exception_type": "TimeoutError",
+      "timestamp": "2026-06-23T23:33:09.668615+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782258000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T23:46:57.659656+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T23:46:57.659656+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782258600",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T23:46:57.659656+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782258300",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T23:46:57.659656+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782258900",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T23:50:51.657931+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782258600",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T23:51:03.658753+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782258900",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-23T23:52:03.669444+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782267900",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:33:57.665757+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782267900",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:33:57.665757+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782268200",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:34:09.665320+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782267900",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:34:09.665320+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782268500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:34:21.667351+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782268200",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:34:21.667351+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782268500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:34:21.667351+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782268500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:34:33.667396+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:34:33.667396+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782267900",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:34:33.667396+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782268500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:34:45.670026+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782268500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:34:45.670026+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:35:03.663730+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782268800",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:35:03.663730+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782268500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:35:15.663498+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:35:15.663498+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782268800",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:35:15.663498+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782268200",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:35:15.663498+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782268500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:36:27.658423+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782268800",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T02:36:51.668214+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782271500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T03:27:15.661867+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782271500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T03:27:39.668254+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782271500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T03:28:03.666678+00:00"
+    }
+  ],
+  "microstructure_coverage": {
+    "by_asset": {
+      "BTC": 10699,
+      "ETH": 10691,
+      "SOL": 10699
+    },
+    "events": 32089,
+    "field_coverage_percentage": {
+      "bid_ask_spread": 100.0,
+      "book_imbalance": 100.0,
+      "cross_asset_relative_yes": 99.9907,
+      "cross_asset_yes_dispersion": 99.9907,
+      "quote_age_seconds": 100.0,
+      "quote_timestamp": 100.0,
+      "refresh_latency_seconds": 100.0,
+      "repricing_acceleration": 98.635,
+      "repricing_velocity": 99.3175,
+      "spread_change": 99.3175,
+      "spread_compression": 99.3175,
+      "spread_velocity": 99.3175,
+      "total_ask_depth": 100.0,
+      "total_bid_depth": 100.0,
+      "yes_ask_size": 100.0,
+      "yes_bid_size": 100.0
+    },
+    "schema_version": 1
+  },
+  "no_trading_guarantee": true
+}

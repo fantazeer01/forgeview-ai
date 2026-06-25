@@ -1,0 +1,166 @@
+{
+  "artifacts": {
+    "excluded_boundary_rows.csv": {
+      "row_count": 12,
+      "sha256": "d2c85ca1b8cb1b7a2dd8cebedaaed4a7546f7b7cbf3c7eb6716b678b7d119bed"
+    },
+    "holdout_features.csv": {
+      "row_count": 158,
+      "sha256": "fdc781ab636e7801f174e2254e3ccd6220197833d8ac0b357a61df8710f2b395"
+    },
+    "sealed_holdout_labels.csv": {
+      "row_count": 158,
+      "sha256": "9ea0faa072dd9c74146011da9cd6599e643fb7f40c2f8ce9643bb17f0394ca2b"
+    },
+    "split_assignments.csv": {
+      "row_count": 1064,
+      "sha256": "3cb3072159401e6ce6861d3d22f7d8d4e3b1573d9239ca2d1ef1be941d54286d"
+    },
+    "train.csv": {
+      "row_count": 741,
+      "sha256": "cfcca2faa0358d6e6f099f6a678cf7f54997766be23c4159425682e7b0a83e25"
+    },
+    "validation.csv": {
+      "row_count": 153,
+      "sha256": "1ec0ca09e5833c9678d27477b794a185be0b37d00ee79345e8a1d6b2b76bac35"
+    }
+  },
+  "baselines": {
+    "deterministic_lag_score": "existing lag_score transformed by a rule fitted on train only",
+    "logistic_regression": "interpretable regularized linear probability baseline; preprocessing fitted on train only",
+    "polymarket_probability": "row yes_price",
+    "unconditional_frequency": "training-split UP frequency, constant probability"
+  },
+  "configuration": {
+    "atomic_unit": "window_start",
+    "embargo_windows_per_boundary": 1,
+    "holdout_fraction": 0.15,
+    "purge_windows_per_boundary": 1,
+    "train_fraction": 0.7,
+    "validation_fraction": 0.15,
+    "window_duration_seconds": 300
+  },
+  "holdout": {
+    "development_api_exposes_labels": false,
+    "label_commitment_sha256": "9ea0faa072dd9c74146011da9cd6599e643fb7f40c2f8ce9643bb17f0394ca2b",
+    "labels_sealed": true,
+    "release_condition": "one-time final evaluation after candidate and thresholds are frozen from train/validation only",
+    "selection_use_prohibited": true
+  },
+  "metrics": {
+    "primary": [
+      "log_loss",
+      "brier_score"
+    ],
+    "secondary": [
+      "calibration_error",
+      "balanced_accuracy",
+      "roc_auc",
+      "precision",
+      "recall",
+      "asset_attribution",
+      "time_period_attribution"
+    ]
+  },
+  "precommitted_acceptance": {
+    "final_holdout_edge_evidence": [
+      "frozen candidate beats both unconditional and Polymarket baselines on log loss",
+      "frozen candidate beats both unconditional and Polymarket baselines on Brier score",
+      "relative improvement versus Polymarket is >=1% on both primary metrics",
+      "benefit is present in at least two assets and no single asset supplies >40% of simulated net P&L",
+      "cost and latency stress tests remain positive"
+    ],
+    "holdout_reuse": "prohibited",
+    "validation_advancement": [
+      "candidate beats unconditional frequency on both primary metrics",
+      "candidate improves at least one primary metric versus Polymarket by >=1%",
+      "the other primary metric is no worse than Polymarket by >0.5%",
+      "directional benefit is present in at least two assets"
+    ]
+  },
+  "protocol_id": "time_ordered_holdout_v1",
+  "schema_version": 1,
+  "source": {
+    "columns": [
+      "market_id",
+      "asset",
+      "market_source",
+      "window_start",
+      "window_end",
+      "feature_timestamp",
+      "market_age_seconds",
+      "seconds_to_expiry",
+      "return_5s",
+      "return_15s",
+      "return_30s",
+      "return_60s",
+      "momentum_short",
+      "momentum_medium",
+      "volatility_30s",
+      "volatility_60s",
+      "yes_price",
+      "no_price",
+      "yes_no_spread",
+      "probability_change_15s",
+      "probability_change_30s",
+      "lag_score",
+      "confidence_score",
+      "detection_delay",
+      "early_window_flag",
+      "late_window_flag",
+      "outcome",
+      "resolution_timestamp",
+      "label_source",
+      "source_session"
+    ],
+    "first_window": "2026-06-18T23:15:00+00:00",
+    "last_window": "2026-06-23T03:05:00+00:00",
+    "path": "polymarket\\data\\training\\public_only.csv",
+    "required_label_source": "polymarket_gamma_resolved",
+    "required_market_source": "public",
+    "row_count": 1064,
+    "sha256": "2be24229ef79638abbe3a843e5d79c97c4834d87ef19f0bcd5b5b736c897c276",
+    "window_count": 356
+  },
+  "splits": {
+    "boundaries": [
+      {
+        "embargoed_windows": [
+          "2026-06-22T14:05:00+00:00"
+        ],
+        "first_next_window": "2026-06-22T14:10:00+00:00",
+        "last_development_window": "2026-06-22T13:55:00+00:00",
+        "name": "train_validation",
+        "purged_windows": [
+          "2026-06-22T14:00:00+00:00"
+        ],
+        "raw_cut_window": "2026-06-22T14:05:00+00:00"
+      },
+      {
+        "embargoed_windows": [
+          "2026-06-22T22:40:00+00:00"
+        ],
+        "first_next_window": "2026-06-22T22:45:00+00:00",
+        "last_development_window": "2026-06-22T22:30:00+00:00",
+        "name": "validation_holdout",
+        "purged_windows": [
+          "2026-06-22T22:35:00+00:00"
+        ],
+        "raw_cut_window": "2026-06-22T22:40:00+00:00"
+      }
+    ],
+    "row_counts": {
+      "excluded": 12,
+      "holdout": 158,
+      "train": 741,
+      "validation": 153
+    },
+    "window_counts": {
+      "excluded": 4,
+      "holdout": 53,
+      "train": 248,
+      "validation": 51
+    }
+  },
+  "status": "frozen"
+}

@@ -1,0 +1,201 @@
+{
+  "task": "Wallet Public Trade History Ingestion Design v1",
+  "generated_at_utc": "2026-06-24T20:35:38.024305+00:00",
+  "status": "design_complete_no_ingestion_run",
+  "strict_rules_observed": [
+    "public read-only endpoints only",
+    "no wallet connection or private keys",
+    "no order placement",
+    "no automatic trade copying",
+    "no market capture campaigns",
+    "no sealed holdout inspection",
+    "no holdout evaluation",
+    "no production model training",
+    "no unbounded history ingestion",
+    "seed-wallet allowlist only in first implementation"
+  ],
+  "schema_fields": [
+    "wallet_id",
+    "profile_url",
+    "source_endpoint",
+    "source_endpoint_name",
+    "activity_type",
+    "activity_timestamp",
+    "activity_datetime_utc",
+    "transaction_hash",
+    "condition_id",
+    "token_id",
+    "asset_id",
+    "market_slug",
+    "event_slug",
+    "market_title",
+    "outcome",
+    "outcome_index",
+    "side",
+    "price",
+    "size",
+    "notional_value",
+    "notional_source",
+    "market_type",
+    "asset_class",
+    "up_down_market",
+    "time_to_expiry_seconds",
+    "expiry_timestamp",
+    "expiry_source",
+    "entry_or_exit_candidate",
+    "lifecycle_group_key",
+    "dedupe_key",
+    "source_fetch_timestamp",
+    "raw_payload_hash",
+    "raw_page_hash",
+    "normalization_version",
+    "data_quality_flags"
+  ],
+  "architecture": {
+    "mode": "future bounded read-only ingestion from public endpoints only",
+    "primary_flow": [
+      "load seed wallet allowlist",
+      "fetch bounded activity TRADE pages with cache-first lookup",
+      "write raw page JSONL and fetch manifest before normalization",
+      "normalize rows to wallet_trade_history schema",
+      "cross-check first bounded /trades page per wallet",
+      "join existing positions/closed positions snapshots where available",
+      "join market metadata/endDate for observed markets only",
+      "optionally join narrow CLOB prices-history windows and external BTC/ETH/SOL reference snapshots in later bounded task",
+      "export deterministic CSV and Parquet where local dependencies allow",
+      "write quality report and hashes"
+    ],
+    "dedupe_key": "wallet_id|source_endpoint_name|transaction_hash|condition_id|token_id|activity_timestamp|side|price|size",
+    "raw_hashing": "canonical JSON with stable key ordering and SHA-256 for each row plus each page",
+    "deterministic_rebuild": "raw JSONL is the source of truth; normalized exports must rebuild byte-identically from raw inputs and fixed versioned rules"
+  },
+  "first_ingestion_scope": {
+    "wallet_allowlist_source": "polymarket/wallet_intelligence/watched_wallets.example.csv",
+    "seed_wallets_only": true,
+    "max_wallets": 6,
+    "primary_endpoint": "https://data-api.polymarket.com/activity?user={wallet}&type=TRADE&limit=100&offset={offset}&sortBy=TIMESTAMP&sortDirection=DESC",
+    "cross_check_endpoint": "https://data-api.polymarket.com/trades?user={wallet}&limit=100&offset={offset}",
+    "page_size": 100,
+    "max_pages_per_wallet_primary_activity": 3,
+    "max_rows_per_wallet_primary_activity": 300,
+    "max_pages_per_wallet_trades_cross_check": 1,
+    "max_rows_per_wallet_trades_cross_check": 100,
+    "max_total_activity_rows": 1800,
+    "max_total_cross_check_rows": 600,
+    "metadata_join_scope": "only markets observed in bounded wallet activity rows",
+    "price_history_join_scope": "design-only now; future implementation may fetch narrow windows around normalized activity rows only",
+    "binance_reference_join_scope": "design-only now; future implementation must use existing/as-of reference snapshots or bounded public reference queries"
+  },
+  "join_plan": [
+    {
+      "join_name": "activity_to_market_metadata",
+      "left_keys": "activity.condition_id, activity.market_slug",
+      "right_source": "positions/closed_positions/Gamma market metadata",
+      "right_keys": "condition_id primary; slug fallback",
+      "purpose": "Adds expiry/endDate, market title, outcome token map, active/closed status",
+      "risk_control": "Quarantine conflicting condition_id->slug mappings; preserve both raw values"
+    },
+    {
+      "join_name": "condition_to_slug",
+      "left_keys": "condition_id",
+      "right_source": "activity rows, trades rows, positions rows",
+      "right_keys": "condition_id",
+      "purpose": "Validates that activity and aggregate snapshots refer to same market",
+      "risk_control": "Do not infer a missing condition_id from title alone"
+    },
+    {
+      "join_name": "token_to_outcome",
+      "left_keys": "token_id / asset_id",
+      "right_source": "activity/trades rows and market metadata token maps",
+      "right_keys": "token_id plus condition_id",
+      "purpose": "Confirms Up/Down/YES/NO outcome label and outcome index",
+      "risk_control": "If endpoint outcome conflicts with metadata, mark conflict and keep raw endpoint label"
+    },
+    {
+      "join_name": "trades_to_positions",
+      "left_keys": "wallet_id, condition_id, token_id, outcome",
+      "right_source": "positions and closed_positions snapshots",
+      "right_keys": "wallet+condition+token/outcome",
+      "purpose": "Cross-checks aggregate average entry, realized PnL, current/closed status",
+      "risk_control": "Aggregate positions do not prove individual fills; use as validation only"
+    },
+    {
+      "join_name": "trades_to_price_history",
+      "left_keys": "token_id, activity_timestamp",
+      "right_source": "CLOB prices-history",
+      "right_keys": "token_id plus narrow timestamp window",
+      "purpose": "Adds Polymarket token price path before/after wallet activity for repricing context",
+      "risk_control": "Query only small windows around known activity rows in future implementation"
+    },
+    {
+      "join_name": "trades_to_binance_reference",
+      "left_keys": "asset_class, activity_timestamp",
+      "right_source": "external BTC/ETH/SOL reference price snapshots",
+      "right_keys": "asset_class plus timestamp nearest at-or-before",
+      "purpose": "Adds external return windows around entry for Binance-lag analysis",
+      "risk_control": "Wallet endpoints alone cannot prove lag; require as-of reference snapshots"
+    },
+    {
+      "join_name": "lifecycle_rows",
+      "left_keys": "wallet_id, condition_id, token_id, outcome, side, timestamp",
+      "right_source": "normalized trade_history rows",
+      "right_keys": "group by lifecycle_group_key ordered by timestamp",
+      "purpose": "Supports entry/exit candidate grouping, partial exits, approximate hold time",
+      "risk_control": "Do not collapse unmatched rows into copyability claims"
+    }
+  ],
+  "validation_gates": [
+    {
+      "gate": "required_field_coverage",
+      "threshold": "100% for wallet_id, source_endpoint, activity_timestamp, transaction_hash, condition_id, token_id, side, price, size, source_fetch_timestamp, raw_payload_hash",
+      "action_on_fail": "fail normalized export; quarantine bad rows"
+    },
+    {
+      "gate": "duplicate_rate",
+      "threshold": "<= 1% duplicate dedupe_key rows before dedupe and 0 duplicate dedupe_key rows after dedupe",
+      "action_on_fail": "fail report and inspect endpoint/page overlap"
+    },
+    {
+      "gate": "timestamp_parse_rate",
+      "threshold": ">= 99% parseable activity_timestamp to UTC datetime",
+      "action_on_fail": "fail export if required timestamps cannot be parsed"
+    },
+    {
+      "gate": "market_classification_coverage",
+      "threshold": ">= 95% market_type not unknown for normalized rows",
+      "action_on_fail": "warn below 98%; fail below 95%"
+    },
+    {
+      "gate": "fast_crypto_classification_coverage",
+      "threshold": "100% classification for rows whose slug/title contains BTC, ETH, SOL, Up, Down, or updown",
+      "action_on_fail": "fail classification report"
+    },
+    {
+      "gate": "provenance_completeness",
+      "threshold": "100% rows have source_endpoint, source_fetch_timestamp, raw_payload_hash, raw_page_hash, normalization_version",
+      "action_on_fail": "fail export"
+    },
+    {
+      "gate": "deterministic_export",
+      "threshold": "two rebuilds from raw JSONL produce identical CSV hash and identical JSON report hash",
+      "action_on_fail": "fail handoff"
+    },
+    {
+      "gate": "bounded_scope",
+      "threshold": "wallet count, rows per wallet, pages per wallet, retries, and endpoint names remain within ingestion_limits.json",
+      "action_on_fail": "abort fetch before writing normalized outputs"
+    },
+    {
+      "gate": "safety_boundary",
+      "threshold": "no authenticated requests, wallet/private-key code, order endpoints, capture campaigns, holdout files, or live execution paths touched",
+      "action_on_fail": "abort task and record violation"
+    },
+    {
+      "gate": "join_quality_reporting",
+      "threshold": "report coverage for market metadata, closed/current positions, price-history, and Binance/reference joins; do not impute missing joins",
+      "action_on_fail": "warn and retain explicit unavailable flags"
+    }
+  ],
+  "successor_task": "Wallet Public Trade History Ingester Fixture Implementation v1",
+  "successor_scope": "Implement schema constants, fixture-based normalizer/deduper tests, and CLI dry-run/inspect scaffolding using saved probe fixtures only; do not fetch broad history yet."
+}

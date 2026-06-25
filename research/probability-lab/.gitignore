@@ -1,0 +1,73 @@
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*private_key*
+*private-key*
+*wallet*
+*seed*
+*mnemonic*
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# JavaScript
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Cache and temporary output
+cache/
+.cache/
+tmp/
+temp/
+*.tmp
+*.log
+
+# Large/raw research data
+data/
+raw_data/
+recordings/
+recorder_data/
+*live_btc5m*.csv
+*orderbook_snapshots*.csv
+*.parquet
+*.feather
+*.arrow
+*.sqlite
+*.db
+*.zip
+*.7z
+
+# Media and unrelated application files
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.steam
+steamapps/
+
+# Generated local validation outputs
+outcomes.json
+*_outcome_cache.json
+

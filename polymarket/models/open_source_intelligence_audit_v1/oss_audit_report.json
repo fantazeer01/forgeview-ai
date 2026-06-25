@@ -1,0 +1,137 @@
+{
+  "audit": "Polymarket Open Source Intelligence Audit v1",
+  "date": "2026-06-24",
+  "scope": "Read-only public GitHub repository audit for ForgeView Polymarket research acceleration.",
+  "strict_rules_observed": {
+    "live_trading_run": false,
+    "wallets_connected": false,
+    "private_keys_used": false,
+    "global_dependencies_installed": false,
+    "existing_pipeline_modified": false,
+    "campaigns_launched": false,
+    "production_models_trained": false
+  },
+  "outputs": [
+    "polymarket/models/open_source_intelligence_audit_v1/oss_audit_report.md",
+    "polymarket/models/open_source_intelligence_audit_v1/oss_audit_report.json",
+    "polymarket/models/open_source_intelligence_audit_v1/repository_scorecard.csv",
+    "polymarket/models/open_source_intelligence_audit_v1/feature_gap_matrix.csv",
+    "polymarket/models/open_source_intelligence_audit_v1/reuse_recommendations.csv"
+  ],
+  "top_3_most_useful_repositories": [
+    {
+      "rank": 1,
+      "repository": "ent0n29/polybot",
+      "url": "https://github.com/ent0n29/polybot",
+      "reason": "Best match for wallet intelligence and strategy reverse engineering: user-trade ingestion, profile resolution, ClickHouse research schema, replication scoring, paper bot matching, maker fill calibration, and BTC/ETH Up/Down strategy notes."
+    },
+    {
+      "rank": 2,
+      "repository": "evan-kolberg/prediction-market-backtesting",
+      "url": "https://github.com/evan-kolberg/prediction-market-backtesting",
+      "reason": "Best match for backtesting, dry-run research, and execution realism: L2 book replay, queue-position proxy, latency/slippage/fee modeling, strategy boundaries, and BTC 5m sandbox plumbing."
+    },
+    {
+      "rank": 3,
+      "repository": "pmxt-dev/pmxt",
+      "url": "https://github.com/pmxt-dev/pmxt",
+      "reason": "Best API reference: unified Polymarket Gamma/CLOB/Data APIs, WebSocket order books/trades, Python/TypeScript SDKs, and Binance feed normalization."
+    }
+  ],
+  "repositories": [
+    {
+      "repository": "alsk1992/CloddsBot",
+      "url": "https://github.com/alsk1992/CloddsBot",
+      "direct_usefulness_score": 55,
+      "directly_useful": false,
+      "useful_features": ["dry-run signal router", "paper trading", "Polymarket feed handlers", "Binance futures handlers", "whale tracking", "market-making and copy-trading concepts"],
+      "risks": ["autonomous agent execution", "private key configuration", "global npm install recommendation", "broad dependency and postinstall surface"],
+      "safe_reuse": ["operational checklist ideas", "dry-run routing tests", "security scanner posture"]
+    },
+    {
+      "repository": "ent0n29/polybot",
+      "url": "https://github.com/ent0n29/polybot",
+      "direct_usefulness_score": 95,
+      "directly_useful": true,
+      "useful_features": ["wallet profile resolver", "user trade ingestion", "ClickHouse research schema", "strategy reverse-engineering guide", "replication scoring", "paper trade match reports", "maker fill calibration", "BTC/ETH Up/Down target-wallet findings"],
+      "risks": ["execution service and signing code exists", "heavy infrastructure", "target-user results may be period-specific"],
+      "safe_reuse": ["schema concepts", "snapshot/report workflow", "replication-score methodology", "paired-outcome behavior checks"]
+    },
+    {
+      "repository": "MrFadiAi/Polymarket-bot",
+      "url": "https://github.com/MrFadiAi/Polymarket-bot",
+      "direct_usefulness_score": 78,
+      "directly_useful": true,
+      "useful_features": ["smart money service examples", "follow-wallet strategy example", "kline aggregation", "real-time WebSocket examples", "dry-run flag", "dashboard and risk controls"],
+      "risks": ["private key required in setup", "live trading examples", "dashboard can toggle live mode", "SDK examples include order placement"],
+      "safe_reuse": ["smart-money field inventory", "wallet-following observability concepts", "risk-panel vocabulary"]
+    },
+    {
+      "repository": "HarrierOnChain/Prediction-Markets-Trading-Bot-Toolkits",
+      "url": "https://github.com/HarrierOnChain/Prediction-Markets-Trading-Bot-Toolkits",
+      "direct_usefulness_score": 70,
+      "directly_useful": false,
+      "useful_features": ["copy trading bot", "BTC short-window arbitrage concept", "orderbook imbalance", "market making", "dry run", "depth guard", "circuit breaker"],
+      "risks": ["execution-first repository", "private-key config", "marketing claims need verification", "copy-trading and live-order design is outside ForgeView scope"],
+      "safe_reuse": ["adapter boundary", "depth guard", "dry-run-first gate", "circuit-breaker terminology"]
+    },
+    {
+      "repository": "evan-kolberg/prediction-market-backtesting",
+      "url": "https://github.com/evan-kolberg/prediction-market-backtesting",
+      "direct_usefulness_score": 92,
+      "directly_useful": true,
+      "useful_features": ["Nautilus backtesting extension", "Polymarket L2 replay", "PMXT/Telonex data flows", "execution modeling", "queue position", "latency", "slippage", "fees and maker rebates", "strategy modules", "account ledger replay"],
+      "risks": ["mixed license requires review before code reuse", "large framework complexity", "some live sandbox paths exist"],
+      "safe_reuse": ["execution realism checklist", "strategy/loader/runner separation", "reporting metrics", "public data caveats"]
+    },
+    {
+      "repository": "pmxt-dev/pmxt",
+      "url": "https://github.com/pmxt-dev/pmxt",
+      "direct_usefulness_score": 86,
+      "directly_useful": true,
+      "useful_features": ["unified prediction-market API", "Polymarket Gamma/CLOB/Data API specs", "WebSocket orderbook and trade examples", "Python and TypeScript SDKs", "Binance feed normalization", "CLI watch commands"],
+      "risks": ["hosted trading/write paths", "private-key examples", "server/SDK dependency surface"],
+      "safe_reuse": ["read-only API mapping", "normalization field names", "WebSocket example semantics", "Binance feed normalization comparison"]
+    },
+    {
+      "repository": "lihanyu81/polymarket_lp_tool",
+      "url": "https://github.com/lihanyu81/polymarket_lp_tool",
+      "direct_usefulness_score": 66,
+      "directly_useful": false,
+      "useful_features": ["passive liquidity order monitoring", "cancel/replace rules", "reward-band pricing", "anti-sniping filters", "fill/depth risk alerts", "Telegram/Web controls", "Rust WebSocket-first rewrite"],
+      "risks": ["requires private keys/API credentials", "execution path cancels/replaces live orders", "not focused on repricing or wallet intelligence"],
+      "safe_reuse": ["anti-sniping risk vocabulary", "pricing-rule observability", "WebSocket-first design notes"]
+    },
+    {
+      "repository": "aarora4/Awesome-Prediction-Market-Tools",
+      "url": "https://github.com/aarora4/Awesome-Prediction-Market-Tools",
+      "direct_usefulness_score": 45,
+      "directly_useful": false,
+      "useful_features": ["directory of APIs", "analytics tools", "alerting", "smart-money trackers", "copy-trading services", "data vendors"],
+      "risks": ["directory only", "quality of listed tools varies", "many commercial or closed services"],
+      "safe_reuse": ["future source discovery list"]
+    }
+  ],
+  "strongest_reusable_ideas": [
+    "Adopt polybot-style wallet snapshots and replication-score reports for research-only wallet intelligence.",
+    "Add prediction-market-backtesting-style execution realism assumptions to repricing reports: L2 depth, queue proxy, latency, fees, slippage, and passive fill probability.",
+    "Use PMXT as a read-only API mapping reference for Gamma/CLOB/Data/WebSocket normalization and Binance feed comparison.",
+    "Keep strategy logic separated from data loading and runner orchestration.",
+    "For any execution-like simulator, enforce dry-run invariants, depth guard terminology, and explicit no-key/no-order boundaries."
+  ],
+  "biggest_feature_gaps": [
+    "No normalized wallet/profile/position ingestion yet.",
+    "No wallet behavior metrics or copyability-delay measurement.",
+    "No L2 queue-position or passive-book fill realism in repricing simulation.",
+    "No read-only unified API adapter review against external Polymarket tooling.",
+    "No explicit replication-score framework comparing observed wallet behavior against ForgeView signals."
+  ],
+  "highest_risk_repositories": [
+    "alsk1992/CloddsBot",
+    "HarrierOnChain/Prediction-Markets-Trading-Bot-Toolkits",
+    "lihanyu81/polymarket_lp_tool",
+    "MrFadiAi/Polymarket-bot"
+  ],
+  "recommended_next_task": "Wallet Intelligence Data Ingestion v1",
+  "successor_task_rationale": "The audit found wallet/trader ingestion and replication scoring to be the highest-leverage missing capability. Data ingestion must precede behavior scoring, copy-delay analysis, or repricing cross-comparison."
+}

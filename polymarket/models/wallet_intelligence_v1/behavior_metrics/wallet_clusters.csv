@@ -1,0 +1,7 @@
+wallet_id,primary_cluster,clusters,rationale
+0x1f0ebc543b2d411f66947041625c0aa1ce61cf86,fast_crypto_directional,fast_crypto_directional|cheap_side_buyer,classification=fast_crypto_focused; fast_share=0.77193; cheap_share=0.210526; positions=57
+0x594edB9112f526Fa6A80b8F858A6379C8A2c1C11,cheap_side_buyer,cheap_side_buyer|weather_other,classification=weather_focused; fast_share=0; cheap_share=0.63; positions=100
+0x63ce342161250d705dc0b16df89036c8e5f9ba9a,fast_crypto_directional,fast_crypto_directional,classification=fast_crypto_focused; fast_share=0.9; cheap_share=0.08; positions=50
+0xd0d6053c3c37e727402d84c14069780d360993aa,fast_crypto_directional,fast_crypto_directional,classification=fast_crypto_focused; fast_share=0.716981; cheap_share=0.018868; positions=53
+0xde17f7144fbd0eddb2679132c10ff5e74b120988,cheap_side_buyer,cheap_side_buyer,classification=mixed; fast_share=0; cheap_share=0.41; positions=100
+0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a,fast_crypto_directional,fast_crypto_directional|high_volume_repeated_pattern,classification=fast_crypto_focused; fast_share=1; cheap_share=0.18; positions=100

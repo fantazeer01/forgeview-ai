@@ -1,0 +1,4 @@
+evidence_level,target_signals,minimum_observed_hours_gate,minimum_independent_sessions_gate,minimum_signals_per_asset,minimum_signals_per_side,minimum_expectancy_after_slippage,count_only_12h_sessions_at_current_rate,balance_adjusted_12h_sessions_at_current_rates,balance_adjusted_total_hours_estimate,binding_current_constraint,recommended_path
+weak,100,40,3,25,35,0.005,4,8,91.88,YES_side_balance,Use 12h independent public sessions after threshold sensitivity audit; stop only when all balance and quality gates pass.
+moderate,300,120,6,75,100,0.008,12,22,262.51,YES_side_balance,Use 12h independent public sessions after threshold sensitivity audit; stop only when all balance and quality gates pass.
+strong_development,1000,400,20,250,350,0.01,40,77,918.78,YES_side_balance,Use 12h independent public sessions after threshold sensitivity audit; stop only when all balance and quality gates pass.

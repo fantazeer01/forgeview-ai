@@ -1,0 +1,190 @@
+{
+  "bottlenecks": {
+    "candidate_to_signal_compression": 0.3218390804597701,
+    "lag_reason_totals": {
+      "confidence_below_threshold": 87,
+      "external_move_below_threshold": 37843,
+      "near_expiry_insufficient_time": 6396,
+      "polymarket_already_repriced": 19565,
+      "qualified_external_move_not_repriced": 0
+    },
+    "primary": [
+      "small sample",
+      "YES side scarcity",
+      "BTC/ETH underrepresentation",
+      "strict lag admission filters",
+      "non-overlap compression",
+      "incomplete 120s/180s forward horizon coverage"
+    ],
+    "raw_candidate_rate_per_hour": 7.25,
+    "realized_signal_rate_per_hour": 2.1332540446824453
+  },
+  "collection_gates": {
+    "asset_balance": {
+      "moderate": ">=75 signals per BTC/ETH/SOL",
+      "strong_development": ">=250 signals per BTC/ETH/SOL and no single asset dominates P&L",
+      "weak": ">=25 signals per BTC/ETH/SOL and no asset below 25% of signals when feasible"
+    },
+    "continuity_requirements": [
+      "fatal capture errors = 0",
+      "checkpoint coverage >= 95% hard floor",
+      "no checkpoint gap > 300 seconds",
+      "temporal coverage >= 99% preferred",
+      "campaign completeness recorded before processing"
+    ],
+    "forbidden_actions": [
+      "sealed holdout outcome inspection",
+      "holdout evaluation",
+      "production model training",
+      "wallet/private-key connection",
+      "live trading",
+      "canonical outcome-training merge",
+      "validation protocol modification"
+    ],
+    "horizon_requirements": {
+      "120s": ">=90% coverage",
+      "180s": ">=80% where time-to-expiry permits; otherwise tag as short-horizon stratum",
+      "30s": ">=95% coverage",
+      "60s": ">=95% coverage"
+    },
+    "minimum_signal_density": {
+      "healthy_baseline": ">= 2.0 signals/hour under strict baseline lane",
+      "pause_and_review": "< 1.0 signal/hour after any 24 observed hours",
+      "preferred_after_threshold_audit": ">= 3.0 signals/hour with frozen threshold stratum"
+    },
+    "replay_requirements": [
+      "session_completed event required",
+      "deterministic replay required",
+      "deterministic export required",
+      "paper-only simulator reproducible from stored public evidence"
+    ],
+    "side_balance": {
+      "moderate": ">=100 signals per YES/NO and no side below 35%",
+      "strong_development": ">=350 signals per YES/NO and positive stressed expectancy on both sides",
+      "weak": ">=35 signals per YES/NO and no side below 30% of signals"
+    },
+    "status": "precommitted_plan_only_no_capture_launched",
+    "version": "repricing_evidence_collection_gates_v1"
+  },
+  "created_utc": "2026-06-24T15:14:38.682439+00:00",
+  "evidence_roadmap": [
+    {
+      "balance_adjusted_12h_sessions_at_current_rates": 8,
+      "balance_adjusted_total_hours_estimate": 91.88,
+      "binding_current_constraint": "YES_side_balance",
+      "count_only_12h_sessions_at_current_rate": 4,
+      "evidence_level": "weak",
+      "minimum_expectancy_after_slippage": 0.005,
+      "minimum_independent_sessions_gate": 3,
+      "minimum_observed_hours_gate": 40,
+      "minimum_signals_per_asset": 25,
+      "minimum_signals_per_side": 35,
+      "recommended_path": "Use 12h independent public sessions after threshold sensitivity audit; stop only when all balance and quality gates pass.",
+      "target_signals": 100
+    },
+    {
+      "balance_adjusted_12h_sessions_at_current_rates": 22,
+      "balance_adjusted_total_hours_estimate": 262.51,
+      "binding_current_constraint": "YES_side_balance",
+      "count_only_12h_sessions_at_current_rate": 12,
+      "evidence_level": "moderate",
+      "minimum_expectancy_after_slippage": 0.008,
+      "minimum_independent_sessions_gate": 6,
+      "minimum_observed_hours_gate": 120,
+      "minimum_signals_per_asset": 75,
+      "minimum_signals_per_side": 100,
+      "recommended_path": "Use 12h independent public sessions after threshold sensitivity audit; stop only when all balance and quality gates pass.",
+      "target_signals": 300
+    },
+    {
+      "balance_adjusted_12h_sessions_at_current_rates": 77,
+      "balance_adjusted_total_hours_estimate": 918.78,
+      "binding_current_constraint": "YES_side_balance",
+      "count_only_12h_sessions_at_current_rate": 40,
+      "evidence_level": "strong_development",
+      "minimum_expectancy_after_slippage": 0.01,
+      "minimum_independent_sessions_gate": 20,
+      "minimum_observed_hours_gate": 400,
+      "minimum_signals_per_asset": 250,
+      "minimum_signals_per_side": 350,
+      "recommended_path": "Use 12h independent public sessions after threshold sensitivity audit; stop only when all balance and quality gates pass.",
+      "target_signals": 1000
+    }
+  ],
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "input_evidence": {
+    "asset_counts": {
+      "BTC": 5,
+      "ETH": 8,
+      "SOL": 15
+    },
+    "evidence_level": "INSUFFICIENT_SMOKE_ONLY",
+    "exit_counts": {
+      "repricing_target": 16,
+      "stop_loss": 8,
+      "timeout": 4
+    },
+    "expectancy_after_slippage": null,
+    "max_drawdown": 0.405,
+    "pnl_after_slippage": null,
+    "side_counts": {
+      "NO": 23,
+      "YES": 5
+    },
+    "signals": 28,
+    "signals_per_hour": 2.1332540446824453,
+    "win_rate": 0.5714285714285714
+  },
+  "plan_name": "Design Repricing-Focused Public Evidence Collection Plan v1",
+  "recommended_collection_strategy": {
+    "collection_after_successor": "Independent 12-hour public-only repricing-focused sessions, BTC/ETH/SOL, full market lifecycle, strict continuity and replay gates, no canonical merge.",
+    "immediate_successor": "Run Repricing Threshold Sensitivity Audit v1",
+    "moderate_plan": "Target 22 independent 12-hour sessions or until 300 signals, >=75 per asset, and >=100 per side all pass.",
+    "strong_plan": "Target 77 independent 12-hour sessions or until 1000 signals, >=250 per asset, and >=350 per side all pass.",
+    "weak_plan": "Target 8 independent 12-hour sessions or until 100 signals, >=25 per asset, and >=35 per side all pass.",
+    "why": "Freeze density and balance-oriented entry thresholds from existing public sessions before spending new capture time."
+  },
+  "status": "completed_plan_only_no_capture_launched",
+  "strategy_signal_rate_estimates": [
+    {
+      "description": "Current replay rules: qualified lag or confidence-below-threshold only; non-overlapping paper positions per market/side.",
+      "estimated_signals_per_hour": 2.1333,
+      "expected_signal_quality": "cleanest_comparable_to_smoke",
+      "main_risk": "Slow accumulation and severe YES/BTC underrepresentation.",
+      "recommended_use": "Baseline evidence lane; keep unchanged for continuity.",
+      "strategy_id": "S0_current_strict"
+    },
+    {
+      "description": "Capture all BTC/ETH/SOL five-minute markets from open through expiry with the same public schema and fixed replay rules.",
+      "estimated_signals_per_hour": 3.0,
+      "expected_signal_quality": "high_if_replay_gates_pass",
+      "main_risk": "Still may be side-imbalanced if market drift is one-sided.",
+      "recommended_use": "Preferred evidence collection lane after threshold audit.",
+      "strategy_id": "S1_complete_market_lifecycle"
+    },
+    {
+      "description": "Before any new capture, replay existing sessions under fixed lag-score and confidence alternatives, then freeze one relaxed threshold stratum.",
+      "estimated_signals_per_hour": 4.5,
+      "expected_signal_quality": "diagnostic_until_frozen",
+      "main_risk": "Overfitting if thresholds are selected on P&L rather than signal density and balance.",
+      "recommended_use": "Immediate successor task; do not claim edge from threshold selection.",
+      "strategy_id": "S2_precommitted_threshold_sweep"
+    },
+    {
+      "description": "Separate 30s/60s/120s repricing stratum for events currently rejected as near-expiry-insufficient-time; no final-resolution holding.",
+      "estimated_signals_per_hour": 6.0,
+      "expected_signal_quality": "separate_stratum_only",
+      "main_risk": "Expiry effects, censorship, and execution risk differ from baseline repricing.",
+      "recommended_use": "Pilot only after explicit gates; never mix untagged with baseline.",
+      "strategy_id": "S3_short_horizon_near_expiry_stratum"
+    },
+    {
+      "description": "Include public BTC/ETH/SOL markets with longer expiry horizons, if available, while preserving per-horizon stratification.",
+      "estimated_signals_per_hour": 1.5,
+      "expected_signal_quality": "unknown_until_pilot",
+      "main_risk": "Market mechanics may differ from five-minute crypto contracts.",
+      "recommended_use": "Secondary expansion path once baseline collection is healthy.",
+      "strategy_id": "S4_additional_expiry_horizons"
+    }
+  ]
+}

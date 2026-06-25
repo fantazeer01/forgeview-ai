@@ -1,0 +1,20 @@
+{
+  "holdout_outcomes_read": false,
+  "inputs": {
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\coverage_report.json": "1812c87461566cb0d1e55852e2cee28be3b2cb0076190552128544b0fa72e88b",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\export\\dataset.csv": "4e790466fe24238a7dde282d1412a8aa771f1897c4b7f1d979bda21fbebef8a2",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\export\\feature_summary.json": "a485a4791d6f85fce6e9cc7a775986e11e12468bf1b0d747d31a1ced3fd5ed5d",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\export\\missingness_diagnostics.json": "e498a020c21c559b1d8cd062f5a3fd42dd58c09cec6c95ac3c6caf813c3c2d3a",
+    "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\replay_validation.json": "a57b627e9f688f9b9674502584a0801340f6bd7ec93a864928f4a5006880c033"
+  },
+  "outputs": {
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batch_001\\correlation_matrix.csv": "6a5bd44227b16a0d3e5fee2cf15ab699471e4a91534f15693091a263e659ac6c",
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batch_001\\diagnostic_predictions.csv": "3f8623df6b618e3557f5ba3901fdb9eeb5ff08be54157743f933f1a3b56dacf3",
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batch_001\\diagnostics_report.json": "2169068ee2a3c6d69f5c625f4770c1f33e1f8c2cb16241e26108aacdf9f5eb06",
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batch_001\\diagnostics_report.md": "e93f77d37f756303acd659e0e97d50007f3b7be9bd56c183c47a9912648a6f94",
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batch_001\\feature_diagnostics.csv": "710ae3e0220552e8b2158df631fdd3f2a33eaaa83cf9d522dc1a152f83fd00ff",
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batch_001\\reproducibility_hashes.json": "e44a7a44eec2cfacac67acc62d338331c1b5de29ab50f942327307a1debba6b4",
+    "D:\\ForgeViewAI\\polymarket\\models\\microstructure_diagnostics_batch_001\\segment_metrics.csv": "4875ade5e4edfd7c422780329338a2bb215bb89a027d3c4fc453a60cdcc5bfdd"
+  },
+  "validation_protocol_modified": false
+}

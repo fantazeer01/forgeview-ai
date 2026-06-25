@@ -1,0 +1,14 @@
+{
+  "episode_id": "S1E01",
+  "season_id": "S1",
+  "season_theme": "Does a real trading edge exist in Polymarket BTC 5m markets or is it a data illusion?",
+  "belief_state": "The first experiment found 826 resolved markets, but only 190 had enough matching Bitcoin price information to test, so any apparent edge could still be a data illusion.",
+  "open_loop": "Can the prediction model still beat the market using only the 190 usable market examples?",
+  "contradiction_chain": [
+    "A large archive of 826 resolved markets collapsed to 190 usable examples because 636 lacked matching Bitcoin price information."
+  ],
+  "last_result": "The evidence pool was much smaller than the resolved-market count suggested.",
+  "next_trigger": "Test the model against market prices using the usable historical examples.",
+  "continuation_required": true,
+  "updated_at": "2026-06-18T00:00:00Z"
+}

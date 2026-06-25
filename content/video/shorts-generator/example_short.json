@@ -1,0 +1,11 @@
+{
+  "title": "This Bot Bug Could Trap Every Trade",
+  "description": "Cooldown logic should block weak entries, not exits.\n\nFollow ForgeView:\n\nTelegram:\nt.me/ForgeViewCom\n\nX:\n@ForgeViewX\n\nBuilding AI automation systems, trading bots, and workflows in public.",
+  "scene1": "This bug traps trades",
+  "scene2": "The bot thinks it is safe",
+  "scene3": "But exits get blocked",
+  "scene4": "Cooldown logic is wrong",
+  "scene5": "We changed the risk manager",
+  "scene6": "Now exits stay open",
+  "scene7": "Never block recovery"
+}

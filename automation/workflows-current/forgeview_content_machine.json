@@ -1,0 +1,412 @@
+{
+  "name": "ForgeView Content Machine - Serialized Episode",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "0e98da8e-cfcc-48bd-8184-c87fb6703de6",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1180,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "fileSelector": "D:\\ForgeViewAI\\state\\episode_state.json",
+        "options": {}
+      },
+      "id": "31146438-07a0-43b9-a880-2d6cb5660f0f",
+      "name": "Read episode_state.json",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "json",
+        "options": {}
+      },
+      "id": "73d55043-1547-4e9f-856c-d75bef217aaa",
+      "name": "Parse Episode State",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -740,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const state = $json;\nconst THEME = 'Does a real trading edge exist in Polymarket BTC 5m markets or is it a data illusion?';\nif (state.season_id !== 'S1') throw new Error('season_id must remain S1');\nif (state.season_theme !== THEME) throw new Error('season theme mismatch');\nif (!String(state.open_loop || '').trim().endsWith('?')) throw new Error('stored open_loop must be a question');\nif (state.continuation_required !== true) throw new Error('continuation_required must be true');\nconst match = /^S1E(\\d+)$/.exec(String(state.episode_id || ''));\nif (!match) throw new Error('invalid episode_id');\nconst nextEpisode = `S1E${String(Number(match[1]) + 1).padStart(2, '0')}`;\nconst prompt = `You are the serialized investigative editor for ForgeView Probability Lab.\\n\\nSEASON QUESTION:\\n${THEME}\\n\\nPREVIOUS STATE:\\n${JSON.stringify(state, null, 2)}\\n\\nGenerate exactly one next episode. It MUST depend on the previous open_loop, introduce a contradiction, partially resolve the prior uncertainty, evolve belief_state, append one new contradiction, and end with a NEW unresolved question. Never fully resolve the season question.\\n\\nTone: Bloomberg terminal realism, Netflix investigative tension, AI financial experiment. Viewer language, no unexplained statistics. Research only. No trading instruction.\\n\\nReturn strict JSON only with this exact shape:\\n{\\n  \\\"episode_id\\\": \\\"${nextEpisode}\\\",\\n  \\\"narrative_hook\\\": \\\"conflict-first hook\\\",\\n  \\\"breakdown\\\": \\\"system failure or insight shift\\\",\\n  \\\"partial_resolution\\\": \\\"what part of the previous open loop is answered\\\",\\n  \\\"telegram_post\\\": \\\"complete Telegram post\\\",\\n  \\\"x_post\\\": \\\"X post under 280 characters\\\",\\n  \\\"scenes\\\": [\\n    {\\\"scene_id\\\":\\\"scene_1\\\",\\\"prompt\\\":\\\"production-ready Kling prompt\\\",\\\"duration_seconds\\\":10},\\n    {\\\"scene_id\\\":\\\"scene_2\\\",\\\"prompt\\\":\\\"production-ready Kling prompt\\\",\\\"duration_seconds\\\":10},\\n    {\\\"scene_id\\\":\\\"scene_3\\\",\\\"prompt\\\":\\\"production-ready Kling prompt\\\",\\\"duration_seconds\\\":10},\\n    {\\\"scene_id\\\":\\\"scene_4\\\",\\\"prompt\\\":\\\"production-ready Kling prompt\\\",\\\"duration_seconds\\\":10}\\n  ],\\n  \\\"belief_state_update\\\": \\\"new belief after this result\\\",\\n  \\\"open_loop\\\": \\\"new unresolved question ending with ?\\\",\\n  \\\"last_result\\\": \\\"latest experiment outcome\\\",\\n  \\\"new_contradiction\\\": \\\"one newly broken assumption\\\",\\n  \\\"next_trigger\\\": \\\"what evidence should trigger the following episode\\\"\\n}\\n\\nAll four scenes must express the same narrative transition. The final Telegram sentence and final scene must ask the new open_loop question.`;\nreturn [{ json: { state, next_episode_id: nextEpisode, prompt } }];"
+      },
+      "id": "95c9b711-4d61-4d0c-aebd-882cc52f3b6d",
+      "name": "Prepare Narrative Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -520,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "text",
+        "operation": "message",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1 mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You generate one continuous ForgeView investigative episode. Output valid JSON only. Never reset season context and never fully resolve the core season question."
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.prompt }}"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object",
+          "temperature": 0.7
+        }
+      },
+      "id": "fbf9e13b-bb00-4a25-8eeb-cae56fd00339",
+      "name": "Generate Next Episode",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -280,
+        0
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "forgeview-openai",
+          "name": "ForgeView OpenAI"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "jsCode": "const prepared = $('Prepare Narrative Request').first().json;\nconst raw = $json.message?.content ?? $json.output?.[0]?.content?.[0]?.text ?? $json.choices?.[0]?.message?.content ?? $json.content ?? $json.text ?? $json;\nlet generated;\nif (typeof raw === 'string') {\n  const cleaned = raw.trim().replace(/^```json\\s*/i, '').replace(/\\s*```$/, '');\n  generated = JSON.parse(cleaned);\n} else {\n  generated = raw;\n}\nconst required = ['episode_id','narrative_hook','breakdown','partial_resolution','telegram_post','x_post','belief_state_update','open_loop','last_result','new_contradiction','next_trigger'];\nfor (const field of required) {\n  if (!String(generated[field] ?? '').trim()) throw new Error(`Missing generated field: ${field}`);\n}\nif (generated.episode_id !== prepared.next_episode_id) throw new Error('episode_id continuity failure');\nif (!Array.isArray(generated.scenes) || generated.scenes.length !== 4) throw new Error('Exactly four scenes are required');\nif (!String(generated.open_loop).trim().endsWith('?')) throw new Error('open_loop must end with a question');\nif (String(generated.open_loop).trim() === String(prepared.state.open_loop).trim()) throw new Error('A new open_loop is required');\nif (String(generated.belief_state_update).trim() === String(prepared.state.belief_state).trim()) throw new Error('belief_state must evolve');\nif (String(generated.telegram_post).length > 4096) throw new Error('Telegram post exceeds 4096 characters');\nif ([...String(generated.x_post)].length > 280) throw new Error('X post exceeds 280 characters');\nconst chain = [...(prepared.state.contradiction_chain || [])];\nif (!chain.includes(generated.new_contradiction)) chain.push(generated.new_contradiction);\nreturn [{ json: {\n  ...generated,\n  season_id: 'S1',\n  season_theme: prepared.state.season_theme,\n  previous_episode_id: prepared.state.episode_id,\n  previous_open_loop: prepared.state.open_loop,\n  contradiction_chain: chain,\n  continuation_required: true,\n  generated_at: new Date().toISOString()\n} }];"
+      },
+      "id": "55dba758-9df5-48f5-a33f-470fdd894809",
+      "name": "Validate Episode Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -40,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "={{ $json.telegram_post }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disableWebPagePreview": true
+        }
+      },
+      "id": "4c6dc7c7-633c-471a-9917-b08fe33bf8d5",
+      "name": "Publish Telegram Post",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        -260
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "forgeview-telegram",
+          "name": "ForgeView Telegram Bot"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.x.com/2/tweets",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ text: $json.x_post }) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "955e430b-87cc-47db-a826-9fcfb8c28f28",
+      "name": "Publish X Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        -80
+      ],
+      "credentials": {
+        "oAuth2Api": {
+          "id": "forgeview-x-oauth2",
+          "name": "ForgeView X OAuth2"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "jsCode": "const requests = $json.scenes.map((scene, index) => ({\n  scene_id: scene.scene_id || `scene_${index + 1}`,\n  provider: 'kling',\n  mode: 'ready_for_upload',\n  request: {\n    model_name: 'kling-v2-6',\n    prompt: String(scene.prompt || ''),\n    negative_prompt: 'unreadable text, distorted monitors, logos, watermarks, crypto coins, rockets, luxury cars, hooded hackers, trading advice',\n    mode: 'pro',\n    duration: String(scene.duration_seconds || 10),\n    aspect_ratio: '9:16',\n    external_task_id: `${$json.episode_id}_${scene.scene_id || index + 1}`\n  }\n}));\nreturn [{ json: {\n  episode_id: $json.episode_id,\n  created_at: new Date().toISOString(),\n  status: 'ready_for_upload',\n  provider: 'kling',\n  async: true,\n  requests\n} }];"
+      },
+      "id": "0a132a79-0e06-463e-b0c7-cd9ca531e29f",
+      "name": "Convert Scenes to Kling Requests",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {
+          "fileName": "kling_requests.json",
+          "format": "formatted"
+        }
+      },
+      "id": "39b58096-f045-4a10-8df4-4f09050c4595",
+      "name": "Create kling_requests.json",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        460,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "D:\\ForgeViewAI\\output\\media\\kling_requests.json",
+        "dataPropertyName": "data",
+        "options": {}
+      },
+      "id": "3584d505-885c-48f8-ac02-785e9fd24c59",
+      "name": "Write kling_requests.json",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        700,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: {\n  episode_id: $json.episode_id,\n  season_id: $json.season_id,\n  season_theme: $json.season_theme,\n  belief_state: $json.belief_state_update,\n  open_loop: $json.open_loop,\n  contradiction_chain: $json.contradiction_chain,\n  last_result: $json.last_result,\n  next_trigger: $json.next_trigger,\n  continuation_required: true,\n  updated_at: new Date().toISOString()\n} }];"
+      },
+      "id": "d7562eef-67f5-4990-b4ca-48162bf9d3bd",
+      "name": "Build Updated Episode State",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {
+          "fileName": "episode_state.json",
+          "format": "formatted"
+        }
+      },
+      "id": "87fc6612-14a3-4134-b8f8-58439cce3612",
+      "name": "Create Updated State File",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        460,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "D:\\ForgeViewAI\\state\\episode_state.json",
+        "dataPropertyName": "data",
+        "options": {}
+      },
+      "id": "c83a627e-c31c-4f2b-ad30-4b00bd28946d",
+      "name": "Write Updated episode_state.json",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        700,
+        280
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read episode_state.json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read episode_state.json": {
+      "main": [
+        [
+          {
+            "node": "Parse Episode State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Episode State": {
+      "main": [
+        [
+          {
+            "node": "Prepare Narrative Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Narrative Request": {
+      "main": [
+        [
+          {
+            "node": "Generate Next Episode",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Next Episode": {
+      "main": [
+        [
+          {
+            "node": "Validate Episode Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Episode Output": {
+      "main": [
+        [
+          {
+            "node": "Publish Telegram Post",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Publish X Post",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Convert Scenes to Kling Requests",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Build Updated Episode State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Scenes to Kling Requests": {
+      "main": [
+        [
+          {
+            "node": "Create kling_requests.json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create kling_requests.json": {
+      "main": [
+        [
+          {
+            "node": "Write kling_requests.json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Updated Episode State": {
+      "main": [
+        [
+          {
+            "node": "Create Updated State File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Updated State File": {
+      "main": [
+        [
+          {
+            "node": "Write Updated episode_state.json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7bdefaa5-c6c2-4235-a426-353595a72fc6",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

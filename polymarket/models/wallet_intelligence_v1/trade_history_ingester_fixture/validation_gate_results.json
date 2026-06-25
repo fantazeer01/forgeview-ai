@@ -1,0 +1,43 @@
+{
+  "bounded_scope_compliance": {
+    "passed": true,
+    "violations": []
+  },
+  "deterministic_export": {
+    "passed": true
+  },
+  "duplicate_rate": {
+    "duplicate_rate_before_dedupe": 0.0,
+    "duplicates_removed": 0,
+    "passed": true
+  },
+  "fast_crypto_classification_coverage": {
+    "coverage": 1.0,
+    "passed": true,
+    "recognizable_fast_crypto_rows": 50
+  },
+  "join_quality_reporting_placeholder": {
+    "notes": "fixture task does not perform joins; future joins must report coverage explicitly",
+    "passed": true
+  },
+  "market_classification_coverage": {
+    "coverage": 1.0,
+    "passed": true
+  },
+  "provenance_completeness": {
+    "coverage": 1.0,
+    "passed": true
+  },
+  "required_field_coverage": {
+    "coverage": 1.0,
+    "passed": true
+  },
+  "safety_boundary_compliance": {
+    "notes": "fixture-only code path; no wallet/private-key/order/live-trading methods invoked",
+    "passed": true
+  },
+  "timestamp_parse_rate": {
+    "coverage": 1.0,
+    "passed": true
+  }
+}

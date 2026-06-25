@@ -1,0 +1,20 @@
+{
+  "inputs": {
+    "protocol_manifest.json": "3e2d9982211546240b189f0c13de9ecf7f5f4f481280c46e5b028983a39d4ab2",
+    "train.csv": "cfcca2faa0358d6e6f099f6a678cf7f54997766be23c4159425682e7b0a83e25",
+    "validation.csv": "1ec0ca09e5833c9678d27477b794a185be0b37d00ee79345e8a1d6b2b76bac35"
+  },
+  "outputs": {
+    "MODEL_CARD.md": "b1ac3c43426e16e7c29bfc29b4ba3acd13790f3a9650485270705435c719b47f",
+    "feature_importance.csv": "dc209f246d97fdc72b4fbd5b53be5b604cce5dd72a12bccae2755e168a88d32d",
+    "model_cards/asset_prior.md": "f1c0eee9979dfb0cb9e3bfbbc7d68a75012669c75e335201828468137b5927f4",
+    "model_cards/constant_prior.md": "9b0fb36d3f5b6e22c0dd82116626c15a3f596147d60cc22179fcc9f60f5f2786",
+    "model_cards/logistic_regression.md": "b1c82d9633173651e86a9692bbe7b6f359579353f0f0430e7cbe27ddf3c31bd4",
+    "model_cards/yes_price.md": "096c80af53d96dd57fb4de42e01c374260a827fe38f460432105886856fde294",
+    "predictions_validation.csv": "74116bf09e884b1b41bdd0e861fdebc4e6cb1f6af3aa18e94410f089b8b7f43b",
+    "training_config.json": "8a0c748840dfc4554a21307b668028a203e6552188c31aa51105b17c3968871d",
+    "validation_report.json": "cefc685e4580d2309c198d44b8d4e9d562236f812a28460e8d50c4cdbff01fa3",
+    "validation_report.md": "3a249020a7dd0605d0b64641e3f944737089308218e93610b5fcb04ed8730823"
+  },
+  "sealed_holdout_commitment_from_manifest": "9ea0faa072dd9c74146011da9cd6599e643fb7f40c2f8ce9643bb17f0394ca2b"
+}

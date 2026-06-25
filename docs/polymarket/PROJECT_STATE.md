@@ -1,0 +1,1067 @@
+# Polymarket Project State
+
+Last updated: June 24, 2026  
+Canonical objective: [MASTER_OBJECTIVE.md](MASTER_OBJECTIVE.md)  
+Active task: [NEXT_TASK.md](NEXT_TASK.md)  
+Decision log: [DECISIONS.md](DECISIONS.md)
+
+## Current stage
+
+Stage 9 - Baseline probability modelling preparation.
+
+Repository consolidation note: `research/probability-lab` is now maintained as
+a normal folder inside the root ForgeViewAI repository. Its nested Git metadata
+was removed, project files were preserved, and ForgeViewAI is the only Git
+repository for this workspace.
+
+Version-control hygiene note: runtime-generated artifacts are now excluded from
+the ForgeViewAI Git index, including Polymarket run sessions, JSONL event
+streams, Parquet datasets, logs, and Python/test caches. Source code,
+configuration examples, docs, tests, research files, and small CSV/JSON reports
+remain eligible for version control.
+
+The public evidence and validation-protocol gates are passed. Baseline
+diagnostics concluded `FEATURE_SET_INCOMPLETE`. Market Microstructure Feature
+Capture v1, bounded public smoke validation, and Independent Microstructure
+Development Dataset Batch 001 are complete. Development-only Batch 001
+microstructure diagnostics found no incremental win over YES price and are
+classified `DATASET_TOO_SMALL_OR_UNSTABLE`. Independent Microstructure
+Development Dataset Batch 002 is also complete and stored separately from
+canonical training data. Combined development-only diagnostics over Batches
+001-002 still found YES price to be the best diagnostic predictor and are
+classified `DATASET_STILL_TOO_SMALL_OR_UNSTABLE`. Repricing Research v1 is now
+implemented as a separate development-only module focused on 30-180 second
+probability repricing rather than final UP/DOWN outcomes. The final holdout
+remains sealed.
+Repricing Research v1 Data Sufficiency Audit classifies the current 28-signal
+sample as `INSUFFICIENT_SMOKE_ONLY`: useful for diagnostics, but not enough
+for model development, shadow validation, or edge claims.
+Repricing-Focused Public Evidence Collection Plan v1 is complete. It keeps the
+branch planning-only, finds YES-side scarcity as the binding collection
+constraint, and recommends a no-capture threshold sensitivity audit before any
+new public evidence campaign is authorized.
+Repricing Threshold Sensitivity Audit v1 is complete. It recommends the
+balanced collection stratum for future evidence gathering, selected for signal
+density, asset/side balance, and horizon coverage rather than paper P&L.
+Evidence gates remain unchanged and the final holdout remains sealed.
+Balanced Repricing Evidence Collection Preflight v1 is complete. The balanced
+stratum is operationally ready for a future explicitly authorized 12-hour
+public-only evidence campaign, but no campaign was launched in the preflight
+task.
+Balanced Repricing Evidence Collection Batch 001 is complete. It produced a
+complete continuous 12-hour public-only session and a deterministic balanced
+repricing dataset. The single-session result is positive after conservative
+slippage and clears signal, asset, and side count floors, but weak evidence is
+not reached because the branch still lacks at least 40 observed hours and at
+least 3 independent balanced-stratum sessions.
+Wallet Intelligence Research v1 is now created as a separate research-only
+branch for studying successful public Polymarket wallet behavior in fast
+BTC/ETH/SOL Up or Down markets. It is descriptive only and remains separated
+from final outcome prediction, Repricing Research v1, live trading, wallet
+execution, capture campaigns, production modelling, and sealed holdout
+evaluation.
+Polymarket Open Source Intelligence Audit v1 is complete under
+`polymarket/models/open_source_intelligence_audit_v1/`. The audit found
+`ent0n29/polybot` to be the highest-priority deep-dive target for wallet
+intelligence and strategy reverse engineering, `evan-kolberg/prediction-market-backtesting`
+to be the strongest execution-realistic backtesting reference, and
+`pmxt-dev/pmxt` to be the strongest read-only API normalization reference.
+Wallet Intelligence Data Ingestion v1 is complete. It added a public-data
+ingestion CLI under `polymarket/wallet_intelligence/`, produced normalized
+outputs under `polymarket/data/wallet_intelligence/v1/`, and collected bounded
+first-page public snapshots for the six seed profiles. The run resolved all
+six seed profiles, wrote six wallet profile rows and 460 position rows, found
+four fast-market crypto wallets, one weather-heavy wallet, and one crypto
+non-fast wallet. It did not copy trades, place orders, connect wallets, launch
+capture, run holdout evaluation, or train models. Average holding time,
+drawdown, late-entry timing, and Binance-lag behavior remain unavailable from
+the bounded public profile snapshot.
+Wallet Intelligence Behavior Metrics v1 is complete under
+`polymarket/models/wallet_intelligence_v1/behavior_metrics/`. It analyzed the
+existing 460 position rows only, classified four wallets as fast crypto
+focused, one as weather focused, and one as mixed. The strongest fast-market
+wallet is `0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a`, with 100 visible BTC
+Up/Down positions, 100% fast-market share, balanced YES/NO exposure, and
+small visible position sizes relative to the other seed wallets. Copyability
+scores remain deliberately low because public snapshots lack complete fill
+history, observation delay, liquidity consumption, linked entry/exit timing,
+drawdown, and Binance-lag alignment.
+Wallet Intelligence Deep History Feasibility v1 is complete under
+`polymarket/models/wallet_intelligence_v1/deep_history_feasibility/`. It
+reviewed existing ingestion code and public Polymarket Data API/CLOB endpoint
+coverage, performed one bounded read-only 50-row activity probe for
+`0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a`, and found that public
+trade/activity history is feasible for bounded research. Entry timestamp,
+entry price, side, size, market type, and partial exit/holding-period evidence
+can be reconstructed with joins. Full strategy reconstruction, copyability,
+queue/fill certainty, and Binance-lag conclusions remain unavailable from
+wallet endpoints alone.
+Wallet Public Trade History Ingestion Design v1 is complete under
+`polymarket/models/wallet_intelligence_v1/trade_history_ingestion_design/`.
+It defined a 35-field normalized trade-history schema, bounded seed-wallet
+ingestion limits, raw JSONL and deterministic export architecture, duplicate
+handling, source provenance, a seven-part join plan, and ten validation gates.
+The design authorizes a future fixture-based implementation task only; it did
+not ingest unbounded history, launch broad collection, place orders, copy
+trades, connect wallets, inspect holdout outcomes, or run holdout evaluation.
+Wallet Public Trade History Ingester Fixture Implementation v1 is complete
+under
+`polymarket/models/wallet_intelligence_v1/trade_history_ingester_fixture/`.
+It added fixture-only trade-history normalization, 35-field schema constants,
+dedupe keys, raw row/page hashing, timestamp parsing, BTC/ETH/SOL Up/Down
+classification, bounded-limit checks, validation gates, deterministic fixture
+exports, and the CLI command
+`python -m polymarket.wallet_intelligence trade-history-fixture`. The fixture
+run normalized 50 saved public `TRADE` rows and passed all ten gates. It did
+not run broad public ingestion, live trading, trade copying, wallet/private-key
+use, order placement, capture campaigns, holdout inspection, or holdout
+evaluation.
+Wallet Public Trade History Bounded Public Smoke v1 is complete under
+`polymarket/data/wallet_intelligence/trade_history_smoke_v1/`. It fetched one
+public read-only `activity?type=TRADE` page for each of the six seed wallets,
+normalized 600 rows, removed zero duplicates, passed all ten validation gates,
+and verified deterministic CSV repeat export. The smoke found 367 fast crypto
+rows, with asset counts 359 BTC, 97 ETH, 11 SOL, and 133 other; YES-like /
+NO-like outcomes were 249 / 351. It did not run broad public ingestion, live
+trading, trade copying, wallet/private-key use, order placement, capture
+campaigns, holdout inspection, or holdout evaluation.
+The active successor task is Wallet Trade Lifecycle Reconstruction Design v1.
+
+## Completed milestones
+
+- v1 deterministic paper-trading and P&L engine.
+- v2 noise, slippage, latency, and walk-forward robustness validation.
+- v3 real-market public capture, replay, and shadow validation.
+- v4 BTC/ETH/SOL five-minute discovery and external-reference lag scanner.
+- v5 long capture, market lifecycle tracking, evidence reports, inspect,
+  replay, and live terminal modes.
+- Feature Engine v1 with one leakage-controlled row per completed market.
+- CSV and Parquet training exports with feature and label provenance.
+- Dataset Quality Engine v1 with deterministic scoring and public-only exports.
+- Resolution Engine v1 with strict public Gamma outcome parsing, saved raw
+  evidence, deterministic replay, and proxy reconciliation.
+- Feature Engine authoritative-label preference with proxy labels disabled by
+  default.
+- Public Feature Completeness Repair v1 with first-seen lifecycle recovery,
+  stale as-of rejection, sparse-row exclusion, and reproducible missingness
+  diagnostics.
+- Public Evidence Batch Pipeline v1 with public-only capture enforcement,
+  resumable fail-closed stages, immutable as-of session snapshots, artifact
+  hashes, and master sample-gate verdicts.
+- Campaign Reliability & Diagnostics v1 with monotonic-versus-UTC clock
+  monitoring, actual start/completion timestamps, temporal completeness
+  verdicts, independent discovery-failure evidence, partial endpoint success,
+  and preserved campaign stdout/stderr artifacts.
+- Campaign Observation Continuity Gate v1.1 with checkpoint-density, gap,
+  terminal-continuity, completion-marker, and fatal-error acceptance gates.
+  Batch 003 is now deterministically classified `INCOMPLETE_CAMPAIGN` while
+  retaining all 368 usable clean rows.
+- Campaign Observation Continuity Root Cause Analysis v1 established two
+  independent causes for Batch 003:
+  - the host entered Windows sleep from June 21, 2026 02:49:06 UTC to
+    09:57:14 UTC, confirmed by Windows Power-Troubleshooter event 1;
+  - while awake, the capture loop serialized approximately 16 blocking HTTP
+    requests per cycle, then slept another two seconds, producing a median
+    9.378-second and mean 11.803-second checkpoint interval instead of two
+    seconds.
+- Non-Blocking Capture Cadence Architecture v1 with fixed-deadline scheduling,
+  cached background discovery, concurrent reference/discovery/quote requests,
+  cadence-independent checkpoint emission, bounded network timeouts, Windows
+  sleep inhibition, and fail-closed power preflight.
+- Public Evidence Campaign Batch 004 (`20260621_220439`) completed with full
+  six-hour continuity, fresh authoritative resolution processing, deterministic
+  replay, and 268 additional clean public rows.
+- Public Evidence Campaign Batch 005 (`20260622_110942`) completed with full
+  six-hour continuity, fresh authoritative resolution processing, deterministic
+  replay, and 215 additional clean public rows.
+- Public Evidence Campaign Batch 006 (`20260622_211037`) completed with full
+  six-hour continuity, fresh authoritative resolution processing, deterministic
+  replay, and 213 additional clean public rows. It raised the authoritative
+  dataset to 1,064 rows and passed the 1,000-row public evidence gate.
+- Time-Ordered Holdout and Baseline Validation Protocol v1 with atomic
+  five-minute window groups, one-window purge and embargo at each boundary,
+  deterministic artifact hashes, separated holdout labels, and precommitted
+  baseline metrics and acceptance rules.
+- Baseline Probability Model v1 with deterministic class-prior, asset-prior,
+  Polymarket YES-price, and fixed logistic predictors. The logistic model beat
+  both prior baselines but lost to YES price on validation, producing
+  `NO_EDGE_FOUND_YET`.
+- Baseline Failure Diagnostics v1 with fixed feature-group ablations, asset and
+  regime attribution, calibration, drift, correlation, and redundancy
+  evidence. Conclusion: `FEATURE_SET_INCOMPLETE`.
+- Market Microstructure Feature Capture v1 with public CLOB depth/timestamp
+  preservation, schema-versioned session events, deterministic as-of features,
+  cross-asset synchronization, explicit missingness, and legacy replay
+  compatibility.
+- Public Microstructure Capture Smoke Validation v1 with a complete,
+  continuous 900-second BTC/ETH/SOL public session, 1,328 microstructure
+  events, deterministic replay, and deterministic disposable feature export.
+  Decision: `READY_FOR_PRODUCTION_CAPTURE`.
+- Independent Microstructure Development Dataset Batch 001 from session
+  `20260623_120611`, a complete continuous six-hour public-only schema-v1
+  capture with 32,041 microstructure events, deterministic replay, and a
+  separate 213-row development dataset under
+  `polymarket/data/microstructure_dataset_batch_001/`. The dataset contains
+  71 BTC, 71 ETH, and 71 SOL rows; all 19 microstructure feature columns are
+  populated on every exported row. It has not been merged into canonical
+  training data.
+- Development-Only Microstructure Feature Diagnostics Batch 001 under
+  `polymarket/models/microstructure_diagnostics_batch_001/`. The fixed
+  chronological 70/30 development diagnostic used 149 train rows and 64
+  evaluation rows from Batch 001 only. YES price remained the best diagnostic
+  result with evaluation log loss 0.568340 and Brier 0.192367. The
+  microstructure-only diagnostic model scored 0.628730 / 0.220724, and the
+  YES-plus-microstructure diagnostic model scored 0.594523 / 0.203701.
+  Decision: `DATASET_TOO_SMALL_OR_UNSTABLE`.
+- Capture robustness repair for asynchronous discovery worker exceptions.
+  Raw async discovery exceptions are now normalized into structured
+  `discovery_failure` diagnostics instead of crashing capture. This was
+  regression-tested in `tests/polymarket/test_v5.py`.
+- Independent Microstructure Development Dataset Batch 002 from session
+  `20260623_214015`, a complete continuous six-hour public-only schema-v1
+  capture with 32,089 microstructure events, deterministic replay, and a
+  separate 213-row development dataset under
+  `polymarket/data/microstructure_dataset_batch_002/`. The dataset contains
+  71 BTC, 71 ETH, and 71 SOL rows; all 19 microstructure feature columns are
+  populated on every exported row. It has not been merged into canonical
+  training data.
+- Combined Development-Only Microstructure Diagnostics Batches 001-002 under
+  `polymarket/models/microstructure_diagnostics_batches_001_002/`. The fixed
+  chronological window-group 70/30 development diagnostic used 297 train rows
+  and 129 evaluation rows from the two independent proxy-labelled batches.
+  YES price remained the best diagnostic result with evaluation log loss
+  0.546792 and Brier 0.182709. The microstructure-only diagnostic model scored
+  0.677837 / 0.241526, and the YES-plus-microstructure diagnostic model scored
+  0.610897 / 0.210249. YES price remained best on BTC, ETH, and SOL
+  independently. Decision: `DATASET_STILL_TOO_SMALL_OR_UNSTABLE`.
+- Repricing Research v1 under `polymarket/repricing_research/`, documented in
+  `docs/polymarket/REPRICING_RESEARCH_V1.md`. This separate development-only
+  module labels and simulates short-horizon contract repricing over 30, 60,
+  120, and 180 seconds. It does not predict final market outcome, does not use
+  the sealed holdout, does not place orders, and does not connect wallets or
+  private keys.
+- Repricing Research v1 short replay over completed schema-v1 microstructure
+  Batches 001 and 002 under
+  `polymarket/models/repricing_research_v1/short_replay/`. The replay produced
+  28 non-overlapping paper signals, 16 target-before-stop wins, 57.14% win
+  rate, 0.9665 simulated P&L before fees/slippage, 0.4065 simulated P&L after
+  a 0.02 conservative slippage haircut per signal, 0.4050 max drawdown, and
+  0.0145 expectancy per signal. This is a development smoke result only, not
+  an alpha or production claim.
+- Repricing Research v1 Data Sufficiency Audit under
+  `polymarket/models/repricing_research_v1/data_sufficiency_audit/`. The
+  audit found that the 28-signal sample is below the 100-signal weak-evidence
+  floor, has only 13.1255 observed hours, is imbalanced by asset (5 BTC, 8
+  ETH, 15 SOL) and side (5 YES, 23 NO), and is unstable: aggregate expectancy
+  is positive at 0.0145 after slippage, but NO-side expectancy is -0.0084 and
+  ETH expectancy is -0.0094. Current evidence level:
+  `INSUFFICIENT_SMOKE_ONLY`.
+- Repricing-Focused Public Evidence Collection Plan v1 under
+  `polymarket/models/repricing_research_v1/evidence_collection_plan_v1/`.
+  The plan estimates the current strict replay rate at 2.1333 signals/hour and
+  identifies the binding evidence bottlenecks as small sample size, YES-side
+  scarcity, BTC/ETH underrepresentation, strict lag admission filters,
+  non-overlap compression, and incomplete 120/180 second forward-horizon
+  coverage. Count-only accumulation would require about 4 / 12 / 40
+  independent 12-hour sessions to reach 100 / 300 / 1,000 signals, but
+  balance-adjusted gates at current rates require about 8 / 22 / 77 such
+  sessions because YES-side count is binding. No capture was launched.
+- Repricing Threshold Sensitivity Audit v1 under
+  `polymarket/models/repricing_research_v1/threshold_sensitivity_audit_v1/`.
+  The persisted current smoke dataset remains 28 signals at 2.1333
+  signals/hour, with BTC / ETH / SOL counts of 5 / 8 / 15 and YES / NO counts
+  of 5 / 23. The dominant detector-level removal filter is
+  `external_move_below_threshold`, with 36,465 of 64,130 candidate
+  observations in the recomputed audit. Requiring full 180-second horizon
+  coverage removes every current signal; among entry-admission thresholds,
+  `external_move_threshold_bps` has the largest density effect. The recommended
+  future collection stratum is `balanced`: external move threshold 6 bps,
+  repricing ratio 0.65, minimum confidence 0.45, minimum dataset expiry 60
+  seconds, 180-second max hold, and accepted reasons
+  `qualified_external_move_not_repriced` plus `confidence_below_threshold`.
+  It estimates 61 outcome-free overlap-adjusted signals, 3.9184 signals/hour,
+  BTC / ETH / SOL counts of 17 / 20 / 24, YES / NO counts of 14 / 47, and
+  30s / 60s / 120s / 180s horizon coverage of
+  100.0% / 98.36% / 80.33% / 0.0%. The recommendation was not selected by
+  paper P&L, and no capture was launched.
+- Balanced Repricing Evidence Collection Preflight v1 under
+  `polymarket/models/repricing_research_v1/balanced_collection_preflight_v1/`.
+  The preflight verified CLI support for the frozen balanced stratum, separated
+  future paths under `polymarket/runs/repricing_balanced_v1/`,
+  `polymarket/models/repricing_research_v1/balanced_collection_batch_001/`,
+  and `polymarket/data/repricing_research_balanced_batch_001/`, and recorded
+  the future launch command without executing it. Windows AC sleep and
+  hibernate are disabled, no competing `python -m polymarket.edge_engine_v5
+  capture` process was found, no stale lock was found, and available disk space
+  is approximately 391.469 GB. The expected 12-hour run has 21,600 checkpoints,
+  about 47.02 expected repricing signals at 3.9184 signals/hour, and about
+  205 MB expected artifacts. Operational preflight result:
+  `READY_FOR_AUTHORIZED_LAUNCH`. Campaign launch was not authorized or
+  executed by the preflight task itself.
+- Balanced Repricing Evidence Collection Batch 001 from session
+  `polymarket/runs/repricing_balanced_v1/20260624_154206/session.jsonl`. The
+  12-hour public-only balanced-stratum campaign completed with
+  `session_completed`, campaign completeness status `complete`, 100.0%
+  coverage, 21,600 / 21,600 checkpoints, observation continuity status
+  `continuous`, maximum checkpoint gap 2.035487 seconds, no gaps over 10 / 60 /
+  300 seconds, and zero fatal capture errors. V5 replay succeeded under
+  `polymarket/models/repricing_research_v1/balanced_collection_batch_001/capture_replay/`.
+  The balanced repricing dataset was exported under
+  `polymarket/models/repricing_research_v1/balanced_collection_batch_001/repricing_dataset/`
+  and copied separately to
+  `polymarket/data/repricing_research_balanced_batch_001/`. Deterministic
+  export was verified by matching SHA-256 hashes across repeated exports. The
+  dataset has 130 signals, BTC / ETH / SOL counts of 37 / 29 / 64, YES / NO
+  counts of 59 / 71, 11.2706 signals/hour, 58.46% target-before-stop win rate,
+  +0.012331 expectancy after conservative slippage, +1.603 after-slippage
+  simulated P&L, and 0.875 max drawdown. Exit reasons are 76
+  `repricing_target`, 45 `stop_loss`, and 9 `timeout`. Evidence level:
+  `SINGLE_SESSION_POSITIVE_BELOW_WEAK_EVIDENCE_HOURS_AND_SESSION_GATES`.
+- Wallet Intelligence Research v1 under `polymarket/wallet_intelligence/`,
+  documented in `docs/polymarket/WALLET_INTELLIGENCE_RESEARCH_V1.md`. This
+  separate research-only branch defines wallet/profile schema, research
+  questions, strict no-execution boundaries, copyability-score semantics, and
+  an initial watched-wallet input template. It does not collect data yet, does
+  not inspect the sealed holdout, does not launch capture, does not train
+  production models, and does not connect wallets or copy trades.
+- Polymarket Open Source Intelligence Audit v1 under
+  `polymarket/models/open_source_intelligence_audit_v1/`. The audit inspected
+  eight public GitHub repositories for relevance to Repricing Research, Wallet
+  Intelligence, Binance-Polymarket lag strategies, smart-money/copy-trading
+  analysis, backtesting, and dry-run simulation. It produced a report,
+  machine-readable JSON, repository scorecard, feature gap matrix, and reuse
+  recommendations. No dependencies were installed, no code was executed beyond
+  read-only inspection, no wallets were connected, no campaigns were launched,
+  no production models were trained, and the existing pipeline was not
+  modified.
+- Wallet Intelligence Data Ingestion v1 under
+  `polymarket/data/wallet_intelligence/v1/`. The bounded public snapshot
+  resolved all six seed profiles from
+  `polymarket/wallet_intelligence/watched_wallets.example.csv`, wrote
+  `wallets_raw.jsonl`, `wallet_profiles.csv`, `wallet_positions.csv`,
+  `wallet_summary.json`, `ingestion_report.md`, and
+  `ingestion_report.json`, and preserved source URLs plus retrieval timestamp
+  `2026-06-24T20:00:17+00:00`. It uses only public profile/data endpoints and
+  records unavailable timing fields explicitly.
+- Wallet Intelligence Behavior Metrics v1 under
+  `polymarket/models/wallet_intelligence_v1/behavior_metrics/`. It produced
+  `behavior_metrics_report.md`, `behavior_metrics_report.json`,
+  `wallet_behavior_metrics.csv`, `wallet_similarity_matrix.csv`,
+  `wallet_clusters.csv`, and `copyability_risk.csv` from existing ingestion
+  artifacts only. It found four fast-crypto-focused wallets, one
+  weather-focused wallet, one mixed wallet, aggregate YES/NO counts of
+  234 / 225, dominant entry bucket `80_100c`, and no support for late-window,
+  hold-time, drawdown, or executable copyability claims.
+- Wallet Intelligence Deep History Feasibility v1 under
+  `polymarket/models/wallet_intelligence_v1/deep_history_feasibility/`. It
+  produced `deep_history_feasibility_report.md`,
+  `deep_history_feasibility_report.json`, `endpoint_inventory.csv`,
+  `wallet_feasibility_matrix.csv`, and `bounded_probe_sample.jsonl`. It found
+  a safe bounded public-history path through Data API activity/trades plus
+  positions, closed positions, CLOB price history, and external BTC/ETH/SOL
+  reference-price joins. A one-wallet 50-row read-only probe returned public
+  `TRADE` rows with timestamps, transaction hashes, token IDs, condition IDs,
+  sides, prices, sizes, outcomes, slugs, and event slugs. The result supports
+  a future ingestion design task only.
+- Wallet Public Trade History Ingestion Design v1 under
+  `polymarket/models/wallet_intelligence_v1/trade_history_ingestion_design/`.
+  It produced `trade_history_ingestion_design.md`,
+  `trade_history_ingestion_design.json`, `trade_history_schema.csv`,
+  `join_plan.csv`, `ingestion_limits.json`, and
+  `validation_gate_definition.json`. The design caps the first future scope at
+  the six seed wallets, 100 rows per page, three primary activity pages per
+  wallet, one trades cross-check page per wallet, 1,800 primary activity rows
+  total, 600 cross-check rows total, and public read-only cache-first
+  endpoint usage only. No broad ingestion was run.
+- Wallet Public Trade History Ingester Fixture Implementation v1 under
+  `polymarket/models/wallet_intelligence_v1/trade_history_ingester_fixture/`.
+  It produced `fixture_ingestion_report.md`,
+  `fixture_ingestion_report.json`, `normalized_trades_fixture.csv`,
+  `raw_trades_fixture.jsonl`, `validation_gate_results.json`, and
+  `reproducibility_hashes.json`. The fixture run normalized 50 saved public
+  trade rows for `0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a`, removed zero
+  duplicates, passed all ten validation gates, and recorded deterministic CSV
+  repeat-export status. The full automated suite now has 105 passing tests.
+- Wallet Public Trade History Bounded Public Smoke v1 under
+  `polymarket/data/wallet_intelligence/trade_history_smoke_v1/`. It produced
+  `trade_history_raw.jsonl`, `trade_history_normalized.csv`,
+  `trade_history_summary.json`, `bounded_smoke_report.md`,
+  `bounded_smoke_report.json`, `validation_gate_results.json`, and
+  `reproducibility_hashes.json`. The smoke attempted and succeeded for all six
+  seed wallets, fetched 600 public `TRADE` rows across six pages, normalized
+  600 rows, removed zero duplicates, passed all ten validation gates, and
+  recorded deterministic CSV repeat-export status. It found 367 fast-crypto
+  rows, 359 BTC rows, 97 ETH rows, 11 SOL rows, 133 other rows, 249 YES-like
+  outcomes, and 351 NO-like outcomes. The full automated suite now has 106
+  passing tests.
+- Public Evidence Campaign Batch 003 (`20260620_213414`) was captured and fully
+  processed through resolution, feature, quality, and deterministic replay.
+  It added 139 clean authoritative rows, but is not accepted as a complete
+  campaign: observations stop at June 21, 2026 02:48:58 UTC and the terminal
+  event follows at 09:57:33 UTC, leaving a 7:08:34 observation-free tail. The
+  v1 completeness metric incorrectly reported `complete` because UTC and
+  monotonic clocks advanced together during the likely host suspension.
+- Finalized public capture batch `20260619_174322` with fresh Gamma resolution
+  refresh, deterministic replay, and measured dataset growth.
+- Completed processing of Public Evidence Campaign Batch 002
+  (`20260619_223637`) with fresh resolution refresh, deterministic replay, and
+  155 additional clean rows. A subsequent integrity investigation found that
+  the process exited through its normal completion path, but timestamped live
+  observations cover only 5:05:15 of the requested six-hour wall-clock market
+  period. The terminal completion timestamp was synthesized as start plus the
+  configured duration and therefore overstates observed market coverage by
+  54:44.951.
+- Self-guiding project management documents with one active-task protocol,
+  durable decisions, and a separated research backlog.
+- Product isolation under `polymarket/`, `docs/polymarket/`,
+  `tests/polymarket/`, and `polymarket/data|runs/`.
+- Full automated suite passing: 89 tests.
+
+## Active milestone
+
+Polymarket Wallet Intelligence Research.
+
+Wallet Intelligence Research v1 now has bounded public-data ingestion,
+behavior metrics, a deep-history feasibility review, a public trade-history
+ingestion design, a fixture-only trade-history ingester, and a bounded public
+trade-history smoke for the six seed profiles. The active successor task is
+Wallet Trade Lifecycle Reconstruction Design v1: design how normalized trade
+rows should be grouped into entry/exit/holding-time candidates without
+overclaiming copyability, queue position, fill priority, Binance-lag
+alignment, or strategy intent.
+
+Current measured baseline:
+
+| Metric | Current | Milestone target |
+|---|---:|---:|
+| Clean completed rows | 1,064 | >=1,000 |
+| Public rows | 1,064 | >=1,000 |
+| Mock rows | 0 | Excluded from model validation |
+| Public rows per asset | 353 BTC / 355 ETH / 356 SOL | >=200 |
+| Public UP / DOWN | 527 / 537 | Minority class >=30% |
+| Authoritative resolution coverage | 1,391 / 1,398 (99.50%) | >=95% |
+| Feature completeness | 99.18% | >=95% |
+| Duplicate rows | 0 | <=1% |
+| Dataset quality score | 99.52 | >=75 |
+| Dataset Quality Engine recommendation | Yes | Yes |
+| Evidence-pipeline training authorization | Yes | Yes |
+| Frozen train / validation / holdout rows | 741 / 153 / 158 | Deterministic |
+| Boundary-excluded rows | 12 | Fully traceable |
+| Holdout labels | Sealed, SHA-256 committed | Untouched |
+| Best validation predictor | Polymarket YES price | Candidate must beat it |
+| Baseline v1 verdict | `NO_EDGE_FOUND_YET` | `ADVANCE_CANDIDATE` |
+| Diagnostic conclusion | `FEATURE_SET_INCOMPLETE` | New information required |
+| Fixed groups beating YES price | 0 / 8 | At least one stable group |
+| New microstructure columns | 19 | Implemented |
+| Deterministic raw/depth fixture coverage | 100% | >=95% |
+| Real public raw microstructure coverage | 100% | >=95% |
+| Velocity / acceleration coverage | 99.10% / 98.19% | Warm-up adjusted |
+| Smoke continuity | 450 / 450 checkpoints | >=95% |
+| Smoke decision | `READY_FOR_PRODUCTION_CAPTURE` | Ready |
+| Batch 001 dataset rows | 213 | Development evidence |
+| Batch 001 rows per asset | 71 BTC / 71 ETH / 71 SOL | Balanced |
+| Batch 001 microstructure row coverage | 100% | Complete |
+| Batch 001 replay compatibility | Verified | Required |
+| Batch 001 diagnostic decision | `DATASET_TOO_SMALL_OR_UNSTABLE` | Do not advance |
+| Batch 001 best diagnostic predictor | YES price | Candidate must beat it |
+| Batch 001 diagnostic eval rows | 64 | Too small |
+| Batch 002 dataset rows | 213 | Development evidence |
+| Batch 002 rows per asset | 71 BTC / 71 ETH / 71 SOL | Balanced |
+| Batch 002 microstructure row coverage | 100% | Complete |
+| Batch 002 replay compatibility | Verified | Required |
+| Combined microstructure diagnostic rows | 426 | Development evidence |
+| Combined diagnostic rows per asset | 142 BTC / 142 ETH / 142 SOL | Balanced |
+| Combined diagnostic outcomes | 213 UP / 213 DOWN | Balanced proxy labels |
+| Combined diagnostic best predictor | Polymarket YES price | Candidate must beat it |
+| Combined diagnostic decision | `DATASET_STILL_TOO_SMALL_OR_UNSTABLE` | Do not advance |
+| Repricing Research v1 short replay signals | 28 | Development smoke only |
+| Repricing Research v1 short replay win rate | 57.14% | Not a production claim |
+| Repricing Research v1 after-slippage paper P&L | 0.4065 | Needs stress testing |
+| Repricing Research v1 evidence level | `INSUFFICIENT_SMOKE_ONLY` | Diagnostics only |
+| Repricing weak evidence target | 100 signals / 40 hours / 3 sessions | Not met |
+| Repricing moderate evidence target | 300 signals / 120 hours / 6 sessions | Not met |
+| Repricing strong development target | 1,000 signals / 400 hours / 20 sessions | Not met |
+
+## Blockers
+
+- Historical sessions predate the schema and have 0% microstructure coverage.
+- Public order flow is currently a depth/quote-change proxy, not authenticated
+  trade aggressor data.
+- Combined Batch 001-002 development diagnostics did not beat YES price and
+  remain too small or unstable to justify a candidate specification.
+- Repricing Research v1 has only a short existing-session smoke replay; it
+  lacks a larger repricing-focused sample, balanced asset/side coverage,
+  executable bid/ask exit modelling, fee/slippage stress grids, and
+  prospective frozen shadow evidence.
+- Wallet Intelligence Research v1 now has normalized public profile records,
+  position records, behavior metrics, similarity clusters, and copyability
+  risk tiers for the six seed profiles. It still lacks complete trade/fill
+  history, linked entry/exit timestamps, average holding time, drawdown
+  evidence, reliable late-entry timing, Binance-lag alignment, and executable
+  observation-delay/liquidity evidence.
+- OSS audit findings are descriptive only. Execution-heavy repositories expose
+  private-key, live-order, copy-trading, market-making, or cancel/replace
+  paths and must not be run or imported into ForgeView's research pipeline.
+- The existing validation and holdout periods may not be retrofitted with new
+  features.
+
+The holdout remains sealed. Final holdout evaluation, alpha claims, P&L
+optimization, and trading remain unauthorized.
+
+## Next actions
+
+The single active task is Wallet Trade Lifecycle Reconstruction Design v1.
+Its scope and acceptance criteria are defined in `NEXT_TASK.md`.
+
+## Latest metrics
+
+Measured June 24, 2026:
+
+- automated tests: 106 passing;
+- Wallet Intelligence Research v1 module path:
+  `polymarket/wallet_intelligence/`;
+- Wallet Intelligence Research v1 document:
+  `docs/polymarket/WALLET_INTELLIGENCE_RESEARCH_V1.md`;
+- Wallet Intelligence watched-wallet template:
+  `polymarket/wallet_intelligence/watched_wallets.example.csv`;
+- Wallet Intelligence seed profiles: 6;
+- Wallet Intelligence normalized profile records collected: 6;
+- Wallet Intelligence normalized position records collected: 460;
+- Wallet Intelligence public-data output path:
+  `polymarket/data/wallet_intelligence/v1/`;
+- Wallet Intelligence fast-market crypto wallets found in bounded snapshot: 4;
+- Wallet Intelligence weather-heavy wallets found in bounded snapshot: 1;
+- Wallet Intelligence crypto non-fast wallets found in bounded snapshot: 1;
+- Wallet Intelligence unresolved seed profiles: 0;
+- Wallet Intelligence behavior metrics output path:
+  `polymarket/models/wallet_intelligence_v1/behavior_metrics/`;
+- Wallet Intelligence wallets analyzed in behavior metrics: 6;
+- Wallet Intelligence classifications: 4 fast crypto focused, 1 weather
+  focused, 1 mixed;
+- Wallet Intelligence strongest fast-market wallet:
+  `0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a`;
+- Wallet Intelligence aggregate YES / NO counts: 234 / 225;
+- Wallet Intelligence dominant entry bucket: `80_100c` with 111 / 460 visible
+  positions;
+- Wallet Intelligence most similar pair:
+  `0x1f0ebc543b2d411f66947041625c0aa1ce61cf86` and
+  `0xd0d6053c3c37e727402d84c14069780d360993aa`, similarity 0.939721;
+- Wallet Intelligence late-window behavior available: false;
+- Wallet Intelligence deep-history feasibility output path:
+  `polymarket/models/wallet_intelligence_v1/deep_history_feasibility/`;
+- Wallet Intelligence bounded public activity probe rows: 50;
+- Wallet Intelligence public trade/activity history feasible: bounded yes;
+- Wallet Intelligence full strategy reconstruction feasible: false;
+- Wallet Intelligence Binance-lag alignment feasible from wallet endpoints
+  alone: false;
+- Wallet Intelligence trade-history ingestion design output path:
+  `polymarket/models/wallet_intelligence_v1/trade_history_ingestion_design/`;
+- Wallet Intelligence trade-history schema fields: 35;
+- Wallet Intelligence trade-history join-plan rows: 7;
+- Wallet Intelligence trade-history validation gates: 10;
+- Wallet Intelligence first future activity row cap: 1,800 rows across six
+  seed wallets;
+- Wallet Intelligence first future trades cross-check cap: 600 rows across six
+  seed wallets;
+- Wallet Intelligence trade-history fixture ingester output path:
+  `polymarket/models/wallet_intelligence_v1/trade_history_ingester_fixture/`;
+- Wallet Intelligence fixture trade rows normalized: 50;
+- Wallet Intelligence fixture validation gates passed: 10 / 10;
+- Wallet Intelligence fixture duplicate rows removed: 0;
+- Wallet Intelligence fixture deterministic CSV repeat export: true;
+- Wallet Intelligence fixture Parquet status:
+  `not_written_no_project_parquet_dependency`;
+- Wallet Intelligence public trade-history smoke output path:
+  `polymarket/data/wallet_intelligence/trade_history_smoke_v1/`;
+- Wallet Intelligence public smoke wallets attempted / succeeded: 6 / 6;
+- Wallet Intelligence public smoke pages fetched: 6;
+- Wallet Intelligence public smoke rows fetched / normalized: 600 / 600;
+- Wallet Intelligence public smoke validation gates passed: 10 / 10;
+- Wallet Intelligence public smoke duplicate rows removed: 0;
+- Wallet Intelligence public smoke deterministic CSV repeat export: true;
+- Wallet Intelligence public smoke fast crypto rows: 367;
+- Wallet Intelligence public smoke BTC / ETH / SOL / other rows:
+  359 / 97 / 11 / 133;
+- Wallet Intelligence public smoke YES-like / NO-like outcomes: 249 / 351;
+- Wallet Intelligence copyability overclaim allowed: false;
+- Wallet Intelligence holdout outcomes read: false;
+- Wallet Intelligence capture campaigns launched: 0;
+- Wallet Intelligence wallet/private-key connections implemented: false;
+- OSS audit output path:
+  `polymarket/models/open_source_intelligence_audit_v1/`;
+- OSS audit repositories inspected: 8;
+- OSS audit top repository for first deep dive: `ent0n29/polybot`;
+- OSS audit top backtesting reference:
+  `evan-kolberg/prediction-market-backtesting`;
+- OSS audit top API reference: `pmxt-dev/pmxt`;
+- OSS audit live trading run: false;
+- OSS audit wallet/private-key use: false;
+- OSS audit dependencies installed globally: false;
+- Repricing Research v1 module path: `polymarket/repricing_research/`;
+- Repricing Research v1 document:
+  `docs/polymarket/REPRICING_RESEARCH_V1.md`;
+- Repricing Research v1 short replay output:
+  `polymarket/models/repricing_research_v1/short_replay/`;
+- Repricing Research v1 short replay input sessions:
+  `polymarket/runs/microstructure_development_v1/20260623_120611/session.jsonl`
+  and
+  `polymarket/runs/microstructure_development_v1_batch_002/20260623_214015/session.jsonl`;
+- Repricing Research v1 short replay rows/signals: 28;
+- Repricing Research v1 target-before-stop wins: 16;
+- Repricing Research v1 paper win rate: 57.14%;
+- Repricing Research v1 average favorable repricing: 0.3265;
+- Repricing Research v1 average adverse move: -0.1164;
+- Repricing Research v1 simulated P&L before fees/slippage: 0.9665;
+- Repricing Research v1 simulated P&L after conservative slippage: 0.4065;
+- Repricing Research v1 max drawdown: 0.4050;
+- Repricing Research v1 expectancy per signal: 0.0145;
+- Repricing Research v1 signals per hour: 2.1333;
+- Repricing Research v1 Data Sufficiency Audit path:
+  `polymarket/models/repricing_research_v1/data_sufficiency_audit/`;
+- Repricing Research v1 current evidence level:
+  `INSUFFICIENT_SMOKE_ONLY`;
+- Repricing Research v1 observed hours in current sample: 13.1255;
+- Repricing Research v1 signals by asset: 5 BTC, 8 ETH, and 15 SOL;
+- Repricing Research v1 signals by side: 5 YES and 23 NO;
+- Repricing Research v1 exits: 16 repricing target, 8 stop loss, and 4
+  timeout;
+- Repricing Research v1 per-signal after-slippage P&L standard deviation:
+  0.0948, variance 0.0090, median 0.0175, q25 -0.0500, q75 0.0400;
+- Repricing Research v1 side stability: YES expectancy 0.1200, NO expectancy
+  -0.0084;
+- Repricing Research v1 asset stability: BTC expectancy 0.0890, ETH
+  expectancy -0.0094, SOL expectancy 0.0024;
+- Repricing Research v1 horizon coverage: 30s 100.0%, 60s 67.86%, 120s
+  64.29%, 180s 0.0%;
+- Repricing Research v1 weak evidence floor: at least 100 signals, 40 observed
+  hours, 3 independent sessions, 25 signals per asset, 35 signals per side,
+  and after-slippage expectancy at least 0.005;
+- Repricing Research v1 moderate evidence floor: at least 300 signals, 120
+  observed hours, 6 sessions, 75 signals per asset, 100 signals per side, and
+  after-slippage expectancy at least 0.008;
+- Repricing Research v1 strong development floor: at least 1,000 signals, 400
+  observed hours, 20 sessions, 250 signals per asset, 350 signals per side,
+  after-slippage expectancy at least 0.010, positive stress results, and no
+  single asset/session contributing more than 40% of P&L;
+- Repricing Research v1 data is sufficient for diagnostics: true;
+- Repricing Research v1 data is sufficient for model development: false;
+- Repricing Research v1 data is sufficient for shadow strategy validation:
+  false;
+- Repricing Research v1 data is sufficient for edge claims: false;
+- Repricing Research v1 holdout outcomes read: false;
+- Repricing Research v1 validation protocol modified: false;
+- interrupted 12-hour Batch 003 capture process was stopped after the strategy
+  direction changed; any partial run artifact remains excluded from analysis;
+- Combined Batch 001-002 microstructure diagnostics path:
+  `polymarket/models/microstructure_diagnostics_batches_001_002/`;
+- Combined Batch 001-002 diagnostic decision:
+  `DATASET_STILL_TOO_SMALL_OR_UNSTABLE`;
+- Combined Batch 001-002 diagnostic rows analyzed: 426;
+- Combined Batch 001-002 diagnostic split: chronological atomic window-group
+  297 train rows / 129 evaluation rows, development-only and proxy-labelled;
+- Combined Batch 001-002 rows per asset: 142 BTC, 142 ETH, and 142 SOL;
+- Combined Batch 001-002 proxy outcomes: 213 UP and 213 DOWN;
+- Combined Batch 001-002 microstructure feature coverage: 8,094 / 8,094
+  cells populated (100.0%);
+- Combined Batch 001-002 microstructure missing cells: 0;
+- Combined Batch 001-002 best diagnostic result: YES price only, evaluation
+  log loss 0.546792, Brier 0.182709, accuracy 72.87%, ROC AUC 0.8055;
+- Combined Batch 001-002 microstructure-only diagnostic model: evaluation log
+  loss 0.677837, Brier 0.241526, accuracy 56.59%, ROC AUC 0.6228;
+- Combined Batch 001-002 YES-plus-microstructure diagnostic model:
+  evaluation log loss 0.610897, Brier 0.210249, accuracy 65.89%, ROC AUC
+  0.7295;
+- Combined Batch 001-002 YES price beaten on development data: false;
+- Combined Batch 001-002 per-asset best diagnostic predictor: YES price for
+  BTC, ETH, and SOL;
+- Combined Batch 001-002 stable possible incremental microstructure features:
+  none under the fixed batch-stability rule;
+- Combined Batch 001-002 features helping only one batch:
+  `quote_age_seconds`, `time_since_quote_update_seconds`,
+  `repricing_velocity`, `consecutive_quote_stability`, and
+  `cross_asset_yes_dispersion`;
+- Combined Batch 001-002 unstable feature: `book_imbalance`;
+- Combined Batch 001-002 diagnostics holdout outcomes read: false;
+- Combined Batch 001-002 diagnostics holdout evaluation run: false;
+- Combined Batch 001-002 diagnostics validation protocol modified: false;
+- Independent Microstructure Development Dataset Batch 002 session:
+  `20260623_214015`;
+- Batch 002 session path:
+  `polymarket/runs/microstructure_development_v1_batch_002/20260623_214015/session.jsonl`;
+- Batch 002 configured / observed duration: 21,600.0 / 21,600.013484
+  seconds;
+- Batch 002 campaign completeness: complete, 100.0% temporal coverage;
+- Batch 002 observation continuity: 10,800 / 10,800 checkpoints (100.0%);
+- Batch 002 maximum checkpoint gap: 2.038265 seconds;
+- Batch 002 gaps over 10 / 60 / 300 seconds: 0 / 0 / 0;
+- Batch 002 fatal capture errors: 0;
+- Batch 002 discovery failures: 53, retained as independent diagnostics;
+- Batch 002 microstructure events: 32,089;
+- Batch 002 events by asset: 10,699 BTC, 10,691 ETH, and 10,699 SOL;
+- Batch 002 raw microstructure coverage: quote age, latency, bid/ask size,
+  total depth, book imbalance, spread, quote-change frequencies, and stability
+  100%; repricing velocity 99.3175%; repricing acceleration 98.6350%;
+  spread change/velocity/compression 99.3175%; cross-asset
+  dispersion/relative YES 99.9907%;
+- Batch 002 feature export rows: 213, with 71 BTC, 71 ETH, and 71 SOL;
+- Batch 002 feature export outcomes: 123 UP and 90 DOWN using explicit proxy
+  labels for development ingestion only;
+- Batch 002 all 19 microstructure feature columns populated on feature rows:
+  100%;
+- Batch 002 core feature missingness: 1 / 4,260 cells missing (99.9765%
+  complete), from `probability_change_30s`;
+- Batch 002 CSV and Parquet repeat-export hashes: deterministic;
+- Batch 002 CSV SHA-256:
+  `4a9b5ea0628bef82e2202cfdbf12efe3759f92609f0f822a624aa414f01ce318`;
+- Batch 002 Parquet SHA-256:
+  `74004dadba89d3230674008ca74e35d730e1b471b6fbba017902818800766f4f`;
+- Batch 002 replay metrics, campaign completeness, and microstructure coverage:
+  exact match;
+- Batch 002 dataset location:
+  `polymarket/data/microstructure_dataset_batch_002/`;
+- Batch 002 canonical training data merge status: not merged;
+- Batch 002 holdout outcomes read: false;
+- Batch 002 validation protocol modified: false;
+- Batch 002 completed after one failed incomplete attempt
+  (`20260623_185001`) exposed an async discovery exception-handling bug; the
+  failed attempt has no `session_completed` marker and was excluded from the
+  Batch 002 dataset export;
+- Batch 001 microstructure diagnostics path:
+  `polymarket/models/microstructure_diagnostics_batch_001/`;
+- Batch 001 diagnostic decision: `DATASET_TOO_SMALL_OR_UNSTABLE`;
+- Batch 001 diagnostic rows analyzed: 213;
+- Batch 001 diagnostic split: chronological 149 train rows / 64 evaluation
+  rows, development-only and proxy-labelled;
+- Batch 001 best diagnostic result: YES price only, evaluation log loss
+  0.568340, Brier 0.192367, accuracy 68.75%, ROC AUC 0.7882;
+- Batch 001 microstructure-only diagnostic model: evaluation log loss
+  0.628730, Brier 0.220724, accuracy 62.50%, ROC AUC 0.7395;
+- Batch 001 YES-plus-microstructure diagnostic model: evaluation log loss
+  0.594523, Brier 0.203701, accuracy 71.875%, ROC AUC 0.7672;
+- Batch 001 YES price beaten on development data: false;
+- Batch 001 possible incremental feature by residual partial correlation:
+  `cross_asset_yes_dispersion`;
+- Batch 001 feature redundant with YES price: `book_imbalance`;
+- Batch 001 unstable microstructure features: none by the fixed half-sample
+  one-standard-deviation rule;
+- Batch 001 redundant feature pairs include `yes_change_frequency_30s` /
+  `no_change_frequency_30s`, `spread_change` / `spread_compression`,
+  `time_since_quote_update_seconds` / `consecutive_quote_stability`, and
+  spread-change variants;
+- Batch 001 diagnostics holdout outcomes read: false;
+- Batch 001 diagnostics holdout evaluation run: false;
+- Batch 001 diagnostics validation protocol modified: false;
+- Independent Microstructure Development Dataset Batch 001 session:
+  `20260623_120611`;
+- latest session path:
+  `polymarket/runs/microstructure_development_v1/20260623_120611/session.jsonl`;
+- Batch 001 configured / observed duration: 21,600.0 / 21,600.009733
+  seconds;
+- Batch 001 campaign completeness: complete, 100.0% temporal coverage;
+- Batch 001 observation continuity: 10,800 / 10,800 checkpoints (100.0%);
+- Batch 001 maximum checkpoint gap: 2.042252 seconds;
+- Batch 001 gaps over 10 / 60 / 300 seconds: 0 / 0 / 0;
+- Batch 001 fatal capture errors: 0;
+- Batch 001 discovery failures: 77, retained as independent diagnostics;
+- Batch 001 microstructure events: 32,041;
+- Batch 001 events by asset: 10,681 BTC, 10,684 ETH, and 10,676 SOL;
+- Batch 001 raw microstructure coverage: quote age, latency, bid/ask size,
+  total depth, book imbalance, spread, quote-change frequencies, and stability
+  100%; repricing velocity 99.3165%; repricing acceleration 98.6330%;
+  spread change/velocity/compression 99.3165%; cross-asset
+  dispersion/relative YES 99.9782%;
+- Batch 001 feature export rows: 213, with 71 BTC, 71 ETH, and 71 SOL;
+- Batch 001 feature export outcomes: 90 UP and 123 DOWN using explicit proxy
+  labels for development ingestion only;
+- Batch 001 all 19 microstructure feature columns populated on feature rows:
+  100%;
+- Batch 001 core feature missingness: 6 / 4,260 cells missing (99.8592%
+  complete), from `momentum_medium` and `return_60s`;
+- Batch 001 CSV and Parquet repeat-export hashes: deterministic;
+- Batch 001 CSV SHA-256:
+  `4e790466fe24238a7dde282d1412a8aa771f1897c4b7f1d979bda21fbebef8a2`;
+- Batch 001 Parquet SHA-256:
+  `434376318dbe4acea954af1a895fa01e7d023c27329d628381fea3e123f0b553`;
+- Batch 001 replay metrics, campaign completeness, and microstructure coverage:
+  exact match;
+- Batch 001 dataset location:
+  `polymarket/data/microstructure_dataset_batch_001/`;
+- canonical training data merge status: not merged;
+- holdout outcomes read: false;
+- validation protocol modified: false;
+- public microstructure smoke session: `20260623_114635`;
+- configured / observed duration: 900.0 / 900.008502 seconds;
+- campaign completeness: complete, 100.0% temporal coverage;
+- observation continuity: 450 / 450 checkpoints (100.0%);
+- maximum checkpoint gap: 2.012861 seconds;
+- microstructure events: 1,328;
+- events by asset: 443 BTC, 443 ETH, 442 SOL;
+- quote timestamp/age, latency, bid/ask size, total depth, book imbalance,
+  spread, change frequencies, stability: 100% populated;
+- repricing velocity: 1,316 / 1,328 (99.0964%);
+- repricing acceleration: 1,304 / 1,328 (98.1928%);
+- spread change/velocity/compression: 1,316 / 1,328 (99.0964%);
+- cross-asset dispersion/relative YES: 1,327 / 1,328 (99.9247%);
+- Feature Engine smoke export: 6 rows, 2 per asset;
+- all 19 microstructure fields populated on smoke feature rows: 100%;
+- CSV and Parquet repeat-export hashes: deterministic;
+- replay metrics, completeness, and microstructure coverage: exact match;
+- public smoke decision: `READY_FOR_PRODUCTION_CAPTURE`;
+- decision scope: research capture only, not trading production;
+- microstructure event schema: v1;
+- optional Feature Engine microstructure columns: 19;
+- deterministic raw quote/depth coverage: 100%;
+- deterministic velocity coverage: 90%;
+- deterministic acceleration coverage: 80%;
+- deterministic synchronized cross-asset dispersion coverage: 96.67%;
+- historical schema-v1 coverage: 0% because sessions predate implementation;
+- real public schema-v1 coverage: unmeasured;
+- legacy v5 shadow replay compatibility: verified;
+- strictly as-of Feature Engine selection and future-event rejection: verified;
+- frozen validation protocol hashes: unchanged and verified;
+- baseline and diagnostic report hashes: unchanged and verified;
+- holdout outcomes read: false;
+- Baseline Failure Diagnostics conclusion: `FEATURE_SET_INCOMPLETE`;
+- fixed feature groups beating YES price on both primary metrics: 0 / 8;
+- logistic better individual validation rows: 71 / 153;
+- YES price better or equal individual validation rows: 82 / 153;
+- meaningful regimes where logistic beats YES on both metrics: 0;
+- only apparent segment win: medium lag, 8 rows, rejected as insufficient;
+- BTC logistic / YES log loss: 0.664369 / 0.625346;
+- ETH logistic / YES log loss: 0.679225 / 0.627134;
+- SOL logistic / YES log loss: 0.659881 / 0.598903;
+- exact redundant pair: `yes_price` / `yes_no_spread`, correlation 1.0;
+- near-redundant pair: `detection_delay` / `late_window_flag`, correlation
+  0.9797;
+- validation feature missingness: zero;
+- all validation rows use the early-window feature anchor;
+- largest mean distribution shifts include return_30s (-0.392 train standard
+  deviations), return_15s (-0.370), and return_5s (-0.347);
+- return_15s outcome correlation changes from +0.192 train to -0.065
+  validation;
+- diagnostic artifacts and deterministic hashes: verified;
+- exactly one recommended hypothesis: new market-microstructure information;
+- holdout outcomes read: false;
+- Baseline Probability Model v1 verdict: `NO_EDGE_FOUND_YET`;
+- best validation predictor: Polymarket YES price;
+- constant-prior validation log loss / Brier: 0.699768 / 0.253309;
+- asset-prior validation log loss / Brier: 0.700291 / 0.253566;
+- YES-price validation log loss / Brier: 0.617128 / 0.216683;
+- logistic validation log loss / Brier: 0.667825 / 0.238251;
+- logistic validation accuracy / ROC AUC: 56.21% / 0.6462;
+- YES-price validation accuracy / ROC AUC: 62.75% / 0.6721;
+- logistic train log loss / Brier: 0.590650 / 0.204572;
+- logistic train-to-validation log-loss gap: +0.077175;
+- logistic failed to beat YES price on BTC, ETH, and SOL independently;
+- holdout outcomes read: false;
+- baseline artifacts and deterministic hashes: verified;
+- validation protocol: `time_ordered_holdout_v1`, frozen and hash-verified;
+- source commitment:
+  `2be24229ef79638abbe3a843e5d79c97c4834d87ef19f0bcd5b5b736c897c276`;
+- source windows / rows: 356 / 1,064;
+- train: 248 windows / 741 rows, ending June 22, 2026 13:55 UTC;
+- validation: 51 windows / 153 rows, from June 22, 2026 14:10 UTC through
+  22:30 UTC;
+- untouched holdout: 53 windows / 158 rows, beginning June 22, 2026 22:45 UTC;
+- excluded boundary evidence: 4 windows / 12 rows;
+- purge/embargo: one complete five-minute window on each side of both raw
+  boundaries;
+- sealed holdout label commitment:
+  `9ea0faa072dd9c74146011da9cd6599e643fb7f40c2f8ce9643bb17f0394ca2b`;
+- development loader exposes no holdout outcomes;
+- model-development authorization: true for train/validation only;
+- final holdout evaluation authorization: false;
+- Batch 006 session: `20260622_211037`;
+- Batch 006 continuity: 10,800 / 10,800 checkpoints (100.0%);
+- Batch 006 temporal coverage: 100.0%;
+- Batch 006 maximum checkpoint gap: 2.035024 seconds;
+- Batch 006 gaps over 10 / 60 / 300 seconds: 0 / 0 / 0;
+- Batch 006 fatal capture errors: 0;
+- Batch 006 discovery failures: 41, retained as independent diagnostics;
+- Batch 006 clean-row growth: 851 to 1,064 (+213);
+- clean public rows per asset: 353 BTC, 355 ETH, 356 SOL;
+- clean public outcomes: 527 UP, 537 DOWN;
+- minority class share: 49.53%;
+- authoritative resolutions: 1,391 / 1,398 (99.50%);
+- feature completeness: 99.18%;
+- missing values: 0.55% of all cells;
+- duplicate rows: 0;
+- dataset quality score: 99.52/100;
+- Batch 006 manifest verdict: `DATA_GATE_PASSED`;
+- total milestone progress: 100.0%;
+- deterministic resolution replay: verified;
+- evidence-pipeline training authorization: true;
+- development-only baseline fitting authorization: true;
+- final holdout evaluation authorization: false until one candidate and all
+  evaluation assumptions are frozen;
+- Batch 005 session: `20260622_110942`;
+- Batch 005 continuity: 10,800 / 10,800 checkpoints (100.0%);
+- Batch 005 temporal coverage: 100.0%;
+- Batch 005 maximum checkpoint gap: 2.04033 seconds;
+- Batch 005 gaps over 10 / 60 / 300 seconds: 0 / 0 / 0;
+- Batch 005 fatal capture errors: 0;
+- Batch 005 reference coverage / market data gap: 99.8426% / 0.8471%;
+- Batch 005 completed windows / observed markets: 213 / 222;
+- Batch 005 clean-row growth: 636 to 851 (+215);
+- clean public rows per asset: 282 BTC, 284 ETH, 285 SOL;
+- clean public outcomes: 427 UP, 424 DOWN;
+- minority class share: 49.82%;
+- authoritative resolutions: 1,174 / 1,176 (99.83%);
+- proxy agreement: 937 matched / 61 mismatched (93.89%);
+- feature completeness: 98.97%;
+- duplicate rows: 0;
+- dataset quality score: 99.60/100;
+- Batch 005 manifest verdict: `INSUFFICIENT_PUBLIC_SAMPLE`;
+- total milestone progress: 85.1%;
+- deterministic resolution replay: verified;
+- project training authorization: false because the 1,000-row total sample
+  gate and untouched-holdout requirement remain unmet;
+- Batch 004 session: `20260621_220439`;
+- Batch 004 continuity: 10,800 / 10,800 checkpoints (100.0%);
+- Batch 004 maximum checkpoint gap: 2.04185 seconds;
+- Batch 004 gaps over 10 / 60 / 300 seconds: 0 / 0 / 0;
+- Batch 004 reference coverage / market data gap: 99.9444% / 0.7364%;
+- Batch 004 completed windows / observed markets: 211 / 222;
+- Batch 004 clean-row growth: 368 to 636 (+268);
+- clean public rows per asset: 210 BTC, 212 ETH, 214 SOL;
+- clean public outcomes: 324 UP, 312 DOWN;
+- minority class share: 49.06%;
+- authoritative resolutions: 951 / 954 (99.69%);
+- proxy agreement: 728 matched / 56 mismatched (92.86%);
+- authoritative candidate rows: 908;
+- sparse rows excluded: 272;
+- feature completeness: 98.62%;
+- missing values: 0.92% of all cells;
+- duplicate rows: 0;
+- dataset quality score: 99.12/100;
+- Batch 004 manifest verdict: `INSUFFICIENT_PUBLIC_SAMPLE`;
+- total milestone progress: 63.6%;
+- per-asset sample progress: BTC 100%, ETH 100%, SOL 100%;
+- deterministic resolution replay: verified;
+- project training authorization: false because the 1,000-row total sample
+  gate and untouched-holdout requirement remain unmet;
+- accelerated cadence test: 300 / 300 checkpoints, 100.0% coverage;
+- accelerated maximum checkpoint gap: 2.0 seconds;
+- accelerated gaps over 10 / 60 / 300 seconds: 0 / 0 / 0;
+- simulated recovery versus Batch 003: 14.8241% to 100.0%, an 85.1759
+  percentage-point improvement;
+- current Windows AC sleep timeout: 18,000 seconds;
+- current Windows AC hibernate timeout: disabled;
+- overnight preflight status: unsafe / blocked until AC sleep is disabled;
+- capture process now requests Windows `ES_SYSTEM_REQUIRED` for its lifetime;
+- Batch 003 session: `20260620_213414`;
+- Batch 003 pipeline status: completed; deterministic replay verified;
+- Batch 003 clean-row growth: 229 to 368 (+139);
+- clean public rows per asset: 122 BTC, 123 ETH, 123 SOL;
+- clean public outcomes: 198 UP, 170 DOWN;
+- authoritative resolutions: 510 / 510 (100.00%);
+- feature completeness: 98.27%;
+- dataset quality score: 97.58/100;
+- total milestone progress: 36.8%;
+- Batch 003 capture checkpoints: 1,601;
+- Batch 003 actual checkpoint span: 18,884.756 seconds
+  (5:14:44.756);
+- Batch 003 terminal observation gap: approximately 25,714.360 seconds
+  (7:08:34.360);
+- Batch 003 recorded runtime/span: 44,599.110 / 44,599.118 seconds;
+- Batch 003 discovery failures: 10, with endpoint, exception type, and full
+  message preserved;
+- Batch 003 reference coverage / market data gap: 99.94% / 6.87%;
+- Batch 003 integrity disposition: data rows remain usable, but the campaign
+  is not accepted as a continuous six-hour evidence campaign;
+- corrected Batch 003 verdict: `INCOMPLETE_CAMPAIGN`;
+- Batch 003 checkpoint coverage: 1,601 / 10,800 (14.8241%);
+- Batch 003 maximum checkpoint gap: 25,714.360435 seconds;
+- Batch 003 gaps over 10 / 60 / 300 seconds: 530 / 5 / 1;
+- Batch 003 effective observed duration: 18,884.756204 seconds;
+- Batch 003 continuity rejection reasons:
+  `checkpoint_coverage_below_95_percent` and
+  `checkpoint_gap_over_300_seconds`;
+- Batch 003 total checkpoint shortfall: 9,199;
+- checkpoint shortfall while the host was awake: approximately 7,842
+  (85.25% of the total shortfall);
+- checkpoint shortfall during the remaining intended runtime after sleep
+  began: approximately 1,357 (14.75%);
+- Windows sleep interval: 25,687.148 seconds, from 02:49:06.910 UTC to
+  09:57:14.058 UTC, wake source power button;
+- active checkpoint interval distribution: minimum 7.847 seconds, median
+  9.378 seconds, mean 11.803 seconds, p95 28.488 seconds;
+- active-loop estimated work time excluding the configured post-cycle sleep:
+  median 7.378 seconds and mean 9.803 seconds;
+- each discovery cycle performs ten sequential Gamma requests; each poll also
+  performs three sequential reference requests and up to three sequential
+  CLOB quote requests before writing `capture_checkpoint`;
+- because every observed cycle exceeded the five-second discovery interval,
+  discovery ran on effectively every cycle, producing approximately 16,010
+  sequential Gamma requests over 1,601 checkpoints;
+- ten explicit Gamma discovery failures added an estimated 203.821 seconds
+  above the clean-iteration median, but clean iterations still had a
+  9.325-second median; timeouts amplified rather than caused the cadence
+  failure;
+- previous public sessions show the same architecture-limited cadence:
+  11.661 seconds mean for `20260619_174322` and 10.394 seconds mean for
+  `20260619_223637`;
+- resolution processing did not interfere with capture because it begins only
+  after `LongShadowCapture.run()` returns;
+- finalized batch cutoff: June 21, 2026 09:57:33 UTC;
+- Batch 002 requested duration: 21,600 seconds;
+- Batch 002 timestamped live-observation span: 18,315.049 seconds
+  (5:05:15.049), ending June 20, 2026 03:41:52.553 UTC;
+- Batch 002 synthetic terminal gap: 3,284.951 seconds (54:44.951);
+- Batch 002 process path: normal `session_completed`, not a crash or forced
+  termination;
+- Batch 002 session coverage: 189 markets (63 per asset), 5,289/5,289
+  reference points, and 4,815/5,289 successful market quote points;
+- Batch 002 discovery failure detail: unrecoverable beyond `URLError` because
+  exception reasons and stdout/stderr were not persisted;
+- new campaigns record actual UTC start/completion, monotonic elapsed runtime,
+  observed UTC span, temporal coverage percentage, shortfall, and detected
+  wall-clock discontinuities;
+- temporal coverage below 99% with more than five seconds of shortfall is
+  marked `incomplete_temporal_coverage`; the evidence-batch verdict becomes
+  `INCOMPLETE_CAMPAIGN` and project training authorization remains false;
+- each new discovery failure records timestamp, endpoint URL, exception type,
+  and exception message as an independent `discovery_failure` event;
+- partial discovery results survive failures from individual Gamma endpoints;
+- new capture sessions preserve `campaign.stdout.log` and
+  `campaign.stderr.log`;
+- frozen input sessions: 20;
+- public markets discovered for resolution: 510;
+- authoritative resolutions: 510 (100.00%);
+- proxy agreement: 399 matched / 36 mismatched (91.72%);
+- sparse rows excluded: 116;
+- clean public/mock rows: 368 / 0;
+- minority class share: 46.20%;
+- feature completeness: 98.27%;
+- missing values: 1.15% of all cells;
+- duplicate rows: 0;
+- dataset quality score: 97.58/100;
+- Dataset Quality Engine recommendation: true;
+- batch verdict: `INSUFFICIENT_PUBLIC_SAMPLE`;
+- total milestone progress: 36.8%;
+- project training authorization: false because sample-size gates are unmet.
+
+## State update protocol
+
+At the end of every completed active task:
+
+1. Move the result into Completed milestones.
+2. Refresh blockers and latest measured metrics from generated artifacts.
+3. Update the active milestone if its exit criteria changed or passed.
+4. Add material decisions to `DECISIONS.md`.
+5. Replace the completed task in `NEXT_TASK.md` with exactly one active task.
+6. Keep speculative work in `RESEARCH_BACKLOG.md`.
+
+## Current commands
+
+```powershell
+python -m polymarket.edge_engine_v5 capture --assets BTC ETH SOL --duration 21600
+python -m polymarket.edge_engine_v5 lifecycle --assets BTC ETH SOL --duration 600 --poll-interval 1
+python -m polymarket.resolution_engine reconcile
+python -m polymarket.resolution_engine replay
+python -m polymarket.feature_engine build
+python -m polymarket.dataset_quality analyze
+python -m polymarket.dataset_quality build-public
+python -m polymarket.evidence_batch resume --session polymarket/runs/v5/20260619_223637/session.jsonl --resolution-mode replay
+python -m unittest discover -s tests -v
+```

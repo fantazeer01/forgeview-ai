@@ -1,0 +1,15 @@
+{
+  "provider": "mock",
+  "kling": {
+    "api_base": "https://api-singapore.klingai.com",
+    "model": "kling-v2-6",
+    "mode": "pro",
+    "aspect_ratio": "9:16",
+    "duration_seconds": 10
+  },
+  "workspace_root": "D:\\ForgeViewAI",
+  "jobs_dir": "D:\\ForgeViewAI\\output\\media\\jobs",
+  "outputs_dir": "D:\\ForgeViewAI\\output\\media\\outputs",
+  "async": true,
+  "text_publishing_blocked": false
+}

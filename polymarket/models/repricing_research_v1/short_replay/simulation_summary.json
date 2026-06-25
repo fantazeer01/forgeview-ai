@@ -1,0 +1,15 @@
+{
+  "average_adverse_move": -0.11642857142857142,
+  "average_favorable_repricing": 0.32649999999999996,
+  "expectancy_per_signal": 0.014517857142857155,
+  "first_entry_timestamp": "2026-06-23T13:31:45.901851+00:00",
+  "last_entry_timestamp": "2026-06-24T02:39:17.658036+00:00",
+  "max_drawdown": 0.405,
+  "rows": 28,
+  "signals": 28,
+  "signals_per_hour": 2.1332540446824453,
+  "simulated_pnl_after_conservative_slippage": 0.4065,
+  "simulated_pnl_before_fees_slippage": 0.9665,
+  "win_rate": 0.5714285714285714,
+  "wins": 16
+}

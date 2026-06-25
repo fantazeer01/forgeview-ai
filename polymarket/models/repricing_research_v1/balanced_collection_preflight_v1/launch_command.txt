@@ -1,0 +1,1 @@
+python -m polymarket.edge_engine_v5 capture --assets BTC ETH SOL --duration 43200 --poll-interval 2 --discovery-interval 5 --output-root polymarket/runs/repricing_balanced_v1 --no-mock-fallback --min-completed-windows 1 --min-shadow-trades 1 --min-entry-seconds 60 --external-move-threshold-bps 6 --repricing-ratio 0.65 --min-confidence 0.45

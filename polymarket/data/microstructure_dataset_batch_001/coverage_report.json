@@ -1,0 +1,270 @@
+{
+  "capture": {
+    "campaign_completeness": {
+      "actual_utc_completion_timestamp": "2026-06-23T18:06:11.902080+00:00",
+      "actual_utc_start_timestamp": "2026-06-23T12:06:11.892347+00:00",
+      "coverage_percentage": 100.0,
+      "expected_duration_seconds": 21600.0,
+      "material_shortfall_seconds": 0.0,
+      "monotonic_elapsed_runtime_seconds": 21600.0,
+      "observed_utc_span_seconds": 21600.009733,
+      "rejection_reasons": [],
+      "status": "complete",
+      "wall_clock_discontinuities": [],
+      "wall_clock_discontinuity_count": 0
+    },
+    "configured_duration_seconds": 21600.0,
+    "events_by_asset": {
+      "BTC": 10681,
+      "ETH": 10684,
+      "SOL": 10676
+    },
+    "market_data_gap_percentage": 0.8878,
+    "microstructure_events": 32041,
+    "mode": "public",
+    "observation_continuity": {
+      "actual_checkpoint_count": 10800,
+      "checkpoint_coverage_percentage": 100.0,
+      "effective_observed_duration_seconds": 21598.001237,
+      "expected_checkpoint_count": 10800,
+      "fatal_capture_error_count": 0,
+      "first_observation_timestamp": "2026-06-23T12:06:11.894348+00:00",
+      "gaps_over_10_seconds": 0,
+      "gaps_over_300_seconds": 0,
+      "gaps_over_60_seconds": 0,
+      "last_observation_timestamp": "2026-06-23T18:06:09.895585+00:00",
+      "max_checkpoint_gap_seconds": 2.042252,
+      "rejection_reasons": [],
+      "session_completed_present": true,
+      "status": "continuous",
+      "terminal_gap_seconds": 2.006495
+    },
+    "observed_duration_seconds": 21600.009733,
+    "reference_coverage_percentage": 99.8611,
+    "session": "polymarket\\runs\\microstructure_development_v1\\20260623_120611\\session.jsonl"
+  },
+  "coverage": {
+    "features": [
+      {
+        "event_field": "quote_age_seconds",
+        "event_missing_percentage": 0.0,
+        "event_population_percentage": 100.0,
+        "feature": "quote_age_seconds",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32041
+      },
+      {
+        "event_field": "time_since_last_quote_update_seconds",
+        "event_missing_percentage": 0.0,
+        "event_population_percentage": 100.0,
+        "feature": "time_since_quote_update_seconds",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32041
+      },
+      {
+        "event_field": "repricing_velocity",
+        "event_missing_percentage": 0.6835,
+        "event_population_percentage": 99.3165,
+        "feature": "repricing_velocity",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 31822
+      },
+      {
+        "event_field": "repricing_acceleration",
+        "event_missing_percentage": 1.367,
+        "event_population_percentage": 98.633,
+        "feature": "repricing_acceleration",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 31603
+      },
+      {
+        "event_field": "yes_change_frequency_30s",
+        "event_missing_percentage": 0.0,
+        "event_population_percentage": 100.0,
+        "feature": "yes_change_frequency_30s",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32041
+      },
+      {
+        "event_field": "no_change_frequency_30s",
+        "event_missing_percentage": 0.0,
+        "event_population_percentage": 100.0,
+        "feature": "no_change_frequency_30s",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32041
+      },
+      {
+        "event_field": "consecutive_quote_stability",
+        "event_missing_percentage": 0.0,
+        "event_population_percentage": 100.0,
+        "feature": "consecutive_quote_stability",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32041
+      },
+      {
+        "event_field": "bid_ask_spread",
+        "event_missing_percentage": 0.0,
+        "event_population_percentage": 100.0,
+        "feature": "bid_ask_spread",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32041
+      },
+      {
+        "event_field": "spread_change",
+        "event_missing_percentage": 0.6835,
+        "event_population_percentage": 99.3165,
+        "feature": "spread_change",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 31822
+      },
+      {
+        "event_field": "spread_velocity",
+        "event_missing_percentage": 0.6835,
+        "event_population_percentage": 99.3165,
+        "feature": "spread_velocity",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 31822
+      },
+      {
+        "event_field": "spread_compression",
+        "event_missing_percentage": 0.6835,
+        "event_population_percentage": 99.3165,
+        "feature": "spread_compression",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 31822
+      },
+      {
+        "event_field": "yes_bid_size",
+        "event_missing_percentage": 0.0,
+        "event_population_percentage": 100.0,
+        "feature": "yes_bid_size",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32041
+      },
+      {
+        "event_field": "yes_ask_size",
+        "event_missing_percentage": 0.0,
+        "event_population_percentage": 100.0,
+        "feature": "yes_ask_size",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32041
+      },
+      {
+        "event_field": "total_bid_depth",
+        "event_missing_percentage": 0.0,
+        "event_population_percentage": 100.0,
+        "feature": "total_bid_depth",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32041
+      },
+      {
+        "event_field": "total_ask_depth",
+        "event_missing_percentage": 0.0,
+        "event_population_percentage": 100.0,
+        "feature": "total_ask_depth",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32041
+      },
+      {
+        "event_field": "book_imbalance",
+        "event_missing_percentage": 0.0,
+        "event_population_percentage": 100.0,
+        "feature": "book_imbalance",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32041
+      },
+      {
+        "event_field": "refresh_latency_seconds",
+        "event_missing_percentage": 0.0,
+        "event_population_percentage": 100.0,
+        "feature": "market_refresh_latency",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32041
+      },
+      {
+        "event_field": "cross_asset_yes_dispersion",
+        "event_missing_percentage": 0.0218,
+        "event_population_percentage": 99.9782,
+        "feature": "cross_asset_yes_dispersion",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32034
+      },
+      {
+        "event_field": "cross_asset_relative_yes",
+        "event_missing_percentage": 0.0218,
+        "event_population_percentage": 99.9782,
+        "feature": "cross_asset_relative_yes",
+        "feature_row_population_percentage": 100.0,
+        "feature_rows_valid": 213,
+        "replay_status": "compatible",
+        "valid_sample_count": 32034
+      }
+    ],
+    "minimum_required_raw_field_coverage_percentage": 100.0
+  },
+  "decision": "READY_FOR_PRODUCTION_CAPTURE",
+  "feature_engine": {
+    "all_microstructure_columns_present": true,
+    "csv_sha256": "4e790466fe24238a7dde282d1412a8aa771f1897c4b7f1d979bda21fbebef8a2",
+    "deterministic_export": true,
+    "parquet_sha256": "434376318dbe4acea954af1a895fa01e7d023c27329d628381fea3e123f0b553",
+    "rows": 213,
+    "rows_by_asset": {
+      "BTC": 71,
+      "ETH": 71,
+      "SOL": 71
+    }
+  },
+  "holdout": {
+    "outcomes_read": false,
+    "protocol_modified": false
+  },
+  "limitations": [
+    "The 15-minute smoke is an operational coverage test, not alpha validation.",
+    "Order flow remains a public order-book change proxy.",
+    "Feature export uses proxy labels only to verify disposable ingestion."
+  ],
+  "replay": {
+    "campaign_completeness_matches": true,
+    "compatible": true,
+    "metrics_match": true,
+    "microstructure_coverage_matches": true
+  },
+  "schema_version": 1
+}

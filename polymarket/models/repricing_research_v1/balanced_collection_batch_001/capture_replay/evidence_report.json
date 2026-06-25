@@ -1,0 +1,969 @@
+{
+  "mode": "public",
+  "fallback_reason": "",
+  "verdict": "NO_EDGE",
+  "metrics": {
+    "total_markets_observed": 438,
+    "completed_market_windows": 428,
+    "opportunities_detected": 27,
+    "opportunity_rate": 0.063084,
+    "shadow_trades": 3,
+    "simulated_pnl": -77.471091,
+    "win_rate": 0.333333,
+    "avg_win": 22.222222,
+    "avg_loss": -49.846656,
+    "max_drawdown": 0.00996933,
+    "edge_decay": 1.0,
+    "latency_sensitivity": 0.058563,
+    "reference_coverage_percentage": 99.6991,
+    "data_gap_percentage": 1.0266
+  },
+  "campaign_completeness": {
+    "actual_utc_completion_timestamp": "2026-06-25T03:42:06.760761+00:00",
+    "actual_utc_start_timestamp": "2026-06-24T15:42:06.763390+00:00",
+    "coverage_percentage": 100.0,
+    "expected_duration_seconds": 43200.0,
+    "material_shortfall_seconds": 0.002629,
+    "monotonic_elapsed_runtime_seconds": 43200.0,
+    "observed_utc_span_seconds": 43199.997371,
+    "rejection_reasons": [],
+    "status": "complete",
+    "wall_clock_discontinuities": [],
+    "wall_clock_discontinuity_count": 0
+  },
+  "observation_continuity": {
+    "status": "continuous",
+    "expected_checkpoint_count": 21600,
+    "actual_checkpoint_count": 21600,
+    "checkpoint_coverage_percentage": 100.0,
+    "max_checkpoint_gap_seconds": 2.035487,
+    "gaps_over_10_seconds": 0,
+    "gaps_over_60_seconds": 0,
+    "gaps_over_300_seconds": 0,
+    "effective_observed_duration_seconds": 43197.98923,
+    "first_observation_timestamp": "2026-06-24T15:42:06.765390+00:00",
+    "last_observation_timestamp": "2026-06-25T03:42:04.754620+00:00",
+    "terminal_gap_seconds": 2.006141,
+    "session_completed_present": true,
+    "fatal_capture_error_count": 0,
+    "rejection_reasons": []
+  },
+  "discovery_failures": [
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782316500",
+      "exception_message": "The read operation timed out",
+      "exception_type": "TimeoutError",
+      "timestamp": "2026-06-24T16:02:30.756512+00:00"
+    },
+    {
+      "endpoint_url": "unknown",
+      "exception_message": "IncompleteRead(129800 bytes read)",
+      "exception_type": "IncompleteRead",
+      "timestamp": "2026-06-24T16:09:36.757281+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782318900",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T16:42:18.756861+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782322200",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T17:28:42.763498+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782325200",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T18:26:06.762133+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782325800",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T18:31:48.753460+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782325800",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T18:33:30.760459+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782328500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T19:20:36.760921+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782329400",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T19:26:36.754134+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782330000",
+      "exception_message": "The read operation timed out",
+      "exception_type": "TimeoutError",
+      "timestamp": "2026-06-24T19:43:18.754024+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782331500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T20:05:00.766206+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "The read operation timed out",
+      "exception_type": "TimeoutError",
+      "timestamp": "2026-06-24T20:06:12.763706+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782332100",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T20:12:24.755790+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "The read operation timed out",
+      "exception_type": "TimeoutError",
+      "timestamp": "2026-06-24T21:02:06.759774+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:02:48.761427+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:02:48.761427+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:02:48.761427+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782335100",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:02:48.761427+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782335100",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:02:48.761427+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334800",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:02:48.761427+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334800",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:02:48.761427+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:02:48.761427+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:02:48.761427+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:02:48.761427+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:00.764115+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:00.764115+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:00.764115+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:00.764115+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:00.764115+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:00.764115+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:00.764115+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:00.764115+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:00.764115+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:12.767588+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:12.767588+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:12.767588+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:12.767588+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:12.767588+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:12.767588+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:12.767588+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:12.767588+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:24.754941+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:24.754941+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:24.754941+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:24.754941+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:24.754941+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:30.764912+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:30.764912+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:30.764912+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:30.764912+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:30.764912+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:30.764912+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:30.764912+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:30.764912+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:30.764912+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:36.760228+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:36.760228+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:36.760228+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:36.760228+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:36.760228+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:36.760228+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:36.760228+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:42.756663+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:42.756663+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:42.756663+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:42.756663+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:42.756663+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:42.756663+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:54.760028+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:54.760028+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:54.760028+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:54.760028+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:03:54.760028+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:00.756352+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:00.756352+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:00.756352+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:00.756352+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:00.756352+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:00.756352+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:00.756352+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:00.756352+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:06.760035+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:06.760035+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:06.760035+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:06.760035+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:06.760035+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:06.760035+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:06.760035+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:06.760035+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:06.760035+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334800",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:12.760278+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782334500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:12.760278+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782335100",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:04:12.760278+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782336000",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:23:30.757278+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782336600",
+      "exception_message": "The read operation timed out",
+      "exception_type": "TimeoutError",
+      "timestamp": "2026-06-24T21:29:06.760477+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782336900",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:42:00.759773+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782337500",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:42:00.759773+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782336900",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:42:18.756219+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782337200",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:42:18.756219+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782337200",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T21:42:30.760858+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782338400",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:08:42.761278+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782339000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:08:54.753001+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:08:54.753001+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782338400",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:08:54.753001+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782339000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:08:54.753001+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782338400",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:08:54.753001+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782339000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:09:06.759743+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782339000",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:10:06.762978+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782339000",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:10:06.762978+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782339000",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:10:06.762978+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782338700",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:10:18.755616+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782339000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:15:18.757890+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782339000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:15:24.762320+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:15:24.762320+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782339300",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:15:30.766288+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782339600",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:15:30.766288+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782339000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:15:42.759068+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782339000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:15:42.759068+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:15:42.759068+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782339000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:15:54.755032+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782339000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:16:00.756603+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782339600",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:16:06.762411+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782339600",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:16:12.752902+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782339600",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:16:18.758959+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782339000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:16:18.758959+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782339600",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:16:24.761038+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782339000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:16:30.766479+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?active=true&closed=false&limit=200&order=volume_24hr&ascending=false",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:16:30.766479+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782339600",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:16:42.761726+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782339000",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-24T22:16:54.757030+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782348300",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T00:41:24.755279+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782347700",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T00:41:36.766184+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782347700",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T00:41:48.758391+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782348300",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T00:41:48.758391+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782349200",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:07:36.762120+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782349500",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:07:48.759565+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782350400",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:26:12.762566+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782350700",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:26:24.756860+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782351000",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:26:36.766190+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782351000",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:26:48.757742+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782350400",
+      "exception_message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:27:00.765732+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782350700",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:27:36.763318+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782350400",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:27:36.763318+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782351000",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:27:48.754574+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782350700",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:28:00.764902+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=sol-updown-5m-1782351000",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:28:00.764902+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=eth-updown-5m-1782350400",
+      "exception_message": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:28:12.757580+00:00"
+    },
+    {
+      "endpoint_url": "https://gamma-api.polymarket.com/events?slug=btc-updown-5m-1782352200",
+      "exception_message": "<urlopen error timed out>",
+      "exception_type": "URLError",
+      "timestamp": "2026-06-25T01:59:06.755157+00:00"
+    }
+  ],
+  "microstructure_coverage": {
+    "by_asset": {
+      "BTC": 21366,
+      "ETH": 21274,
+      "SOL": 21180
+    },
+    "events": 63820,
+    "field_coverage_percentage": {
+      "bid_ask_spread": 100.0,
+      "book_imbalance": 100.0,
+      "cross_asset_relative_yes": 99.9859,
+      "cross_asset_yes_dispersion": 99.9859,
+      "quote_age_seconds": 100.0,
+      "quote_timestamp": 100.0,
+      "refresh_latency_seconds": 100.0,
+      "repricing_acceleration": 98.6368,
+      "repricing_velocity": 99.3184,
+      "spread_change": 99.3184,
+      "spread_compression": 99.3184,
+      "spread_velocity": 99.3184,
+      "total_ask_depth": 100.0,
+      "total_bid_depth": 100.0,
+      "yes_ask_size": 100.0,
+      "yes_bid_size": 100.0
+    },
+    "schema_version": 1
+  },
+  "no_trading_guarantee": true
+}

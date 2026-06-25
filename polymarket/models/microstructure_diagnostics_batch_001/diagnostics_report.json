@@ -1,0 +1,224 @@
+{
+  "baseline_results": {
+    "evaluation_rows": 64,
+    "labels": "proxy_reference_window_return_only",
+    "model_specification": {
+      "epochs": 5000,
+      "hyperparameter_search": false,
+      "l2": 1.0,
+      "learning_rate": 0.08,
+      "production_model": false,
+      "standardization": "train_split_mean_std; missing filled with train median",
+      "type": "fixed_l2_logistic_diagnostic"
+    },
+    "models": {
+      "microstructure_only_diagnostic_logistic": {
+        "evaluation": {
+          "accuracy": 0.625,
+          "balanced_accuracy": 0.6492307692307693,
+          "brier": 0.22072427398843678,
+          "log_loss": 0.6287302577934872,
+          "mean_prediction": 0.5348128495460213,
+          "positive_rate": 0.390625,
+          "roc_auc": 0.7394871794871795,
+          "rows": 64
+        },
+        "train": {
+          "accuracy": 0.5369127516778524,
+          "balanced_accuracy": 0.551007326007326,
+          "brier": 0.23634141765049932,
+          "log_loss": 0.6615932779351849,
+          "mean_prediction": 0.5496169491590976,
+          "positive_rate": 0.436241610738255,
+          "roc_auc": 0.6503663003663004,
+          "rows": 149
+        }
+      },
+      "yes_price_only": {
+        "evaluation": {
+          "accuracy": 0.6875,
+          "balanced_accuracy": 0.6933333333333334,
+          "brier": 0.19236718749999998,
+          "log_loss": 0.5683404419316399,
+          "mean_prediction": 0.49375,
+          "positive_rate": 0.390625,
+          "roc_auc": 0.7882051282051282,
+          "rows": 64
+        },
+        "train": {
+          "accuracy": 0.6241610738255033,
+          "balanced_accuracy": 0.617948717948718,
+          "brier": 0.23487953020134228,
+          "log_loss": 0.6642400096096924,
+          "mean_prediction": 0.47818791946308725,
+          "positive_rate": 0.436241610738255,
+          "roc_auc": 0.6445054945054945,
+          "rows": 149
+        }
+      },
+      "yes_price_plus_microstructure_diagnostic_logistic": {
+        "evaluation": {
+          "accuracy": 0.71875,
+          "balanced_accuracy": 0.7261538461538461,
+          "brier": 0.20370053342830674,
+          "log_loss": 0.5945225451576545,
+          "mean_prediction": 0.4976618495738642,
+          "positive_rate": 0.390625,
+          "roc_auc": 0.7671794871794871,
+          "rows": 64
+        },
+        "train": {
+          "accuracy": 0.6174496644295302,
+          "balanced_accuracy": 0.6154761904761905,
+          "brier": 0.227055643070989,
+          "log_loss": 0.6422589879588052,
+          "mean_prediction": 0.5053288595832157,
+          "positive_rate": 0.436241610738255,
+          "roc_auc": 0.658974358974359,
+          "rows": 149
+        }
+      }
+    },
+    "split_policy": "chronological_70_30_within_batch_001_development_only",
+    "train_rows": 149
+  },
+  "best_diagnostic_result": {
+    "evaluation": {
+      "accuracy": 0.6875,
+      "balanced_accuracy": 0.6933333333333334,
+      "brier": 0.19236718749999998,
+      "log_loss": 0.5683404419316399,
+      "mean_prediction": 0.49375,
+      "positive_rate": 0.390625,
+      "roc_auc": 0.7882051282051282,
+      "rows": 64
+    },
+    "model": "yes_price_only"
+  },
+  "decision": "DATASET_TOO_SMALL_OR_UNSTABLE",
+  "feature_coverage": {
+    "microstructure_available_cells": 4047,
+    "microstructure_columns": 19,
+    "microstructure_feature_cells": 4047,
+    "microstructure_missing_cells": 0,
+    "raw_required_minimum_coverage_percentage": 100.0,
+    "rows_with_complete_microstructure": 213
+  },
+  "holdout": {
+    "evaluation_run": false,
+    "outcomes_read": false,
+    "validation_protocol_modified": false
+  },
+  "information_value_estimate": {
+    "interpretation": "Development-only proxy labels show weak candidate information in a few features, but the sample is too small and temporally narrow to advance a model or claim edge.",
+    "possible_incremental_signal_features": [
+      "cross_asset_yes_dispersion"
+    ],
+    "redundant_pairs_abs_corr_ge_0_90": [
+      {
+        "correlation": 1.0,
+        "left": "yes_change_frequency_30s",
+        "right": "no_change_frequency_30s"
+      },
+      {
+        "correlation": -1.0,
+        "left": "spread_change",
+        "right": "spread_compression"
+      },
+      {
+        "correlation": 0.999998,
+        "left": "time_since_quote_update_seconds",
+        "right": "consecutive_quote_stability"
+      },
+      {
+        "correlation": 0.999997,
+        "left": "spread_change",
+        "right": "spread_velocity"
+      },
+      {
+        "correlation": -0.999997,
+        "left": "spread_velocity",
+        "right": "spread_compression"
+      },
+      {
+        "correlation": 0.945438,
+        "left": "bid_ask_spread",
+        "right": "spread_velocity"
+      },
+      {
+        "correlation": 0.945052,
+        "left": "bid_ask_spread",
+        "right": "spread_change"
+      },
+      {
+        "correlation": -0.945052,
+        "left": "bid_ask_spread",
+        "right": "spread_compression"
+      },
+      {
+        "correlation": 0.912116,
+        "left": "quote_age_seconds",
+        "right": "consecutive_quote_stability"
+      },
+      {
+        "correlation": 0.912101,
+        "left": "quote_age_seconds",
+        "right": "time_since_quote_update_seconds"
+      }
+    ],
+    "redundant_with_yes_price_features": [
+      "book_imbalance"
+    ],
+    "top_partial_correlations_after_yes": [
+      {
+        "abs_partial_corr": 0.132849,
+        "feature": "cross_asset_yes_dispersion"
+      },
+      {
+        "abs_partial_corr": 0.107014,
+        "feature": "repricing_velocity"
+      },
+      {
+        "abs_partial_corr": 0.092256,
+        "feature": "cross_asset_relative_yes"
+      },
+      {
+        "abs_partial_corr": 0.070939,
+        "feature": "market_refresh_latency"
+      },
+      {
+        "abs_partial_corr": 0.051975,
+        "feature": "book_imbalance"
+      },
+      {
+        "abs_partial_corr": 0.051192,
+        "feature": "yes_bid_size"
+      },
+      {
+        "abs_partial_corr": 0.038246,
+        "feature": "yes_change_frequency_30s"
+      },
+      {
+        "abs_partial_corr": 0.038246,
+        "feature": "no_change_frequency_30s"
+      }
+    ],
+    "unstable_features": []
+  },
+  "inputs": {
+    "coverage_report": "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\coverage_report.json",
+    "dataset": "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\export\\dataset.csv",
+    "feature_summary": "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\export\\feature_summary.json",
+    "missingness": "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\export\\missingness_diagnostics.json",
+    "replay_validation": "D:\\ForgeViewAI\\polymarket\\data\\microstructure_dataset_batch_001\\replay_validation.json"
+  },
+  "label_status": {
+    "authoritative_labels": 0,
+    "diagnostic_only": true,
+    "proxy_labels": 213
+  },
+  "rows_analyzed": 213,
+  "yes_price_beaten_by_microstructure_only": false,
+  "yes_price_beaten_by_yes_plus_microstructure": false,
+  "yes_price_beaten_on_development_evaluation": false
+}

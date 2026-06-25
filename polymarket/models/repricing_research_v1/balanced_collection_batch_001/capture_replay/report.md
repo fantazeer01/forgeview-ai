@@ -1,0 +1,21 @@
+# Polymarket Edge Engine v5 Evidence Report
+
+- Verdict: **NO_EDGE**
+- Mode: **public**
+- Completed windows: **428**
+- Opportunities: **27**
+- Shadow trades: **3**
+- Simulated P&L after slippage: **$-77.47**
+- Win rate: **33.3%**
+- Max drawdown: **1.00%**
+- Edge decay: **100.0%**
+- Latency sensitivity: **5.9%**
+- Reference coverage: **99.70%**
+- Data gaps: **1.03%**
+- Campaign completeness: **complete**
+- Temporal coverage: **100.00%**
+- Discovery failures: **148**
+- Microstructure events: **63820**
+- Checkpoint coverage: **100.00%**
+- Maximum checkpoint gap: **2.035s**
+- Real orders submitted: **0**

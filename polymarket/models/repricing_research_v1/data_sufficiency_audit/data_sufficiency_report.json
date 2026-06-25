@@ -1,0 +1,228 @@
+{
+  "branch_status": "repricing_branch_remains_active_for_development_only",
+  "current_signal_sample": {
+    "expectancy_after_slippage": 0.014517857142857155,
+    "hours_observed": 13.125487829166666,
+    "max_drawdown": 0.4050000000000001,
+    "pnl_after_slippage": 0.40650000000000036,
+    "pnl_max": 0.295,
+    "pnl_median": 0.017500000000000033,
+    "pnl_min": -0.18500000000000003,
+    "pnl_q25": -0.05000000000000003,
+    "pnl_q75": 0.04000000000000005,
+    "pnl_std": 0.09483821332326546,
+    "pnl_variance": 0.008994286706349207,
+    "sharpe_like_mean_over_std": 0.15308024723506333,
+    "signals_by_asset": {
+      "BTC": 5,
+      "ETH": 8,
+      "SOL": 15
+    },
+    "signals_by_exit_reason": {
+      "repricing_target": 16,
+      "stop_loss": 8,
+      "timeout": 4
+    },
+    "signals_by_side": {
+      "NO": 23,
+      "YES": 5
+    },
+    "signals_per_hour": 2.1332540446824453,
+    "total_signals": 28,
+    "win_rate": 0.5714285714285714,
+    "wins": 16
+  },
+  "evidence_gates": {
+    "current_evidence_level": "insufficient_smoke_only",
+    "edge_claim_requirements": [
+      "strong development evidence passed",
+      "precommitted strategy and stress assumptions frozen",
+      "prospective shadow validation completed",
+      "separate untouched repricing holdout or forward period evaluated once",
+      "executable cost and depth assumptions remain positive",
+      "no real trading authorization implied"
+    ],
+    "maximum_drawdown_threshold": {
+      "moderate": "max_drawdown <= 1.5x total after-slippage PnL",
+      "strong": "max_drawdown <= 1.0x total after-slippage PnL",
+      "weak": "max_drawdown <= 2.5x total after-slippage PnL"
+    },
+    "minimum_expectancy_after_slippage": {
+      "moderate": 0.008,
+      "strong": 0.01,
+      "weak": 0.005
+    },
+    "minimum_hours_observed": {
+      "moderate": 120,
+      "strong": 400,
+      "weak": 40
+    },
+    "minimum_independent_sessions": {
+      "moderate": 6,
+      "strong": 20,
+      "weak": 3
+    },
+    "minimum_signal_count": {
+      "moderate": 300,
+      "strong": 1000,
+      "weak": 100
+    },
+    "minimum_signals_per_asset": {
+      "moderate": 75,
+      "strong": 250,
+      "weak": 25
+    },
+    "minimum_signals_per_side": {
+      "moderate": 100,
+      "strong": 350,
+      "weak": 35
+    },
+    "stability_requirements": {
+      "moderate": "positive expectancy in all assets and both sides; positive in at least 4 chronological folds",
+      "strong": "positive after stress in all assets, both sides, and at least 80% of chronological folds; no single asset/session >40% of PnL",
+      "weak": "positive expectancy overall and in at least 2 of 3 assets; both sides not materially negative"
+    },
+    "status": "active_development_gates"
+  },
+  "horizon_coverage": {
+    "polymarket_price_move_after_120s": {
+      "coverage_pct": 64.28571428571429,
+      "missing": 10,
+      "present": 18
+    },
+    "polymarket_price_move_after_180s": {
+      "coverage_pct": 0.0,
+      "missing": 28,
+      "present": 0
+    },
+    "polymarket_price_move_after_30s": {
+      "coverage_pct": 100.0,
+      "missing": 0,
+      "present": 28
+    },
+    "polymarket_price_move_after_60s": {
+      "coverage_pct": 67.85714285714286,
+      "missing": 9,
+      "present": 19
+    }
+  },
+  "inputs": {
+    "repricing_labels": "D:\\ForgeViewAI\\polymarket\\models\\repricing_research_v1\\short_replay\\repricing_labels.csv"
+  },
+  "missingness_by_feature_group": {
+    "expiry_and_lag": {
+      "cells": 56,
+      "columns": [
+        "time_to_expiry_seconds",
+        "lag_score"
+      ],
+      "coverage_pct": 100.0,
+      "missing": 0,
+      "missing_pct": 0.0
+    },
+    "external_returns": {
+      "cells": 112,
+      "columns": [
+        "external_return_5s",
+        "external_return_15s",
+        "external_return_30s",
+        "external_return_60s"
+      ],
+      "coverage_pct": 100.0,
+      "missing": 0,
+      "missing_pct": 0.0
+    },
+    "forward_repricing_horizons": {
+      "cells": 112,
+      "columns": [
+        "polymarket_price_move_after_30s",
+        "polymarket_price_move_after_60s",
+        "polymarket_price_move_after_120s",
+        "polymarket_price_move_after_180s"
+      ],
+      "coverage_pct": 58.035714285714285,
+      "missing": 47,
+      "missing_pct": 41.964285714285715
+    },
+    "microstructure": {
+      "cells": 168,
+      "columns": [
+        "quote_age_seconds",
+        "repricing_velocity",
+        "repricing_acceleration",
+        "spread_compression",
+        "book_imbalance",
+        "cross_asset_movement"
+      ],
+      "coverage_pct": 99.4047619047619,
+      "missing": 1,
+      "missing_pct": 0.5952380952380952
+    },
+    "momentum": {
+      "cells": 28,
+      "columns": [
+        "momentum"
+      ],
+      "coverage_pct": 100.0,
+      "missing": 0,
+      "missing_pct": 0.0
+    }
+  },
+  "recommended_next_action": "Collect a precommitted repricing-focused public dataset only after a separate capture plan is approved; before that, run no model training and no edge claims.",
+  "sample_size_targets": [
+    {
+      "evidence_level": "weak_development_evidence",
+      "maximum_drawdown_to_pnl_ratio": 2.5,
+      "minimum_expectancy_after_slippage": 0.005,
+      "minimum_hours": 40,
+      "minimum_independent_sessions": 3,
+      "minimum_signals": 100,
+      "minimum_signals_per_asset": 25,
+      "minimum_signals_per_side": 35,
+      "stability_requirement": "positive expectancy overall and in at least 2 of 3 assets; no side worse than -0.005 expectancy"
+    },
+    {
+      "evidence_level": "moderate_development_evidence",
+      "maximum_drawdown_to_pnl_ratio": 1.5,
+      "minimum_expectancy_after_slippage": 0.008,
+      "minimum_hours": 120,
+      "minimum_independent_sessions": 6,
+      "minimum_signals": 300,
+      "minimum_signals_per_asset": 75,
+      "minimum_signals_per_side": 100,
+      "stability_requirement": "positive expectancy in all assets and both sides; positive in at least 4 chronological folds"
+    },
+    {
+      "evidence_level": "strong_development_evidence",
+      "maximum_drawdown_to_pnl_ratio": 1.0,
+      "minimum_expectancy_after_slippage": 0.01,
+      "minimum_hours": 400,
+      "minimum_independent_sessions": 20,
+      "minimum_signals": 1000,
+      "minimum_signals_per_asset": 250,
+      "minimum_signals_per_side": 350,
+      "stability_requirement": "positive expectancy after stress in all assets, both sides, and at least 80% of chronological folds"
+    }
+  ],
+  "strict_rule_status": {
+    "campaign_launched": false,
+    "holdout_evaluation_run": false,
+    "holdout_outcomes_inspected": false,
+    "live_trading_implemented": false,
+    "production_models_trained": false,
+    "wallet_or_private_keys_connected": false
+  },
+  "sufficiency": {
+    "diagnostics": true,
+    "edge_claims": false,
+    "model_development": false,
+    "rationale": {
+      "diagnostics": "Enough for code-path and label-distribution diagnostics only.",
+      "edge_claims": "Forbidden; no holdout/prospective validation and sample is too small.",
+      "model_development": "28 signals is below the 100-signal weak evidence floor and has severe asset/side imbalance.",
+      "shadow_strategy_validation": "Requires prospective frozen shadow evidence across many independent sessions."
+    },
+    "shadow_strategy_validation": false
+  },
+  "task": "Run Repricing Research v1 Data Sufficiency Audit"
+}

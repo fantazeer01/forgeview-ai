@@ -1,0 +1,148 @@
+{
+  "deterministic_csv_repeat_export": true,
+  "duplicate_rows_removed": 0,
+  "endpoint_errors": {},
+  "fields_unavailable": [
+    "time_to_expiry_seconds",
+    "expiry_timestamp",
+    "exit linkage",
+    "holding time",
+    "queue position",
+    "fill priority",
+    "Binance/reference alignment",
+    "copyability delay"
+  ],
+  "generated_at_utc": "2026-06-24T20:54:32+00:00",
+  "output_dir": "polymarket\\data\\wallet_intelligence\\trade_history_smoke_v1",
+  "pages_by_wallet": {
+    "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86": 1,
+    "0x594edb9112f526fa6a80b8f858a6379c8a2c1c11": 1,
+    "0x63ce342161250d705dc0b16df89036c8e5f9ba9a": 1,
+    "0xd0d6053c3c37e727402d84c14069780d360993aa": 1,
+    "0xde17f7144fbd0eddb2679132c10ff5e74b120988": 1,
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a": 1
+  },
+  "pages_fetched": 6,
+  "parquet_status": "not_written_no_project_parquet_dependency",
+  "recommended_next_task": "Wallet Trade Lifecycle Reconstruction Design v1",
+  "row_summary": {
+    "asset_counts": {
+      "BTC": 359,
+      "ETH": 97,
+      "SOL": 11,
+      "other": 133
+    },
+    "fast_crypto_rows": 367,
+    "price_bucket_distribution": {
+      "0_10c": 201,
+      "10_20c": 19,
+      "20_40c": 97,
+      "40_60c": 37,
+      "60_80c": 106,
+      "80_100c": 140,
+      "unavailable": 0
+    },
+    "side_counts": {
+      "BUY": 543,
+      "SELL": 57,
+      "other": 0
+    },
+    "yes_no_counts": {
+      "NO_like": 351,
+      "YES_like": 249,
+      "other": 0
+    }
+  },
+  "rows_by_wallet": {
+    "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86": 100,
+    "0x594edb9112f526fa6a80b8f858a6379c8a2c1c11": 100,
+    "0x63ce342161250d705dc0b16df89036c8e5f9ba9a": 100,
+    "0xd0d6053c3c37e727402d84c14069780d360993aa": 100,
+    "0xde17f7144fbd0eddb2679132c10ff5e74b120988": 100,
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a": 100
+  },
+  "rows_fetched": 600,
+  "rows_normalized": 600,
+  "schema_fields": 35,
+  "smoke_caps": {
+    "max_pages_per_wallet_primary_activity": 1,
+    "max_rows_per_wallet_primary_activity": 100,
+    "max_total_activity_rows": 600,
+    "max_wallets": 6
+  },
+  "strict_rules_observed": [
+    "bounded public read-only activity TRADE smoke",
+    "seed wallets only",
+    "one activity page per wallet",
+    "no broad public ingestion",
+    "no live trading",
+    "no wallet/private-key connection",
+    "no order placement",
+    "no capture campaign",
+    "no holdout inspection",
+    "no holdout evaluation"
+  ],
+  "task": "Wallet Public Trade History Bounded Public Smoke v1",
+  "validation_gates": {
+    "bounded_scope_compliance": {
+      "passed": true,
+      "violations": []
+    },
+    "deterministic_export": {
+      "passed": true
+    },
+    "duplicate_rate": {
+      "duplicate_rate_before_dedupe": 0.0,
+      "duplicates_removed": 0,
+      "passed": true
+    },
+    "fast_crypto_classification_coverage": {
+      "coverage": 1.0,
+      "passed": true,
+      "recognizable_fast_crypto_rows": 367
+    },
+    "join_quality_reporting_placeholder": {
+      "notes": "this task does not perform joins; future joins must report coverage explicitly",
+      "passed": true
+    },
+    "market_classification_coverage": {
+      "coverage": 1.0,
+      "passed": true
+    },
+    "provenance_completeness": {
+      "coverage": 1.0,
+      "passed": true
+    },
+    "required_field_coverage": {
+      "coverage": 1.0,
+      "passed": true
+    },
+    "safety_boundary_compliance": {
+      "notes": "public read-only normalization path; no wallet/private-key/order/live-trading methods invoked",
+      "passed": true
+    },
+    "timestamp_parse_rate": {
+      "coverage": 1.0,
+      "passed": true
+    }
+  },
+  "validation_gates_passed": true,
+  "wallet_ids_attempted": [
+    "0x63ce342161250d705dc0b16df89036c8e5f9ba9a",
+    "0xde17f7144fbd0eddb2679132c10ff5e74b120988",
+    "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86",
+    "0xd0d6053c3c37e727402d84c14069780d360993aa",
+    "0x594edb9112f526fa6a80b8f858a6379c8a2c1c11",
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+  ],
+  "wallet_ids_succeeded": [
+    "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86",
+    "0x594edb9112f526fa6a80b8f858a6379c8a2c1c11",
+    "0x63ce342161250d705dc0b16df89036c8e5f9ba9a",
+    "0xd0d6053c3c37e727402d84c14069780d360993aa",
+    "0xde17f7144fbd0eddb2679132c10ff5e74b120988",
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+  ],
+  "wallets_attempted": 6,
+  "wallets_succeeded": 6
+}

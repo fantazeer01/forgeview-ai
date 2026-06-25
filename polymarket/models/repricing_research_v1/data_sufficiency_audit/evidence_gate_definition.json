@@ -1,0 +1,52 @@
+{
+  "current_evidence_level": "insufficient_smoke_only",
+  "edge_claim_requirements": [
+    "strong development evidence passed",
+    "precommitted strategy and stress assumptions frozen",
+    "prospective shadow validation completed",
+    "separate untouched repricing holdout or forward period evaluated once",
+    "executable cost and depth assumptions remain positive",
+    "no real trading authorization implied"
+  ],
+  "maximum_drawdown_threshold": {
+    "moderate": "max_drawdown <= 1.5x total after-slippage PnL",
+    "strong": "max_drawdown <= 1.0x total after-slippage PnL",
+    "weak": "max_drawdown <= 2.5x total after-slippage PnL"
+  },
+  "minimum_expectancy_after_slippage": {
+    "moderate": 0.008,
+    "strong": 0.01,
+    "weak": 0.005
+  },
+  "minimum_hours_observed": {
+    "moderate": 120,
+    "strong": 400,
+    "weak": 40
+  },
+  "minimum_independent_sessions": {
+    "moderate": 6,
+    "strong": 20,
+    "weak": 3
+  },
+  "minimum_signal_count": {
+    "moderate": 300,
+    "strong": 1000,
+    "weak": 100
+  },
+  "minimum_signals_per_asset": {
+    "moderate": 75,
+    "strong": 250,
+    "weak": 25
+  },
+  "minimum_signals_per_side": {
+    "moderate": 100,
+    "strong": 350,
+    "weak": 35
+  },
+  "stability_requirements": {
+    "moderate": "positive expectancy in all assets and both sides; positive in at least 4 chronological folds",
+    "strong": "positive after stress in all assets, both sides, and at least 80% of chronological folds; no single asset/session >40% of PnL",
+    "weak": "positive expectancy overall and in at least 2 of 3 assets; both sides not materially negative"
+  },
+  "status": "active_development_gates"
+}
