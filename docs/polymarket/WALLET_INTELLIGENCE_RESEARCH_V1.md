@@ -743,3 +743,72 @@ Next research task: Wallet Lifecycle Metrics Review v1. It should review the
 structural metrics outputs for interpretability, confirm the near-flat
 threshold is documented correctly, and decide whether any future bounded
 deeper-history task is justified without adding scoring or execution logic.
+
+## Wallet Metrics Readiness Review v1
+
+Wallet Metrics Readiness Review v1 is complete.
+
+Output:
+
+- `polymarket/models/wallet_intelligence_v1/wallet_metrics_readiness_review/wallet_metrics_readiness_review.md`
+
+Reviewed inputs:
+
+- `polymarket/models/wallet_intelligence_v1/lifecycle_metrics/wallet_metrics.csv`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_metrics/wallet_metrics_summary.json`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_metrics/wallet_metrics_report.md`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/lifecycle_positions.csv`
+
+Conclusion:
+
+- current lifecycle outputs are sufficient to design Wallet Score v1 as a
+  bounded structural readiness score;
+- current outputs are not sufficient for profitability scoring, copyability
+  scoring, execution-quality scoring, wallet ranking, alpha claims, or
+  strategy-quality claims;
+- no new metrics were created.
+
+Metric readiness:
+
+- ready for Wallet Score design: lifecycle coverage, still-open share,
+  partial-exit activity, bounded-history oversold count, BUY/SELL event
+  density, SELL-only lifecycle share, near-flat residual count,
+  fast-crypto lifecycle count/share, dominant asset/outcome, and
+  asset/outcome concentration;
+- useful later: raw visible size fields, including average/median visible
+  position size and visible bought/sold/remaining/oversold size totals, after
+  normalization and completeness policy;
+- needs additional data: full-exit interpretation, expiry/resolution behavior,
+  mark-to-market values, PnL, ROI, Sharpe, drawdown, holding time,
+  Binance/reference alignment, copyability delay, fill uncertainty, and
+  execution-quality evidence;
+- not useful as score values: `wallet_id` and `profile_url`, which remain
+  identifiers/provenance only.
+
+Recommended minimum metric set for Wallet Score Design v1:
+
+- `total_lifecycle_positions`;
+- `fast_crypto_lifecycle_share`;
+- `fast_crypto_lifecycle_count`;
+- `partial_exits`;
+- `percentage_still_open_positions`;
+- `percentage_sell_only_lifecycles`;
+- `oversold_bounded_history`;
+- `average_buy_count_per_lifecycle`;
+- `average_sell_count_per_lifecycle`;
+- `average_events_per_lifecycle`;
+- `near_flat_residual_count`;
+- `dominant_asset`;
+- `asset_concentration`;
+- `dominant_outcome`;
+- `outcome_concentration`.
+
+Next research task: Wallet Score Design v1. It should design, but not
+implement, a first structural score specification using only
+readiness-approved metrics unless a new metric is strictly justified. It must
+define score objective, allowed inputs, excluded inputs, missing-data policy,
+normalization policy, data-quality gates, output schema, and validation
+criteria. It must not implement scoring, rank wallets, compute PnL/ROI/Sharpe,
+estimate copyability, add mark-to-market joins, add expiry joins, launch
+ingestion, connect wallets/private keys, place orders, inspect sealed holdout
+outcomes, or run holdout evaluation.

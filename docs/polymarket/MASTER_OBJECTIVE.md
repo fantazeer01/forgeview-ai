@@ -391,28 +391,31 @@ insufficient. No model or alpha claim is currently justified.
 
 ## 14. Next milestone
 
-### Wallet Lifecycle Metrics Review v1
+### Wallet Score Design v1
 
-The next milestone is to review the bounded wallet-level lifecycle metrics
-before any deeper-history or interpretation expansion. This milestone must not
-infer copyability, strategy intent, queue position, fill priority,
-Binance-lag alignment, PnL, wallet ranking, wallet scoring, or executable edge
-from the bounded public smoke alone.
+The next milestone is to design the first structural Wallet Score
+specification using only readiness-approved Wallet Intelligence lifecycle
+metrics. This milestone must not implement scoring, rank wallets, infer
+copyability, strategy intent, queue position, fill priority,
+Binance-lag alignment, PnL, ROI, Sharpe, or executable edge from the bounded
+public smoke alone.
 
 Exit criteria:
 
 - read Wallet Intelligence ingestion, behavior metrics, deep-history
   feasibility, trade-history ingestion design, fixture-ingester, bounded
-  public smoke, lifecycle reconstruction fixture outputs, and lifecycle review
-  and lifecycle metrics outputs;
-- review wallet-level structural metrics for determinism and interpretability;
-- confirm the 0.1-share near-flat threshold is documented as review-only and
-  not a full-exit dust policy;
-- identify which lifecycle metrics are safe to use in descriptive research and
-  which require deeper public history;
+  public smoke, lifecycle reconstruction fixture outputs, lifecycle review,
+  lifecycle metrics outputs, and Wallet Metrics Readiness Review v1;
+- define score objective, allowed inputs, excluded inputs, missing-data policy,
+  normalization policy, data-quality gates, output schema, and validation
+  criteria;
+- use only current structural lifecycle metrics approved by the readiness
+  review unless a new metric is explicitly justified as strictly required for
+  design;
 - recommend exactly one successor task;
-- do not launch new public ingestion or add scoring, PnL, reference alignment,
-  expiry joins, copyability delay, queue modelling, or execution logic;
+- do not launch new public ingestion or add score implementation, PnL,
+  reference alignment, expiry joins, mark-to-market, copyability delay, queue
+  modelling, ranking, or execution logic;
 - keep outputs separate from canonical outcome-prediction datasets,
   repricing datasets, validation data, and sealed holdout data.
 

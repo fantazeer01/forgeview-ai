@@ -780,3 +780,23 @@ Reason: Structural lifecycle summaries are useful for research triage, but
 bounded one-page public history does not support value, ranking, copyability,
 or execution conclusions. Keeping the first metrics layer structural preserves
 the descriptive Wallet Intelligence boundary.
+
+## D-051: Wallet score design must start from readiness-approved structural metrics
+
+Status: Accepted
+Decision: Wallet Metrics Readiness Review v1 authorizes a design-only Wallet
+Score v1 task using current structural lifecycle metrics as inputs. Ready
+inputs include lifecycle coverage, fast-crypto lifecycle count/share,
+partial-exit activity, still-open share, SELL-only and bounded-history risk,
+BUY/SELL event density, near-flat residual count, asset concentration, and
+outcome concentration. Raw visible size fields may remain descriptive or be
+used only after an explicit normalization policy. Full-exit interpretation,
+PnL, ROI, Sharpe, mark-to-market, expiry/resolution behavior, copyability,
+wallet ranking, and execution quality remain unauthorized until additional
+data and separate design gates exist.
+
+Reason: The current Wallet Intelligence outputs are deterministic and
+structurally informative, but they come from bounded public smoke history.
+Starting Wallet Score with a design-only pass prevents accidental ranking or
+copyability claims while preserving a path to specify data-quality gates and
+allowed inputs.

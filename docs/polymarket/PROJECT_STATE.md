@@ -169,7 +169,20 @@ CSV repeat export, and forbidden metric exclusion. It did not compute PnL,
 ROI, Sharpe, copyability, wallet scoring/ranking, mark-to-market values,
 expiry joins, reference alignment, queue modelling, execution, wallet/private
 key use, order placement, holdout inspection, or holdout evaluation.
-The active successor task is Wallet Lifecycle Metrics Review v1.
+Wallet Metrics Readiness Review v1 is complete under
+`polymarket/models/wallet_intelligence_v1/wallet_metrics_readiness_review/`.
+It reviewed all currently available lifecycle metric fields and found that the
+outputs are sufficient for a first structural Wallet Score design, but not for
+profitability, copyability, execution-quality, ranking, or alpha claims. Ready
+inputs include lifecycle coverage, fast-crypto lifecycle share, partial-exit
+activity, still-open share, SELL-only/bounded-history risk, event density,
+near-flat residual count, asset concentration, and outcome concentration.
+Raw visible size fields are useful later after normalization, and full-exit
+interpretation needs deeper history, expiry, or redemption context. No new
+metrics, scoring implementation, ingestion, PnL, mark-to-market, expiry join,
+copyability model, wallet/private-key use, order placement, holdout
+inspection, or holdout evaluation was added.
+The active successor task is Wallet Score Design v1.
 
 ## Completed milestones
 
@@ -469,11 +482,13 @@ Wallet Intelligence Research v1 now has bounded public-data ingestion,
 behavior metrics, a deep-history feasibility review, a public trade-history
 ingestion design, a fixture-only trade-history ingester, a bounded public
 trade-history smoke for the six seed profiles, and a small deterministic
-lifecycle reconstruction fixture prototype plus a completed lifecycle review.
-The active successor task is Wallet Lifecycle Metrics Review v1: review the
-bounded structural wallet-level lifecycle metrics before any deeper history
-ingestion, expiry joins, PnL, reference alignment, copyability delay, queue
-modelling, scoring, or execution logic.
+lifecycle reconstruction fixture prototype, a completed lifecycle review,
+bounded structural lifecycle metrics, and a Wallet Metrics Readiness Review.
+The active successor task is Wallet Score Design v1: design the first
+structural score specification from readiness-approved metrics only before
+any score implementation, deeper history ingestion, expiry joins, PnL,
+reference alignment, copyability delay, queue modelling, ranking, or execution
+logic.
 
 Current measured baseline:
 
@@ -555,7 +570,7 @@ optimization, and trading remain unauthorized.
 
 ## Next actions
 
-The single active task is Wallet Lifecycle Metrics Review v1.
+The single active task is Wallet Score Design v1.
 Its scope and acceptance criteria are defined in `NEXT_TASK.md`.
 
 ## Latest metrics
