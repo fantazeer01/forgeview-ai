@@ -391,24 +391,30 @@ insufficient. No model or alpha claim is currently justified.
 
 ## 14. Next milestone
 
-### Wallet Watchlist Review v1
+### Wallet Watchlist Broader Evidence Batch v1
 
-The next milestone is to review the first Wallet Watchlist v1 artifact created
-from existing Wallet Score outputs only. The watchlist is a monitoring and
-deeper-analysis research handoff, not a trading signal, copy-trading
-recommendation, profitability ranking, alpha claim, or live-trading input.
+The next milestone is to apply the reviewed Wallet Watchlist v1 artifact
+pattern to a bounded broader evidence batch. The watchlist remains a
+monitoring and deeper-analysis research handoff, not a trading signal,
+copy-trading recommendation, profitability ranking, alpha claim, or
+live-trading input.
 
 Exit criteria:
 
-- inspect `wallet_watchlist.py`, the CLI wiring, tests, generated watchlist
-  CSV, summary JSON, report, and source `wallet_scores.csv`;
-- verify the watchlist uses existing Wallet Score outputs only and does not
-  change score formula or thresholds;
-- verify every included wallet has score, priority bucket, reason codes,
-  structural strengths, structural risks, and a research-only next action;
-- verify minimum-visibility inclusion/exclusion behavior;
-- verify deterministic ordering, reason-code coverage, no forbidden metrics,
-  no forbidden claims, and repeatable export;
+- read the Wallet Watchlist Review v1 report and the approved broader evidence
+  collection design;
+- use the reviewed watchlist schema and report pattern;
+- preserve the existing Wallet Score v1 formula, thresholds, and forbidden
+  input boundaries;
+- enforce the approved broader batch limits of 30 wallets, two primary
+  activity pages per wallet, 200 primary rows per wallet, 6,000 primary rows
+  overall, one `/trades` cross-check page per wallet, 100 cross-check rows per
+  wallet, 3,000 cross-check rows overall, and two retries per page;
+- produce deterministic broader-batch watchlist artifacts under a separate
+  output path;
+- verify deterministic ordering, reason-code coverage, strengths/risks/actions
+  presence, no forbidden metrics, no forbidden claims, repeatable export, and
+  bounded-scope compliance;
 - recommend exactly one successor task;
 - do not add new score inputs, change thresholds, compute PnL, ROI, Sharpe,
   alpha, mark-to-market, copyability, execution quality, trading ranking, or

@@ -1124,6 +1124,48 @@ Interpretation:
 - it does not compute or claim PnL, ROI, Sharpe, alpha, copyability,
   mark-to-market value, execution quality, or trading suitability.
 
-Next research task: Wallet Watchlist Review v1. It should review the artifact,
-validation gates, language, inclusion/exclusion behavior, and source-score
-dependency before any broader evidence collection or ranking work resumes.
+## Wallet Watchlist Review v1
+
+Wallet Watchlist Review v1 is complete.
+
+Output:
+
+- `polymarket/models/wallet_intelligence_v1/wallet_watchlist_review/wallet_watchlist_review_report.md`
+
+Review conclusion:
+
+- the watchlist is human-useful after a small report wording fix;
+- the watchlist uses existing Wallet Score outputs only;
+- the Wallet Score formula and thresholds were not changed;
+- all six score-fixture wallets remain included;
+- zero wallets are excluded by the minimum visibility gate;
+- reason codes, structural strengths, structural risks, and next research
+  actions are present for every included wallet;
+- deterministic ordering, repeatable export, and forbidden-claim checks remain
+  validated;
+- no trading recommendation, profitability, alpha, copyability, execution
+  quality, PnL, ROI, Sharpe, or mark-to-market claim is present.
+
+Small bounded review fixes:
+
+- the Markdown watchlist report now shows strengths, risks, and next research
+  action under each wallet row;
+- medium/high action wording now says "include in research watchlist" rather
+  than "monitor in research watchlist" to avoid implying live monitoring.
+
+Updated artifact status:
+
+- wallets input: 6;
+- wallets included: 6;
+- wallets excluded: 0;
+- priority bucket distribution: 1 `medium_priority`, 3 `low_priority`, and
+  2 `insufficient_visible_structure`;
+- updated watchlist CSV SHA-256:
+  `f8add3e19afb27ed800e2eb87cb8b045df1ac40356f462b5a2e322e5ef394e8c`;
+- Wallet Intelligence tests: 29 passing;
+- full automated suite: 123 passing.
+
+Next research task: Wallet Watchlist Broader Evidence Batch v1. It should
+apply the reviewed watchlist pattern to a bounded broader evidence batch while
+preserving the existing Wallet Score formula, thresholds, deterministic
+exports, and all non-trading safety boundaries.

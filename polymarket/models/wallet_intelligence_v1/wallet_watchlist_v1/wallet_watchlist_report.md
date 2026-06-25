@@ -1,6 +1,6 @@
 # Wallet Watchlist v1
 
-Generated: 2026-06-25T21:23:58+00:00
+Generated: 2026-06-25T21:28:50+00:00
 
 ## Scope
 
@@ -23,11 +23,29 @@ This is a monitoring/research artifact. It is not a trading signal, not a copy-t
 ## Watchlist Rows
 
 - `0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a`: score=73, bucket=medium_priority, reasons=bucket_medium_priority;minimum_visibility_passed;fast_crypto_relevant;visible_partial_exit_activity;concentration_risk;near_flat_residual_ambiguity
+  - strengths: strong visible lifecycle coverage; high fast-crypto lifecycle share; visible partial-exit structure; visible repeated event density; interpretable market specialization
+  - risks: bounded public history only; high concentration limits generality; near-flat residual ambiguity
+  - next research action: include in research watchlist and prepare deeper public-history review
 - `0x63ce342161250d705dc0b16df89036c8e5f9ba9a`: score=42.14285714285714285714285714, bucket=low_priority, reasons=bucket_low_priority;minimum_visibility_passed;fast_crypto_relevant;visible_partial_exit_activity;small_visible_sample;near_flat_residual_ambiguity
+  - strengths: minimum visible lifecycle coverage; high fast-crypto lifecycle share; visible partial-exit structure; visible repeated event density; interpretable market specialization
+  - risks: bounded public history only; small visible lifecycle sample; near-flat residual ambiguity
+  - next research action: keep in research watchlist and revisit after deeper public-history evidence
 - `0xd0d6053c3c37e727402d84c14069780d360993aa`: score=32, bucket=low_priority, reasons=bucket_low_priority;minimum_visibility_passed;fast_crypto_relevant;visible_partial_exit_activity;bounded_history_artifact_risk;small_visible_sample
+  - strengths: minimum visible lifecycle coverage; high fast-crypto lifecycle share; visible partial-exit structure; visible repeated event density; interpretable market specialization
+  - risks: bounded public history only; small visible lifecycle sample; bounded-history artifact risk
+  - next research action: keep in research watchlist and revisit after deeper public-history evidence
 - `0x1f0ebc543b2d411f66947041625c0aa1ce61cf86`: score=26, bucket=low_priority, reasons=bucket_low_priority;minimum_visibility_passed;fast_crypto_relevant;all_or_mostly_open_visibility;small_visible_sample
+  - strengths: minimum visible lifecycle coverage; high fast-crypto lifecycle share; visible repeated event density; interpretable market specialization
+  - risks: bounded public history only; all or mostly open visible lifecycle state; small visible lifecycle sample
+  - next research action: keep in research watchlist and revisit after deeper public-history evidence
 - `0x594edb9112f526fa6a80b8f858a6379c8a2c1c11`: score=13, bucket=insufficient_visible_structure, reasons=bucket_insufficient_visible_structure;minimum_visibility_passed;no_fast_crypto_visibility;all_or_mostly_open_visibility;concentration_risk
+  - strengths: minimum visible lifecycle coverage; visible repeated event density
+  - risks: bounded public history only; all or mostly open visible lifecycle state; no visible fast-crypto lifecycle share; high concentration limits generality; insufficient visible structure bucket
+  - next research action: retain as low-visibility control unless additional bounded public history is collected
 - `0xde17f7144fbd0eddb2679132c10ff5e74b120988`: score=6, bucket=insufficient_visible_structure, reasons=bucket_insufficient_visible_structure;minimum_visibility_passed;no_fast_crypto_visibility;all_or_mostly_open_visibility;concentration_risk;small_visible_sample
+  - strengths: minimum visible lifecycle coverage; visible repeated event density
+  - risks: bounded public history only; all or mostly open visible lifecycle state; no visible fast-crypto lifecycle share; small visible lifecycle sample; high concentration limits generality; insufficient visible structure bucket
+  - next research action: retain as low-visibility control unless additional bounded public history is collected
 
 ## Validation
 

@@ -314,9 +314,9 @@ def _structural_risks(row: dict[str, str]) -> list[str]:
 def _next_research_action(row: dict[str, str]) -> str:
     bucket = row.get("score_band") or ""
     if bucket == "high_priority":
-        return "monitor in research watchlist and review bounded public history first"
+        return "include in research watchlist and review bounded public history first"
     if bucket == "medium_priority":
-        return "monitor in research watchlist and prepare deeper public-history review"
+        return "include in research watchlist and prepare deeper public-history review"
     if bucket == "low_priority":
         return "keep in research watchlist and revisit after deeper public-history evidence"
     return "retain as low-visibility control unless additional bounded public history is collected"
@@ -350,6 +350,9 @@ def _build_watchlist_report(summary: dict[str, Any], rows: list[dict[str, str]])
         lines.append(
             f"- `{row['wallet_id']}`: score={row['score']}, bucket={row['priority_bucket']}, reasons={row['reason_codes']}"
         )
+        lines.append(f"  - strengths: {row['structural_strengths']}")
+        lines.append(f"  - risks: {row['structural_risks']}")
+        lines.append(f"  - next research action: {row['recommended_next_research_action']}")
     lines.extend(["", "## Validation", ""])
     for name, value in summary["validation"].items():
         lines.append(f"- `{name}`: {str(value).lower()}")

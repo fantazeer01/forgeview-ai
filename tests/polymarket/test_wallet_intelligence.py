@@ -1107,6 +1107,10 @@ class WalletWatchlistTests(unittest.TestCase):
             self.assertIn("not a trading signal", report)
             self.assertIn("not a copy-trading recommendation", report)
             self.assertIn("based only on bounded public history", report)
+            self.assertIn("strengths:", report)
+            self.assertIn("risks:", report)
+            self.assertIn("next research action:", report)
+            self.assertIn("include in research watchlist", report)
 
     def test_wallet_watchlist_module_has_no_execution_or_forbidden_metric_methods(self):
         import polymarket.wallet_intelligence.wallet_watchlist as wallet_watchlist

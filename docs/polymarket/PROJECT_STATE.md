@@ -231,8 +231,9 @@ score behavior, and review criteria. It preserves the strict boundary against
 profitability, alpha, copyability, trading recommendations, wallet/private-key
 use, order placement, capture campaigns, production model training, sealed
 holdout inspection, and holdout evaluation.
-Wallet Watchlist v1 is now complete from the existing six-wallet score
-fixture. The active successor task is Wallet Watchlist Review v1.
+Wallet Watchlist v1 and Wallet Watchlist Review v1 are complete from the
+existing six-wallet score fixture. The active successor task is Wallet
+Watchlist Broader Evidence Batch v1.
 
 ## Completed milestones
 
@@ -535,12 +536,12 @@ trade-history smoke for the six seed profiles, a deterministic lifecycle
 reconstruction fixture prototype, a completed lifecycle review, bounded
 structural lifecycle metrics, a Wallet Metrics Readiness Review, Wallet Score
 Design v1, Wallet Score Fixture Implementation v1, Wallet Score Fixture
-Review v1, Wallet Score Broader Evidence Collection Design v1, and Wallet
-Watchlist v1.
-The active successor task is Wallet Watchlist Review v1: review the research
-watchlist artifact and interpretation-safety boundaries before broader
-evidence collection, ranking, expiry joins, PnL, reference alignment,
-copyability delay, queue modelling, trading ranking, or execution logic.
+Review v1, Wallet Score Broader Evidence Collection Design v1, Wallet
+Watchlist v1, and Wallet Watchlist Review v1.
+The active successor task is Wallet Watchlist Broader Evidence Batch v1:
+apply the reviewed watchlist artifact pattern to bounded broader evidence
+while preserving the existing score formula, thresholds, public read-only
+limits, deterministic exports, and all non-trading safety boundaries.
 
 Current measured baseline:
 
@@ -1358,10 +1359,64 @@ Interpretation:
   mark-to-market, execution-quality, order-placement, wallet/private-key,
   sealed-holdout, or holdout-evaluation logic was added.
 
-Next research task: Wallet Watchlist Review v1. It should review the
-watchlist artifact, validation gates, language, inclusion/exclusion behavior,
-and source-score dependency before any broader evidence collection or ranking
-work resumes.
+## Wallet Watchlist Review v1
+
+Wallet Watchlist Review v1 is complete.
+
+Output:
+
+- `polymarket/models/wallet_intelligence_v1/wallet_watchlist_review/wallet_watchlist_review_report.md`
+
+Files inspected:
+
+- `polymarket/wallet_intelligence/wallet_watchlist.py`
+- `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist.csv`
+- `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist_summary.json`
+- `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist_report.md`
+- `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_scores.csv`
+- `tests/polymarket/test_wallet_intelligence.py`
+
+Review findings:
+
+- no score-formula, threshold, inclusion-gate, or safety-boundary bug was
+  found;
+- the watchlist uses existing Wallet Score outputs only;
+- all six score-fixture wallets remain included and zero wallets are excluded
+  by the minimum visibility gate;
+- every included wallet has clear reason codes, structural strengths,
+  structural risks, and a research-only next action;
+- deterministic ordering and repeatable export remain validated;
+- no trading recommendation, profitability, alpha, copyability, execution
+  quality, PnL, ROI, Sharpe, or mark-to-market claim is present.
+
+Small bounded review fixes:
+
+- `wallet_watchlist_report.md` now includes strengths, risks, and next
+  research action for each watchlist row;
+- high/medium action wording changed from "monitor in research watchlist" to
+  "include in research watchlist" to avoid implying live monitoring.
+
+Updated watchlist artifact:
+
+- wallets input: 6;
+- wallets included: 6;
+- wallets excluded: 0;
+- priority bucket distribution: 1 `medium_priority`, 3 `low_priority`, and
+  2 `insufficient_visible_structure`;
+- source score SHA-256:
+  `52ceafde32dc6e6c4d07829e824a83c9b767bc7da4d1b3461188e6cda2e3b2ad`;
+- updated watchlist CSV SHA-256:
+  `f8add3e19afb27ed800e2eb87cb8b045df1ac40356f462b5a2e322e5ef394e8c`.
+
+Tests:
+
+- Wallet Intelligence tests: 29 passing;
+- full automated suite: 123 passing.
+
+Next research task: Wallet Watchlist Broader Evidence Batch v1. It should
+apply the reviewed watchlist pattern to a bounded broader evidence batch while
+preserving the existing Wallet Score formula, thresholds, deterministic
+exports, and all non-trading safety boundaries.
 
 ## State update protocol
 

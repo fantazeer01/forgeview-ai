@@ -8,63 +8,59 @@ This file contains exactly one active task. A future Codex session must read
 `REPRICING_RESEARCH_V1.md`, and
 `WALLET_INTELLIGENCE_RESEARCH_V1.md` before starting it.
 
-## Active task: Wallet Watchlist Review v1
+## Active task: Wallet Watchlist Broader Evidence Batch v1
 
 ### Objective
 
-Review the first Wallet Watchlist v1 artifact for correctness, interpretation
-safety, and readiness as a monitoring/research handoff before any broader
-evidence collection or ranking work resumes.
+Apply the reviewed Wallet Watchlist v1 artifact pattern to a bounded broader
+evidence batch while preserving the existing Wallet Score formula, score
+thresholds, public read-only limits, deterministic exports, and all
+non-trading safety boundaries.
 
 ### Required scope
 
-1. Inspect:
-   - `polymarket/wallet_intelligence/wallet_watchlist.py`;
-   - `polymarket/wallet_intelligence/cli.py`;
-   - `tests/polymarket/test_wallet_intelligence.py`;
-   - `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist.csv`;
-   - `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist_summary.json`;
-   - `polymarket/models/wallet_intelligence_v1/wallet_watchlist_v1/wallet_watchlist_report.md`;
-   - `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_scores.csv`.
-2. Verify that Wallet Watchlist v1 uses existing Wallet Score outputs only.
-3. Verify that the score formula and score thresholds were not changed.
-4. Confirm that every included wallet has:
-   - `wallet_id`;
+1. Read:
+   - `polymarket/models/wallet_intelligence_v1/wallet_watchlist_review/wallet_watchlist_review_report.md`;
+   - `polymarket/models/wallet_intelligence_v1/wallet_score_broader_evidence_design/broader_evidence_plan.md`;
+   - `docs/polymarket/WALLET_INTELLIGENCE_RESEARCH_V1.md`.
+2. Use the reviewed Wallet Watchlist v1 schema and report pattern:
+   - wallet ID;
    - score;
    - priority bucket;
    - reason codes;
    - structural strengths;
    - structural risks;
    - recommended next research action.
-5. Confirm that wallets failing minimum visibility requirements are excluded
-   and that the current included/excluded counts are correct.
-6. Verify report language clearly says the artifact is:
-   - a monitoring/research artifact;
-   - not a trading signal;
-   - not a copy-trading recommendation;
-   - based only on bounded public history.
-7. Verify validation gates:
+3. Use existing Wallet Score v1 formula and thresholds only.
+4. Do not add scoring inputs or change score penalties.
+5. Keep the batch bounded by the approved broader-evidence limits:
+   - maximum wallets: 30;
+   - maximum primary activity pages per wallet: 2;
+   - maximum primary activity rows per wallet: 200;
+   - maximum primary activity rows overall: 6,000;
+   - maximum `/trades` cross-check pages per wallet: 1;
+   - maximum cross-check rows per wallet: 100;
+   - maximum cross-check rows overall: 3,000;
+   - maximum retries per page: 2.
+6. Produce deterministic broader-batch watchlist artifacts under a separate
+   output path.
+7. Validate:
    - deterministic ordering;
    - reason codes present;
+   - strengths/risks/actions present;
    - no forbidden claims;
    - no forbidden metrics;
-   - repeatable export.
-8. Do not add score inputs, change thresholds, rank wallets for trading,
-   compute PnL/ROI/Sharpe, estimate copyability, add mark-to-market values,
-   inspect sealed holdout outcomes, or run holdout evaluation.
-9. If bounded correctness or interpretation-safety bugs are found, fix only
-   those issues.
-10. Produce a concise review note or report with:
-   - confirmed invariants;
-   - watchlist behavior observations;
-   - inclusion/exclusion assessment;
-   - known limitations;
-   - recommended successor task.
+   - repeatable export;
+   - bounded-scope compliance.
+8. Summarize distribution and validation without interpreting profitability,
+   alpha, copyability, execution quality, or trading suitability.
 
 ### Acceptance criteria
 
 - Wallet Intelligence tests and the full test suite are run.
-- The watchlist remains a research monitoring artifact only.
-- No profitability, alpha, copyability, execution-quality, or trading
-  recommendation claims are introduced.
+- No live monitoring, live trading, automatic trade copying, wallet/private-key
+  use, order placement, capture campaign, production model training, sealed
+  holdout inspection, or holdout evaluation is implemented.
+- No PnL, ROI, Sharpe, alpha, copyability, execution-quality,
+  mark-to-market, or trading-recommendation claim is introduced.
 - Exactly one successor task remains in this file.
