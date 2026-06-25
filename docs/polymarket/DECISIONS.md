@@ -874,3 +874,35 @@ public seed wallets would overfit the fixture and weaken the interpretation
 safety boundary. A conservative zero-high distribution is preferable until a
 broader sample can test whether the score bands generalize without adding
 profitability, copyability, execution, or live-trading claims.
+
+## D-055: Wallet Score broader evidence uses a bounded 30-wallet design
+
+Status: Accepted
+Decision: Wallet Score Broader Evidence Collection Design v1 defines the first
+broader Wallet Score evidence batch as a bounded public read-only 30-wallet
+sample. The target composition is 6 existing seed wallets, up to 12 fast
+BTC/ETH/SOL Up/Down candidates, up to 6 mixed or non-fast-crypto controls, and
+up to 6 lower-activity insufficient-data controls. The first implementation
+must not add score inputs or change Wallet Score v1 thresholds or penalties.
+
+The batch limits are 30 wallets, 2 primary activity pages per wallet, 200
+primary rows per wallet, 6,000 primary rows overall, 1 `/trades` cross-check
+page per wallet, 100 cross-check rows per wallet, 3,000 cross-check rows
+overall, 2 retries per page, and polite request pacing. Healthy score behavior
+is defined as a non-degenerate distribution across at least three bands,
+stable deterministic outputs, 10% to 45% insufficient-data rate, no more than
+20% `high_priority`, visible separation between fast-crypto candidates and
+controls, and no high score driven primarily by one fragile bounded-history
+artifact.
+
+Suspicious behavior requiring review includes more than 70% of wallets in one
+bucket, more than 20% `high_priority`, more than 60%
+`insufficient_visible_structure`, unstable ordering, guessed unavailable
+fields, or excessive sensitivity to bounded-history artifacts.
+
+Reason: The six-wallet fixture is too small to tune thresholds or judge score
+distribution quality. A capped 30-wallet public sample is large enough to
+detect obvious score pathologies while staying reproducible, manually
+reviewable, and clearly separated from profitability, alpha, copyability,
+trading recommendations, execution, canonical outcome validation, and sealed
+holdout workflows.

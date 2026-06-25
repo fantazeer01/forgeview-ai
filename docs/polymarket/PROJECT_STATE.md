@@ -215,7 +215,24 @@ copyability, alpha claims, mark-to-market values, resolved win/loss outcomes,
 sealed holdout data, private wallet data, order-placement data, authenticated
 trading data, public ingestion, wallet/private-key use, order placement, or
 holdout evaluation was added.
-The active successor task is Wallet Score Fixture Review v1.
+Wallet Score Broader Evidence Collection Design v1 is complete under
+`polymarket/models/wallet_intelligence_v1/wallet_score_broader_evidence_design/`.
+It defines a bounded public read-only plan for applying the existing Wallet
+Score v1 to a 30-wallet sample without adding score inputs or changing
+thresholds. The target sample is five times the current fixture size and is
+split across existing seed wallets, fast BTC/ETH/SOL Up/Down candidates,
+mixed or non-fast controls, and lower-activity insufficient-data controls.
+The planned limits are 30 wallets, two primary activity pages per wallet, 200
+primary rows per wallet, 6,000 primary rows overall, one `/trades` cross-check
+page per wallet, 100 cross-check rows per wallet, 3,000 cross-check rows
+overall, two retries per page, and polite request pacing. The plan defines
+expected artifact paths, validation gates, healthy score behavior, suspicious
+score behavior, and review criteria. It preserves the strict boundary against
+profitability, alpha, copyability, trading recommendations, wallet/private-key
+use, order placement, capture campaigns, production model training, sealed
+holdout inspection, and holdout evaluation.
+The active successor task is Wallet Score Broader Evidence Batch
+Implementation v1.
 
 ## Completed milestones
 
@@ -1227,6 +1244,64 @@ Strict exclusions remain active:
 Next research task: Wallet Score Broader Evidence Collection Design v1. It
 should design a bounded, public, read-only evidence expansion plan before any
 broader ingestion, score expansion, or threshold adjustment.
+
+## Wallet Score Broader Evidence Collection Design v1
+
+Wallet Score Broader Evidence Collection Design v1 is complete.
+
+Output:
+
+- `polymarket/models/wallet_intelligence_v1/wallet_score_broader_evidence_design/broader_evidence_plan.md`
+
+Design summary:
+
+- target sample: 30 public wallets;
+- composition: 6 existing seed wallets, up to 12 fast BTC/ETH/SOL Up/Down
+  candidates, up to 6 mixed or non-fast-crypto controls, and up to 6
+  lower-activity insufficient-data controls;
+- purpose: evaluate Wallet Score v1 score behavior beyond the six-wallet
+  fixture, not wallet profitability, alpha, copyability, or trading quality;
+- no implementation, ingestion, scoring change, threshold change, or metric
+  generation change was added in this design task.
+
+Safety limits:
+
+- maximum wallets: 30;
+- maximum primary activity pages per wallet: 2;
+- maximum primary activity rows per wallet: 200;
+- maximum primary activity rows overall: 6,000;
+- maximum `/trades` cross-check pages per wallet: 1;
+- maximum cross-check rows per wallet: 100;
+- maximum cross-check rows overall: 3,000;
+- maximum retries per page: 2;
+- minimum one-second delay between wallet requests;
+- no market-wide scans, recursive profile crawling, automatic follow-wallet
+  expansion, authenticated requests, wallet/private-key use, order placement,
+  capture campaigns, production model training, sealed holdout inspection, or
+  holdout evaluation.
+
+Healthy score behavior criteria:
+
+- non-degenerate distribution across at least three score bands;
+- deterministic outputs and stable ordering;
+- insufficient-data rate between 10% and 45%;
+- `high_priority` share no greater than 20%;
+- visible separation between fast-crypto candidates and controls;
+- no high score driven primarily by one fragile bounded-history artifact.
+
+Suspicious behavior criteria:
+
+- more than 70% of wallets in one bucket;
+- more than 20% `high_priority`;
+- more than 60% `insufficient_visible_structure`;
+- high-priority scores driven by tiny samples, all-open positions, or
+  bounded-history oversold artifacts;
+- unstable ordering or guessed unavailable fields.
+
+Next research task: Wallet Score Broader Evidence Batch Implementation v1. It
+should implement the bounded public read-only broader evidence batch, produce
+the expected artifacts, apply the existing Wallet Score v1 without new inputs
+or threshold changes, and run validation gates and tests.
 
 ## State update protocol
 

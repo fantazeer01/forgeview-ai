@@ -391,30 +391,32 @@ insufficient. No model or alpha claim is currently justified.
 
 ## 14. Next milestone
 
-### Wallet Score Broader Evidence Collection Design v1
+### Wallet Score Broader Evidence Batch Implementation v1
 
-The next milestone is to design a bounded, public, read-only evidence expansion
-plan for applying the existing Wallet Score v1 to a broader wallet sample. The
-score remains a structural research-priority tool only. This milestone must not
-treat the score as profitability, alpha, ROI, PnL, Sharpe, execution quality,
-copyability, or live-trading evidence.
+The next milestone is to implement the bounded, public, read-only broader
+evidence batch defined in Wallet Score Broader Evidence Collection Design v1.
+The score remains a structural research-priority tool only. This milestone
+must not treat the score as profitability, alpha, ROI, PnL, Sharpe, execution
+quality, copyability, or live-trading evidence.
 
 Exit criteria:
 
 - read Wallet Score Design v1, Wallet Score Fixture Implementation v1 outputs,
-  and Wallet Score Fixture Review v1;
-- define wallet selection criteria for a broader public sample without
-  creating wallet rankings or recommendations;
-- define per-wallet/page/row limits, retry limits, public endpoint posture,
-  provenance, and reproducibility requirements;
-- define validation gates for applying the existing score to the broader
-  sample;
-- define review criteria for whether current thresholds remain acceptable
-  after broader evidence collection;
-- produce the broader evidence collection design artifact;
+  Wallet Score Fixture Review v1, and Wallet Score Broader Evidence Collection
+  Design v1;
+- add the broader wallet manifest template;
+- enforce a maximum 30-wallet sample, two primary activity pages per wallet,
+  200 primary activity rows per wallet, 6,000 primary activity rows overall,
+  one cross-check page per wallet, 100 cross-check rows per wallet, and 3,000
+  cross-check rows overall;
+- preserve public read-only endpoint use, source provenance, deterministic
+  raw/normalized exports, and validation gates;
+- apply the existing Wallet Score v1 without new inputs or threshold changes;
+- summarize score behavior against the design's healthy and suspicious
+  behavior criteria;
 - recommend exactly one successor task;
-- do not launch new public ingestion or add new score inputs, change
-  thresholds, compute PnL, add reference alignment, expiry joins,
+- do not add new score inputs, change thresholds, compute PnL, add reference
+  alignment, expiry joins,
   mark-to-market, copyability delay, queue modelling, trading ranking, or
   execution logic;
 - keep outputs separate from canonical outcome-prediction datasets,

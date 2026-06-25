@@ -1002,3 +1002,64 @@ applying the existing score to more wallets. It must not launch ingestion, add
 score inputs, change thresholds, compute PnL/ROI/Sharpe, infer copyability,
 join mark-to-market values, connect wallets/private keys, place orders,
 inspect sealed holdout outcomes, or run holdout evaluation.
+
+## Wallet Score Broader Evidence Collection Design v1
+
+Wallet Score Broader Evidence Collection Design v1 is complete.
+
+Output:
+
+- `polymarket/models/wallet_intelligence_v1/wallet_score_broader_evidence_design/broader_evidence_plan.md`
+
+Purpose:
+
+- evaluate Wallet Score v1 behavior beyond the current six-wallet fixture;
+- preserve Wallet Score v1 as a structural research-priority score only;
+- avoid profitability, alpha, copyability, trading-quality, or execution
+  claims.
+
+Target sample:
+
+- 30 public wallets total;
+- 6 existing seed wallets;
+- up to 12 additional fast BTC/ETH/SOL Up/Down candidates;
+- up to 6 mixed or non-fast-crypto controls;
+- up to 6 lower-activity insufficient-data controls.
+
+Safety limits:
+
+- maximum primary activity pages per wallet: 2;
+- maximum primary activity rows per wallet: 200;
+- maximum primary activity rows overall: 6,000;
+- maximum `/trades` cross-check pages per wallet: 1;
+- maximum cross-check rows per wallet: 100;
+- maximum cross-check rows overall: 3,000;
+- maximum retries per page: 2;
+- no market-wide scans, recursive profile crawling, automatic follow-wallet
+  expansion, authenticated requests, wallet/private-key use, order placement,
+  capture campaigns, production model training, sealed holdout inspection, or
+  holdout evaluation.
+
+Planned healthy behavior checks:
+
+- score distribution spans at least three bands;
+- deterministic outputs and stable ordering;
+- insufficient-data rate is between 10% and 45%;
+- `high_priority` share is no greater than 20%;
+- fast-crypto candidates separate structurally from controls;
+- no high score is driven primarily by a single bounded-history artifact.
+
+Planned suspicious behavior checks:
+
+- more than 70% of wallets in one score band;
+- more than 20% `high_priority`;
+- more than 60% `insufficient_visible_structure`;
+- unstable ordering;
+- guessed unavailable fields;
+- excessive sensitivity to bounded-history oversold or all-open artifacts.
+
+Next research task: Wallet Score Broader Evidence Batch Implementation v1. It
+should implement the bounded public read-only batch from this design, produce
+the expected artifacts, apply the existing Wallet Score v1 without new inputs
+or threshold changes, run validation gates, and run the Wallet Intelligence
+and full test suites.

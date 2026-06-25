@@ -8,31 +8,31 @@ This file contains exactly one active task. A future Codex session must read
 `REPRICING_RESEARCH_V1.md`, and
 `WALLET_INTELLIGENCE_RESEARCH_V1.md` before starting it.
 
-## Active task: Wallet Score Broader Evidence Collection Design v1
+## Active task: Wallet Score Broader Evidence Batch Implementation v1
 
 ### Objective
 
-Design a bounded, public, read-only evidence expansion plan for applying the
-existing Wallet Score v1 to a broader wallet sample before any broader
-ingestion or score threshold change.
+Implement the bounded public read-only Wallet Score broader evidence batch
+defined in Wallet Score Broader Evidence Collection Design v1.
 
 ### Required scope
 
 1. Read:
    - `polymarket/models/wallet_intelligence_v1/wallet_score_design/wallet_score_design_v1.md`;
    - `polymarket/models/wallet_intelligence_v1/wallet_score_fixture_review/wallet_score_fixture_review_report.md`;
-   - `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_scores.csv`;
-   - `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_scores_summary.json`;
-   - `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_score_validation.json`;
+   - `polymarket/models/wallet_intelligence_v1/wallet_score_broader_evidence_design/broader_evidence_plan.md`;
    - `docs/polymarket/WALLET_INTELLIGENCE_RESEARCH_V1.md`.
-2. Define the purpose of broader evidence collection for Wallet Score v1.
-3. Define wallet selection criteria for a larger public sample without turning
-   the score into a ranking, recommendation, or trading-quality measure.
-4. Define public read-only data limits, including maximum wallets, pages per
-   wallet, rows per wallet, retry limits, and rate-limit posture.
-5. Define required provenance and reproducibility requirements.
-6. Define validation gates for applying the existing score to the broader
-   sample:
+2. Add a broader wallet manifest template at
+   `polymarket/wallet_intelligence/watched_wallets_broader_v1.example.csv`.
+3. Implement or wire a bounded public read-only batch path that can process
+   the broader wallet manifest while enforcing the design limits.
+4. Preserve the existing Wallet Score v1 allowed inputs and thresholds.
+5. Produce expected artifacts under the paths specified in the design:
+   - `polymarket/data/wallet_intelligence/trade_history_broader_v1/`;
+   - `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_broader_v1/`;
+   - `polymarket/models/wallet_intelligence_v1/lifecycle_metrics_broader_v1/`;
+   - `polymarket/models/wallet_intelligence_v1/wallet_score_broader_evidence_v1/`.
+6. Run validation gates:
    - score bounds;
    - deterministic ordering;
    - no forbidden inputs;
@@ -40,18 +40,25 @@ ingestion or score threshold change.
    - wallet-source provenance;
    - bounded-scope compliance;
    - interpretation-safety language.
-7. Define review criteria for deciding whether the current thresholds remain
-   acceptable after broader evidence collection.
-8. Produce a design artifact under
-   `polymarket/models/wallet_intelligence_v1/wallet_score_broader_evidence_design/`.
-9. Recommend exactly one successor task.
+7. Summarize score distribution against the healthy and suspicious behavior
+   criteria from the design.
+8. Recommend exactly one successor task.
 
 ### Acceptance criteria
 
-- No public ingestion is launched.
+- Public ingestion, if used, is bounded to the design limits:
+  - maximum wallets: 30;
+  - maximum primary activity pages per wallet: 2;
+  - maximum primary activity rows per wallet: 200;
+  - maximum primary activity rows overall: 6,000;
+  - maximum cross-check pages per wallet: 1;
+  - maximum cross-check rows per wallet: 100;
+  - maximum cross-check rows overall: 3,000;
+  - maximum retries per page: 2.
 - No new score inputs are added.
 - No threshold or penalty change is made.
-- No metric generation change is made.
+- No metric generation change is made except path parameterization needed to
+  write the broader evidence artifacts.
 - No PnL, ROI, realized profit, Sharpe, execution quality, copyability, alpha
   claims, mark-to-market values, final resolved win/loss outcomes, sealed
   holdout labels, private wallet data, order-placement data, or authenticated
