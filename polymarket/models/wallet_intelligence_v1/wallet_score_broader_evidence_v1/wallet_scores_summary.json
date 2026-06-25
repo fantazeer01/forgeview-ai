@@ -1,0 +1,97 @@
+{
+  "forbidden_input_audit": {
+    "allowed_score_inputs": [
+      "total_lifecycle_positions",
+      "fast_crypto_lifecycle_count",
+      "fast_crypto_lifecycle_share",
+      "partial_exits",
+      "percentage_still_open_positions",
+      "percentage_sell_only_lifecycles",
+      "oversold_bounded_history",
+      "average_buy_count_per_lifecycle",
+      "average_sell_count_per_lifecycle",
+      "average_events_per_lifecycle",
+      "near_flat_residual_count",
+      "dominant_asset",
+      "asset_concentration",
+      "dominant_outcome",
+      "outcome_concentration"
+    ],
+    "forbidden_inputs_used": [],
+    "forbidden_score_inputs": [
+      "pnl",
+      "roi",
+      "realized_profit",
+      "realized_pnl",
+      "sharpe",
+      "execution_quality",
+      "copyability",
+      "alpha",
+      "mark_to_market",
+      "wallet_ranking",
+      "final_resolved_win_loss",
+      "sealed_holdout",
+      "private_wallet",
+      "order_placement",
+      "authenticated_trading"
+    ],
+    "report_only_fields": [
+      "wallet_id",
+      "profile_url"
+    ]
+  },
+  "generated_at_utc": "2026-06-25T21:41:10+00:00",
+  "not_computed": [
+    "profitability",
+    "alpha",
+    "ROI",
+    "PnL",
+    "Sharpe",
+    "realized profit",
+    "execution quality",
+    "copyability",
+    "mark-to-market values",
+    "final resolved win/loss outcomes",
+    "sealed holdout labels or outputs",
+    "private wallet data",
+    "order-placement data",
+    "authenticated trading data"
+  ],
+  "output_dir": "polymarket\\models\\wallet_intelligence_v1\\wallet_score_broader_evidence_v1",
+  "recommended_next_task": "Wallet Score Fixture Review v1",
+  "reproducibility_hashes": {
+    "csv_repeat_export_hash_match": true,
+    "wallet_scores_csv_sha256": "3bdab5149a0c22eb213fc62d3213016b2a63d7edbc15b0c55c18006c1e98d690"
+  },
+  "score_band_counts": {
+    "high_priority": 3,
+    "insufficient_visible_structure": 2,
+    "low_priority": 12,
+    "medium_priority": 13
+  },
+  "score_bounds": {
+    "maximum": "100",
+    "minimum": "0"
+  },
+  "score_version": "wallet_score_v1_structural_fixture",
+  "source_metrics_csv": "polymarket\\models\\wallet_intelligence_v1\\lifecycle_metrics_broader_v1\\wallet_metrics.csv",
+  "source_metrics_sha256": "931a9f316fab5ab15f07d8b8a61adae5b7d19dd5b8e74fe247573af8f99fb964",
+  "task": "Wallet Score Fixture Implementation v1",
+  "validation": {
+    "all_validation_passed": true,
+    "allowed_input_set_exact_match": true,
+    "component_bounds": true,
+    "deterministic_ordering": true,
+    "deterministic_score_calculation": true,
+    "forbidden_inputs_used": [],
+    "missing_metric_handling": true,
+    "missing_source_fields": [],
+    "no_forbidden_metrics_used": true,
+    "output_schema_completeness": true,
+    "penalty_bounds": true,
+    "repeatable_export": true,
+    "score_bounds": true,
+    "source_provenance_completeness": true
+  },
+  "wallets_scored": 30
+}

@@ -41,6 +41,10 @@ from polymarket.wallet_intelligence.wallet_watchlist import (
     compute_wallet_watchlist,
     run_wallet_watchlist,
 )
+from polymarket.wallet_intelligence.copyability_sprint import (
+    build_copyability_research,
+    validate_copyability_research,
+)
 
 
 class FakeClient:
@@ -1129,6 +1133,119 @@ class WalletWatchlistTests(unittest.TestCase):
         )
         for fragment in forbidden_fragments:
             self.assertFalse(any(fragment in name.lower() for name in names))
+
+
+class WalletCopyabilitySprintTests(unittest.TestCase):
+    def test_copyability_research_classifies_wallets_with_reason_codes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            scores_path = root / "wallet_scores.csv"
+            watchlist_path = root / "wallet_watchlist.csv"
+            metrics_path = root / "wallet_metrics.csv"
+            score_rows = [
+                {
+                    "wallet_id": "0xaaa",
+                    "profile_url": "https://polymarket.com/0xaaa",
+                    "wallet_score": "74",
+                    "score_band": "medium_priority",
+                    "total_lifecycle_positions": "30",
+                    "fast_crypto_lifecycle_share": "1",
+                    "partial_exits": "10",
+                    "percentage_still_open_positions": "0.5",
+                    "oversold_bounded_history": "0",
+                    "coverage_component": "20",
+                    "fast_crypto_component": "25",
+                    "lifecycle_activity_component": "15",
+                    "event_density_component": "9",
+                    "specialization_component": "7",
+                    "bounded_history_penalty": "0",
+                    "still_open_penalty": "0",
+                    "small_sample_penalty": "0",
+                    "concentration_penalty": "2",
+                    "near_flat_ambiguity_penalty": "0",
+                },
+                {
+                    "wallet_id": "0xbbb",
+                    "profile_url": "https://polymarket.com/0xbbb",
+                    "wallet_score": "40",
+                    "score_band": "low_priority",
+                    "total_lifecycle_positions": "8",
+                    "fast_crypto_lifecycle_share": "0",
+                    "partial_exits": "0",
+                    "percentage_still_open_positions": "1",
+                    "oversold_bounded_history": "1",
+                    "coverage_component": "8",
+                    "fast_crypto_component": "0",
+                    "lifecycle_activity_component": "2",
+                    "event_density_component": "0",
+                    "specialization_component": "1",
+                    "bounded_history_penalty": "5",
+                    "still_open_penalty": "15",
+                    "small_sample_penalty": "5",
+                    "concentration_penalty": "0",
+                    "near_flat_ambiguity_penalty": "0",
+                },
+                {
+                    "wallet_id": "0xccc",
+                    "profile_url": "https://polymarket.com/0xccc",
+                    "wallet_score": "10",
+                    "score_band": "insufficient_visible_structure",
+                    "total_lifecycle_positions": "2",
+                    "fast_crypto_lifecycle_share": "0",
+                    "partial_exits": "0",
+                    "percentage_still_open_positions": "1",
+                    "oversold_bounded_history": "0",
+                    "coverage_component": "2",
+                    "fast_crypto_component": "0",
+                    "lifecycle_activity_component": "0",
+                    "event_density_component": "0",
+                    "specialization_component": "0",
+                    "bounded_history_penalty": "0",
+                    "still_open_penalty": "15",
+                    "small_sample_penalty": "10",
+                    "concentration_penalty": "0",
+                    "near_flat_ambiguity_penalty": "0",
+                },
+            ]
+            watchlist_rows = [
+                {
+                    "wallet_id": "0xaaa",
+                    "reason_codes": "enough_visible_structure; fast_crypto_relevant",
+                    "structural_strengths": "visible fast-crypto lifecycle coverage",
+                    "structural_risks": "bounded public history only",
+                },
+                {
+                    "wallet_id": "0xbbb",
+                    "reason_codes": "minimum_visible_structure",
+                    "structural_strengths": "some lifecycle coverage",
+                    "structural_risks": "mostly open visible state",
+                },
+            ]
+            for path, rows in ((scores_path, score_rows), (metrics_path, score_rows)):
+                with path.open("w", encoding="utf-8", newline="") as handle:
+                    writer = csv.DictWriter(handle, fieldnames=list(rows[0].keys()))
+                    writer.writeheader()
+                    writer.writerows(rows)
+            with watchlist_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=list(watchlist_rows[0].keys()))
+                writer.writeheader()
+                writer.writerows(watchlist_rows)
+
+            rows, summary = build_copyability_research(
+                scores_path=scores_path,
+                watchlist_path=watchlist_path,
+                metrics_path=metrics_path,
+                ingestion_summary={"primary_rows_normalized": 40, "cross_check_rows_fetched": 10, "rows_by_wallet": {"0xaaa": 30}},
+                discovery_summary={"wallets_selected": 3},
+                generated_at="2026-06-26T00:00:00+00:00",
+            )
+
+            self.assertTrue(summary["validation"]["all_validation_passed"])
+            self.assertEqual([row["recommendation"] for row in rows], ["monitor_candidate", "needs_more_history", "exclude_for_now"])
+            self.assertEqual(summary["analysis"]["A_monitor_candidate_count"], 1)
+            self.assertEqual(summary["analysis"]["B_exclude_for_now_count"], 1)
+            self.assertTrue(validate_copyability_research(rows)["no_forbidden_claims"])
+            self.assertIn("realized outcome joins", rows[0]["missing_evidence"])
 
 
 if __name__ == "__main__":

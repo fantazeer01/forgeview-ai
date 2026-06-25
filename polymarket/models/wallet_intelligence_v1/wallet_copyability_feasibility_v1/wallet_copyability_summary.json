@@ -1,0 +1,332 @@
+{
+  "analysis": {
+    "A_monitor_candidate_count": 11,
+    "B_exclude_for_now_count": 0,
+    "C_score_separation": "non_degenerate: scores span 4 priority buckets ({'high_priority': 3, 'insufficient_visible_structure': 2, 'low_priority': 12, 'medium_priority': 13})",
+    "D_component_ranges": {
+      "bounded_history_penalty": {
+        "maximum": "9.615384615384615384615384616",
+        "minimum": "0",
+        "range": 9.615384615384615
+      },
+      "concentration_penalty": {
+        "maximum": "10",
+        "minimum": "0",
+        "range": 10.0
+      },
+      "coverage_component": {
+        "maximum": "25",
+        "minimum": "8",
+        "range": 17.0
+      },
+      "event_density_component": {
+        "maximum": "15",
+        "minimum": "6",
+        "range": 9.0
+      },
+      "fast_crypto_component": {
+        "maximum": "25",
+        "minimum": "0",
+        "range": 25.0
+      },
+      "lifecycle_activity_component": {
+        "maximum": "15",
+        "minimum": "0",
+        "range": 15.0
+      },
+      "near_flat_ambiguity_penalty": {
+        "maximum": "5",
+        "minimum": "0",
+        "range": 5.0
+      },
+      "small_sample_penalty": {
+        "maximum": "10",
+        "minimum": "0",
+        "range": 10.0
+      },
+      "specialization_component": {
+        "maximum": "10",
+        "minimum": "3",
+        "range": 7.0
+      },
+      "still_open_penalty": {
+        "maximum": "15",
+        "minimum": "0",
+        "range": 15.0
+      }
+    },
+    "D_most_influential_metrics": [
+      "fast_crypto_component",
+      "coverage_component",
+      "lifecycle_activity_component",
+      "still_open_penalty",
+      "concentration_penalty"
+    ],
+    "E_almost_useless_metrics": [],
+    "F_interesting_despite_weak_raw_evidence": [
+      "0x54afeb88e709fbfb7e75a1ab8275ed4f0b333130",
+      "0x0e0d60ea727cb7a569ea391263cc10952d1e6e5b",
+      "0x1a561cdee16a7a263231aacc9ee50447ea6cf475",
+      "0x11e7740bc4f6f16f4c56bcdc8abda23f0863d3c2",
+      "0x47d7dfd8b93e656d44ed173c848203e05982113a"
+    ],
+    "G_largest_remaining_blockers": [
+      "realized outcome joins",
+      "expiry joins",
+      "complete unbounded wallet history",
+      "entry-to-exit holding time",
+      "observation delay model",
+      "slippage model",
+      "liquidity and fill uncertainty",
+      "queue position",
+      "maker/taker completeness",
+      "external BTC/ETH/SOL reference alignment"
+    ],
+    "observed": "bounded public trade history separates wallets structurally by visible lifecycle coverage, fast-crypto share, partial exits, still-open share, concentration, and bounded-history artifacts",
+    "unknown": "realized outcomes, expiry behavior, observation delay, fill/slippage feasibility, liquidity, and full history remain unknown"
+  },
+  "classification_counts": {
+    "insufficient_signal": 2,
+    "monitor_candidate": 11,
+    "needs_more_history": 17
+  },
+  "confidence_counts": {
+    "low_structural": 1,
+    "low_to_medium_structural": 25,
+    "medium_structural": 4
+  },
+  "evidence_size": {
+    "cross_check_rows_fetched": 3000,
+    "lifecycle_rows_input_to_score": 30,
+    "primary_rows_normalized": 5765,
+    "wallets_selected": 30
+  },
+  "forbidden_claims": [
+    "no performance claim",
+    "no market-advantage claim",
+    "no copy outcome claim",
+    "no return claim",
+    "no trading instruction",
+    "no financial advice"
+  ],
+  "generated_at_utc": "2026-06-25T21:41:10+00:00",
+  "master_question": "Can publicly observable Polymarket wallet activity contain enough information to identify wallets worth monitoring for future copy-trading research?",
+  "observed_vs_unknown": {
+    "observed": [
+      "public activity/trade rows",
+      "normalized trade fields",
+      "visible lifecycle structure",
+      "visible BUY/SELL side counts",
+      "fast-crypto exposure",
+      "structural Wallet Score components",
+      "watchlist inclusion reason codes"
+    ],
+    "unknown": [
+      "realized outcome joins",
+      "expiry joins",
+      "complete unbounded wallet history",
+      "entry-to-exit holding time",
+      "observation delay model",
+      "slippage model",
+      "liquidity and fill uncertainty",
+      "queue position",
+      "maker/taker completeness",
+      "external BTC/ETH/SOL reference alignment"
+    ]
+  },
+  "pipeline_outputs": {
+    "copyability_research": "polymarket\\models\\wallet_intelligence_v1\\wallet_copyability_feasibility_v1",
+    "lifecycle_metrics": "polymarket\\models\\wallet_intelligence_v1\\lifecycle_metrics_broader_v1",
+    "lifecycle_reconstruction": "polymarket\\models\\wallet_intelligence_v1\\lifecycle_reconstruction_broader_v1",
+    "trade_history": "polymarket\\data\\wallet_intelligence\\trade_history_broader_v1",
+    "wallet_score": "polymarket\\models\\wallet_intelligence_v1\\wallet_score_broader_evidence_v1",
+    "wallet_watchlist": "polymarket\\models\\wallet_intelligence_v1\\wallet_watchlist_broader_v1"
+  },
+  "pipeline_summaries": {
+    "ingestion": {
+      "cross_check_rows_fetched": 3000,
+      "primary_rows_normalized": 5765,
+      "row_summary": {
+        "asset_counts": {
+          "BTC": 4073,
+          "ETH": 778,
+          "SOL": 282,
+          "other": 632
+        },
+        "fast_crypto_rows": 4897,
+        "price_bucket_distribution": {
+          "0_10c": 573,
+          "10_20c": 251,
+          "20_40c": 938,
+          "40_60c": 1954,
+          "60_80c": 1233,
+          "80_100c": 816,
+          "unavailable": 0
+        },
+        "side_counts": {
+          "BUY": 5063,
+          "SELL": 702,
+          "other": 0
+        },
+        "yes_no_counts": {
+          "NO_like": 2959,
+          "YES_like": 2796,
+          "other": 10
+        }
+      },
+      "validation_gates_passed": true,
+      "wallets_attempted": 30,
+      "wallets_with_primary_rows": 30
+    },
+    "lifecycle": {
+      "input_rows": 5765,
+      "lifecycle_positions": 2135,
+      "status_counts": {
+        "full_exit": 80,
+        "oversold_bounded_history": 24,
+        "partial_exit": 296,
+        "still_open": 1735
+      },
+      "validation": {
+        "bounded_history_negative_position_groups": [
+          "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e|0x1e8f3ae0c32a9f5f7e18589b400b08bf7ebd2767dc37488ba2329045d25309d2|90292146658163448341505089992123582851468206944827877624767064050683707633816|Up",
+          "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e|0x488a9e9cf1146ac255d04495388a4f50479c4080b2cbac15444fac80bbdbc5e3|2346870892233538772417578509653740473779208508737744841466639451531707345786|Up",
+          "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e|0x6311801404db718df312f89e6c1b7e07dbae4e0a193b0030e8380939a26ba9d3|38060658432015378319276396787464037461448174638247630283589327303653984341739|Up",
+          "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e|0x7a6955812de50296f3eec62dbb1fe0f0806f43871f919ab40a100c0dca06568e|68705537617713681316925927219672229996300423683484692018920950271484414343297|Up",
+          "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e|0x863c2b2ec5188b27cb53fc2326ee95281b3f6e50de2f661b986162c0513d7c73|19487494843673038326873140657989052894333090814179424213823089667572820043184|Up",
+          "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199|0x37f9c726b07d94315a4df32534bba9761a750a1ebd0152e18350adb8f22fb186|79645665548765699440243951252600941272658687876446796033885082039230836758390|Up",
+          "0x20d2309cd92b797ae7ca175ed828ed8a27fbe29d|0x3e94fcefe71cfb5271501349bd05258dfb2b23f6aca852e97e19704bf698d252|37436205701090822746280522075515243662864305886259853867202600929151464956659|Down",
+          "0x20d2309cd92b797ae7ca175ed828ed8a27fbe29d|0x3e94fcefe71cfb5271501349bd05258dfb2b23f6aca852e97e19704bf698d252|8874596496201673007513952304392839654038338018779263651462711747336979613394|Up",
+          "0x20d2309cd92b797ae7ca175ed828ed8a27fbe29d|0x9a46ed9478fe16bdf92abcd3a16d99e8d2edcaf2e93bd751d500be6febc90cc5|82645888231724186491348634406026917903147590872057627271308524945004424785746|Up",
+          "0x20d2309cd92b797ae7ca175ed828ed8a27fbe29d|0xaf0daa55b910380f17368cf2ab31f2b8bf15bf1a78b6bdded84e043655e99bb1|76677764733984333749678304311310374710528542862302092732661744135495790378048|Down",
+          "0x20d2309cd92b797ae7ca175ed828ed8a27fbe29d|0xaf0daa55b910380f17368cf2ab31f2b8bf15bf1a78b6bdded84e043655e99bb1|76722811246258304596633531147622178631450597741868425340746659529531578853758|Up",
+          "0x20d2309cd92b797ae7ca175ed828ed8a27fbe29d|0xf488a2026748e912b6f6b8c8a798b48caeb3ef2a4b2e74100af62f18ed39d06d|32311549005514087761173337723539055593273096619095651922482446996797456023160|Up",
+          "0x20d2309cd92b797ae7ca175ed828ed8a27fbe29d|0xf488a2026748e912b6f6b8c8a798b48caeb3ef2a4b2e74100af62f18ed39d06d|46015588628922109477393203879398334926160237288188546818316329313643921910260|Down",
+          "0x20d2309cd92b797ae7ca175ed828ed8a27fbe29d|0xfbbb1b74ffb67c2695286282f30979488a41d71f8506582d1a06a3fabe6d34ef|59758139657099909080839641592658969622527209038681905958932940221666172463589|Up",
+          "0x29a55c2bf8efd1029c001477b34be47d3ca37752|0x5c95e4d59e8f3c6e59cc57828770f86aeb30234e1b1dc855074cc58591737a4b|10526583185370820965240030833693778943021777532815077985045537761153085057496|Yes",
+          "0x29a55c2bf8efd1029c001477b34be47d3ca37752|0x8aceabb48cb838361ad540b26bc47b93ccd8752a4f60943d73ec8094a9bd0bf1|1022706508844267052701729595205651307332237906904907604011151460674605459957|No",
+          "0x29a55c2bf8efd1029c001477b34be47d3ca37752|0xd61508a9dbe1e56477761c192651011c0d0c8f39adc66f43fb85cede3810d6e9|26187080245357918347419204548192210484526963692017308529619294362806057008798|Down",
+          "0x29a55c2bf8efd1029c001477b34be47d3ca37752|0xf0df61a5e8cbd3a31daeaadb2446857df79a8e098f80240868df6777fed6f61c|82365401312789388194042099991681611186527671327105864012361461140479181326743|No",
+          "0x3c6afcbc144b6bb110dbf8538bde2781c24a8a58|0x545bfc117996466a0b4e3e90fe19e3ebc240e74365e13edcb0cde6ca30d79bc7|67222941710428421332891599335384388804379570177766769023845879958344900291834|Down",
+          "0x4bfb3f47ad1a0b494ecaa3c1a9bfba22a4c39f3a|0x2338d99c602e77ae20ad8f6fb923e54ca223727ce825400b970af2a876945028|105591396529409500536874542101641730864996401907634446874507625860800932690304|Down",
+          "0x4d0730b1c8b4da2444ab7a4a389a607584132b94|0x11f6a3fe8f2d58d36fcfc522230f381f331e8eff6fc90837291960e86584bf88|10861978651798938998794648162587056711494266728607939978474961070865550384541|Down",
+          "0xd0d6053c3c37e727402d84c14069780d360993aa|0x8fe2ec3961b5151878793f5ee9f3386462ab2cffa341f521ea4af3c943f4f1e1|106321015771996003843951031116798387360396092381038356576150508114564342386617|Up",
+          "0xd0d6053c3c37e727402d84c14069780d360993aa|0x8fe2ec3961b5151878793f5ee9f3386462ab2cffa341f521ea4af3c943f4f1e1|63871622315168997250449926595191905329567685141975937804940439076331565817724|Down",
+          "0xd0d6053c3c37e727402d84c14069780d360993aa|0xe097a1795f1e604a6978f204fdedc2a74bed913dfc1a0e821bb3e1b9dc400b0c|76829429153942219807978602083390198391897986706153416743972383502549288436433|Up"
+        ],
+        "deterministic_ordering": true,
+        "no_unexpected_negative_position_size": true,
+        "position_size_conservation": true,
+        "position_size_conservation_failures": [],
+        "repeatable_output": true,
+        "unexpected_negative_position_groups": []
+      }
+    },
+    "metrics": {
+      "aggregate": {
+        "buy_trade_count": 5063,
+        "near_flat_residual_count": 125,
+        "sell_only_lifecycles": 14,
+        "sell_trade_count": 702,
+        "status_counts": {
+          "full_exit": 80,
+          "oversold_bounded_history": 24,
+          "partial_exit": 296,
+          "still_open": 1735
+        },
+        "total_lifecycle_positions": 2135,
+        "wallets_analyzed": 30
+      },
+      "validation": {
+        "all_validation_passed": true,
+        "buy_trade_count_matches": true,
+        "decimal_metric_fields_parse": true,
+        "deterministic_csv_repeat_export": true,
+        "deterministic_wallet_ordering": true,
+        "forbidden_metric_fields": [],
+        "forbidden_metric_fields_absent": true,
+        "input_position_count_matches": true,
+        "sell_trade_count_matches": true,
+        "share_fields_in_range": true,
+        "status_count_conservation": true,
+        "wallet_coverage": true
+      },
+      "wallets_analyzed": 30
+    },
+    "score": {
+      "score_band_counts": {
+        "high_priority": 3,
+        "insufficient_visible_structure": 2,
+        "low_priority": 12,
+        "medium_priority": 13
+      },
+      "validation": {
+        "all_validation_passed": true,
+        "allowed_input_set_exact_match": true,
+        "component_bounds": true,
+        "deterministic_ordering": true,
+        "deterministic_score_calculation": true,
+        "forbidden_inputs_used": [],
+        "missing_metric_handling": true,
+        "missing_source_fields": [],
+        "no_forbidden_metrics_used": true,
+        "output_schema_completeness": true,
+        "penalty_bounds": true,
+        "repeatable_export": true,
+        "score_bounds": true,
+        "source_provenance_completeness": true
+      },
+      "wallets_scored": 30
+    },
+    "watchlist": {
+      "priority_bucket_counts": {
+        "high_priority": 3,
+        "insufficient_visible_structure": 2,
+        "low_priority": 12,
+        "medium_priority": 13
+      },
+      "validation": {
+        "all_validation_passed": true,
+        "deterministic_ordering": true,
+        "forbidden_claim_phrases": [],
+        "forbidden_metric_fields": [],
+        "no_forbidden_claims": true,
+        "no_forbidden_metric_fields": true,
+        "output_schema_completeness": true,
+        "reason_codes_present": true,
+        "repeatable_export": true,
+        "research_actions_present": true
+      },
+      "wallets_included": 30
+    }
+  },
+  "priority_bucket_counts": {
+    "high_priority": 3,
+    "insufficient_visible_structure": 2,
+    "low_priority": 12,
+    "medium_priority": 13
+  },
+  "recommended_next_sprint": "Wallet Expiry And Outcome Join Feasibility Sprint v1",
+  "reproducibility_hashes": {
+    "csv_repeat_export_hash_match": true,
+    "wallet_copyability_report_md_sha256": "d7789631aefd072c7a41bb48d6e595d57e6b01c584937be67872f05526fdd4f9",
+    "wallet_copyability_research_csv_sha256": "8b266c4c7455beaed969ebccc4f43c86aae5a9c8096b4580c5eddc46114043cf",
+    "wallet_copyability_summary_json_sha256": "4485c7dd6ae800b8136c25a0baac2a357eea8696191612252235adee22209fe9"
+  },
+  "research_conclusion": "Based on the current bounded public evidence, Wallet Intelligence is moving toward a useful copy-trading research system only as a structural triage layer: 11 of 30 wallets became monitor_candidate and the score separated wallets into multiple structural groups, but missing realized outcomes, expiry joins, complete history, timing-delay, slippage, and liquidity evidence remain too significant for any conclusion about copy outcomes, market advantage, returns, or trading use.",
+  "sprint_version": "wallet_copyability_feasibility_sprint_v1",
+  "task": "Wallet Copyability Feasibility Sprint v1",
+  "validation": {
+    "all_validation_passed": true,
+    "deterministic_ordering": true,
+    "every_wallet_classified": true,
+    "forbidden_claim_phrases": [],
+    "forbidden_metric_fields": [],
+    "no_forbidden_claims": true,
+    "no_forbidden_metric_fields": true,
+    "output_schema_completeness": true,
+    "reason_codes_present": true,
+    "repeatable_export": true
+  },
+  "wallet_count": 30
+}

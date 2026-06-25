@@ -931,3 +931,31 @@ small research handoff for monitoring and deeper analysis, but it remains
 bounded public history with structural scores only. A watchlist improves
 review ergonomics without changing score behavior or implying profitability,
 copyability, execution quality, or trading suitability.
+
+## D-057: Wallet copyability research is structural triage until expiry/outcome joins exist
+
+Status: Accepted
+Decision: Wallet Copyability Feasibility Sprint v1 accepts the existing
+Wallet Intelligence pipeline as a bounded public-data research path for
+structural triage only. The broader 30-wallet sprint may classify wallets as
+`monitor_candidate`, `needs_more_history`, `insufficient_signal`, or
+`exclude_for_now` for future research prioritization, using existing
+normalized public trade history, lifecycle reconstruction, lifecycle metrics,
+Wallet Score, and Wallet Watchlist outputs without changing score formulas or
+thresholds.
+
+The sprint does not authorize trade copying, live monitoring, live trading,
+wallet/private-key use, order placement, production model training, sealed
+holdout inspection, holdout evaluation, broad scraping, capture campaigns, or
+any profitability, market-advantage, return, execution-quality, or trading
+claim. The next research sprint must target expiry and public outcome joins,
+because the copyability feasibility evidence found those fields, plus complete
+history, timing delay, slippage, liquidity, queue, and reference alignment, to
+be the largest remaining blockers.
+
+Reason: The 30-wallet sprint produced a non-degenerate structural separation
+across four Wallet Score buckets and 11 monitor candidates, but the result is
+only a research prioritization layer. Without expiry and resolved-outcome
+context, wallet lifecycles cannot yet distinguish final-resolution behavior,
+pre-expiry exits, realized side correctness, holding time, or whether observed
+behavior could be studied as a copy-trading hypothesis.

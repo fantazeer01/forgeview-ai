@@ -1165,7 +1165,86 @@ Updated artifact status:
 - Wallet Intelligence tests: 29 passing;
 - full automated suite: 123 passing.
 
-Next research task: Wallet Watchlist Broader Evidence Batch v1. It should
-apply the reviewed watchlist pattern to a bounded broader evidence batch while
-preserving the existing Wallet Score formula, thresholds, deterministic
-exports, and all non-trading safety boundaries.
+## Wallet Copyability Feasibility Sprint v1
+
+Wallet Copyability Feasibility Sprint v1 is complete.
+
+Purpose:
+
+- answer whether publicly observable Polymarket wallet activity currently
+  contains enough information to identify wallets worth monitoring for future
+  copy-trading research;
+- reuse the existing pipeline without changing Wallet Score formulas or
+  thresholds;
+- preserve the strict boundary against trading recommendations, trade copying,
+  wallet/private-key use, order placement, live monitoring, sealed holdout
+  inspection, holdout evaluation, and production model training.
+
+Outputs:
+
+- `polymarket/models/wallet_intelligence_v1/wallet_copyability_feasibility_v1/wallet_copyability_research.csv`
+- `polymarket/models/wallet_intelligence_v1/wallet_copyability_feasibility_v1/wallet_copyability_summary.json`
+- `polymarket/models/wallet_intelligence_v1/wallet_copyability_feasibility_v1/wallet_copyability_report.md`
+
+Evidence batch:
+
+- wallets selected and classified: 30;
+- normalized primary public activity rows: 5,765;
+- `/trades` cross-check rows fetched: 3,000;
+- lifecycle candidates reconstructed: 2,135;
+- fast-crypto rows in normalized primary history: 4,897;
+- BTC / ETH / SOL / other rows: 4,073 / 778 / 282 / 632;
+- BUY / SELL rows: 5,063 / 702;
+- YES-like / NO-like / other outcomes: 2,796 / 2,959 / 10.
+
+Wallet Score distribution:
+
+- `high_priority`: 3;
+- `medium_priority`: 13;
+- `low_priority`: 12;
+- `insufficient_visible_structure`: 2.
+
+Copyability research classifications:
+
+- `monitor_candidate`: 11;
+- `needs_more_history`: 17;
+- `insufficient_signal`: 2;
+- `exclude_for_now`: 0.
+
+Observed:
+
+- bounded public activity and `/trades` rows are enough to identify structural
+  wallet groups and produce deterministic research-priority classifications;
+- Wallet Score did not collapse the broader batch into one bucket;
+- strongest score drivers were fast-crypto relevance, lifecycle coverage,
+  lifecycle activity, still-open penalty, and concentration penalty;
+- no score component or penalty had zero range in the batch.
+
+Unknown:
+
+- realized outcomes;
+- expiry joins;
+- complete unbounded wallet history;
+- entry-to-exit holding time;
+- observation delay;
+- slippage and liquidity/fill uncertainty;
+- queue position;
+- maker/taker completeness;
+- external BTC/ETH/SOL reference alignment.
+
+Research conclusion:
+
+Based on the current bounded public evidence, Wallet Intelligence is moving
+toward a useful copy-trading research system only as a structural triage
+layer: 11 of 30 wallets became `monitor_candidate` and the score separated
+wallets into multiple structural groups, but missing realized outcomes, expiry
+joins, complete history, timing-delay, slippage, and liquidity evidence remain
+too significant for any conclusion about copy outcomes, market advantage,
+returns, or trading use.
+
+Next research sprint: Wallet Expiry And Outcome Join Feasibility Sprint v1.
+It should measure whether existing bounded wallet lifecycle evidence can be
+joined to public expiry and outcome metadata. It must not modify Wallet Score,
+tune thresholds, rank wallets for trading, place orders, copy trades, connect
+wallets/private keys, inspect sealed holdout data, run holdout evaluation, or
+launch a capture campaign.

@@ -1,0 +1,16 @@
+{
+  "all_validation_passed": true,
+  "allowed_input_set_exact_match": true,
+  "component_bounds": true,
+  "deterministic_ordering": true,
+  "deterministic_score_calculation": true,
+  "forbidden_inputs_used": [],
+  "missing_metric_handling": true,
+  "missing_source_fields": [],
+  "no_forbidden_metrics_used": true,
+  "output_schema_completeness": true,
+  "penalty_bounds": true,
+  "repeatable_export": true,
+  "score_bounds": true,
+  "source_provenance_completeness": true
+}

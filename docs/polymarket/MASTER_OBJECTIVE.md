@@ -391,36 +391,36 @@ insufficient. No model or alpha claim is currently justified.
 
 ## 14. Next milestone
 
-### Wallet Watchlist Broader Evidence Batch v1
+### Wallet Expiry And Outcome Join Feasibility Sprint v1
 
-The next milestone is to apply the reviewed Wallet Watchlist v1 artifact
-pattern to a bounded broader evidence batch. The watchlist remains a
-monitoring and deeper-analysis research handoff, not a trading signal,
-copy-trading recommendation, profitability ranking, alpha claim, or
-live-trading input.
+The next milestone is to determine whether the bounded Wallet Intelligence
+trade/lifecycle evidence can be joined to public market expiry and resolution
+metadata. The copyability feasibility sprint found that public wallet
+activity is useful as structural triage, but realized outcomes, expiry joins,
+holding-time evidence, timing delay, slippage, and liquidity uncertainty are
+the binding missing layers before deeper copy-trading research can make
+stronger descriptive claims.
 
 Exit criteria:
 
-- read the Wallet Watchlist Review v1 report and the approved broader evidence
-  collection design;
-- use the reviewed watchlist schema and report pattern;
-- preserve the existing Wallet Score v1 formula, thresholds, and forbidden
-  input boundaries;
-- enforce the approved broader batch limits of 30 wallets, two primary
-  activity pages per wallet, 200 primary rows per wallet, 6,000 primary rows
-  overall, one `/trades` cross-check page per wallet, 100 cross-check rows per
-  wallet, 3,000 cross-check rows overall, and two retries per page;
-- produce deterministic broader-batch watchlist artifacts under a separate
-  output path;
-- verify deterministic ordering, reason-code coverage, strengths/risks/actions
-  presence, no forbidden metrics, no forbidden claims, repeatable export, and
-  bounded-scope compliance;
-- recommend exactly one successor task;
-- do not add new score inputs, change thresholds, compute PnL, ROI, Sharpe,
-  alpha, mark-to-market, copyability, execution quality, trading ranking, or
-  execution logic;
+- use existing bounded Wallet Intelligence trade/lifecycle artifacts only
+  unless a small public read-only metadata probe is explicitly bounded;
+- inventory public endpoint paths that can map condition IDs, token IDs,
+  market slugs, event slugs, expiry timestamps, and resolved outcomes;
+- measure join coverage on the 30-wallet copyability sprint evidence without
+  opening sealed holdout outcomes or canonical outcome-prediction data;
+- report which lifecycle fields become measurable after expiry/outcome joins
+  and which remain blocked by timing-delay, slippage, liquidity, queue, or
+  full-history uncertainty;
+- produce deterministic feasibility artifacts under a separate output path;
+- recommend exactly one successor research sprint from the measured join
+  coverage;
+- do not change Wallet Score, tune thresholds, rank wallets for trading,
+  compute ROI, Sharpe, market advantage, mark-to-market values, or execution
+  quality;
 - keep outputs separate from canonical outcome-prediction datasets,
   repricing datasets, validation data, and sealed holdout data.
 
 No trade copying, wallet/private-key use, live trading, holdout evaluation,
-production model training, or automatic capture campaign is authorized.
+production model training, broad scraping, or automatic capture campaign is
+authorized.

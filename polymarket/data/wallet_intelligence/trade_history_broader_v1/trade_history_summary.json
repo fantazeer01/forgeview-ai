@@ -1,0 +1,190 @@
+{
+  "cross_check_pages_fetched": 30,
+  "cross_check_rows_fetched": 3000,
+  "duplicate_rows_removed": 6,
+  "endpoint_errors": {},
+  "fields_unavailable": [
+    "realized outcome joins",
+    "expiry joins",
+    "complete unbounded wallet history",
+    "entry-to-exit holding time",
+    "observation delay model",
+    "slippage model",
+    "liquidity and fill uncertainty",
+    "queue position",
+    "maker/taker completeness",
+    "external BTC/ETH/SOL reference alignment"
+  ],
+  "generated_at_utc": "2026-06-25T21:41:10+00:00",
+  "limits": {
+    "max_cross_check_pages_per_wallet": 1,
+    "max_cross_check_rows_total": 3000,
+    "max_primary_pages_per_wallet": 2,
+    "max_primary_rows_per_wallet": 200,
+    "max_primary_rows_total": 6000,
+    "max_wallets": 30
+  },
+  "output_dir": "polymarket\\data\\wallet_intelligence\\trade_history_broader_v1",
+  "pages_by_wallet": {
+    "0x01b739b360d3c2f6cc8ec84cda900d48650e2eca": 2,
+    "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e": 2,
+    "0x0e0d60ea727cb7a569ea391263cc10952d1e6e5b": 2,
+    "0x11e7740bc4f6f16f4c56bcdc8abda23f0863d3c2": 2,
+    "0x1a39c44c2bc6b23cc715a197cc0d76574ab51bb6": 2,
+    "0x1a561cdee16a7a263231aacc9ee50447ea6cf475": 2,
+    "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199": 2,
+    "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86": 2,
+    "0x20d2309cd92b797ae7ca175ed828ed8a27fbe29d": 2,
+    "0x251c1a283703beed41590b0875a8dcb8ddd1541f": 2,
+    "0x25f4707c93e4bfdf26cd6c5cc46c5464691cf88e": 2,
+    "0x29a55c2bf8efd1029c001477b34be47d3ca37752": 2,
+    "0x2c3ef176341ced9b0c5456d355d58fc0832e282d": 2,
+    "0x2e554602dbe0d9549fd5a356892f3f7ddb28c549": 2,
+    "0x3b19d4c9e38af6e6d6923039275d5cfe89bc3655": 2,
+    "0x3c6afcbc144b6bb110dbf8538bde2781c24a8a58": 2,
+    "0x4228048ea2f8f571ff2777cc32baee584c5134cb": 2,
+    "0x47d7dfd8b93e656d44ed173c848203e05982113a": 2,
+    "0x4a0b6dacb223f1126080048826f0271dbe31ff39": 2,
+    "0x4af813b3fc6038c55d06ce21531e9dceab093b6d": 2,
+    "0x4bfb3f47ad1a0b494ecaa3c1a9bfba22a4c39f3a": 2,
+    "0x4d0730b1c8b4da2444ab7a4a389a607584132b94": 2,
+    "0x54afeb88e709fbfb7e75a1ab8275ed4f0b333130": 2,
+    "0x594edb9112f526fa6a80b8f858a6379c8a2c1c11": 2,
+    "0x59e9593d9ad358947577a51f2c2d32b49cff2f9d": 2,
+    "0x60ca7ed001bb8496c50fde95329f6a8fa756f86e": 2,
+    "0x63ce342161250d705dc0b16df89036c8e5f9ba9a": 2,
+    "0xd0d6053c3c37e727402d84c14069780d360993aa": 2,
+    "0xde17f7144fbd0eddb2679132c10ff5e74b120988": 2,
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a": 2
+  },
+  "primary_pages_fetched": 60,
+  "primary_rows_fetched": 5771,
+  "primary_rows_normalized": 5765,
+  "row_summary": {
+    "asset_counts": {
+      "BTC": 4073,
+      "ETH": 778,
+      "SOL": 282,
+      "other": 632
+    },
+    "fast_crypto_rows": 4897,
+    "price_bucket_distribution": {
+      "0_10c": 573,
+      "10_20c": 251,
+      "20_40c": 938,
+      "40_60c": 1954,
+      "60_80c": 1233,
+      "80_100c": 816,
+      "unavailable": 0
+    },
+    "side_counts": {
+      "BUY": 5063,
+      "SELL": 702,
+      "other": 0
+    },
+    "yes_no_counts": {
+      "NO_like": 2959,
+      "YES_like": 2796,
+      "other": 10
+    }
+  },
+  "rows_by_wallet": {
+    "0x01b739b360d3c2f6cc8ec84cda900d48650e2eca": 200,
+    "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e": 200,
+    "0x0e0d60ea727cb7a569ea391263cc10952d1e6e5b": 200,
+    "0x11e7740bc4f6f16f4c56bcdc8abda23f0863d3c2": 200,
+    "0x1a39c44c2bc6b23cc715a197cc0d76574ab51bb6": 200,
+    "0x1a561cdee16a7a263231aacc9ee50447ea6cf475": 200,
+    "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199": 200,
+    "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86": 200,
+    "0x20d2309cd92b797ae7ca175ed828ed8a27fbe29d": 200,
+    "0x251c1a283703beed41590b0875a8dcb8ddd1541f": 200,
+    "0x25f4707c93e4bfdf26cd6c5cc46c5464691cf88e": 200,
+    "0x29a55c2bf8efd1029c001477b34be47d3ca37752": 200,
+    "0x2c3ef176341ced9b0c5456d355d58fc0832e282d": 200,
+    "0x2e554602dbe0d9549fd5a356892f3f7ddb28c549": 200,
+    "0x3b19d4c9e38af6e6d6923039275d5cfe89bc3655": 121,
+    "0x3c6afcbc144b6bb110dbf8538bde2781c24a8a58": 200,
+    "0x4228048ea2f8f571ff2777cc32baee584c5134cb": 200,
+    "0x47d7dfd8b93e656d44ed173c848203e05982113a": 200,
+    "0x4a0b6dacb223f1126080048826f0271dbe31ff39": 114,
+    "0x4af813b3fc6038c55d06ce21531e9dceab093b6d": 136,
+    "0x4bfb3f47ad1a0b494ecaa3c1a9bfba22a4c39f3a": 200,
+    "0x4d0730b1c8b4da2444ab7a4a389a607584132b94": 200,
+    "0x54afeb88e709fbfb7e75a1ab8275ed4f0b333130": 200,
+    "0x594edb9112f526fa6a80b8f858a6379c8a2c1c11": 200,
+    "0x59e9593d9ad358947577a51f2c2d32b49cff2f9d": 200,
+    "0x60ca7ed001bb8496c50fde95329f6a8fa756f86e": 200,
+    "0x63ce342161250d705dc0b16df89036c8e5f9ba9a": 200,
+    "0xd0d6053c3c37e727402d84c14069780d360993aa": 200,
+    "0xde17f7144fbd0eddb2679132c10ff5e74b120988": 200,
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a": 200
+  },
+  "strict_rules_observed": [
+    "public read-only Data API activity and trades endpoints",
+    "bounded wallet sample",
+    "bounded primary activity pages",
+    "bounded trades cross-check pages",
+    "no wallet/private-key connection",
+    "no order placement",
+    "no automatic trade copying",
+    "no live monitoring",
+    "no capture campaign",
+    "no holdout inspection",
+    "no holdout evaluation"
+  ],
+  "task": "Wallet Public Trade History Broader Evidence v1",
+  "validation_gates": {
+    "all_validation_passed": true,
+    "bounded_scope_compliance": {
+      "passed": true,
+      "violations": []
+    },
+    "cross_check_bounded_scope": {
+      "cross_check_pages": 30,
+      "cross_check_rows": 3000,
+      "passed": true
+    },
+    "deterministic_export": {
+      "passed": true
+    },
+    "duplicate_rate": {
+      "duplicate_rate_before_dedupe": 0.0010396811644429042,
+      "duplicates_removed": 6,
+      "passed": true
+    },
+    "fast_crypto_classification_coverage": {
+      "coverage": 1.0,
+      "passed": true,
+      "recognizable_fast_crypto_rows": 4897
+    },
+    "join_quality_reporting_placeholder": {
+      "notes": "this task does not perform joins; future joins must report coverage explicitly",
+      "passed": true
+    },
+    "market_classification_coverage": {
+      "coverage": 1.0,
+      "passed": true
+    },
+    "provenance_completeness": {
+      "coverage": 1.0,
+      "passed": true
+    },
+    "required_field_coverage": {
+      "coverage": 1.0,
+      "passed": true
+    },
+    "safety_boundary_compliance": {
+      "notes": "public read-only normalization path; no wallet/private-key/order/live-trading methods invoked",
+      "passed": true
+    },
+    "timestamp_parse_rate": {
+      "coverage": 1.0,
+      "passed": true
+    }
+  },
+  "validation_gates_passed": true,
+  "wallets_attempted": 30,
+  "wallets_with_primary_pages": 30,
+  "wallets_with_primary_rows": 30
+}

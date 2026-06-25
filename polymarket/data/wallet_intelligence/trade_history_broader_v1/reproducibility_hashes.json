@@ -1,0 +1,9 @@
+{
+  "broader_ingestion_report_json_sha256": "87f59c9591c70d5c5f92dab6a88547aed87d5710c0ca4d0b2e9e73f2c2c6f2df",
+  "csv_repeat_export_hash_match": true,
+  "trade_history_cross_check_raw_jsonl_sha256": "ea7de2c4396fa4c7d231bd4450aaa8340bb354a2d17dfd22ab1649a9d480ef64",
+  "trade_history_normalized_csv_sha256": "40d395b65a964535ddefccd7fdc0642e5cfc90bba36cba3a2c92b03e9a07b062",
+  "trade_history_raw_jsonl_sha256": "d8408a7e43cf806488d954cc4460161e286c215434b5bc36c3df7bb35d808823",
+  "trade_history_summary_json_sha256": "87f59c9591c70d5c5f92dab6a88547aed87d5710c0ca4d0b2e9e73f2c2c6f2df",
+  "validation_gate_results_json_sha256": "5b264698c57bb4c25b6eff8bcbd88b542cdea1e0da7fe9ef3d5477f2021b95fa"
+}

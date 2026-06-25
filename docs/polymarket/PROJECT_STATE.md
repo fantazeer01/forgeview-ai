@@ -232,8 +232,9 @@ profitability, alpha, copyability, trading recommendations, wallet/private-key
 use, order placement, capture campaigns, production model training, sealed
 holdout inspection, and holdout evaluation.
 Wallet Watchlist v1 and Wallet Watchlist Review v1 are complete from the
-existing six-wallet score fixture. The active successor task is Wallet
-Watchlist Broader Evidence Batch v1.
+existing six-wallet score fixture. Wallet Copyability Feasibility Sprint v1
+has now completed the broader 30-wallet evidence run. The active successor
+task is Wallet Expiry And Outcome Join Feasibility Sprint v1.
 
 ## Completed milestones
 
@@ -537,11 +538,12 @@ reconstruction fixture prototype, a completed lifecycle review, bounded
 structural lifecycle metrics, a Wallet Metrics Readiness Review, Wallet Score
 Design v1, Wallet Score Fixture Implementation v1, Wallet Score Fixture
 Review v1, Wallet Score Broader Evidence Collection Design v1, Wallet
-Watchlist v1, and Wallet Watchlist Review v1.
-The active successor task is Wallet Watchlist Broader Evidence Batch v1:
-apply the reviewed watchlist artifact pattern to bounded broader evidence
-while preserving the existing score formula, thresholds, public read-only
-limits, deterministic exports, and all non-trading safety boundaries.
+Watchlist v1, Wallet Watchlist Review v1, and Wallet Copyability Feasibility
+Sprint v1.
+The active successor task is Wallet Expiry And Outcome Join Feasibility Sprint
+v1: measure public expiry/outcome join coverage for the bounded 30-wallet
+copyability evidence before any deeper copy-trading research claims are
+attempted.
 
 Current measured baseline:
 
@@ -1413,10 +1415,106 @@ Tests:
 - Wallet Intelligence tests: 29 passing;
 - full automated suite: 123 passing.
 
-Next research task: Wallet Watchlist Broader Evidence Batch v1. It should
-apply the reviewed watchlist pattern to a bounded broader evidence batch while
-preserving the existing Wallet Score formula, thresholds, deterministic
-exports, and all non-trading safety boundaries.
+The current user-directed research sprint superseded the old
+Wallet Watchlist Broader Evidence Batch v1 loop and completed the broader
+evidence run as Wallet Copyability Feasibility Sprint v1.
+
+## Wallet Copyability Feasibility Sprint v1
+
+Wallet Copyability Feasibility Sprint v1 is complete.
+
+Code and CLI:
+
+- sprint orchestration lives in
+  `polymarket/wallet_intelligence/copyability_sprint.py`;
+- the CLI command is:
+  `python -m polymarket.wallet_intelligence copyability-sprint`.
+
+Primary outputs:
+
+- `polymarket/models/wallet_intelligence_v1/wallet_copyability_feasibility_v1/wallet_copyability_research.csv`
+- `polymarket/models/wallet_intelligence_v1/wallet_copyability_feasibility_v1/wallet_copyability_summary.json`
+- `polymarket/models/wallet_intelligence_v1/wallet_copyability_feasibility_v1/wallet_copyability_report.md`
+
+Pipeline outputs:
+
+- `polymarket/wallet_intelligence/watched_wallets_broader_v1.example.csv`
+- `polymarket/data/wallet_intelligence/trade_history_broader_v1/`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_broader_v1/`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_metrics_broader_v1/`
+- `polymarket/models/wallet_intelligence_v1/wallet_score_broader_evidence_v1/`
+- `polymarket/models/wallet_intelligence_v1/wallet_watchlist_broader_v1/`
+
+Evidence size:
+
+- wallets selected: 30;
+- primary activity rows normalized: 5,765;
+- cross-check `/trades` rows fetched: 3,000;
+- lifecycle candidates reconstructed: 2,135;
+- wallets scored and classified: 30.
+
+Classification counts:
+
+- `monitor_candidate`: 11;
+- `needs_more_history`: 17;
+- `insufficient_signal`: 2;
+- `exclude_for_now`: 0.
+
+Wallet Score bucket distribution:
+
+- `high_priority`: 3;
+- `medium_priority`: 13;
+- `low_priority`: 12;
+- `insufficient_visible_structure`: 2.
+
+Research findings:
+
+- Wallet Score separated the broader sample into four structural groups, so
+  the score is not degenerate on this batch;
+- strongest score drivers were fast-crypto relevance, lifecycle coverage,
+  lifecycle activity, still-open penalty, and concentration penalty;
+- no score component or penalty had zero range in the batch;
+- five wallets looked structurally interesting despite weak raw evidence,
+  mainly because bounded history leaves most visible lifecycle state still
+  open;
+- largest blockers remain realized outcome joins, expiry joins, complete
+  unbounded wallet history, entry-to-exit holding time, observation delay,
+  slippage, liquidity/fill uncertainty, queue position, maker/taker
+  completeness, and external BTC/ETH/SOL reference alignment.
+
+Validation:
+
+- bounded public read-only limits were respected;
+- deterministic ordering: passed;
+- deterministic export/repeatability: passed;
+- every wallet classified: passed;
+- reason codes present for every wallet: passed;
+- forbidden metric fields absent: passed;
+- forbidden claim phrases absent: passed.
+
+Research conclusion:
+
+Based on the current bounded public evidence, Wallet Intelligence is moving
+toward a useful copy-trading research system only as a structural triage
+layer: 11 of 30 wallets became `monitor_candidate` and the score separated
+wallets into multiple structural groups, but missing realized outcomes, expiry
+joins, complete history, timing-delay, slippage, and liquidity evidence remain
+too significant for any conclusion about copy outcomes, market advantage,
+returns, or trading use.
+
+Strict exclusions preserved:
+
+- no Wallet Score formula or threshold changes;
+- no PnL, ROI, Sharpe, market-advantage, return, mark-to-market,
+  execution-quality, or trading-suitability computation;
+- no wallet/private-key use, order placement, trade copying, live monitoring,
+  capture campaign, production model training, sealed holdout inspection, or
+  holdout evaluation.
+
+Next research sprint: Wallet Expiry And Outcome Join Feasibility Sprint v1.
+It should measure whether existing bounded wallet lifecycle evidence can be
+joined to public expiry and outcome metadata before any deeper copy-trading
+research claims are attempted.
 
 ## State update protocol
 

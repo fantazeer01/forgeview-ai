@@ -15,6 +15,7 @@ from .lifecycle import DEFAULT_LIFECYCLE_INPUT, DEFAULT_LIFECYCLE_OUTPUT, run_li
 from .lifecycle_metrics import DEFAULT_LIFECYCLE_METRICS_INPUT, DEFAULT_LIFECYCLE_METRICS_OUTPUT, run_lifecycle_metrics
 from .wallet_score import DEFAULT_WALLET_SCORE_INPUT, DEFAULT_WALLET_SCORE_OUTPUT, run_wallet_score_fixture
 from .wallet_watchlist import DEFAULT_WATCHLIST_INPUT, DEFAULT_WATCHLIST_OUTPUT, run_wallet_watchlist
+from .copyability_sprint import DEFAULT_COPYABILITY_OUTPUT, run_wallet_copyability_sprint
 
 
 DEFAULT_INPUT = Path("polymarket/wallet_intelligence/watched_wallets.example.csv")
@@ -98,6 +99,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     watchlist.add_argument("--input", type=Path, default=DEFAULT_WATCHLIST_INPUT)
     watchlist.add_argument("--output", type=Path, default=DEFAULT_WATCHLIST_OUTPUT)
+
+    copyability = subparsers.add_parser(
+        "copyability-sprint",
+        help="Run the bounded public Wallet Copyability Feasibility Sprint.",
+    )
+    copyability.add_argument("--output", type=Path, default=DEFAULT_COPYABILITY_OUTPUT)
+    copyability.add_argument("--delay", type=float, default=0.5)
     return parser
 
 
@@ -181,6 +189,18 @@ def main(argv: list[str] | None = None) -> int:
         print(
             json.dumps(
                 run_wallet_watchlist(args.input, args.output),
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return 0
+    if args.command == "copyability-sprint":
+        print(
+            json.dumps(
+                run_wallet_copyability_sprint(
+                    client=PolymarketPublicClient(delay_seconds=args.delay, timeout_seconds=20),
+                    copyability_output_dir=args.output,
+                ),
                 indent=2,
                 sort_keys=True,
             )
