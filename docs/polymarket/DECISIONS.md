@@ -984,3 +984,31 @@ reduces that dominant ambiguity, enables time-to-expiry and late-window
 analysis, improves lifecycle and watchlist interpretation, and has lower
 implementation risk than full-history pagination, liquidity reconstruction,
 execution-delay modelling, or queue-position estimation.
+
+## D-059: Wallet expiry joins are Gamma-first with CLOB token cross-checks
+
+Status: Accepted
+Decision: Polymarket Public Data Discovery Sprint v1 narrows the next Wallet
+Market Expiry Join Sprint v1 to public read-only endpoint joins only. The
+primary expiry and lifecycle metadata path is Gamma
+`/markets/slug/{market_slug}`, Gamma `/events/slug/{event_slug}`, and Gamma
+`/events?slug={event_slug}`. Gamma `/markets/token/{token_id}` may be used as a
+fallback when slug joins fail. CLOB `/clob-markets/{condition_id}` may be used
+only as a token/outcome mapping cross-check.
+
+CLOB `/book`, `/price`, `/midpoint`, `/spread`, `/last-trade-price`,
+`/prices-history`, and `/batch-prices-history` remain useful later for
+liquidity, slippage, and mark-to-market research, but they are not part of the
+expiry join sprint. Authenticated CLOB order, user order, user trade, user
+WebSocket, bridge write, relayer write, wallet/private-key, and order-placement
+paths remain excluded.
+
+Reason: Bounded public probes confirmed that Data API wallet activity/trade
+rows expose join keys, Gamma path-by-slug and event-by-slug routes can resolve
+historical fast-market metadata, and CLOB `/clob-markets/{condition_id}`
+returns token/outcome mappings for historical and sampling conditions. The same
+probes showed that CLOB orderbook/price routes can return 404 for expired or
+non-orderbook tokens, so they should not be required for expiry joins. This
+keeps the next sprint focused on the highest-information missing layer without
+introducing mark-to-market, liquidity, execution, copyability, or trading
+claims.

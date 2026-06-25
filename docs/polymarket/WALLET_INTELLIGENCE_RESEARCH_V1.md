@@ -1306,3 +1306,47 @@ evidence and measure join coverage. It must not modify Wallet Score, tune
 thresholds, rank wallets for trading, place orders, copy trades, connect
 wallets/private keys, inspect sealed holdout data, run holdout evaluation, or
 launch a capture campaign.
+
+## Public Data Discovery Sprint v1
+
+Polymarket Public Data Discovery Sprint v1 is complete.
+
+Outputs:
+
+- `polymarket/models/wallet_intelligence_v1/public_data_discovery_v1/public_endpoint_inventory.csv`
+- `polymarket/models/wallet_intelligence_v1/public_data_discovery_v1/endpoint_dependency_graph.md`
+- `polymarket/models/wallet_intelligence_v1/public_data_discovery_v1/wallet_data_source_report.md`
+
+Discovery result:
+
+- Gamma API is the best next source for public market expiry and lifecycle
+  metadata.
+- Data API remains the best public wallet-history source for activity, trades,
+  positions, closed positions, value, and traded-count context.
+- CLOB `/clob-markets/{condition_id}` is the best CLOB cross-check for
+  condition-to-token and outcome mapping.
+- CLOB orderbook, price, midpoint, spread, last-trade-price, and
+  prices-history endpoints are useful later for liquidity, slippage, and
+  mark-to-market research, but they should not be required for the expiry join
+  sprint because bounded probes showed quote endpoints can be unavailable for
+  expired or non-orderbook tokens.
+- Data API `/holders` and `/oi` are useful later for participant and
+  open-interest context.
+- CLOB Market WebSocket and RTDS are future prospective evidence sources, not
+  retrospective wallet-history joins.
+- Public on-chain settlement/redemption data may be valuable later, but it
+  requires a separate contract/ABI and provenance inventory.
+
+Recommended next endpoint set for Wallet Market Expiry Join Sprint v1:
+
+1. `GET https://gamma-api.polymarket.com/markets/slug/{market_slug}`;
+2. `GET https://gamma-api.polymarket.com/events/slug/{event_slug}`;
+3. `GET https://gamma-api.polymarket.com/events?slug={event_slug}`;
+4. `GET https://gamma-api.polymarket.com/markets/token/{token_id}` as fallback;
+5. `GET https://clob.polymarket.com/clob-markets/{condition_id}` as
+   token/outcome cross-check.
+
+The discovery sprint did not implement endpoint integration, change Wallet
+Score or Wallet Watchlist, compute PnL/ROI/Sharpe, infer profitability,
+estimate copyability, place orders, copy trades, connect wallets/private keys,
+inspect sealed holdout outcomes, run holdout evaluation, or launch capture.

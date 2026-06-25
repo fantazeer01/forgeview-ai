@@ -1593,6 +1593,68 @@ report-only public expiry context to existing bounded wallet lifecycle
 evidence and measure join coverage before resolved outcomes or any deeper
 copyability layer is implemented.
 
+## Polymarket Public Data Discovery Sprint v1
+
+Polymarket Public Data Discovery Sprint v1 is complete.
+
+Outputs:
+
+- `polymarket/models/wallet_intelligence_v1/public_data_discovery_v1/public_endpoint_inventory.csv`
+- `polymarket/models/wallet_intelligence_v1/public_data_discovery_v1/endpoint_dependency_graph.md`
+- `polymarket/models/wallet_intelligence_v1/public_data_discovery_v1/wallet_data_source_report.md`
+
+Purpose:
+
+- perform a real-world discovery pass over public Polymarket data sources that
+  can improve Wallet Intelligence;
+- inventory Gamma API, Data API, CLOB read endpoints, public wallet activity,
+  market/event/outcome metadata, expiry, resolution, liquidity, volume,
+  orderbook, holder, open-interest, WebSocket, and settlement/redemption
+  source paths;
+- do not implement integration, change Wallet Score, change Wallet Watchlist,
+  connect wallets, use private keys, place orders, copy trades, inspect sealed
+  holdout outcomes, run holdout evaluation, or launch capture.
+
+Discovery basis:
+
+- official Polymarket API documentation;
+- existing ForgeViewAI endpoint usage and Wallet Intelligence artifacts;
+- small bounded read-only probes for one existing seed wallet, one historical
+  BTC Up/Down market from the broader wallet batch, and one sampling
+  orderbook-enabled CLOB market.
+
+Findings:
+
+- Gamma API is the strongest next source for market expiry and lifecycle
+  metadata;
+- Data API remains the primary public wallet-history source through
+  `/activity`, `/trades`, `/positions`, `/closed-positions`, `/value`, and
+  `/traded`;
+- CLOB `/clob-markets/{condition_id}` is the best token/outcome cross-check
+  for existing wallet rows;
+- CLOB orderbook, price, midpoint, and spread routes are useful for future
+  liquidity/slippage work, but bounded probes showed they can 404 for expired
+  or non-orderbook tokens and should not be assumed available for historical
+  wallet rows;
+- CLOB `/prices-history` is useful later for mark-to-market research, but its
+  parameters and historical coverage need a separate bounded validation;
+- authenticated CLOB order/user endpoints, user WebSocket channels, bridge
+  write paths, relayer write paths, wallet/private-key flows, order placement,
+  and automatic trade copying remain excluded.
+
+Recommended next engineering endpoint set:
+
+1. `GET https://gamma-api.polymarket.com/markets/slug/{market_slug}`;
+2. `GET https://gamma-api.polymarket.com/events/slug/{event_slug}`;
+3. `GET https://gamma-api.polymarket.com/events?slug={event_slug}`;
+4. `GET https://gamma-api.polymarket.com/markets/token/{token_id}` as a
+   fallback when slug joins fail;
+5. `GET https://clob.polymarket.com/clob-markets/{condition_id}` as a
+   token/outcome cross-check only.
+
+Next research task remains Wallet Market Expiry Join Sprint v1, now with the
+public endpoint path narrowed by discovery evidence.
+
 ## State update protocol
 
 At the end of every completed active task:

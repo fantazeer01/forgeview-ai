@@ -30,30 +30,37 @@ Score, Wallet Watchlist, copyability classifications, or any trading boundary.
    - `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_broader_v1/lifecycle_positions.csv`;
    - `docs/polymarket/WALLET_INTELLIGENCE_RESEARCH_V1.md`.
 2. Use existing bounded Wallet Intelligence artifacts as the primary input.
-3. Join only public read-only market expiry metadata. Inventory endpoint paths
-   that can map:
+3. Join only public read-only market expiry metadata using the endpoint path
+   confirmed by Polymarket Public Data Discovery Sprint v1:
+   - primary: `GET https://gamma-api.polymarket.com/markets/slug/{market_slug}`;
+   - primary: `GET https://gamma-api.polymarket.com/events/slug/{event_slug}`;
+   - fallback: `GET https://gamma-api.polymarket.com/events?slug={event_slug}`;
+   - fallback: `GET https://gamma-api.polymarket.com/markets/token/{token_id}`;
+   - cross-check only:
+     `GET https://clob.polymarket.com/clob-markets/{condition_id}`.
+4. Use these joins to map:
    - condition IDs;
    - token IDs / asset IDs;
    - market slugs;
    - event slugs;
    - expiry timestamps.
-4. If public probing is needed, keep it narrowly bounded and read-only:
+5. If public probing is needed, keep it narrowly bounded and read-only:
    - no more than 30 markets/events sampled from existing evidence;
    - no recursive crawling;
    - no broad market capture;
    - no authenticated requests.
-5. Produce measured expiry join coverage for the existing 30-wallet evidence
+6. Produce measured expiry join coverage for the existing 30-wallet evidence
    batch:
    - market metadata coverage;
    - expiry timestamp coverage;
    - condition ID / token ID mapping coverage;
    - unresolved or ambiguous market counts.
-6. Report which fields become measurable after joins:
+7. Report which fields become measurable after joins:
    - time-to-expiry at entry;
    - held-through-expiry candidate;
    - late-window entry behavior;
    - lifecycle status refinement if safe and report-only.
-7. Report fields that remain unavailable:
+8. Report fields that remain unavailable:
    - resolved outcomes;
    - observation delay;
    - slippage and fill certainty;
@@ -61,9 +68,13 @@ Score, Wallet Watchlist, copyability classifications, or any trading boundary.
    - full unbounded history;
    - private intent;
    - external BTC/ETH/SOL reference alignment.
-8. Do not modify Wallet Score formula, thresholds, Wallet Watchlist logic, or
+9. Do not use CLOB orderbook, price, midpoint, spread, prices-history, or
+   batch-prices-history endpoints in this sprint except as documented future
+   work. The discovery sprint found those routes useful later but not required
+   for expiry joins.
+10. Do not modify Wallet Score formula, thresholds, Wallet Watchlist logic, or
    copyability classifications.
-9. Do not compute ROI, PnL, Sharpe, market advantage, execution quality,
+11. Do not compute ROI, PnL, Sharpe, market advantage, execution quality,
    trading rankings, or trading recommendations.
 
 ### Outputs
