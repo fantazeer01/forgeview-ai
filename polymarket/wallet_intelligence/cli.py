@@ -16,6 +16,12 @@ from .lifecycle_metrics import DEFAULT_LIFECYCLE_METRICS_INPUT, DEFAULT_LIFECYCL
 from .wallet_score import DEFAULT_WALLET_SCORE_INPUT, DEFAULT_WALLET_SCORE_OUTPUT, run_wallet_score_fixture
 from .wallet_watchlist import DEFAULT_WATCHLIST_INPUT, DEFAULT_WATCHLIST_OUTPUT, run_wallet_watchlist
 from .copyability_sprint import DEFAULT_COPYABILITY_OUTPUT, run_wallet_copyability_sprint
+from .market_outcome import (
+    DEFAULT_MARKET_OUTCOME_INPUT,
+    DEFAULT_MARKET_OUTCOME_OUTPUT,
+    PublicMarketMetadataClient,
+    run_market_outcome_resolution_sprint,
+)
 
 
 DEFAULT_INPUT = Path("polymarket/wallet_intelligence/watched_wallets.example.csv")
@@ -106,6 +112,14 @@ def build_parser() -> argparse.ArgumentParser:
     )
     copyability.add_argument("--output", type=Path, default=DEFAULT_COPYABILITY_OUTPUT)
     copyability.add_argument("--delay", type=float, default=0.5)
+
+    outcome = subparsers.add_parser(
+        "market-outcome-resolution",
+        help="Join lifecycle candidates to public market outcome metadata.",
+    )
+    outcome.add_argument("--input", type=Path, default=DEFAULT_MARKET_OUTCOME_INPUT)
+    outcome.add_argument("--output", type=Path, default=DEFAULT_MARKET_OUTCOME_OUTPUT)
+    outcome.add_argument("--delay", type=float, default=0.02)
     return parser
 
 
@@ -200,6 +214,19 @@ def main(argv: list[str] | None = None) -> int:
                 run_wallet_copyability_sprint(
                     client=PolymarketPublicClient(delay_seconds=args.delay, timeout_seconds=20),
                     copyability_output_dir=args.output,
+                ),
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return 0
+    if args.command == "market-outcome-resolution":
+        print(
+            json.dumps(
+                run_market_outcome_resolution_sprint(
+                    input_csv=args.input,
+                    output_dir=args.output,
+                    client=PublicMarketMetadataClient(delay_seconds=args.delay),
                 ),
                 indent=2,
                 sort_keys=True,

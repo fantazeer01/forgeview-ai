@@ -1350,3 +1350,70 @@ The discovery sprint did not implement endpoint integration, change Wallet
 Score or Wallet Watchlist, compute PnL/ROI/Sharpe, infer profitability,
 estimate copyability, place orders, copy trades, connect wallets/private keys,
 inspect sealed holdout outcomes, run holdout evaluation, or launch capture.
+
+## Wallet Market Outcome Resolution Sprint v1
+
+Wallet Market Outcome Resolution Sprint v1 is complete.
+
+Artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/market_outcome_resolution_v1/market_outcome_join.csv`
+- `polymarket/models/wallet_intelligence_v1/market_outcome_resolution_v1/market_outcome_join_summary.json`
+- `polymarket/models/wallet_intelligence_v1/market_outcome_resolution_v1/market_outcome_join_report.md`
+- `polymarket/models/wallet_intelligence_v1/market_outcome_resolution_v1/reproducibility_hashes.json`
+
+Research question:
+
+- Can bounded public wallet lifecycle positions be linked to resolved market
+  outcomes reliably enough to support future outcome-aware Wallet
+  Intelligence?
+
+Observed evidence:
+
+- 2,135 lifecycle positions were evaluated;
+- 1,122 unique conditions were evaluated;
+- 2,134 rows joined to public market metadata, a 99.95% join success rate;
+- 2,122 rows received automatic resolved outcome classifications, a 99.39%
+  automatic resolved outcome rate;
+- 1,112 unique conditions were resolved;
+- 9 unique conditions remained unresolved;
+- 1 row failed metadata resolution;
+- 0 rows had conflicting metadata;
+- 0 rows had ambiguous joins.
+
+Lifecycle resolution status counts:
+
+- `matched_outcome`: 1,116;
+- `unmatched_outcome`: 1,006;
+- `unresolved_market`: 12;
+- `insufficient_evidence`: 1.
+
+Endpoint path used:
+
+- primary: Gamma `/markets/slug/{market_slug}`;
+- fallback only when needed: Gamma event slug/query, Gamma token fallback, and
+  CLOB `/clob-markets/{condition_id}` condition cross-check.
+
+Interpretation:
+
+- outcome-aware Wallet Intelligence is now technically feasible for bounded
+  descriptive research over the current lifecycle evidence;
+- the join is not a performance, copyability, market-advantage, or trading
+  result;
+- matched/unmatched outcome labels describe whether the lifecycle candidate's
+  visible outcome matches the public terminal outcome, not whether the wallet
+  made or lost money;
+- full wallet history, closed-position semantics, fill certainty, observation
+  delay, liquidity, queue position, and reference-asset alignment are still
+  missing.
+
+Biggest blocker:
+
+- one row lacked enough public metadata after Gamma token fallback and CLOB
+  condition fallback.
+
+Next research task:
+
+- Wallet Outcome-Aware Metrics Sprint v1. It should compute bounded
+  descriptive counts and rates from `market_outcome_join.csv`, preserve all
+  forbidden claims, and leave Wallet Score and Wallet Watchlist unchanged.

@@ -1655,6 +1655,64 @@ Recommended next engineering endpoint set:
 Next research task remains Wallet Market Expiry Join Sprint v1, now with the
 public endpoint path narrowed by discovery evidence.
 
+## Wallet Market Outcome Resolution Sprint v1
+
+Wallet Market Outcome Resolution Sprint v1 is complete.
+
+Outputs:
+
+- `polymarket/models/wallet_intelligence_v1/market_outcome_resolution_v1/market_outcome_join.csv`
+- `polymarket/models/wallet_intelligence_v1/market_outcome_resolution_v1/market_outcome_join_summary.json`
+- `polymarket/models/wallet_intelligence_v1/market_outcome_resolution_v1/market_outcome_join_report.md`
+- `polymarket/models/wallet_intelligence_v1/market_outcome_resolution_v1/reproducibility_hashes.json`
+
+Measured evidence:
+
+- lifecycle positions evaluated: 2,135;
+- unique conditions evaluated: 1,122;
+- metadata join success: 2,134 of 2,135 rows, or 99.95%;
+- automatic resolved outcome classification: 2,122 of 2,135 rows, or 99.39%;
+- resolved market conditions: 1,112;
+- unresolved market conditions: 9;
+- failed joins: 1;
+- ambiguous joins: 0;
+- conflicting metadata rows: 0;
+- lifecycle outcome classifications:
+  - `matched_outcome`: 1,116;
+  - `unmatched_outcome`: 1,006;
+  - `unresolved_market`: 12;
+  - `insufficient_evidence`: 1.
+
+Implementation:
+
+- added `polymarket/wallet_intelligence/market_outcome.py`;
+- added `python -m polymarket.wallet_intelligence market-outcome-resolution`;
+- added `MarketOutcomeJoinRecord` and deterministic output schema;
+- added focused Wallet Intelligence unit tests for resolved, unresolved,
+  conflicting, and repeatable-output behavior.
+
+Conclusion:
+
+- outcome-aware Wallet Intelligence is technically feasible on the current
+  bounded public lifecycle evidence;
+- public Gamma market-by-slug metadata is sufficient for the overwhelming
+  majority of historical lifecycle rows;
+- CLOB condition metadata remains useful as a fallback or token/outcome
+  cross-check, but is not required for rows where Gamma condition IDs match;
+- the biggest measured blocker is the single row where Gamma token fallback
+  and CLOB condition fallback were both unavailable.
+
+Strict exclusions preserved:
+
+- no PnL, ROI, realized-profit, Sharpe, market-advantage, copyability,
+  execution-quality, Wallet Score, Wallet Watchlist, trading recommendation,
+  wallet/private-key, order-placement, holdout-inspection, holdout-evaluation,
+  or capture-campaign logic was added.
+
+Next research task: Wallet Outcome-Aware Metrics Sprint v1. It should compute
+bounded descriptive outcome classifications over `market_outcome_join.csv`
+without changing Wallet Score, Wallet Watchlist, or any trading boundary.
+
 ## State update protocol
 
 At the end of every completed active task:

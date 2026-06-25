@@ -120,6 +120,41 @@ LIFECYCLE_POSITION_FIELDS = [
     "data_quality_flags",
 ]
 
+MARKET_OUTCOME_JOIN_FIELDS = [
+    "wallet_id",
+    "profile_url",
+    "condition_id",
+    "token_id",
+    "outcome",
+    "lifecycle_group_key",
+    "market_slug",
+    "event_slug",
+    "market_title",
+    "market_type",
+    "asset_class",
+    "up_down_market",
+    "first_activity_timestamp",
+    "first_activity_datetime_utc",
+    "last_activity_timestamp",
+    "last_activity_datetime_utc",
+    "lifecycle_status",
+    "market_id",
+    "event_id",
+    "expiry_timestamp",
+    "resolution_timestamp",
+    "resolved_status",
+    "winning_outcome",
+    "outcome_prices",
+    "lifecycle_resolution_status",
+    "join_confidence",
+    "join_status",
+    "join_reason",
+    "metadata_sources",
+    "condition_id_match",
+    "token_outcome_cross_check",
+    "conflicting_metadata",
+]
+
 
 @dataclass(frozen=True)
 class WatchedWallet:
@@ -233,3 +268,39 @@ class LifecyclePositionRecord:
     position_size_conserved: str
     transaction_hashes: str
     data_quality_flags: str
+
+
+@dataclass(frozen=True)
+class MarketOutcomeJoinRecord:
+    wallet_id: str
+    profile_url: str
+    condition_id: str
+    token_id: str
+    outcome: str
+    lifecycle_group_key: str
+    market_slug: str
+    event_slug: str
+    market_title: str
+    market_type: str
+    asset_class: str
+    up_down_market: str
+    first_activity_timestamp: str
+    first_activity_datetime_utc: str
+    last_activity_timestamp: str
+    last_activity_datetime_utc: str
+    lifecycle_status: str
+    market_id: str
+    event_id: str
+    expiry_timestamp: str
+    resolution_timestamp: str
+    resolved_status: str
+    winning_outcome: str
+    outcome_prices: str
+    lifecycle_resolution_status: str
+    join_confidence: str
+    join_status: str
+    join_reason: str
+    metadata_sources: str
+    condition_id_match: str
+    token_outcome_cross_check: str
+    conflicting_metadata: str

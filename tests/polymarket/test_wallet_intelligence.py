@@ -45,6 +45,12 @@ from polymarket.wallet_intelligence.copyability_sprint import (
     build_copyability_research,
     validate_copyability_research,
 )
+from polymarket.wallet_intelligence.market_outcome import (
+    fetch_market_metadata,
+    join_lifecycle_outcomes,
+    run_market_outcome_resolution_sprint,
+    validate_market_outcome_joins,
+)
 
 
 class FakeClient:
@@ -1246,6 +1252,168 @@ class WalletCopyabilitySprintTests(unittest.TestCase):
             self.assertEqual(summary["analysis"]["B_exclude_for_now_count"], 1)
             self.assertTrue(validate_copyability_research(rows)["no_forbidden_claims"])
             self.assertIn("realized outcome joins", rows[0]["missing_evidence"])
+
+
+class FakeMarketMetadataClient:
+    def get_market_by_slug(self, slug):
+        if slug == "resolved-up":
+            return {
+                "id": "m1",
+                "conditionId": "0xaaa",
+                "slug": slug,
+                "endDate": "2026-06-25T19:00:00Z",
+                "closed": True,
+                "outcomes": '["Up", "Down"]',
+                "outcomePrices": '["1", "0"]',
+                "umaResolutionStatus": "resolved",
+                "automaticallyResolved": True,
+                "closedTime": "2026-06-25 19:00:20+00",
+            }
+        if slug == "unresolved":
+            return {
+                "id": "m2",
+                "conditionId": "0xbbb",
+                "slug": slug,
+                "endDate": "2026-06-26T19:00:00Z",
+                "closed": False,
+                "outcomes": '["Up", "Down"]',
+                "outcomePrices": '["0.5", "0.5"]',
+            }
+        if slug == "conflict":
+            return {
+                "id": "m3",
+                "conditionId": "0xnotccc",
+                "slug": slug,
+                "closed": True,
+                "outcomes": '["Yes", "No"]',
+                "outcomePrices": '["1", "0"]',
+                "umaResolutionStatus": "resolved",
+            }
+        return None
+
+    def get_event_by_slug(self, slug):
+        return {"id": f"event-{slug}", "slug": slug, "markets": []}
+
+    def get_events_query_by_slug(self, slug):
+        return None
+
+    def get_market_by_token(self, token_id):
+        return None
+
+    def get_clob_market(self, condition_id):
+        tokens = {
+            "0xaaa": [{"t": "token-up", "o": "Up"}, {"t": "token-down", "o": "Down"}],
+            "0xbbb": [{"t": "token-up-b", "o": "Up"}],
+            "0xccc": [{"t": "token-yes", "o": "Yes"}],
+        }
+        return {"t": tokens.get(condition_id, [])}
+
+
+class WalletMarketOutcomeResolutionTests(unittest.TestCase):
+    def _lifecycle(self, **overrides):
+        row = {
+            "wallet_id": "0xwallet",
+            "profile_url": "https://polymarket.com/0xwallet",
+            "condition_id": "0xaaa",
+            "token_id": "token-up",
+            "outcome": "Up",
+            "lifecycle_group_key": "0xwallet|0xaaa|token-up|Up",
+            "market_slug": "resolved-up",
+            "event_slug": "resolved-up",
+            "market_title": "Bitcoin Up or Down",
+            "market_type": "fast_crypto_up_down",
+            "asset_class": "BTC",
+            "up_down_market": "true",
+            "first_activity_timestamp": "1",
+            "first_activity_datetime_utc": "2026-06-25T18:45:00+00:00",
+            "last_activity_timestamp": "2",
+            "last_activity_datetime_utc": "2026-06-25T18:46:00+00:00",
+            "status": "still_open",
+        }
+        row.update(overrides)
+        return row
+
+    def test_market_outcome_join_classifies_resolved_and_unresolved_rows(self):
+        rows = [
+            self._lifecycle(),
+            self._lifecycle(
+                condition_id="0xaaa",
+                token_id="token-down",
+                outcome="Down",
+                lifecycle_group_key="0xwallet|0xaaa|token-down|Down",
+            ),
+            self._lifecycle(
+                condition_id="0xbbb",
+                token_id="token-up-b",
+                outcome="Up",
+                lifecycle_group_key="0xwallet|0xbbb|token-up-b|Up",
+                market_slug="unresolved",
+                event_slug="unresolved",
+            ),
+        ]
+        metadata = fetch_market_metadata(rows, FakeMarketMetadataClient())
+        joined = join_lifecycle_outcomes(rows, metadata)
+        status_by_key = {(row.condition_id, row.outcome): row.lifecycle_resolution_status for row in joined}
+        self.assertEqual(status_by_key[("0xaaa", "Up")], "matched_outcome")
+        self.assertEqual(status_by_key[("0xaaa", "Down")], "unmatched_outcome")
+        self.assertIn("unresolved_market", [row.lifecycle_resolution_status for row in joined])
+        self.assertEqual([row for row in joined if row.condition_id == "0xaaa" and row.outcome == "Up"][0].join_confidence, "high")
+        validation = validate_market_outcome_joins(joined)
+        self.assertTrue(validation["deterministic_ordering"])
+        self.assertTrue(validation["all_rows_have_confidence_labels"])
+        self.assertTrue(validation["unresolved_handling_present"])
+        self.assertTrue(validation["no_forbidden_metric_fields"])
+
+    def test_market_outcome_join_flags_conflicting_metadata(self):
+        rows = [
+            self._lifecycle(
+                condition_id="0xccc",
+                token_id="token-yes",
+                outcome="Yes",
+                lifecycle_group_key="0xwallet|0xccc|token-yes|Yes",
+                market_slug="conflict",
+                event_slug="conflict",
+            )
+        ]
+        metadata = fetch_market_metadata(rows, FakeMarketMetadataClient())
+        joined = join_lifecycle_outcomes(rows, metadata)
+        self.assertEqual(joined[0].join_status, "conflicting_metadata")
+        self.assertEqual(joined[0].lifecycle_resolution_status, "insufficient_evidence")
+
+    def test_market_outcome_sprint_writes_repeatable_outputs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_csv = root / "lifecycle_positions.csv"
+            rows = [self._lifecycle()]
+            with input_csv.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=list(rows[0].keys()))
+                writer.writeheader()
+                writer.writerows(rows)
+            output_dir = root / "outcome"
+            first = run_market_outcome_resolution_sprint(
+                input_csv,
+                output_dir,
+                client=FakeMarketMetadataClient(),
+                generated_at="2026-06-26T00:00:00+00:00",
+            )
+            second = run_market_outcome_resolution_sprint(
+                input_csv,
+                output_dir,
+                client=FakeMarketMetadataClient(),
+                generated_at="2026-06-26T00:00:00+00:00",
+            )
+            self.assertEqual(first["lifecycle_positions_evaluated"], 1)
+            self.assertTrue(first["validation"]["repeatable_export"])
+            self.assertEqual(
+                first["reproducibility_hashes"]["market_outcome_join_csv_sha256"],
+                second["reproducibility_hashes"]["market_outcome_join_csv_sha256"],
+            )
+            self.assertTrue((output_dir / "market_outcome_join.csv").exists())
+            self.assertTrue((output_dir / "market_outcome_join_summary.json").exists())
+            self.assertTrue((output_dir / "market_outcome_join_report.md").exists())
+            report = (output_dir / "market_outcome_join_report.md").read_text(encoding="utf-8")
+            self.assertIn("not a trading signal", report)
+            self.assertIn("not a copy-trading recommendation", report)
 
 
 if __name__ == "__main__":

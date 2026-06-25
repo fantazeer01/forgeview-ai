@@ -1012,3 +1012,27 @@ non-orderbook tokens, so they should not be required for expiry joins. This
 keeps the next sprint focused on the highest-information missing layer without
 introducing mark-to-market, liquidity, execution, copyability, or trading
 claims.
+
+## D-060: Outcome joins may advance to descriptive outcome-aware metrics
+
+Status: Accepted
+Decision: Wallet Market Outcome Resolution Sprint v1 authorizes a bounded
+descriptive outcome-aware metrics sprint over the generated
+`market_outcome_join.csv` artifact. The approved inputs are public read-only
+Gamma market metadata joined to existing wallet lifecycle rows, with Gamma
+event/token and CLOB condition metadata used only as fallbacks or
+cross-checks. The approved output semantics are limited to `matched_outcome`,
+`unmatched_outcome`, `unresolved_market`, and `insufficient_evidence`.
+
+The next sprint must not change Wallet Score, Wallet Watchlist, copyability
+classifications, trading boundaries, or any live system. It must not compute
+or claim PnL, ROI, realized profit, Sharpe, market advantage, copyability,
+execution quality, expected value, trading suitability, or recommendations.
+
+Reason: The sprint evaluated 2,135 lifecycle rows across 1,122 unique
+conditions and joined 2,134 rows to public market metadata. Automatic resolved
+outcome classification covered 2,122 rows, with 1,112 resolved conditions, 9
+unresolved conditions, 1 failed join, 0 ambiguous joins, and 0 conflicting
+metadata rows. That coverage is strong enough to compute descriptive
+outcome-aware metrics, but not enough to infer wallet profitability,
+trade-copying viability, or execution results.
