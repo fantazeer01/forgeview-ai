@@ -8,21 +8,21 @@ This file contains exactly one active task. A future Codex session must read
 `DECISIONS.md`, `REPRICING_RESEARCH_V1.md`, and
 `WALLET_INTELLIGENCE_RESEARCH_V1.md` before starting it.
 
-## Active task: Wallet Outcome Skill Baseline Sprint v1
+## Active task: Wallet Activity Visibility Delay Sprint v1
 
 ### Hypothesis under test
 
-H1: Some public wallets consistently make better decisions than random.
+H2: Public wallet actions become visible quickly enough.
 
 ### Objective
 
-Use existing public wallet lifecycle and market outcome join artifacts to test
-whether visible wallet outcome choices beat a predefined random baseline in
-five-minute BTC, ETH, and SOL Polymarket markets.
+Use existing public wallet trade-history, lifecycle, and outcome-skill
+artifacts to test whether the four H1 above-baseline wallets have activity
+timestamps that appear early enough to support future strategy research.
 
-This is a hypothesis test, not a general metrics layer. The sprint must end
-with one answer: `supported`, `rejected`, or
-`inconclusive_with_next_blocker`.
+This is a falsification sprint. Assume H2 is false unless public activity
+timestamps show that candidate wallet actions are visible with enough time
+remaining to be studied further.
 
 ### Required scope
 
@@ -32,35 +32,34 @@ with one answer: `supported`, `rejected`, or
    - `docs/polymarket/PROJECT_STATE.md`;
    - `docs/polymarket/DECISIONS.md`;
    - `docs/polymarket/WALLET_INTELLIGENCE_RESEARCH_V1.md`;
-   - `polymarket/models/wallet_intelligence_v1/market_outcome_resolution_v1/market_outcome_join.csv`;
-   - `polymarket/models/wallet_intelligence_v1/market_outcome_resolution_v1/market_outcome_join_summary.json`;
-   - `polymarket/models/wallet_intelligence_v1/wallet_copyability_feasibility_v1/wallet_copyability_summary.json`.
-2. Use `market_outcome_join.csv` as the primary source.
-3. Restrict the main test set to:
-   - public wallet lifecycle rows;
-   - BTC, ETH, and SOL fast Up/Down markets;
-   - resolved rows with `matched_outcome` or `unmatched_outcome`;
-   - no sealed holdout data and no canonical outcome-prediction holdout paths.
-4. Define baselines before measuring:
-   - random 50/50 side baseline for binary Up/Down rows;
-   - naive aggregate side-frequency baseline if appropriate;
-   - any minimum per-wallet sample gate used for interpretation.
-5. Compute descriptive hypothesis-test evidence:
-   - aggregate matched-outcome rate;
-   - per-wallet matched-outcome rate;
-   - sample size by wallet;
-   - asset breakdown for BTC, ETH, and SOL;
-   - simple confidence interval or binomial-style uncertainty measure if
-     available without adding heavy dependencies;
-   - whether any observed effect survives minimum sample gates.
-6. Clearly separate:
-   - observed resolved-side match evidence;
-   - unknown profitability;
-   - unknown execution feasibility;
-   - unknown visibility delay;
+   - `polymarket/models/wallet_intelligence_v1/outcome_skill_baseline_v1/wallet_skill_baseline.csv`;
+   - `polymarket/models/wallet_intelligence_v1/outcome_skill_baseline_v1/wallet_skill_summary.json`;
+   - `polymarket/data/wallet_intelligence/trade_history_broader_v1/trade_history_normalized.csv`;
+   - `polymarket/models/wallet_intelligence_v1/market_outcome_resolution_v1/market_outcome_join.csv`.
+2. Restrict the main analysis to H1 above-baseline wallets:
+   - `0x088df3b7e5c1b5c2d4b7dc760863153480cf025e`;
+   - `0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199`;
+   - `0x29a55c2bf8efd1029c001477b34be47d3ca37752`;
+   - `0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a`.
+3. Use existing artifacts only unless a missing field makes H2 impossible to
+   evaluate. Do not launch broad ingestion, capture, crawling, or live
+   monitoring.
+4. Compute visibility-delay evidence:
+   - first visible wallet activity timestamp per lifecycle candidate;
+   - market expiry timestamp when available;
+   - time from first visible activity to expiry;
+   - share of candidate actions visible with at least 60, 120, and 180 seconds
+     remaining;
+   - unresolved or missing timestamp fraction;
+   - per-wallet sample counts.
+5. Clearly separate:
+   - observed timestamp evidence;
+   - unknown public feed latency;
+   - unknown human/automation reaction time;
+   - unknown fill feasibility;
    - unknown slippage/liquidity;
    - unknown complete-history bias.
-7. Do not compute or claim:
+6. Do not compute or claim:
    - PnL;
    - ROI;
    - realized profit;
@@ -72,38 +71,32 @@ with one answer: `supported`, `rejected`, or
    - execution quality;
    - trading suitability;
    - trading recommendations.
-8. Do not modify Wallet Score, Wallet Watchlist, strategy thresholds, live
+7. Do not modify Wallet Score, Wallet Watchlist, strategy thresholds, live
    systems, wallet/private-key handling, order placement, capture campaigns,
    production models, sealed holdout artifacts, or holdout evaluation.
-9. Add deterministic validation:
-   - all tested rows are resolved binary fast-crypto rows;
-   - per-wallet sample counts reconcile to aggregate counts;
-   - baseline definitions are present;
-   - deterministic ordering;
-   - repeatable export;
-   - no forbidden metrics or claims.
-10. Add focused tests and run Wallet Intelligence tests plus the full test
-    suite.
+8. End with exactly one conclusion for H2:
+   - `SUPPORTED`;
+   - `REJECTED`;
+   - `INCONCLUSIVE`.
+9. Run Wallet Intelligence tests and the full test suite.
 
 ### Outputs
 
 Produce deterministic artifacts under:
 
-`polymarket/models/wallet_intelligence_v1/outcome_skill_baseline_v1/`
+`polymarket/models/wallet_intelligence_v1/activity_visibility_delay_v1/`
 
 Include:
 
-- `wallet_outcome_skill_baseline.csv`
-- `wallet_outcome_skill_summary.json`
-- `wallet_outcome_skill_validation.json`
-- `wallet_outcome_skill_report.md`
+- `wallet_activity_visibility_delay.csv`
+- `wallet_activity_visibility_summary.json`
+- `wallet_activity_visibility_report.md`
 
 ### Acceptance criteria
 
-- The sprint answers H1 as `supported`, `rejected`, or
-  `inconclusive_with_next_blocker`.
-- If H1 is not supported, the next task must stop or sharply narrow wallet
-  strategy research rather than add more data infrastructure.
-- If H1 is supported, the next task should test H2 or H3 directly.
-- Wallet Intelligence tests and the full test suite are run.
+- The sprint answers H2 as `SUPPORTED`, `REJECTED`, or `INCONCLUSIVE`.
+- If H2 is rejected, the next task must stop or sharply narrow public-wallet
+  strategy research.
+- If H2 is supported or inconclusive with useful remaining evidence, the next
+  task should test H3 directly.
 - Exactly one active successor task remains in this file after completion.

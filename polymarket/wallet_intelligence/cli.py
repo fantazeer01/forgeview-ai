@@ -22,6 +22,13 @@ from .market_outcome import (
     PublicMarketMetadataClient,
     run_market_outcome_resolution_sprint,
 )
+from .outcome_skill import (
+    DEFAULT_WALLET_SKILL_INPUT,
+    DEFAULT_WALLET_SKILL_OUTPUT,
+    DEFAULT_WALLET_SKILL_SCORE_INPUT,
+    DEFAULT_WALLET_SKILL_WATCHLIST_INPUT,
+    run_wallet_outcome_skill_baseline,
+)
 
 
 DEFAULT_INPUT = Path("polymarket/wallet_intelligence/watched_wallets.example.csv")
@@ -120,6 +127,15 @@ def build_parser() -> argparse.ArgumentParser:
     outcome.add_argument("--input", type=Path, default=DEFAULT_MARKET_OUTCOME_INPUT)
     outcome.add_argument("--output", type=Path, default=DEFAULT_MARKET_OUTCOME_OUTPUT)
     outcome.add_argument("--delay", type=float, default=0.02)
+
+    skill = subparsers.add_parser(
+        "wallet-outcome-skill",
+        help="Run the H1 wallet outcome-skill baseline sprint.",
+    )
+    skill.add_argument("--input", type=Path, default=DEFAULT_WALLET_SKILL_INPUT)
+    skill.add_argument("--output", type=Path, default=DEFAULT_WALLET_SKILL_OUTPUT)
+    skill.add_argument("--score-csv", type=Path, default=DEFAULT_WALLET_SKILL_SCORE_INPUT)
+    skill.add_argument("--watchlist-csv", type=Path, default=DEFAULT_WALLET_SKILL_WATCHLIST_INPUT)
     return parser
 
 
@@ -227,6 +243,20 @@ def main(argv: list[str] | None = None) -> int:
                     input_csv=args.input,
                     output_dir=args.output,
                     client=PublicMarketMetadataClient(delay_seconds=args.delay),
+                ),
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return 0
+    if args.command == "wallet-outcome-skill":
+        print(
+            json.dumps(
+                run_wallet_outcome_skill_baseline(
+                    input_csv=args.input,
+                    output_dir=args.output,
+                    score_csv=args.score_csv,
+                    watchlist_csv=args.watchlist_csv,
                 ),
                 indent=2,
                 sort_keys=True,

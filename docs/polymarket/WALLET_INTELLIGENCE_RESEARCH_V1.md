@@ -1474,3 +1474,68 @@ Hypothesis:
 Required answer:
 
 - `supported`, `rejected`, or `inconclusive_with_next_blocker`.
+
+## Wallet Outcome Skill Baseline Sprint v1
+
+Wallet Outcome Skill Baseline Sprint v1 is complete.
+
+Hypothesis tested:
+
+- H1: Some public wallets consistently make better decisions than random.
+
+Artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/outcome_skill_baseline_v1/wallet_skill_baseline.csv`
+- `polymarket/models/wallet_intelligence_v1/outcome_skill_baseline_v1/wallet_skill_summary.json`
+- `polymarket/models/wallet_intelligence_v1/outcome_skill_baseline_v1/wallet_skill_report.md`
+
+Baseline definitions:
+
+- main test set: resolved BTC/ETH/SOL fast Up/Down lifecycle rows from
+  `market_outcome_join.csv`;
+- random baseline: 0.500000;
+- population baseline: 0.524609;
+- minimum resolved positions per wallet: 30;
+- conservative separation gate: z-score threshold 1.96 plus Wilson interval
+  support.
+
+Observed results:
+
+- wallets evaluated: 28;
+- resolved positions tested: 1,788;
+- matched outcomes: 938;
+- unmatched outcomes: 850;
+- above-baseline evidence wallets: 4;
+- below-baseline evidence wallets: 3;
+- sample-size-consistent wallets: 13;
+- insufficient-evidence wallets: 8.
+
+Above-baseline evidence wallets:
+
+- `0x088df3b7e5c1b5c2d4b7dc760863153480cf025e`;
+- `0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199`;
+- `0x29a55c2bf8efd1029c001477b34be47d3ca37752`;
+- `0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a`.
+
+Evidence that weakens H1:
+
+- three wallets were below baseline under the same rules;
+- thirteen wallets were statistically consistent with the population
+  baseline;
+- eight wallets did not meet the minimum sample gate;
+- the broader wallet set is retrospective and can contain selection and
+  survivorship bias;
+- public visibility delay, actionable time remaining, fill certainty,
+  complete wallet history, and liquidity context are still unknown.
+
+Final conclusion:
+
+- `INCONCLUSIVE`.
+
+Meaning:
+
+- H1 should not be promoted to a strategy claim;
+- H1 should not be abandoned yet because four wallets clear conservative
+  outcome-quality gates;
+- the only justified successor is H2 visibility-delay testing on those four
+  wallets, not broader wallet analytics.

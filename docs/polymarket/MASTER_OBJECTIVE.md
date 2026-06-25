@@ -410,31 +410,31 @@ or profitability claim is currently justified.
 
 ## 14. Next milestone
 
-### Wallet Outcome Skill Baseline Sprint v1
+### Wallet Activity Visibility Delay Sprint v1
 
-The next milestone is a direct H1 test:
+The next milestone is a direct H2 test:
 
-> Some public wallets consistently make better decisions than random.
+> Public wallet actions become visible quickly enough.
 
-The sprint must use existing public wallet lifecycle and market outcome join
-artifacts to measure whether visible wallet outcome choices beat a predefined
-random baseline in five-minute BTC, ETH, and SOL Polymarket markets. This is a
-hypothesis test, not another general metrics layer.
+Wallet Outcome Skill Baseline Sprint v1 left H1 `INCONCLUSIVE`: four wallets
+cleared conservative above-baseline outcome gates, but the evidence also found
+below-baseline wallets, many baseline-consistent wallets, and major
+retrospective-data risks. The next sprint must test whether those four
+candidate wallets were visible early enough to remain useful for future
+strategy research.
 
 Exit criteria:
 
-- use `market_outcome_join.csv` as the primary input;
-- restrict analysis to public wallet activity and public resolved outcome
-  labels already collected;
-- define random and naive baselines before measuring results;
-- report aggregate and per-wallet matched-outcome rates with minimum sample
-  gates;
-- report whether H1 is `supported`, `rejected`, or
-  `inconclusive_with_next_blocker`;
-- if H1 is not supported, recommend stopping or narrowing wallet strategy
-  research rather than adding infrastructure;
-- if H1 is supported, recommend the next sprint that most directly tests H2
-  or H3;
+- restrict analysis to the four H1 above-baseline wallets;
+- use existing public wallet activity, lifecycle, and outcome join artifacts;
+- measure first visible wallet activity timestamp versus market expiry;
+- report the share of candidate actions visible with at least 60, 120, and
+  180 seconds remaining;
+- report whether H2 is `SUPPORTED`, `REJECTED`, or `INCONCLUSIVE`;
+- if H2 is rejected, recommend stopping or sharply narrowing public-wallet
+  strategy research;
+- if H2 is supported or still useful but incomplete, recommend the next sprint
+  that most directly tests H3;
 - do not change Wallet Score, tune thresholds, rank wallets for trading,
   compute ROI, Sharpe, market advantage, mark-to-market values, or execution
   quality;

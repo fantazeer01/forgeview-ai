@@ -1067,3 +1067,31 @@ and review loops faster than it was eliminating strategy hypotheses. A
 profit-first hypothesis filter keeps engineering subordinate to evidence and
 forces every sprint to answer whether public wallet activity is moving toward
 a tradable, statistically justified strategy or should be abandoned/narrowed.
+
+## D-062: H1 remains inconclusive and narrows to H2 visibility testing
+
+Status: Accepted
+Decision: Wallet Outcome Skill Baseline Sprint v1 does not support broad
+wallet strategy work, but it also does not reject H1. The sprint classifies H1
+as `INCONCLUSIVE` on current bounded public evidence. Future wallet-strategy
+research may continue only as a narrow H2 visibility-delay test for the four
+wallets that cleared the conservative above-baseline outcome-quality gates:
+
+- `0x088df3b7e5c1b5c2d4b7dc760863153480cf025e`;
+- `0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199`;
+- `0x29a55c2bf8efd1029c001477b34be47d3ca37752`;
+- `0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a`.
+
+The project must not generalize these wallets into a strategy, alter Wallet
+Score, tune Watchlist thresholds, infer copy success, or add broad wallet
+infrastructure from this result. The next authorized task is Wallet Activity
+Visibility Delay Sprint v1.
+
+Reason: The H1 sprint evaluated 28 wallets and 1,788 resolved BTC/ETH/SOL fast
+Up/Down lifecycle rows. The aggregate match rate was 0.524609 against a
+0.500000 random baseline. Four wallets exceeded the population baseline under
+minimum-sample and uncertainty gates, but three wallets showed below-baseline
+evidence, thirteen were baseline-consistent, and eight lacked enough resolved
+positions. Retrospective selection, survivorship bias, bounded history,
+missing public visibility delay, unknown actionable time remaining, missing
+fill certainty, and incomplete wallet history prevent a stronger conclusion.

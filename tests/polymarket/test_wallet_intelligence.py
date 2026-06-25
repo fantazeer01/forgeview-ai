@@ -51,6 +51,11 @@ from polymarket.wallet_intelligence.market_outcome import (
     run_market_outcome_resolution_sprint,
     validate_market_outcome_joins,
 )
+from polymarket.wallet_intelligence.outcome_skill import (
+    build_wallet_outcome_skill_baseline,
+    run_wallet_outcome_skill_baseline,
+    validate_wallet_outcome_skill,
+)
 
 
 class FakeClient:
@@ -1414,6 +1419,125 @@ class WalletMarketOutcomeResolutionTests(unittest.TestCase):
             report = (output_dir / "market_outcome_join_report.md").read_text(encoding="utf-8")
             self.assertIn("not a trading signal", report)
             self.assertIn("not a copy-trading recommendation", report)
+
+
+class WalletOutcomeSkillBaselineTests(unittest.TestCase):
+    def _outcome_rows(self, wallet_id, matched, unmatched, *, asset="BTC"):
+        rows = []
+        for index in range(matched + unmatched):
+            status = "matched_outcome" if index < matched else "unmatched_outcome"
+            outcome = "Up" if status == "matched_outcome" else "Down"
+            rows.append(
+                {
+                    "wallet_id": wallet_id,
+                    "profile_url": f"https://polymarket.com/{wallet_id}",
+                    "condition_id": f"0x{wallet_id[-3:]}{index}",
+                    "token_id": f"token-{wallet_id}-{index}",
+                    "outcome": outcome,
+                    "lifecycle_group_key": f"{wallet_id}|{index}|{outcome}",
+                    "market_slug": f"btc-updown-{index}",
+                    "event_slug": f"btc-updown-{index}",
+                    "market_title": "Bitcoin Up or Down",
+                    "market_type": "fast_crypto_up_down",
+                    "asset_class": asset,
+                    "up_down_market": "true",
+                    "first_activity_timestamp": str(index),
+                    "first_activity_datetime_utc": "2026-06-25T18:45:00+00:00",
+                    "last_activity_timestamp": str(index + 1),
+                    "last_activity_datetime_utc": "2026-06-25T18:46:00+00:00",
+                    "lifecycle_status": "still_open",
+                    "market_id": str(index),
+                    "event_id": "",
+                    "expiry_timestamp": "2026-06-25T19:00:00Z",
+                    "resolution_timestamp": "2026-06-25 19:00:20+00",
+                    "resolved_status": "resolved",
+                    "winning_outcome": "Up",
+                    "outcome_prices": '{"Down": 0.0, "Up": 1.0}',
+                    "lifecycle_resolution_status": status,
+                    "join_confidence": "high",
+                    "join_status": "joined",
+                    "join_reason": "resolved_terminal_outcome",
+                    "metadata_sources": "gamma_markets_slug",
+                    "condition_id_match": "true",
+                    "token_outcome_cross_check": "unavailable",
+                    "conflicting_metadata": "false",
+                }
+            )
+        return rows
+
+    def test_outcome_skill_classifies_above_below_and_insufficient_wallets(self):
+        outcome_rows = (
+            self._outcome_rows("0xabove", 35, 5)
+            + self._outcome_rows("0xbelow", 5, 35)
+            + self._outcome_rows("0xsmall", 4, 4)
+        )
+        score_rows = [{"wallet_id": "0xabove", "wallet_score": "80", "score_band": "high_priority"}]
+        watchlist_rows = [{"wallet_id": "0xabove", "priority_bucket": "high_priority", "reason_codes": "fixture"}]
+
+        rows, summary = build_wallet_outcome_skill_baseline(
+            outcome_rows,
+            score_rows=score_rows,
+            watchlist_rows=watchlist_rows,
+            generated_at="2026-06-26T00:00:00+00:00",
+        )
+
+        by_wallet = {row["wallet_id"]: row for row in rows}
+        self.assertEqual(by_wallet["0xabove"]["evidence_classification"], "above_baseline_evidence")
+        self.assertEqual(by_wallet["0xbelow"]["evidence_classification"], "below_baseline_evidence")
+        self.assertEqual(by_wallet["0xsmall"]["evidence_classification"], "insufficient_evidence")
+        self.assertEqual(summary["final_conclusion"], "INCONCLUSIVE")
+        self.assertTrue(summary["validation"]["all_tested_rows_are_resolved_binary_fast_crypto"])
+        self.assertTrue(validate_wallet_outcome_skill(rows, outcome_rows, outcome_rows)["no_forbidden_metric_fields"])
+
+    def test_outcome_skill_sprint_writes_repeatable_outputs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_csv = root / "market_outcome_join.csv"
+            score_csv = root / "wallet_scores.csv"
+            watchlist_csv = root / "wallet_watchlist.csv"
+            output_dir = root / "skill"
+            outcome_rows = (
+                self._outcome_rows("0xabove", 35, 5)
+                + self._outcome_rows("0xbelow", 5, 35)
+                + self._outcome_rows("0xsmall", 4, 4)
+            )
+            with input_csv.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=list(outcome_rows[0].keys()))
+                writer.writeheader()
+                writer.writerows(outcome_rows)
+            with score_csv.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=["wallet_id", "wallet_score", "score_band"])
+                writer.writeheader()
+                writer.writerow({"wallet_id": "0xabove", "wallet_score": "80", "score_band": "high_priority"})
+            with watchlist_csv.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=["wallet_id", "priority_bucket", "reason_codes"])
+                writer.writeheader()
+                writer.writerow({"wallet_id": "0xabove", "priority_bucket": "high_priority", "reason_codes": "fixture"})
+
+            first = run_wallet_outcome_skill_baseline(
+                input_csv,
+                output_dir,
+                score_csv=score_csv,
+                watchlist_csv=watchlist_csv,
+                generated_at="2026-06-26T00:00:00+00:00",
+            )
+            second = run_wallet_outcome_skill_baseline(
+                input_csv,
+                output_dir,
+                score_csv=score_csv,
+                watchlist_csv=watchlist_csv,
+                generated_at="2026-06-26T00:00:00+00:00",
+            )
+
+            self.assertEqual(first["wallet_count"], 3)
+            self.assertTrue(first["validation"]["repeatable_export"])
+            self.assertEqual(
+                first["reproducibility_hashes"]["wallet_skill_baseline_csv_sha256"],
+                second["reproducibility_hashes"]["wallet_skill_baseline_csv_sha256"],
+            )
+            self.assertTrue((output_dir / "wallet_skill_baseline.csv").exists())
+            self.assertTrue((output_dir / "wallet_skill_summary.json").exists())
+            self.assertTrue((output_dir / "wallet_skill_report.md").exists())
 
 
 if __name__ == "__main__":

@@ -243,8 +243,8 @@ existing six-wallet score fixture. Wallet Copyability Feasibility Sprint v1
 has now completed the broader 30-wallet evidence run. Wallet Market Outcome
 Resolution Sprint v1 joined 2,134 of 2,135 lifecycle rows to public market
 metadata and classified 2,122 rows with resolved outcomes. The active
-successor task is now Wallet Outcome Skill Baseline Sprint v1, a direct H1
-test of whether visible public wallet outcome choices beat a random baseline.
+successor task is now Wallet Activity Visibility Delay Sprint v1, a direct H2
+test over the H1 candidate wallets.
 
 ## Completed milestones
 
@@ -1768,6 +1768,77 @@ NEXT_TASK assessment:
 - it has been replaced by `Wallet Outcome Skill Baseline Sprint v1`, which
   directly tests H1 using the existing `market_outcome_join.csv` evidence;
 - exactly one active task remains.
+
+## Wallet Outcome Skill Baseline Sprint v1
+
+Wallet Outcome Skill Baseline Sprint v1 is complete.
+
+Hypothesis tested:
+
+- H1: Some public wallets consistently make better decisions than random.
+
+Output artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/outcome_skill_baseline_v1/wallet_skill_baseline.csv`
+- `polymarket/models/wallet_intelligence_v1/outcome_skill_baseline_v1/wallet_skill_summary.json`
+- `polymarket/models/wallet_intelligence_v1/outcome_skill_baseline_v1/wallet_skill_report.md`
+
+Evidence base:
+
+- existing market outcome join evidence only;
+- no new public ingestion, live monitoring, capture, wallet/private-key use,
+  order placement, sealed holdout inspection, or holdout evaluation;
+- main test restricted to resolved BTC/ETH/SOL fast Up/Down lifecycle rows.
+
+Observed results:
+
+- wallets evaluated: 28;
+- fast crypto lifecycle positions: 1,789;
+- resolved positions tested: 1,788;
+- matched outcomes: 938;
+- unmatched outcomes: 850;
+- population match rate: 0.524609;
+- random baseline rate: 0.500000;
+- above-baseline evidence wallets: 4;
+- below-baseline evidence wallets: 3;
+- sample-size-consistent wallets: 13;
+- insufficient-evidence wallets: 8.
+
+Above-baseline evidence wallets:
+
+- `0x088df3b7e5c1b5c2d4b7dc760863153480cf025e`;
+- `0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199`;
+- `0x29a55c2bf8efd1029c001477b34be47d3ca37752`;
+- `0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a`.
+
+Evidence against H1:
+
+- three wallets showed below-baseline evidence under the same gates;
+- thirteen wallets were consistent with the population baseline after
+  sample-size adjustment;
+- eight wallets failed the minimum resolved-position sample gate;
+- the wallet set is retrospectively selected and exposed to selection and
+  survivorship bias;
+- the evidence still lacks public visibility delay, actionable time remaining,
+  fill certainty, and complete wallet history.
+
+Final conclusion:
+
+- `INCONCLUSIVE`.
+
+Interpretation:
+
+- H1 is not disproven because four wallets clear conservative above-baseline
+  gates;
+- H1 is not convincingly supported because the same evidence contains
+  below-baseline wallets, many baseline-consistent wallets, and major
+  retrospective-data invalidation risks.
+
+Next active task:
+
+- Wallet Activity Visibility Delay Sprint v1. It should test H2 only for the
+  four H1 above-baseline wallets before any broader wallet strategy work is
+  justified.
 
 ## State update protocol
 

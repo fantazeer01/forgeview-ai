@@ -1,0 +1,110 @@
+{
+  "asset_breakdown": {
+    "BTC": {
+      "matched_outcomes": 735,
+      "resolved_positions": 1425,
+      "unmatched_outcomes": 690
+    },
+    "ETH": {
+      "matched_outcomes": 138,
+      "resolved_positions": 232,
+      "unmatched_outcomes": 94
+    },
+    "SOL": {
+      "matched_outcomes": 65,
+      "resolved_positions": 131,
+      "unmatched_outcomes": 66
+    }
+  },
+  "baseline_statistics": {
+    "minimum_resolved_positions_per_wallet": 30,
+    "population_difference_vs_random": "0.024609",
+    "population_match_rate": "0.524609",
+    "random_baseline_rate": "0.500000",
+    "z_threshold": 1.96
+  },
+  "classification_counts": {
+    "above_baseline_evidence": 4,
+    "below_baseline_evidence": 3,
+    "insufficient_evidence": 8,
+    "sample_size_consistent_with_baseline": 13
+  },
+  "evidence_against_h1": [
+    "3 wallets showed below-baseline evidence under the same gates.",
+    "13 wallets were consistent with the population baseline after sample-size adjustment.",
+    "8 wallets failed the minimum resolved-position sample gate.",
+    "The wallet set is retrospectively selected and therefore exposed to selection and survivorship bias.",
+    "The current evidence does not measure public visibility delay, actionable time remaining, fill certainty, or complete wallet history."
+  ],
+  "evidence_supporting_h1": [
+    "4 wallets exceeded the population baseline under the minimum sample and uncertainty gates.",
+    "The aggregate resolved-position match rate was 0.524609 over 1788 resolved fast-crypto rows.",
+    "Above-baseline wallets: 0x088df3b7e5c1b5c2d4b7dc760863153480cf025e, 0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199, 0x29a55c2bf8efd1029c001477b34be47d3ca37752, 0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a."
+  ],
+  "fast_crypto_positions": 1789,
+  "final_conclusion": "INCONCLUSIVE",
+  "final_conclusion_reason": "H1 is not disproven, but it is not convincingly supported: several wallets clear above-baseline gates, several fail in the opposite direction, and major retrospective-data invalidation risks remain.",
+  "generated_at_utc": "2026-06-25T22:40:24+00:00",
+  "hypothesis": "H1: Some public wallets consistently make better decisions than random.",
+  "input_csv": "polymarket\\models\\wallet_intelligence_v1\\market_outcome_resolution_v1\\market_outcome_join.csv",
+  "insufficient_evidence_positions": 0,
+  "matched_outcomes": 938,
+  "observed_not_interpreted_as": [
+    "financial result",
+    "execution feasibility",
+    "visibility-delay evidence",
+    "liquidity evidence",
+    "complete-history evidence",
+    "trading instruction"
+  ],
+  "output_dir": "polymarket\\models\\wallet_intelligence_v1\\outcome_skill_baseline_v1",
+  "recommended_next_hypothesis": "H2: Wallet Activity Visibility Delay Sprint v1, but only for wallets that cleared the above-baseline H1 gates.",
+  "reproducibility_hashes": {
+    "csv_repeat_export_hash_match": true,
+    "wallet_skill_baseline_csv_sha256": "9f3e94180451a4efdb9d20d31f47fd844813a637ce89e82a60049c657b2706b5",
+    "wallet_skill_report_md_sha256": "548c7a35285190c1334bf14e54494542e39fccbc75154f143fb3c501ecc79b96",
+    "wallet_skill_summary_json_sha256": "9e68b135c56a930233165951c8760d2fa9dee8486bbba1e12bc3dea106abeec4"
+  },
+  "resolved_positions": 1788,
+  "skill_version": "wallet_outcome_skill_baseline_v1",
+  "task": "Wallet Outcome Skill Baseline Sprint v1",
+  "unmatched_outcomes": 850,
+  "unresolved_positions": 1,
+  "validation": {
+    "all_tested_rows_are_resolved_binary_fast_crypto": true,
+    "all_validation_passed": true,
+    "baseline_definitions_present": true,
+    "deterministic_ordering": true,
+    "forbidden_claim_rows": [],
+    "forbidden_metric_fields": [],
+    "matched_counts_reconcile_to_aggregate": true,
+    "no_forbidden_claims": true,
+    "no_forbidden_metric_fields": true,
+    "output_schema_complete": true,
+    "repeatable_export": true,
+    "unresolved_and_insufficient_counts_reconcile": true,
+    "wallet_counts_reconcile_to_aggregate": true
+  },
+  "wallet_count": 28,
+  "wallets_with_above_baseline_evidence": [
+    "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e",
+    "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199",
+    "0x29a55c2bf8efd1029c001477b34be47d3ca37752",
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+  ],
+  "wallets_with_below_baseline_evidence": [
+    "0x1a39c44c2bc6b23cc715a197cc0d76574ab51bb6",
+    "0x3b19d4c9e38af6e6d6923039275d5cfe89bc3655",
+    "0x4bfb3f47ad1a0b494ecaa3c1a9bfba22a4c39f3a"
+  ],
+  "wallets_with_insufficient_evidence": [
+    "0x01b739b360d3c2f6cc8ec84cda900d48650e2eca",
+    "0x1f0ebc543b2d411f66947041625c0aa1ce61cf86",
+    "0x20d2309cd92b797ae7ca175ed828ed8a27fbe29d",
+    "0x251c1a283703beed41590b0875a8dcb8ddd1541f",
+    "0x25f4707c93e4bfdf26cd6c5cc46c5464691cf88e",
+    "0x4af813b3fc6038c55d06ce21531e9dceab093b6d",
+    "0x63ce342161250d705dc0b16df89036c8e5f9ba9a",
+    "0xd0d6053c3c37e727402d84c14069780d360993aa"
+  ]
+}
