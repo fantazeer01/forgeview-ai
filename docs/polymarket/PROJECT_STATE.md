@@ -1,6 +1,6 @@
 # Polymarket Project State
 
-Last updated: June 25, 2026  
+Last updated: June 26, 2026
 Canonical objective: [MASTER_OBJECTIVE.md](MASTER_OBJECTIVE.md)  
 Active task: [NEXT_TASK.md](NEXT_TASK.md)  
 Decision log: [DECISIONS.md](DECISIONS.md)
@@ -196,7 +196,26 @@ wallet data, order-placement data, and authenticated trading data as score
 inputs. No score computation, ranking, ingestion, metric-generation change,
 wallet/private-key use, order placement, holdout inspection, or holdout
 evaluation was implemented.
-The active successor task is Wallet Score Fixture Implementation v1.
+Wallet Score Fixture Implementation v1 is complete under
+`polymarket/models/wallet_intelligence_v1/wallet_score_fixture/`. It added
+`polymarket/wallet_intelligence/wallet_score.py` and the CLI command
+`python -m polymarket.wallet_intelligence wallet-score-fixture`, using only
+approved structural lifecycle metrics from existing `wallet_metrics.csv`. The
+fixture produced `wallet_scores.csv`, `wallet_scores_summary.json`,
+`wallet_score_validation.json`, and `wallet_score_report.md`. It scored six
+seed wallets as structural research-priority records only: 1
+`medium_priority`, 3 `low_priority`, and 2
+`insufficient_visible_structure`; no `high_priority` records appeared in the
+current fixture output. Validation passed for score bounds, deterministic
+score calculation, deterministic ordering, forbidden-input exclusion, missing
+metric handling, repeatable export, allowed-input exact match, component
+bounds, penalty bounds, output schema completeness, and source provenance
+completeness. No PnL, ROI, realized profit, Sharpe, execution quality,
+copyability, alpha claims, mark-to-market values, resolved win/loss outcomes,
+sealed holdout data, private wallet data, order-placement data, authenticated
+trading data, public ingestion, wallet/private-key use, order placement, or
+holdout evaluation was added.
+The active successor task is Wallet Score Fixture Review v1.
 
 ## Completed milestones
 
@@ -498,12 +517,12 @@ ingestion design, a fixture-only trade-history ingester, a bounded public
 trade-history smoke for the six seed profiles, and a small deterministic
 lifecycle reconstruction fixture prototype, a completed lifecycle review,
 bounded structural lifecycle metrics, a Wallet Metrics Readiness Review, and
-a completed Wallet Score Design v1.
-The active successor task is Wallet Score Fixture Implementation v1: implement
-the bounded structural score exactly from the approved design and existing
-`wallet_metrics.csv` only before any deeper history ingestion, expiry joins,
-PnL, reference alignment, copyability delay, queue modelling, trading ranking,
-or execution logic.
+a completed Wallet Score Design v1 and Wallet Score Fixture Implementation
+v1.
+The active successor task is Wallet Score Fixture Review v1: review the
+bounded structural score outputs and validation before any score expansion,
+deeper history ingestion, expiry joins, PnL, reference alignment, copyability
+delay, queue modelling, trading ranking, or execution logic.
 
 Current measured baseline:
 
@@ -585,14 +604,14 @@ optimization, and trading remain unauthorized.
 
 ## Next actions
 
-The single active task is Wallet Score Fixture Implementation v1.
+The single active task is Wallet Score Fixture Review v1.
 Its scope and acceptance criteria are defined in `NEXT_TASK.md`.
 
 ## Latest metrics
 
 Measured June 25, 2026:
 
-- automated tests: 116 passing;
+- automated tests: 120 passing;
 - Wallet Intelligence Research v1 module path:
   `polymarket/wallet_intelligence/`;
 - Wallet Intelligence Research v1 document:

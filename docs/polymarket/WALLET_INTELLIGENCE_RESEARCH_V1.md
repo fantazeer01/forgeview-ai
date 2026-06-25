@@ -883,3 +883,68 @@ and run the Wallet Intelligence and full test suites. It must not launch
 ingestion, alter lifecycle metric generation, compute PnL/ROI/Sharpe, estimate
 copyability, join expiry or mark-to-market data, connect wallets/private keys,
 place orders, inspect sealed holdout outcomes, or run holdout evaluation.
+
+## Wallet Score Fixture Implementation v1
+
+Wallet Score Fixture Implementation v1 is complete.
+
+Code and CLI:
+
+- score implementation lives in `polymarket/wallet_intelligence/wallet_score.py`;
+- the CLI command is:
+  `python -m polymarket.wallet_intelligence wallet-score-fixture`.
+
+Outputs:
+
+- `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_scores.csv`
+- `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_scores_summary.json`
+- `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_score_validation.json`
+- `polymarket/models/wallet_intelligence_v1/wallet_score_fixture/wallet_score_report.md`
+
+Scope and result:
+
+- input: existing
+  `polymarket/models/wallet_intelligence_v1/lifecycle_metrics/wallet_metrics.csv`;
+- source metrics SHA-256:
+  `62cd5e79b1388dedb899b8c48da2f48526c880f3ac3b2332e2b2c6f1961deff3`;
+- wallets scored: 6;
+- score-band distribution: 1 `medium_priority`, 3 `low_priority`, and 2
+  `insufficient_visible_structure`;
+- `high_priority` records: 0;
+- deterministic `wallet_scores.csv` SHA-256:
+  `52ceafde32dc6e6c4d07829e824a83c9b767bc7da4d1b3461188e6cda2e3b2ad`.
+
+Validation:
+
+- score bounds: passed;
+- deterministic score calculation: passed;
+- deterministic ordering: passed;
+- forbidden-input exclusion: passed;
+- missing metric handling: passed;
+- repeatable export: passed;
+- allowed input set exact match: passed;
+- component bounds: passed;
+- penalty bounds: passed;
+- output schema completeness: passed;
+- source provenance completeness: passed;
+- Wallet Intelligence tests: 26 passing;
+- full automated suite: 120 passing.
+
+Strict exclusions:
+
+- no PnL, ROI, realized profit, Sharpe, execution quality, copyability, alpha
+  claims, mark-to-market values, final resolved win/loss outcomes, sealed
+  holdout labels, private wallet data, order-placement data, authenticated
+  trading data, public ingestion, live trading, automatic trade copying,
+  wallet/private-key use, order placement, capture campaign, production model
+  training, sealed holdout inspection, or holdout evaluation was implemented.
+
+Interpretation:
+
+- score bands are structural research-priority labels only;
+- higher scores do not indicate better profitability, alpha, wallet skill,
+  execution quality, copyability, or trading suitability.
+
+Next research task: Wallet Score Fixture Review v1. It should review the
+fixture outputs, component behavior, ordering, validation gates, and
+interpretation language before any score expansion or deeper-history use.

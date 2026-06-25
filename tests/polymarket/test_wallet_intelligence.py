@@ -32,6 +32,11 @@ from polymarket.wallet_intelligence.lifecycle_metrics import (
     compute_wallet_lifecycle_metrics,
     run_lifecycle_metrics,
 )
+from polymarket.wallet_intelligence.wallet_score import (
+    ALLOWED_SCORE_INPUTS,
+    compute_wallet_scores,
+    run_wallet_score_fixture,
+)
 
 
 class FakeClient:
@@ -877,6 +882,132 @@ class WalletLifecycleMetricsTests(unittest.TestCase):
             "wallet_connect",
             "sharpe",
             "roi",
+        )
+        for fragment in forbidden_fragments:
+            self.assertFalse(any(fragment in name.lower() for name in names))
+
+
+class WalletScoreFixtureTests(unittest.TestCase):
+    def _metric(self, **overrides):
+        row = {
+            "wallet_id": "0xwallet",
+            "profile_url": "https://polymarket.com/0xwallet",
+            "total_lifecycle_positions": "50",
+            "still_open_positions": "20",
+            "partial_exits": "25",
+            "full_exits": "0",
+            "oversold_bounded_history": "0",
+            "average_position_size": "100",
+            "median_position_size": "100",
+            "average_buy_count_per_lifecycle": "1.2",
+            "average_sell_count_per_lifecycle": "0.6",
+            "average_events_per_lifecycle": "1.8",
+            "percentage_still_open_positions": "0.4",
+            "percentage_sell_only_lifecycles": "0",
+            "buy_trade_count": "60",
+            "sell_trade_count": "30",
+            "total_visible_bought_size": "5000",
+            "total_visible_sold_size": "3000",
+            "remaining_visible_size": "2000",
+            "oversold_visible_size": "0",
+            "near_flat_residual_count": "1",
+            "fast_crypto_lifecycle_count": "50",
+            "fast_crypto_lifecycle_share": "1",
+            "dominant_asset": "BTC",
+            "asset_concentration": "0.8",
+            "dominant_outcome": "Down",
+            "outcome_concentration": "0.6",
+        }
+        row.update(overrides)
+        return row
+
+    def test_computes_bounded_structural_scores_only(self):
+        rows = [
+            self._metric(),
+            self._metric(
+                wallet_id="0xsmall",
+                total_lifecycle_positions="6",
+                fast_crypto_lifecycle_count="6",
+                fast_crypto_lifecycle_share="1",
+                partial_exits="0",
+                average_sell_count_per_lifecycle="0",
+                average_events_per_lifecycle="20",
+                percentage_still_open_positions="1",
+                oversold_bounded_history="0",
+                near_flat_residual_count="0",
+            ),
+        ]
+        scores, summary = compute_wallet_scores(rows, source_metrics_sha256="hash")
+        self.assertTrue(summary["validation"]["all_validation_passed"])
+        self.assertEqual(scores[0]["wallet_id"], "0xwallet")
+        self.assertEqual(scores[0]["wallet_score"], "83")
+        self.assertEqual(scores[0]["score_band"], "high_priority")
+        self.assertEqual(scores[1]["small_sample_penalty"], "10")
+        self.assertEqual(scores[1]["still_open_penalty"], "15")
+        self.assertEqual(summary["forbidden_input_audit"]["forbidden_inputs_used"], [])
+        self.assertEqual(sorted(summary["forbidden_input_audit"]["allowed_score_inputs"]), sorted(ALLOWED_SCORE_INPUTS))
+
+    def test_missing_required_metric_fails_validation_without_guessing(self):
+        row = self._metric()
+        del row["fast_crypto_lifecycle_share"]
+        scores, summary = compute_wallet_scores([row], source_metrics_sha256="hash")
+        self.assertEqual(scores[0]["missing_required_metric_count"], "1")
+        self.assertFalse(summary["validation"]["missing_metric_handling"])
+        self.assertFalse(summary["validation"]["all_validation_passed"])
+        self.assertIn("fast_crypto_lifecycle_share", summary["validation"]["missing_source_fields"])
+
+    def test_wallet_score_fixture_writes_deterministic_outputs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_csv = root / "wallet_metrics.csv"
+            rows = [
+                self._metric(wallet_id="0xbbb"),
+                self._metric(wallet_id="0xaaa", total_lifecycle_positions="10", fast_crypto_lifecycle_count="0", fast_crypto_lifecycle_share="0"),
+            ]
+            with input_csv.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=list(rows[0].keys()))
+                writer.writeheader()
+                for row in rows:
+                    writer.writerow(row)
+            output = root / "score"
+            first = run_wallet_score_fixture(
+                input_csv,
+                output,
+                generated_at="2026-06-26T00:00:00+00:00",
+            )
+            second = run_wallet_score_fixture(
+                input_csv,
+                output,
+                generated_at="2026-06-26T00:00:00+00:00",
+            )
+            self.assertTrue(first["validation"]["all_validation_passed"])
+            self.assertTrue(first["validation"]["repeatable_export"])
+            self.assertEqual(
+                first["reproducibility_hashes"]["wallet_scores_csv_sha256"],
+                second["reproducibility_hashes"]["wallet_scores_csv_sha256"],
+            )
+            self.assertTrue((output / "wallet_scores.csv").exists())
+            self.assertTrue((output / "wallet_scores_summary.json").exists())
+            self.assertTrue((output / "wallet_score_validation.json").exists())
+            self.assertTrue((output / "wallet_score_report.md").exists())
+            with (output / "wallet_scores.csv").open("r", encoding="utf-8") as handle:
+                score_rows = list(csv.DictReader(handle))
+            self.assertEqual(score_rows[0]["wallet_id"], "0xbbb")
+            self.assertEqual(score_rows[0]["source_metrics_sha256"], first["source_metrics_sha256"])
+
+    def test_wallet_score_module_has_no_execution_or_forbidden_metric_methods(self):
+        import polymarket.wallet_intelligence.wallet_score as wallet_score
+
+        names = dir(wallet_score)
+        forbidden_fragments = (
+            "private_key",
+            "place_order",
+            "copy_trade",
+            "execute_trade",
+            "wallet_connect",
+            "sharpe_ratio",
+            "compute_pnl",
+            "compute_roi",
         )
         for fragment in forbidden_fragments:
             self.assertFalse(any(fragment in name.lower() for name in names))

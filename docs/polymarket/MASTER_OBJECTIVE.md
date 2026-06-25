@@ -1,7 +1,7 @@
 # Polymarket Project - Master Objective
 
 Status: Active  
-Last updated: June 25, 2026  
+Last updated: June 26, 2026
 Authority: Permanent source of truth for the ForgeViewAI Polymarket project
 
 This document defines why the project exists, what constitutes success, and
@@ -391,12 +391,13 @@ insufficient. No model or alpha claim is currently justified.
 
 ## 14. Next milestone
 
-### Wallet Score Fixture Implementation v1
+### Wallet Score Fixture Review v1
 
-The next milestone is to implement the first bounded structural Wallet Score
-fixture using only the approved Wallet Score Design v1 and existing lifecycle
-metrics. This milestone must not treat the score as profitability, alpha, ROI,
-PnL, Sharpe, execution quality, copyability, or live-trading evidence.
+The next milestone is to review the first bounded structural Wallet Score
+fixture before any score expansion, deeper-history weighting, expiry joins, or
+copyability modelling. This milestone must not treat the score as
+profitability, alpha, ROI, PnL, Sharpe, execution quality, copyability, or
+live-trading evidence.
 
 Exit criteria:
 
@@ -404,18 +405,19 @@ Exit criteria:
   feasibility, trade-history ingestion design, fixture-ingester, bounded
   public smoke, lifecycle reconstruction fixture outputs, lifecycle review,
   lifecycle metrics outputs, Wallet Metrics Readiness Review v1, and Wallet
-  Score Design v1;
-- implement the designed fixture score from existing
-  `wallet_metrics.csv` only;
-- produce `wallet_scores.csv`, `wallet_scores_summary.json`,
+  Score Design v1, and Wallet Score Fixture Implementation v1 outputs;
+- review `wallet_scores.csv`, `wallet_scores_summary.json`,
   `wallet_score_validation.json`, and `wallet_score_report.md`;
-- validate score bounds, deterministic ordering, forbidden-input exclusion,
+- confirm score bounds, deterministic ordering, forbidden-input exclusion,
   missing metric handling, repeatable export, component bounds, output schema,
-  and source provenance;
+  and source provenance remain valid;
+- check that score bands are interpreted only as structural research-priority
+  labels and not as wallet-quality, profitability, execution, or copyability
+  labels;
 - recommend exactly one successor task;
-- do not launch new public ingestion or add PnL, reference alignment, expiry
-  joins, mark-to-market, copyability delay, queue modelling, trading ranking,
-  or execution logic;
+- do not launch new public ingestion or add new score inputs, PnL, reference
+  alignment, expiry joins, mark-to-market, copyability delay, queue modelling,
+  trading ranking, or execution logic;
 - keep outputs separate from canonical outcome-prediction datasets,
   repricing datasets, validation data, and sealed holdout data.
 

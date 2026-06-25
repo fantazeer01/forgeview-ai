@@ -14,6 +14,7 @@ from .schema import (
 from .trade_history import run_fixture_ingestion
 from .lifecycle import run_lifecycle_fixture_reconstruction
 from .lifecycle_metrics import run_lifecycle_metrics
+from .wallet_score import run_wallet_score_fixture
 
 __all__ = [
     "LIFECYCLE_POSITION_FIELDS",
@@ -29,5 +30,6 @@ __all__ = [
     "run_fixture_ingestion",
     "run_lifecycle_fixture_reconstruction",
     "run_lifecycle_metrics",
+    "run_wallet_score_fixture",
     "summarize_outputs",
 ]

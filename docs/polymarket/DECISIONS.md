@@ -1,6 +1,6 @@
 # Polymarket Architectural Decisions
 
-Last updated: June 25, 2026
+Last updated: June 26, 2026
 
 This append-only log records durable project choices and their rationale.
 Future sessions should add a decision when work changes architecture, data
@@ -825,3 +825,30 @@ visible structural activity to inspect first, but they cannot establish
 profitability, skill, copyability, or executable edge. The first score must be
 a research triage tool with explicit validation gates, not a performance or
 trading-quality model.
+
+## D-053: Wallet Score fixture implementation is validation-gated and non-executable
+
+Status: Accepted
+Decision: Wallet Score Fixture Implementation v1 is accepted as a deterministic
+fixture implementation of the approved Wallet Score Design v1. It may compute
+a bounded 0-100 structural research-priority score from existing
+`wallet_metrics.csv` only, write `wallet_scores.csv`,
+`wallet_scores_summary.json`, `wallet_score_validation.json`, and
+`wallet_score_report.md`, and validate score bounds, deterministic
+calculation, deterministic ordering, forbidden-input exclusion, missing metric
+handling, repeatable export, component/penalty bounds, output schema
+completeness, and source provenance. The score bands must remain structural
+research-priority labels only.
+
+The fixture implementation does not authorize profitability claims, alpha
+claims, ROI/PnL/Sharpe computation, execution-quality scoring, copyability
+scoring, wallet ranking for trading, mark-to-market joins, final
+win/loss-outcome inputs, sealed holdout access, private wallet data,
+order-placement data, authenticated trading data, public ingestion, live
+trading, automatic trade copying, wallet/private-key use, order placement, or
+holdout evaluation.
+
+Reason: The implementation proves the score can be calculated and exported
+deterministically from approved structural metrics while preserving the
+research-only boundary. A review task should inspect the fixture before any
+score expansion or deeper-history use.
