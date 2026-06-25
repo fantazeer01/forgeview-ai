@@ -6,14 +6,16 @@ Scope: Manual and normalized wallet-behavior research, separate from outcome pre
 
 ## Purpose
 
-Wallet Intelligence Research v1 studies successful Polymarket wallets to
-identify repeatable behavioral patterns in fast crypto markets, especially
-BTC, ETH, and SOL Up or Down markets.
+Wallet Intelligence Research v1 now exists for one reason: to test whether
+public wallet activity can support a statistically justified, reproducible
+strategy for five-minute BTC, ETH, and SOL Polymarket markets.
 
-The branch asks whether observed wallet behavior can inform research
-hypotheses about timing, sizing, side selection, holding period, and market
-selection. It does not copy trades, place orders, connect wallets, or train a
-production model.
+It is not a wallet analytics product and not an infrastructure branch. The
+branch asks whether observed public wallet behavior can confirm or reject
+specific research hypotheses about outcome skill, visibility delay,
+actionable time remaining, structural wallet filters, and combined strategy
+performance. It does not copy trades, place orders, connect wallets, or train
+a production model.
 
 This branch is separate from:
 
@@ -39,6 +41,26 @@ Wallet Intelligence Research v1 must not:
 
 All wallet records are research observations. They may generate hypotheses,
 but they do not authorize execution.
+
+## Strategy Reset
+
+Wallet Intelligence work is governed by `RESEARCH_PRINCIPLES.md`.
+
+Core hypotheses:
+
+- H1: Some public wallets consistently make better decisions than random.
+- H2: Their actions become visible quickly enough.
+- H3: Enough time remains after detection to act.
+- H4: Structural filters improve wallet selection.
+- H5: Combining these signals can outperform random participation over time.
+
+Future Wallet Intelligence sprints must name one primary hypothesis, define
+what evidence would confirm or reject it, and end with one answer:
+`supported`, `rejected`, or `inconclusive_with_next_blocker`.
+
+The immediate successor task is Wallet Outcome Skill Baseline Sprint v1. It
+replaces the broader descriptive Outcome-Aware Metrics framing because H1 must
+be tested before more wallet analytics layers are justified.
 
 ## Research Definition
 
@@ -99,7 +121,15 @@ normalized. Missing data must be explicit rather than inferred.
 
 Wallet Intelligence Research v1 should answer:
 
-- Are profitable wallets trading repricing or final resolution?
+- Do public wallets choose the resolved side more often than a random
+  baseline in five-minute BTC/ETH/SOL markets?
+- Are wallets with better visible outcome decisions detectable before the
+  opportunity disappears?
+- Do structural filters improve the candidate set versus unfiltered public
+  wallets?
+- Can public wallet activity survive realistic delay, spread, slippage, and
+  liquidity assumptions?
+- Are profitable-looking wallets trading repricing or final resolution?
 - Do they buy cheap 10-20 cent outcomes?
 - Do they hold to expiry?
 - Do they enter after Binance momentum?
@@ -1412,8 +1442,35 @@ Biggest blocker:
 - one row lacked enough public metadata after Gamma token fallback and CLOB
   condition fallback.
 
-Next research task:
+Superseded successor note:
 
-- Wallet Outcome-Aware Metrics Sprint v1. It should compute bounded
-  descriptive counts and rates from `market_outcome_join.csv`, preserve all
-  forbidden claims, and leave Wallet Score and Wallet Watchlist unchanged.
+- the previous descriptive successor was Wallet Outcome-Aware Metrics Sprint
+  v1;
+- the Project Strategy Reset replaces it with Wallet Outcome Skill Baseline
+  Sprint v1 because H1 must be tested directly before more descriptive wallet
+  layers are justified.
+
+## Strategic Reset Update
+
+The Project Strategy Reset supersedes the previous descriptive successor.
+
+Reason:
+
+- `market_outcome_join.csv` already provides enough resolved outcome evidence
+  to test H1 directly;
+- adding another generic outcome-aware metrics layer would not by itself
+  decide whether public wallets beat random;
+- future engineering must justify itself by expected information gain toward a
+  profitable public-wallet strategy.
+
+Replacement active task:
+
+- Wallet Outcome Skill Baseline Sprint v1.
+
+Hypothesis:
+
+- H1: Some public wallets consistently make better decisions than random.
+
+Required answer:
+
+- `supported`, `rejected`, or `inconclusive_with_next_blocker`.

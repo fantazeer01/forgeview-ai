@@ -7,7 +7,14 @@ Decision log: [DECISIONS.md](DECISIONS.md)
 
 ## Current stage
 
-Stage 9 - Baseline probability modelling preparation.
+Stage 9 - Public wallet strategy hypothesis testing.
+
+Strategic reset: ForgeViewAI Polymarket work is now governed by
+`RESEARCH_PRINCIPLES.md`. The project is not a general infrastructure project
+or wallet analytics product. Every future sprint must test one named
+hypothesis about whether public wallet activity can support a statistically
+justified, reproducible strategy for five-minute BTC, ETH, and SOL markets, or
+reject that hypothesis quickly.
 
 Repository consolidation note: `research/probability-lab` is now maintained as
 a normal folder inside the root ForgeViewAI repository. Its nested Git metadata
@@ -233,8 +240,11 @@ use, order placement, capture campaigns, production model training, sealed
 holdout inspection, and holdout evaluation.
 Wallet Watchlist v1 and Wallet Watchlist Review v1 are complete from the
 existing six-wallet score fixture. Wallet Copyability Feasibility Sprint v1
-has now completed the broader 30-wallet evidence run. The active successor
-task is Wallet Expiry And Outcome Join Feasibility Sprint v1.
+has now completed the broader 30-wallet evidence run. Wallet Market Outcome
+Resolution Sprint v1 joined 2,134 of 2,135 lifecycle rows to public market
+metadata and classified 2,122 rows with resolved outcomes. The active
+successor task is now Wallet Outcome Skill Baseline Sprint v1, a direct H1
+test of whether visible public wallet outcome choices beat a random baseline.
 
 ## Completed milestones
 
@@ -1642,7 +1652,7 @@ Findings:
   write paths, relayer write paths, wallet/private-key flows, order placement,
   and automatic trade copying remain excluded.
 
-Recommended next engineering endpoint set:
+Endpoint set discovered for future hypothesis tests:
 
 1. `GET https://gamma-api.polymarket.com/markets/slug/{market_slug}`;
 2. `GET https://gamma-api.polymarket.com/events/slug/{event_slug}`;
@@ -1709,9 +1719,55 @@ Strict exclusions preserved:
   wallet/private-key, order-placement, holdout-inspection, holdout-evaluation,
   or capture-campaign logic was added.
 
-Next research task: Wallet Outcome-Aware Metrics Sprint v1. It should compute
-bounded descriptive outcome classifications over `market_outcome_join.csv`
-without changing Wallet Score, Wallet Watchlist, or any trading boundary.
+Superseded successor note:
+
+- the previous descriptive successor was Wallet Outcome-Aware Metrics Sprint
+  v1;
+- the Project Strategy Reset replaces it with Wallet Outcome Skill Baseline
+  Sprint v1 because H1 must be tested directly before more descriptive wallet
+  layers are justified.
+
+## Project Strategy Reset
+
+The project strategy reset is complete.
+
+New strategic document:
+
+- `docs/polymarket/RESEARCH_PRINCIPLES.md`
+
+Core strategic question:
+
+- Can ForgeViewAI build a statistically justified, reproducible strategy for
+  the five-minute BTC, ETH, and SOL Polymarket markets using only public wallet
+  activity?
+
+Core principles:
+
+- profit-first research;
+- evidence before engineering;
+- one research hypothesis per sprint;
+- every sprint must end with a clear answer;
+- tooling exists only to test hypotheses;
+- weak hypotheses should be eliminated quickly;
+- experiments are preferred over architecture;
+- engineering work must justify itself through expected information gain.
+
+Core hypotheses now governing Wallet Intelligence:
+
+- H1: Some public wallets consistently make better decisions than random.
+- H2: Their actions become visible quickly enough.
+- H3: Enough time remains after detection to act.
+- H4: Structural filters improve wallet selection.
+- H5: Combining these signals can outperform random participation over time.
+
+NEXT_TASK assessment:
+
+- the previous `Wallet Outcome-Aware Metrics Sprint v1` was useful but too
+  generic under the reset because it would add a descriptive metrics layer
+  without directly deciding a research hypothesis;
+- it has been replaced by `Wallet Outcome Skill Baseline Sprint v1`, which
+  directly tests H1 using the existing `market_outcome_join.csv` evidence;
+- exactly one active task remains.
 
 ## State update protocol
 

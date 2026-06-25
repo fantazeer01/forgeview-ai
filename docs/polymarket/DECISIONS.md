@@ -1036,3 +1036,34 @@ unresolved conditions, 1 failed join, 0 ambiguous joins, and 0 conflicting
 metadata rows. That coverage is strong enough to compute descriptive
 outcome-aware metrics, but not enough to infer wallet profitability,
 trade-copying viability, or execution results.
+
+## D-061: Wallet research is governed by profit-first hypothesis testing
+
+Status: Accepted
+Decision: ForgeViewAI Polymarket work is reset around one strategic question:
+can a statistically justified, reproducible strategy for five-minute BTC,
+ETH, and SOL Polymarket markets be built using only public wallet activity?
+Future work must test a named hypothesis from `RESEARCH_PRINCIPLES.md` or
+reject it quickly enough to avoid wasted effort.
+
+The core hypotheses are:
+
+- H1: Some public wallets consistently make better decisions than random.
+- H2: Their actions become visible quickly enough.
+- H3: Enough time remains after detection to act.
+- H4: Structural filters improve wallet selection.
+- H5: Combining these signals can outperform random participation over time.
+
+Tasks that merely add infrastructure, metrics, joins, reports, or analytics
+without expected information gain against one of these hypotheses should not
+become active. The previous `Wallet Outcome-Aware Metrics Sprint v1` framing
+is superseded because it was descriptive but did not directly decide a core
+hypothesis. The active successor is `Wallet Outcome Skill Baseline Sprint v1`,
+which directly tests H1 using existing public wallet lifecycle and market
+outcome join evidence.
+
+Reason: The project had begun accumulating Wallet Intelligence infrastructure
+and review loops faster than it was eliminating strategy hypotheses. A
+profit-first hypothesis filter keeps engineering subordinate to evidence and
+forces every sprint to answer whether public wallet activity is moving toward
+a tradable, statistically justified strategy or should be abandoned/narrowed.

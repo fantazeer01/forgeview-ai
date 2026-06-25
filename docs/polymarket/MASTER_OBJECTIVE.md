@@ -14,29 +14,30 @@ one, this document takes precedence.
 Future engineering sessions must read these documents in order:
 
 1. `MASTER_OBJECTIVE.md` - permanent objective and gates.
-2. `PROJECT_STATE.md` - measured current status and blockers.
-3. `NEXT_TASK.md` - the single authorized active task.
-4. `DECISIONS.md` - durable architecture and policy decisions.
-5. `RESEARCH_BACKLOG.md` - future ideas that are not yet active.
+2. `RESEARCH_PRINCIPLES.md` - strategic hypothesis filter.
+3. `PROJECT_STATE.md` - measured current status and blockers.
+4. `NEXT_TASK.md` - the single authorized active task.
+5. `DECISIONS.md` - durable architecture and policy decisions.
+6. `RESEARCH_BACKLOG.md` - future ideas that are not yet active.
 
 After completing work, update the state, decisions, and next-task documents in
 the same change. Code is not fully handed off while those documents are stale.
 
 ## 1. Mission
 
-Build a reproducible quantitative research system that determines whether
-short-window Polymarket crypto markets contain a real, executable statistical
-edge caused by slower probability repricing relative to external crypto
-markets.
+Determine whether ForgeViewAI can build a statistically justified,
+reproducible strategy for the five-minute BTC, ETH, and SOL Polymarket
+markets using only public wallet activity.
 
-The system must distinguish genuine edge from simulation artifacts, data
-errors, market-regime luck, latency advantages that cannot be captured, and
-overfitting.
+The project must distinguish a genuine wallet-activity edge from random
+participation, survivorship bias, public-data delays, incomplete wallet
+history, simulation artifacts, data errors, liquidity limits, market-regime
+luck, and overfitting.
 
 ## 2. Final business objective
 
-Create a defensible decision system that can identify, validate, and monitor
-repeatable mispricing in BTC, ETH, and SOL five-minute UP/DOWN markets.
+Create a defensible research process that can either validate or reject a
+public-wallet strategy for BTC, ETH, and SOL five-minute UP/DOWN markets.
 
 The research system may support a future decision about limited capital
 deployment only after every production-readiness gate in this document is
@@ -48,17 +49,19 @@ private-key, order-placement, or real-money execution capability.
 
 Answer the following question with empirical evidence:
 
-> Does external crypto price movement contain timely, incremental information
-> about five-minute Polymarket outcomes or probability changes after accounting
-> for class imbalance, missing data, latency, spread, slippage, market
-> liquidity, and changing market regimes?
+> Does public wallet activity contain timely, incremental information about
+> five-minute BTC, ETH, and SOL Polymarket outcomes or probability changes
+> after accounting for random baselines, class imbalance, missing data,
+> visibility delay, spread, slippage, liquidity, and changing market regimes?
 
 The project must also determine:
 
-- whether the signal works on public, real-market observations rather than
-  mock data;
-- whether performance persists across BTC, ETH, SOL, and different periods;
-- whether the signal remains after realistic delay and transaction costs;
+- whether selected public wallets make better decisions than random;
+- whether their actions become visible quickly enough to observe;
+- whether enough time remains after detection to act;
+- whether structural wallet filters improve selection;
+- whether combined wallet-activity signals can outperform random
+  participation over time after realistic delay and transaction costs;
 - whether probability estimates are calibrated, not merely directionally
   accurate;
 - whether observed performance survives walk-forward and untouched holdout
@@ -80,6 +83,19 @@ repricing validation, live trading, wallet execution, production modelling,
 and sealed holdout evaluation.
 
 ## 4. Success metrics
+
+Research success:
+
+- each sprint tests one named hypothesis from `RESEARCH_PRINCIPLES.md`;
+- each sprint ends with `supported`, `rejected`, or
+  `inconclusive_with_next_blocker`;
+- negative evidence is preserved as a successful research outcome when it
+  eliminates a weak hypothesis;
+- every engineering task states its expected information gain before it is
+  authorized;
+- descriptive Wallet Intelligence work advances only when it supports a
+  wallet-skill, visibility-delay, actionable-time, structural-filter, or
+  combined-strategy hypothesis.
 
 Engineering success:
 
@@ -330,7 +346,7 @@ engines.
 
 ## 13. Current project status
 
-As of June 23, 2026:
+As of June 26, 2026:
 
 - v1 through v5 engines are implemented;
 - public market discovery, external reference capture, quote capture, lifecycle
@@ -386,37 +402,39 @@ As of June 23, 2026:
 - the smoke decision is `READY_FOR_PRODUCTION_CAPTURE` for research evidence
   collection only.
 
-The engineering pipeline is operational, but statistical evidence is
-insufficient. No model or alpha claim is currently justified.
+The research tooling is operational, but the project is being reset around
+profit-first hypothesis testing. No future sprint should exist merely to add
+metrics, joins, or reports. The next task must directly test a core public
+wallet-activity hypothesis or reject it quickly. No model, strategy, alpha,
+or profitability claim is currently justified.
 
 ## 14. Next milestone
 
-### Wallet Market Expiry Join Sprint v1
+### Wallet Outcome Skill Baseline Sprint v1
 
-The next milestone is to implement the highest-priority missing Wallet
-Intelligence information layer identified by Information Gain Sprint v1:
-public market expiry joins. The prioritization sprint found that expiry has
-the best next-week cost/value ratio because 1,735 of 2,135 lifecycle
-candidates in the 30-wallet batch are still-open and expiry context can
-improve lifecycle interpretation without changing Wallet Score, Wallet
-Watchlist, or copyability classifications.
+The next milestone is a direct H1 test:
+
+> Some public wallets consistently make better decisions than random.
+
+The sprint must use existing public wallet lifecycle and market outcome join
+artifacts to measure whether visible wallet outcome choices beat a predefined
+random baseline in five-minute BTC, ETH, and SOL Polymarket markets. This is a
+hypothesis test, not another general metrics layer.
 
 Exit criteria:
 
-- use existing bounded Wallet Intelligence trade/lifecycle artifacts as the
-  primary input;
-- inventory public endpoint paths that can map condition IDs, token IDs,
-  market slugs, event slugs, and expiry timestamps;
-- measure expiry join coverage on the 30-wallet copyability sprint evidence
-  without opening sealed holdout outcomes or canonical outcome-prediction data;
-- report time-to-expiry, late-window behavior, and held-through-expiry
-  candidates as report-only research context;
-- report fields that remain blocked, including resolved outcomes, timing
-  delay, slippage, liquidity, queue, full-history uncertainty, and external
-  reference alignment;
-- produce deterministic expiry-join artifacts under a separate output path;
-- recommend exactly one successor research sprint from the measured join
-  coverage;
+- use `market_outcome_join.csv` as the primary input;
+- restrict analysis to public wallet activity and public resolved outcome
+  labels already collected;
+- define random and naive baselines before measuring results;
+- report aggregate and per-wallet matched-outcome rates with minimum sample
+  gates;
+- report whether H1 is `supported`, `rejected`, or
+  `inconclusive_with_next_blocker`;
+- if H1 is not supported, recommend stopping or narrowing wallet strategy
+  research rather than adding infrastructure;
+- if H1 is supported, recommend the next sprint that most directly tests H2
+  or H3;
 - do not change Wallet Score, tune thresholds, rank wallets for trading,
   compute ROI, Sharpe, market advantage, mark-to-market values, or execution
   quality;
