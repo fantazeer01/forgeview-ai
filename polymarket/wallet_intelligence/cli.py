@@ -12,6 +12,7 @@ from .ingestion import ingest_wallets, inspect_outputs, summarize_outputs
 from .trade_history import DEFAULT_FIXTURE, DEFAULT_FIXTURE_OUTPUT, run_fixture_ingestion
 from .trade_history import DEFAULT_SMOKE_OUTPUT, run_bounded_public_smoke
 from .lifecycle import DEFAULT_LIFECYCLE_INPUT, DEFAULT_LIFECYCLE_OUTPUT, run_lifecycle_fixture_reconstruction
+from .lifecycle_metrics import DEFAULT_LIFECYCLE_METRICS_INPUT, DEFAULT_LIFECYCLE_METRICS_OUTPUT, run_lifecycle_metrics
 
 
 DEFAULT_INPUT = Path("polymarket/wallet_intelligence/watched_wallets.example.csv")
@@ -74,6 +75,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     lifecycle.add_argument("--input", type=Path, default=DEFAULT_LIFECYCLE_INPUT)
     lifecycle.add_argument("--output", type=Path, default=DEFAULT_LIFECYCLE_OUTPUT)
+
+    lifecycle_metrics = subparsers.add_parser(
+        "lifecycle-metrics",
+        help="Compute bounded wallet-level lifecycle metrics from lifecycle positions.",
+    )
+    lifecycle_metrics.add_argument("--input", type=Path, default=DEFAULT_LIFECYCLE_METRICS_INPUT)
+    lifecycle_metrics.add_argument("--output", type=Path, default=DEFAULT_LIFECYCLE_METRICS_OUTPUT)
     return parser
 
 
@@ -130,6 +138,15 @@ def main(argv: list[str] | None = None) -> int:
         print(
             json.dumps(
                 run_lifecycle_fixture_reconstruction(args.input, args.output),
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return 0
+    if args.command == "lifecycle-metrics":
+        print(
+            json.dumps(
+                run_lifecycle_metrics(args.input, args.output),
                 indent=2,
                 sort_keys=True,
             )

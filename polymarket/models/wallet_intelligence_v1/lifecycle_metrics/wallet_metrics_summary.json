@@ -1,0 +1,54 @@
+{
+  "aggregate": {
+    "buy_trade_count": 543,
+    "near_flat_residual_count": 10,
+    "sell_only_lifecycles": 2,
+    "sell_trade_count": 57,
+    "status_counts": {
+      "oversold_bounded_history": 2,
+      "partial_exit": 36,
+      "still_open": 74
+    },
+    "total_lifecycle_positions": 112,
+    "wallets_analyzed": 6
+  },
+  "generated_at_utc": "2026-06-25T20:48:58+00:00",
+  "input_csv": "polymarket\\models\\wallet_intelligence_v1\\lifecycle_reconstruction_fixture\\lifecycle_positions.csv",
+  "input_rows": 112,
+  "near_flat_residual_threshold_shares": "0.1",
+  "not_computed": [
+    "PnL",
+    "ROI",
+    "Sharpe",
+    "copyability",
+    "wallet scoring",
+    "wallet ranking",
+    "mark-to-market values",
+    "expiry joins",
+    "Binance/reference alignment",
+    "queue modelling"
+  ],
+  "output_dir": "polymarket\\models\\wallet_intelligence_v1\\lifecycle_metrics",
+  "recommended_next_task": "Wallet Lifecycle Metrics Review v1",
+  "reproducibility_hashes": {
+    "deterministic_csv_repeat_export": true,
+    "wallet_lifecycle_metrics_csv_sha256": "62cd5e79b1388dedb899b8c48da2f48526c880f3ac3b2332e2b2c6f1961deff3",
+    "wallet_metrics_csv_sha256": "62cd5e79b1388dedb899b8c48da2f48526c880f3ac3b2332e2b2c6f1961deff3"
+  },
+  "task": "Wallet Lifecycle Metrics v1",
+  "validation": {
+    "all_validation_passed": true,
+    "buy_trade_count_matches": true,
+    "decimal_metric_fields_parse": true,
+    "deterministic_csv_repeat_export": true,
+    "deterministic_wallet_ordering": true,
+    "forbidden_metric_fields": [],
+    "forbidden_metric_fields_absent": true,
+    "input_position_count_matches": true,
+    "sell_trade_count_matches": true,
+    "share_fields_in_range": true,
+    "status_count_conservation": true,
+    "wallet_coverage": true
+  },
+  "wallets_analyzed": 6
+}

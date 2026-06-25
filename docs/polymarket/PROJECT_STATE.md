@@ -153,7 +153,23 @@ ordering gained dedupe/provenance tie-breakers. No public ingestion, expiry
 join, mark-to-market PnL, Binance/reference alignment, copyability-delay
 model, queue model, scoring, wallet/private-key use, order placement, holdout
 inspection, or holdout evaluation was added.
-The active successor task is Wallet Lifecycle Metrics v1.
+Wallet Lifecycle Metrics v1 is complete under
+`polymarket/models/wallet_intelligence_v1/lifecycle_metrics/`. It added a
+bounded structural metrics layer over existing lifecycle positions only,
+producing `wallet_metrics.csv`, `wallet_metrics_summary.json`, and
+`wallet_metrics_report.md`. The run analyzed 6 wallets and 112 lifecycle
+position candidates, preserving the existing status counts of 74 still-open,
+36 partial exits, 0 full exits, and 2 bounded-history oversold candidates. It
+reported 543 visible BUY trades, 57 visible SELL trades, 2 SELL-only
+lifecycles, and 10 near-flat residual groups using a documented 0.1-share
+review-only threshold. Validation passed for wallet coverage, position-count
+conservation, status-count conservation, BUY/SELL count matching, decimal
+metric parsing, share ranges, deterministic wallet ordering, deterministic
+CSV repeat export, and forbidden metric exclusion. It did not compute PnL,
+ROI, Sharpe, copyability, wallet scoring/ranking, mark-to-market values,
+expiry joins, reference alignment, queue modelling, execution, wallet/private
+key use, order placement, holdout inspection, or holdout evaluation.
+The active successor task is Wallet Lifecycle Metrics Review v1.
 
 ## Completed milestones
 
@@ -454,10 +470,10 @@ behavior metrics, a deep-history feasibility review, a public trade-history
 ingestion design, a fixture-only trade-history ingester, a bounded public
 trade-history smoke for the six seed profiles, and a small deterministic
 lifecycle reconstruction fixture prototype plus a completed lifecycle review.
-The active successor task is Wallet Lifecycle Metrics v1: compute bounded,
-descriptive wallet-level lifecycle metrics from the existing lifecycle
-positions only, without adding ingestion, expiry joins, PnL, reference
-alignment, copyability delay, queue modelling, scoring, or execution logic.
+The active successor task is Wallet Lifecycle Metrics Review v1: review the
+bounded structural wallet-level lifecycle metrics before any deeper history
+ingestion, expiry joins, PnL, reference alignment, copyability delay, queue
+modelling, scoring, or execution logic.
 
 Current measured baseline:
 
@@ -539,14 +555,14 @@ optimization, and trading remain unauthorized.
 
 ## Next actions
 
-The single active task is Wallet Lifecycle Metrics v1.
+The single active task is Wallet Lifecycle Metrics Review v1.
 Its scope and acceptance criteria are defined in `NEXT_TASK.md`.
 
 ## Latest metrics
 
 Measured June 25, 2026:
 
-- automated tests: 113 passing;
+- automated tests: 116 passing;
 - Wallet Intelligence Research v1 module path:
   `polymarket/wallet_intelligence/`;
 - Wallet Intelligence Research v1 document:
@@ -634,6 +650,17 @@ Measured June 25, 2026:
   `wallet_id|condition_id|token_id|outcome` derivation;
 - Wallet Intelligence lifecycle ordering hardening: dedupe and provenance
   tie-breakers added;
+- Wallet Intelligence lifecycle metrics output path:
+  `polymarket/models/wallet_intelligence_v1/lifecycle_metrics/`;
+- Wallet Intelligence lifecycle metrics wallets analyzed: 6;
+- Wallet Intelligence lifecycle metrics positions analyzed: 112;
+- Wallet Intelligence lifecycle metrics status counts: 74 still open, 36
+  partial exits, 0 full exits, 2 bounded-history oversold;
+- Wallet Intelligence lifecycle metrics visible BUY / SELL trades: 543 / 57;
+- Wallet Intelligence lifecycle metrics sell-only lifecycles: 2;
+- Wallet Intelligence lifecycle metrics near-flat residual count: 10 at a
+  0.1-share review-only threshold;
+- Wallet Intelligence lifecycle metrics validation passed: true;
 - Wallet Intelligence copyability overclaim allowed: false;
 - Wallet Intelligence holdout outcomes read: false;
 - Wallet Intelligence capture campaigns launched: 0;

@@ -1,6 +1,6 @@
 # Polymarket Architectural Decisions
 
-Last updated: June 24, 2026
+Last updated: June 25, 2026
 
 This append-only log records durable project choices and their rationale.
 Future sessions should add a decision when work changes architecture, data
@@ -760,3 +760,23 @@ small residuals as closed positions would invent a tolerance policy and could
 overstate exits from a one-page public history window. Exact accounting keeps
 the fixture reproducible and descriptive while preserving room for a future
 reviewed dust policy.
+
+## D-050: Wallet lifecycle metrics are structural only
+
+Status: Accepted
+Decision: Wallet Lifecycle Metrics v1 computes only bounded structural metrics
+from existing `lifecycle_positions.csv` rows. Authorized metrics include
+wallet-level lifecycle counts, status counts and shares, BUY/SELL event
+counts, visible bought/sold/remaining/oversold sizes, average and median
+visible position size, average event counts per lifecycle, SELL-only
+lifecycle share, near-flat residual counts under a documented review-only
+threshold, asset/outcome concentration, and fast-crypto lifecycle share. The
+metrics layer must not compute PnL, ROI, Sharpe, copyability, wallet scoring,
+wallet ranking, mark-to-market values, expiry joins, Binance/reference
+alignment, queue modelling, execution logic, wallet/private-key logic, order
+placement, sealed holdout inspection, or holdout evaluation.
+
+Reason: Structural lifecycle summaries are useful for research triage, but
+bounded one-page public history does not support value, ranking, copyability,
+or execution conclusions. Keeping the first metrics layer structural preserves
+the descriptive Wallet Intelligence boundary.

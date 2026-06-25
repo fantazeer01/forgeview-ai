@@ -28,6 +28,10 @@ from polymarket.wallet_intelligence.lifecycle import (
     reconstruct_lifecycle_positions,
     run_lifecycle_fixture_reconstruction,
 )
+from polymarket.wallet_intelligence.lifecycle_metrics import (
+    compute_wallet_lifecycle_metrics,
+    run_lifecycle_metrics,
+)
 
 
 class FakeClient:
@@ -737,6 +741,143 @@ class WalletLifecycleReconstructionTests(unittest.TestCase):
 
         names = dir(lifecycle)
         forbidden_fragments = ("private_key", "place_order", "copy_trade", "execute_trade", "wallet_connect")
+        for fragment in forbidden_fragments:
+            self.assertFalse(any(fragment in name.lower() for name in names))
+
+
+class WalletLifecycleMetricsTests(unittest.TestCase):
+    def _position(self, **overrides):
+        row = {
+            "wallet_id": "0xwallet",
+            "profile_url": "https://polymarket.com/0xwallet",
+            "condition_id": "0xcond",
+            "token_id": "123",
+            "outcome": "Up",
+            "lifecycle_group_key": "0xwallet|0xcond|123|Up",
+            "market_slug": "btc-updown-15m-fixture",
+            "event_slug": "btc-updown-15m-fixture",
+            "market_title": "Bitcoin Up or Down - Fixture",
+            "market_type": "fast_crypto_up_down",
+            "asset_class": "BTC",
+            "up_down_market": "true",
+            "first_activity_timestamp": "1771327000",
+            "first_activity_datetime_utc": "2026-02-17T10:36:40+00:00",
+            "last_activity_timestamp": "1771327000",
+            "last_activity_datetime_utc": "2026-02-17T10:36:40+00:00",
+            "buy_trade_count": "1",
+            "sell_trade_count": "0",
+            "total_bought_size": "10",
+            "total_sold_size": "0",
+            "remaining_size": "10",
+            "oversold_size": "0",
+            "weighted_average_entry_price": "0.2",
+            "weighted_average_exit_price": "",
+            "status": "still_open",
+            "negative_position_detected": "false",
+            "negative_position_reason": "",
+            "position_size_conserved": "true",
+            "transaction_hashes": "0xaaa",
+            "data_quality_flags": "none",
+        }
+        row.update(overrides)
+        return row
+
+    def test_computes_structural_wallet_metrics(self):
+        rows = [
+            self._position(total_bought_size="10", remaining_size="10", buy_trade_count="1"),
+            self._position(
+                lifecycle_group_key="0xwallet|0xcond|456|Down",
+                token_id="456",
+                outcome="Down",
+                status="partial_exit",
+                buy_trade_count="2",
+                sell_trade_count="1",
+                total_bought_size="5",
+                total_sold_size="4.95",
+                remaining_size="0.05",
+            ),
+            self._position(
+                wallet_id="0xother",
+                profile_url="https://polymarket.com/0xother",
+                lifecycle_group_key="0xother|0xcond|789|Up",
+                status="oversold_bounded_history",
+                buy_trade_count="0",
+                sell_trade_count="1",
+                total_bought_size="0",
+                total_sold_size="3",
+                remaining_size="0",
+                oversold_size="3",
+            ),
+        ]
+        metrics, summary = compute_wallet_lifecycle_metrics(rows)
+        self.assertEqual(summary["wallets_analyzed"], 2)
+        self.assertTrue(summary["validation"]["all_validation_passed"])
+        first = metrics[0]
+        self.assertEqual(first["wallet_id"], "0xother")
+        self.assertEqual(first["percentage_sell_only_lifecycles"], "1")
+        second = metrics[1]
+        self.assertEqual(second["total_lifecycle_positions"], "2")
+        self.assertEqual(second["still_open_positions"], "1")
+        self.assertEqual(second["partial_exits"], "1")
+        self.assertEqual(second["near_flat_residual_count"], "1")
+        self.assertEqual(second["average_events_per_lifecycle"], "2")
+
+    def test_lifecycle_metrics_writes_deterministic_outputs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_csv = root / "lifecycle_positions.csv"
+            with input_csv.open("w", encoding="utf-8", newline="") as handle:
+                fieldnames = list(self._position().keys())
+                writer = csv.DictWriter(handle, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerow(self._position())
+                writer.writerow(
+                    self._position(
+                        lifecycle_group_key="0xwallet|0xcond|456|Down",
+                        token_id="456",
+                        outcome="Down",
+                        status="full_exit",
+                        buy_trade_count="1",
+                        sell_trade_count="1",
+                        total_bought_size="7",
+                        total_sold_size="7",
+                        remaining_size="0",
+                    )
+                )
+            output = root / "metrics"
+            first = run_lifecycle_metrics(
+                input_csv,
+                output,
+                generated_at="2026-06-24T00:00:00+00:00",
+            )
+            second = run_lifecycle_metrics(
+                input_csv,
+                output,
+                generated_at="2026-06-24T00:00:00+00:00",
+            )
+            self.assertTrue(first["validation"]["all_validation_passed"])
+            self.assertTrue(first["validation"]["deterministic_csv_repeat_export"])
+            self.assertEqual(
+                first["reproducibility_hashes"]["wallet_metrics_csv_sha256"],
+                second["reproducibility_hashes"]["wallet_metrics_csv_sha256"],
+            )
+            self.assertTrue((output / "wallet_metrics.csv").exists())
+            self.assertTrue((output / "wallet_metrics_summary.json").exists())
+            self.assertTrue((output / "wallet_metrics_report.md").exists())
+
+    def test_lifecycle_metrics_module_has_no_execution_or_scoring_methods(self):
+        import polymarket.wallet_intelligence.lifecycle_metrics as lifecycle_metrics
+
+        names = dir(lifecycle_metrics)
+        forbidden_fragments = (
+            "private_key",
+            "place_order",
+            "copy_trade",
+            "execute_trade",
+            "wallet_connect",
+            "sharpe",
+            "roi",
+        )
         for fragment in forbidden_fragments:
             self.assertFalse(any(fragment in name.lower() for name in names))
 

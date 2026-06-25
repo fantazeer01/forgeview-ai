@@ -13,6 +13,7 @@ from .schema import (
 )
 from .trade_history import run_fixture_ingestion
 from .lifecycle import run_lifecycle_fixture_reconstruction
+from .lifecycle_metrics import run_lifecycle_metrics
 
 __all__ = [
     "LIFECYCLE_POSITION_FIELDS",
@@ -27,5 +28,6 @@ __all__ = [
     "inspect_outputs",
     "run_fixture_ingestion",
     "run_lifecycle_fixture_reconstruction",
+    "run_lifecycle_metrics",
     "summarize_outputs",
 ]

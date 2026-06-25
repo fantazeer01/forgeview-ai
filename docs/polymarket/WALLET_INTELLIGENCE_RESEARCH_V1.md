@@ -685,3 +685,61 @@ expiry joins, compute PnL, add Binance/reference alignment, estimate
 copyability delay, model queue priority, add scoring, place orders, connect
 wallets/private keys, inspect sealed holdout outcomes, or run holdout
 evaluation.
+
+## Wallet Lifecycle Metrics v1
+
+Wallet Lifecycle Metrics v1 is complete.
+
+Code and CLI:
+
+- metrics logic lives in
+  `polymarket/wallet_intelligence/lifecycle_metrics.py`;
+- the CLI command is:
+  `python -m polymarket.wallet_intelligence lifecycle-metrics`.
+
+Outputs:
+
+- `polymarket/models/wallet_intelligence_v1/lifecycle_metrics/wallet_metrics.csv`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_metrics/wallet_metrics_summary.json`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_metrics/wallet_metrics_report.md`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_metrics/wallet_lifecycle_metrics.csv`
+
+Scope and result:
+
+- input: existing
+  `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/lifecycle_positions.csv`;
+- wallets analyzed: 6;
+- lifecycle positions analyzed: 112;
+- status counts: 74 still-open, 36 partial exits, 0 full exits, and 2
+  bounded-history oversold;
+- visible BUY / SELL trade counts: 543 / 57;
+- SELL-only lifecycles: 2;
+- near-flat residual groups: 10 at a documented 0.1-share review-only
+  threshold;
+- deterministic CSV repeat export: true.
+
+Validation:
+
+- wallet coverage: passed;
+- input position count matching: passed;
+- status-count conservation: passed;
+- BUY/SELL count matching: passed;
+- decimal metric parsing: passed;
+- share fields in range: passed;
+- forbidden metric fields absent: passed;
+- deterministic wallet ordering: passed;
+- deterministic CSV repeat export: passed;
+- Wallet Intelligence tests: 22 passing;
+- full automated suite: 116 passing.
+
+Strict exclusions:
+
+- no PnL, ROI, Sharpe, copyability, wallet scoring, wallet ranking,
+  mark-to-market values, expiry joins, Binance/reference alignment, queue
+  modelling, public ingestion, live trading, wallet/private-key use, order
+  placement, holdout inspection, or holdout evaluation was implemented.
+
+Next research task: Wallet Lifecycle Metrics Review v1. It should review the
+structural metrics outputs for interpretability, confirm the near-flat
+threshold is documented correctly, and decide whether any future bounded
+deeper-history task is justified without adding scoring or execution logic.
