@@ -623,3 +623,65 @@ Next research task: Wallet Lifecycle Reconstruction Review v1. It should
 review the lifecycle candidates, quantify which groups are interpretable from
 bounded public history, and decide whether a next bounded metrics task is
 justified without adding execution or copy-trading logic.
+
+## Wallet Lifecycle Reconstruction Review v1
+
+Wallet Lifecycle Reconstruction Review v1 is complete.
+
+Outputs:
+
+- `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_review/lifecycle_review_report.md`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_review/lifecycle_review_report.json`
+
+Files inspected:
+
+- `polymarket/wallet_intelligence/lifecycle.py`
+- `polymarket/wallet_intelligence/schema.py`
+- `polymarket/wallet_intelligence/cli.py`
+- `tests/polymarket/test_wallet_intelligence.py`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/lifecycle_positions.csv`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/lifecycle_summary.json`
+- `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/lifecycle_validation.json`
+
+Review findings:
+
+- full-exit count is 0 because no group with both BUY and SELL rows has exact
+  equality between total bought size and total sold size;
+- 36 groups contain both BUY and SELL rows and remain partial exits under the
+  exact-size policy;
+- still-open status is correct for groups with visible BUY rows and no visible
+  SELL rows, but it means still open within the bounded smoke window, not
+  necessarily still open in complete wallet history;
+- the two bounded-history oversold groups are SELL-only XRP Up/Down groups
+  where prior buys are missing from the one-page public smoke window;
+- BUY/SELL semantics are consistent with the current normalized public
+  activity rows, where BUY maps to `entry_candidate` and SELL maps to
+  `exit_candidate`;
+- grouping by wallet, condition ID, token ID, and outcome is sufficient for
+  the fixture prototype because it separates paired outcomes in the same
+  market;
+- deterministic ordering was adequate for the current data, and was hardened
+  with dedupe/provenance tie-breakers during review.
+
+Bounded correctness fixes:
+
+- lifecycle group keys are now derived from explicit row fields rather than
+  trusting the precomputed `lifecycle_group_key` string;
+- deterministic ordering now includes `dedupe_key`, `raw_payload_hash`,
+  `source_endpoint_name`, and `source_fetch_timestamp` after the existing
+  timestamp, transaction hash, side, price, and size tie-breakers.
+
+Tests:
+
+- Wallet Intelligence tests: 19 passing;
+- full automated suite: 113 passing.
+
+Next research task: Wallet Lifecycle Metrics v1. It should compute bounded,
+descriptive wallet-level lifecycle metrics from the existing lifecycle
+positions only, including status counts, partial-exit frequency,
+bounded-history gap rate, near-flat residual counts, asset/outcome
+concentration, and wallet-level summaries. It must not launch ingestion, add
+expiry joins, compute PnL, add Binance/reference alignment, estimate
+copyability delay, model queue priority, add scoring, place orders, connect
+wallets/private keys, inspect sealed holdout outcomes, or run holdout
+evaluation.

@@ -139,7 +139,21 @@ position size. It does not perform expiry joins, mark-to-market PnL,
 Binance/reference alignment, copyability-delay estimation, queue-priority
 modelling, live trading, order placement, wallet/private-key use, holdout
 inspection, or holdout evaluation.
-The active successor task is Wallet Lifecycle Reconstruction Review v1.
+Wallet Lifecycle Reconstruction Review v1 is complete under
+`polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_review/`.
+It reviewed the lifecycle implementation, tests, and fixture outputs, and
+confirmed that the zero full-exit count is explained by exact-size accounting:
+36 groups contain both BUY and SELL rows, but none have equal total bought and
+sold size. Still-open, partial-exit, and bounded-history oversold
+classification are correct for the one-page public smoke window, with the
+important limitation that visible status is not necessarily complete wallet
+status. During review, lifecycle grouping was hardened to derive keys from
+explicit wallet, condition, token, and outcome fields, and deterministic
+ordering gained dedupe/provenance tie-breakers. No public ingestion, expiry
+join, mark-to-market PnL, Binance/reference alignment, copyability-delay
+model, queue model, scoring, wallet/private-key use, order placement, holdout
+inspection, or holdout evaluation was added.
+The active successor task is Wallet Lifecycle Metrics v1.
 
 ## Completed milestones
 
@@ -439,11 +453,11 @@ Wallet Intelligence Research v1 now has bounded public-data ingestion,
 behavior metrics, a deep-history feasibility review, a public trade-history
 ingestion design, a fixture-only trade-history ingester, a bounded public
 trade-history smoke for the six seed profiles, and a small deterministic
-lifecycle reconstruction fixture prototype. The active successor task is
-Wallet Lifecycle Reconstruction Review v1: review the prototype outputs and
-decide whether lifecycle metrics can be interpreted from the bounded public
-history without overclaiming holding time, copyability, queue position, fill
-priority, Binance-lag alignment, or strategy intent.
+lifecycle reconstruction fixture prototype plus a completed lifecycle review.
+The active successor task is Wallet Lifecycle Metrics v1: compute bounded,
+descriptive wallet-level lifecycle metrics from the existing lifecycle
+positions only, without adding ingestion, expiry joins, PnL, reference
+alignment, copyability delay, queue modelling, scoring, or execution logic.
 
 Current measured baseline:
 
@@ -525,14 +539,14 @@ optimization, and trading remain unauthorized.
 
 ## Next actions
 
-The single active task is Wallet Lifecycle Reconstruction Review v1.
+The single active task is Wallet Lifecycle Metrics v1.
 Its scope and acceptance criteria are defined in `NEXT_TASK.md`.
 
 ## Latest metrics
 
 Measured June 25, 2026:
 
-- automated tests: 112 passing;
+- automated tests: 113 passing;
 - Wallet Intelligence Research v1 module path:
   `polymarket/wallet_intelligence/`;
 - Wallet Intelligence Research v1 document:
@@ -612,6 +626,14 @@ Measured June 25, 2026:
 - Wallet Intelligence lifecycle repeatable CSV output: true;
 - Wallet Intelligence lifecycle unexpected negative position groups: 0;
 - Wallet Intelligence lifecycle bounded-history missing-prior-buy groups: 2;
+- Wallet Intelligence lifecycle review output path:
+  `polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_review/`;
+- Wallet Intelligence lifecycle groups with both BUY and SELL rows: 36;
+- Wallet Intelligence lifecycle exact full-exit groups: 0;
+- Wallet Intelligence lifecycle current grouping hardening: explicit
+  `wallet_id|condition_id|token_id|outcome` derivation;
+- Wallet Intelligence lifecycle ordering hardening: dedupe and provenance
+  tie-breakers added;
 - Wallet Intelligence copyability overclaim allowed: false;
 - Wallet Intelligence holdout outcomes read: false;
 - Wallet Intelligence capture campaigns launched: 0;

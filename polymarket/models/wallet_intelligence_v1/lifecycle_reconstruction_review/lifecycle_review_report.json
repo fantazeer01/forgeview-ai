@@ -1,0 +1,56 @@
+{
+  "bounded_correctness_fixes": [
+    "Lifecycle group keys are now derived from explicit wallet_id, condition_id, token_id, and outcome fields instead of trusting a precomputed string.",
+    "Deterministic ordering now includes dedupe_key, raw_payload_hash, source_endpoint_name, and source_fetch_timestamp as additional stable tie-breakers."
+  ],
+  "confirmed_invariants": {
+    "bounded_history_missing_prior_buy_groups": 2,
+    "deterministic_ordering": true,
+    "full_exit_candidates": 0,
+    "input_rows": 600,
+    "lifecycle_positions": 112,
+    "partial_exit_candidates": 36,
+    "position_size_conservation": true,
+    "repeatable_output": true,
+    "still_open_candidates": 74,
+    "unexpected_negative_position_groups": 0
+  },
+  "files_inspected": [
+    "polymarket/wallet_intelligence/lifecycle.py",
+    "polymarket/wallet_intelligence/schema.py",
+    "polymarket/wallet_intelligence/cli.py",
+    "tests/polymarket/test_wallet_intelligence.py",
+    "polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/lifecycle_positions.csv",
+    "polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/lifecycle_summary.json",
+    "polymarket/models/wallet_intelligence_v1/lifecycle_reconstruction_fixture/lifecycle_validation.json"
+  ],
+  "full_exit_count_explanation": "No group with both BUY and SELL rows has exact equality between total bought size and total sold size. Near-flat residuals remain partial exits under the current exact-size policy.",
+  "known_limitations": [
+    "one-page public smoke history can omit prior buys or later sells",
+    "REDEEM and resolution rows are not handled",
+    "expiry joins are not present",
+    "holding time is not reliable",
+    "mark-to-market and realized PnL are not computed",
+    "Binance/reference alignment is not present",
+    "copyability delay, liquidity, fill priority, and queue position are unavailable"
+  ],
+  "recommended_next_task": "Wallet Lifecycle Metrics v1",
+  "safety_boundary": {
+    "copyability_delay_added": false,
+    "expiry_joins_added": false,
+    "holdout_evaluation_run": false,
+    "holdout_outcomes_inspected": false,
+    "live_trading_added": false,
+    "mark_to_market_pnl_added": false,
+    "orders_added": false,
+    "public_ingestion_launched": false,
+    "queue_modeling_added": false,
+    "reference_alignment_added": false,
+    "wallet_private_key_use": false
+  },
+  "suspicious_observations": [
+    "Several partial exits are near-flat by small residual sizes and may require a future explicit precision policy.",
+    "The two oversold bounded-history groups are XRP Up/Down rows, not BTC/ETH/SOL rows."
+  ],
+  "task": "Wallet Lifecycle Reconstruction Review v1"
+}

@@ -30,7 +30,18 @@ def load_trade_history_csv(path: Path) -> list[dict[str, str]]:
         return [dict(row) for row in csv.DictReader(handle)]
 
 
-def deterministic_trade_sort_key(row: dict[str, str]) -> tuple[str, str, str, str, int, str, str, str, str]:
+def lifecycle_group_key(row: dict[str, str]) -> str:
+    return "|".join(
+        [
+            (row.get("wallet_id") or "").lower(),
+            (row.get("condition_id") or "").lower(),
+            row.get("token_id") or "",
+            row.get("outcome") or "",
+        ]
+    )
+
+
+def deterministic_trade_sort_key(row: dict[str, str]) -> tuple[str, str, str, str, int, str, str, str, str, str, str, str, str]:
     return (
         (row.get("wallet_id") or "").lower(),
         (row.get("condition_id") or "").lower(),
@@ -41,6 +52,10 @@ def deterministic_trade_sort_key(row: dict[str, str]) -> tuple[str, str, str, st
         row.get("side") or "",
         row.get("price") or "",
         row.get("size") or "",
+        row.get("dedupe_key") or "",
+        row.get("raw_payload_hash") or "",
+        row.get("source_endpoint_name") or "",
+        row.get("source_fetch_timestamp") or "",
     )
 
 
@@ -48,15 +63,7 @@ def reconstruct_lifecycle_positions(rows: list[dict[str, str]]) -> tuple[list[Li
     ordered = sorted(rows, key=deterministic_trade_sort_key)
     grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
     for row in ordered:
-        key = row.get("lifecycle_group_key") or "|".join(
-            [
-                (row.get("wallet_id") or "").lower(),
-                (row.get("condition_id") or "").lower(),
-                row.get("token_id") or "",
-                row.get("outcome") or "",
-            ]
-        )
-        grouped[key].append(row)
+        grouped[lifecycle_group_key(row)].append(row)
 
     positions = [_reconstruct_group(key, trades) for key, trades in sorted(grouped.items())]
     validation = validate_lifecycle_positions(positions)

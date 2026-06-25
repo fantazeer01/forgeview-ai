@@ -24,6 +24,7 @@ from polymarket.wallet_intelligence.trade_history import (
     run_fixture_ingestion,
 )
 from polymarket.wallet_intelligence.lifecycle import (
+    lifecycle_group_key,
     reconstruct_lifecycle_positions,
     run_lifecycle_fixture_reconstruction,
 )
@@ -680,6 +681,18 @@ class WalletLifecycleReconstructionTests(unittest.TestCase):
         self.assertEqual([p.lifecycle_group_key for p in first_positions], ["0xaaa|0xcond|123|Up", "0xbbb|0xcond|123|Up"])
         self.assertEqual([p.lifecycle_group_key for p in first_positions], [p.lifecycle_group_key for p in second_positions])
         self.assertEqual(first_summary["validation"], second_summary["validation"])
+
+    def test_lifecycle_group_key_is_computed_from_explicit_fields(self):
+        row = self._trade(
+            wallet_id="0xABC",
+            condition_id="0xDEF",
+            token_id="456",
+            outcome="Down",
+            lifecycle_group_key="stale|wrong|key|Up",
+        )
+        positions, _ = reconstruct_lifecycle_positions([row])
+        self.assertEqual(lifecycle_group_key(row), "0xabc|0xdef|456|Down")
+        self.assertEqual(positions[0].lifecycle_group_key, "0xabc|0xdef|456|Down")
 
     def test_lifecycle_fixture_cli_outputs_are_repeatable(self):
         with tempfile.TemporaryDirectory() as tmp:

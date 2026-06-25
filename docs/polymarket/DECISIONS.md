@@ -741,3 +741,22 @@ structure, but a one-page wallet activity window can omit earlier buys or
 later sells. Treating oversold groups as bounded-history gaps preserves
 reproducibility while preventing overclaims about strategy intent,
 copyability, holding time, or executable edge.
+
+## D-049: Wallet lifecycle status uses exact visible size accounting
+
+Status: Accepted
+Decision: Wallet lifecycle reconstruction and review use exact visible
+BUY/SELL size accounting for bounded public trade-history rows. A group is a
+full-exit candidate only when total visible bought size exactly equals total
+visible sold size. Near-flat residuals remain partial exits until a separate
+precision or dust policy is explicitly authorized. Lifecycle grouping is
+derived from explicit `wallet_id`, `condition_id`, `token_id`, and `outcome`
+fields, and deterministic ordering includes timestamp, transaction hash, side,
+price, size, dedupe key, raw payload hash, endpoint name, and fetch timestamp
+tie-breakers.
+
+Reason: The bounded smoke has several near-flat BUY/SELL groups, but treating
+small residuals as closed positions would invent a tolerance policy and could
+overstate exits from a one-page public history window. Exact accounting keeps
+the fixture reproducible and descriptive while preserving room for a future
+reviewed dust policy.
