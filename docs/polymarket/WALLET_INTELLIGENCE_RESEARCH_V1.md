@@ -812,3 +812,74 @@ criteria. It must not implement scoring, rank wallets, compute PnL/ROI/Sharpe,
 estimate copyability, add mark-to-market joins, add expiry joins, launch
 ingestion, connect wallets/private keys, place orders, inspect sealed holdout
 outcomes, or run holdout evaluation.
+
+## Wallet Score Design v1
+
+Wallet Score Design v1 is complete.
+
+Output:
+
+- `polymarket/models/wallet_intelligence_v1/wallet_score_design/wallet_score_design_v1.md`
+
+Purpose:
+
+- define a bounded structural prioritization score for selecting public
+  Polymarket wallets worth deeper Wallet Intelligence analysis;
+- keep the score explicitly separate from profitability, alpha, ROI, PnL,
+  Sharpe, execution quality, copyability, and live trading.
+
+Allowed inputs:
+
+- `total_lifecycle_positions`;
+- `fast_crypto_lifecycle_count`;
+- `fast_crypto_lifecycle_share`;
+- `partial_exits`;
+- `percentage_still_open_positions`;
+- `percentage_sell_only_lifecycles`;
+- `oversold_bounded_history`;
+- `average_buy_count_per_lifecycle`;
+- `average_sell_count_per_lifecycle`;
+- `average_events_per_lifecycle`;
+- `near_flat_residual_count`;
+- `dominant_asset`;
+- `asset_concentration`;
+- `dominant_outcome`;
+- `outcome_concentration`.
+
+Forbidden inputs:
+
+- PnL;
+- ROI;
+- realized profit;
+- Sharpe;
+- execution quality;
+- copyability;
+- alpha claims;
+- mark-to-market values;
+- final resolved win/loss outcomes;
+- sealed holdout labels or outputs;
+- private wallet data;
+- order-placement data;
+- authenticated trading data.
+
+Design summary:
+
+- score scale: 0 to 100;
+- positive components: coverage, fast-crypto relevance, lifecycle activity,
+  event-density consistency, and specialization;
+- penalties: SELL-only/bounded-history risk, excessive still-open share, too
+  few lifecycle positions, excessive concentration, and near-flat residual
+  ambiguity;
+- future outputs: `wallet_scores.csv`, `wallet_scores_summary.json`,
+  `wallet_score_validation.json`, and `wallet_score_report.md`;
+- validation gates: score bounds, deterministic ordering, forbidden-input
+  exclusion, missing metric handling, repeatable export, component bounds,
+  output schema completeness, and source provenance.
+
+Recommended next research task: Wallet Score Fixture Implementation v1. It
+should implement the approved score design against existing
+`wallet_metrics.csv` only, produce the planned artifacts, add focused tests,
+and run the Wallet Intelligence and full test suites. It must not launch
+ingestion, alter lifecycle metric generation, compute PnL/ROI/Sharpe, estimate
+copyability, join expiry or mark-to-market data, connect wallets/private keys,
+place orders, inspect sealed holdout outcomes, or run holdout evaluation.

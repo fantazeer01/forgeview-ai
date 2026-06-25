@@ -391,31 +391,31 @@ insufficient. No model or alpha claim is currently justified.
 
 ## 14. Next milestone
 
-### Wallet Score Design v1
+### Wallet Score Fixture Implementation v1
 
-The next milestone is to design the first structural Wallet Score
-specification using only readiness-approved Wallet Intelligence lifecycle
-metrics. This milestone must not implement scoring, rank wallets, infer
-copyability, strategy intent, queue position, fill priority,
-Binance-lag alignment, PnL, ROI, Sharpe, or executable edge from the bounded
-public smoke alone.
+The next milestone is to implement the first bounded structural Wallet Score
+fixture using only the approved Wallet Score Design v1 and existing lifecycle
+metrics. This milestone must not treat the score as profitability, alpha, ROI,
+PnL, Sharpe, execution quality, copyability, or live-trading evidence.
 
 Exit criteria:
 
 - read Wallet Intelligence ingestion, behavior metrics, deep-history
   feasibility, trade-history ingestion design, fixture-ingester, bounded
   public smoke, lifecycle reconstruction fixture outputs, lifecycle review,
-  lifecycle metrics outputs, and Wallet Metrics Readiness Review v1;
-- define score objective, allowed inputs, excluded inputs, missing-data policy,
-  normalization policy, data-quality gates, output schema, and validation
-  criteria;
-- use only current structural lifecycle metrics approved by the readiness
-  review unless a new metric is explicitly justified as strictly required for
-  design;
+  lifecycle metrics outputs, Wallet Metrics Readiness Review v1, and Wallet
+  Score Design v1;
+- implement the designed fixture score from existing
+  `wallet_metrics.csv` only;
+- produce `wallet_scores.csv`, `wallet_scores_summary.json`,
+  `wallet_score_validation.json`, and `wallet_score_report.md`;
+- validate score bounds, deterministic ordering, forbidden-input exclusion,
+  missing metric handling, repeatable export, component bounds, output schema,
+  and source provenance;
 - recommend exactly one successor task;
-- do not launch new public ingestion or add score implementation, PnL,
-  reference alignment, expiry joins, mark-to-market, copyability delay, queue
-  modelling, ranking, or execution logic;
+- do not launch new public ingestion or add PnL, reference alignment, expiry
+  joins, mark-to-market, copyability delay, queue modelling, trading ranking,
+  or execution logic;
 - keep outputs separate from canonical outcome-prediction datasets,
   repricing datasets, validation data, and sealed holdout data.
 

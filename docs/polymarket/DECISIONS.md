@@ -800,3 +800,28 @@ structurally informative, but they come from bounded public smoke history.
 Starting Wallet Score with a design-only pass prevents accidental ranking or
 copyability claims while preserving a path to specify data-quality gates and
 allowed inputs.
+
+## D-052: Wallet Score v1 is structural prioritization only
+
+Status: Accepted
+Decision: Wallet Score Design v1 defines a bounded 0-100 structural
+prioritization score for deciding which public wallets deserve deeper
+analysis. Authorized components are coverage, fast-crypto relevance, visible
+lifecycle activity, event-density consistency, and limited specialization.
+Authorized penalties are SELL-only/bounded-history risk, excessive still-open
+share, too few lifecycle positions, excessive concentration, and near-flat
+residual ambiguity. The score must use only readiness-approved lifecycle
+metrics from `wallet_metrics.csv`; raw visible size fields and `full_exits`
+remain excluded from v1 scoring.
+
+Forbidden score inputs include PnL, ROI, realized profit, Sharpe, execution
+quality, copyability, alpha claims, mark-to-market values, final resolved
+win/loss outcomes, sealed holdout labels or outputs, private wallet data,
+order-placement data, and authenticated trading data. `wallet_id` and
+`profile_url` may be used only for joins and reporting, not as score values.
+
+Reason: The current bounded wallet metrics can identify wallets with enough
+visible structural activity to inspect first, but they cannot establish
+profitability, skill, copyability, or executable edge. The first score must be
+a research triage tool with explicit validation gates, not a performance or
+trading-quality model.
