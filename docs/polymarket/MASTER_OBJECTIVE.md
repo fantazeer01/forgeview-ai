@@ -391,28 +391,30 @@ insufficient. No model or alpha claim is currently justified.
 
 ## 14. Next milestone
 
-### Wallet Expiry And Outcome Join Feasibility Sprint v1
+### Wallet Market Expiry Join Sprint v1
 
-The next milestone is to determine whether the bounded Wallet Intelligence
-trade/lifecycle evidence can be joined to public market expiry and resolution
-metadata. The copyability feasibility sprint found that public wallet
-activity is useful as structural triage, but realized outcomes, expiry joins,
-holding-time evidence, timing delay, slippage, and liquidity uncertainty are
-the binding missing layers before deeper copy-trading research can make
-stronger descriptive claims.
+The next milestone is to implement the highest-priority missing Wallet
+Intelligence information layer identified by Information Gain Sprint v1:
+public market expiry joins. The prioritization sprint found that expiry has
+the best next-week cost/value ratio because 1,735 of 2,135 lifecycle
+candidates in the 30-wallet batch are still-open and expiry context can
+improve lifecycle interpretation without changing Wallet Score, Wallet
+Watchlist, or copyability classifications.
 
 Exit criteria:
 
-- use existing bounded Wallet Intelligence trade/lifecycle artifacts only
-  unless a small public read-only metadata probe is explicitly bounded;
+- use existing bounded Wallet Intelligence trade/lifecycle artifacts as the
+  primary input;
 - inventory public endpoint paths that can map condition IDs, token IDs,
-  market slugs, event slugs, expiry timestamps, and resolved outcomes;
-- measure join coverage on the 30-wallet copyability sprint evidence without
-  opening sealed holdout outcomes or canonical outcome-prediction data;
-- report which lifecycle fields become measurable after expiry/outcome joins
-  and which remain blocked by timing-delay, slippage, liquidity, queue, or
-  full-history uncertainty;
-- produce deterministic feasibility artifacts under a separate output path;
+  market slugs, event slugs, and expiry timestamps;
+- measure expiry join coverage on the 30-wallet copyability sprint evidence
+  without opening sealed holdout outcomes or canonical outcome-prediction data;
+- report time-to-expiry, late-window behavior, and held-through-expiry
+  candidates as report-only research context;
+- report fields that remain blocked, including resolved outcomes, timing
+  delay, slippage, liquidity, queue, full-history uncertainty, and external
+  reference alignment;
+- produce deterministic expiry-join artifacts under a separate output path;
 - recommend exactly one successor research sprint from the measured join
   coverage;
 - do not change Wallet Score, tune thresholds, rank wallets for trading,

@@ -1511,10 +1511,87 @@ Strict exclusions preserved:
   capture campaign, production model training, sealed holdout inspection, or
   holdout evaluation.
 
-Next research sprint: Wallet Expiry And Outcome Join Feasibility Sprint v1.
-It should measure whether existing bounded wallet lifecycle evidence can be
-joined to public expiry and outcome metadata before any deeper copy-trading
-research claims are attempted.
+Wallet Intelligence Information Gain Sprint v1 superseded the combined
+expiry/outcome next-step framing and selected a narrower, higher cost/value
+successor: Wallet Market Expiry Join Sprint v1.
+
+## Wallet Intelligence Information Gain Sprint v1
+
+Wallet Intelligence Information Gain Sprint v1 is complete.
+
+Outputs:
+
+- `polymarket/models/wallet_intelligence_v1/information_gain_sprint_v1/information_gain_matrix.csv`
+- `polymarket/models/wallet_intelligence_v1/information_gain_sprint_v1/wallet_information_gain_report.md`
+- `polymarket/models/wallet_intelligence_v1/information_gain_sprint_v1/wallet_research_roadmap.md`
+
+Purpose:
+
+- determine which missing information layer should be implemented next to
+  maximize Wallet Intelligence quality;
+- evaluate all candidate layers independently;
+- do not implement any layer, change Wallet Score, change Wallet Watchlist, or
+  redesign the pipeline.
+
+Evidence base:
+
+- 30 wallets classified in the previous copyability sprint;
+- 5,765 normalized public primary activity rows;
+- 3,000 `/trades` cross-check rows;
+- 2,135 reconstructed lifecycle candidates;
+- 1,735 still-open lifecycle candidates;
+- 296 partial exits, 80 full exits, and 24 bounded-history oversold
+  candidates;
+- Wallet Score separated the batch into four structural buckets;
+- previous blockers were realized outcome joins, expiry joins, complete
+  unbounded history, holding time, observation delay, slippage, liquidity/fill
+  uncertainty, queue position, maker/taker completeness, and BTC/ETH/SOL
+  reference alignment.
+
+Top 10 ranked layers:
+
+1. Market expiry;
+2. Resolved market outcome;
+3. Full historical wallet activity;
+4. Additional public endpoints;
+5. Reference asset alignment for BTC/ETH/SOL;
+6. Liquidity / slippage estimation;
+7. Mark-to-market valuation;
+8. Execution delay modelling;
+9. Queue position / fill uncertainty;
+10. Explorer or on-chain settlement metadata.
+
+Conclusion:
+
+- highest expected information gain: market expiry;
+- highest engineering cost: queue position / fill uncertainty;
+- best cost/value ratio: market expiry;
+- recommended next sprint: Wallet Market Expiry Join Sprint v1.
+
+Rationale:
+
+- market expiry directly attacks the dominant measured ambiguity: 1,735 of
+  2,135 lifecycle candidates are still-open;
+- expiry enables time-to-expiry, late-window behavior, and held-through-expiry
+  candidate analysis without introducing performance, return, or trading
+  claims;
+- resolved outcomes and full history remain high value, but expiry has better
+  next-week reproducibility and lower hidden-assumption risk.
+
+Strict exclusions preserved:
+
+- no layer was implemented;
+- no Wallet Score or Wallet Watchlist logic changed;
+- no PnL, ROI, Sharpe, market-advantage, return, mark-to-market,
+  execution-quality, or trading-suitability computation was added;
+- no wallet/private-key use, order placement, trade copying, live monitoring,
+  capture campaign, production model training, sealed holdout inspection, or
+  holdout evaluation was performed.
+
+Next research task: Wallet Market Expiry Join Sprint v1. It should add
+report-only public expiry context to existing bounded wallet lifecycle
+evidence and measure join coverage before resolved outcomes or any deeper
+copyability layer is implemented.
 
 ## State update protocol
 

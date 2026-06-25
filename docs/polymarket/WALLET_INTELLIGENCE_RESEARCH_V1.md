@@ -1242,9 +1242,67 @@ joins, complete history, timing-delay, slippage, and liquidity evidence remain
 too significant for any conclusion about copy outcomes, market advantage,
 returns, or trading use.
 
-Next research sprint: Wallet Expiry And Outcome Join Feasibility Sprint v1.
-It should measure whether existing bounded wallet lifecycle evidence can be
-joined to public expiry and outcome metadata. It must not modify Wallet Score,
-tune thresholds, rank wallets for trading, place orders, copy trades, connect
+## Information Gain Sprint v1
+
+Wallet Intelligence Information Gain Sprint v1 is complete.
+
+Outputs:
+
+- `polymarket/models/wallet_intelligence_v1/information_gain_sprint_v1/information_gain_matrix.csv`
+- `polymarket/models/wallet_intelligence_v1/information_gain_sprint_v1/wallet_information_gain_report.md`
+- `polymarket/models/wallet_intelligence_v1/information_gain_sprint_v1/wallet_research_roadmap.md`
+
+Research question:
+
+- Which missing information layer should be implemented next to maximize the
+  quality of Wallet Intelligence?
+
+Observed basis:
+
+- previous copyability sprint classified 30 wallets;
+- 5,765 normalized public activity rows and 3,000 cross-check rows were
+  available;
+- 2,135 lifecycle candidates were reconstructed;
+- 1,735 lifecycle candidates were still-open;
+- 24 bounded-history oversold groups remained;
+- Wallet Score separated the batch across four structural buckets;
+- 11 wallets became `monitor_candidate`, but copyability remained blocked by
+  missing expiry/outcome/history/timing/execution context.
+
+Layer ranking:
+
+1. Market expiry;
+2. Resolved market outcome;
+3. Full historical wallet activity;
+4. Additional public endpoints;
+5. Reference asset alignment for BTC/ETH/SOL;
+6. Liquidity / slippage estimation;
+7. Mark-to-market valuation;
+8. Execution delay modelling;
+9. Queue position / fill uncertainty;
+10. Explorer or on-chain settlement metadata.
+
+Information-gain conclusion:
+
+- highest expected information gain: market expiry;
+- highest engineering cost: queue position / fill uncertainty;
+- best cost/value ratio: market expiry;
+- one-week capability recommendation: Wallet Market Expiry Join Sprint v1.
+
+Why expiry first:
+
+- expiry directly reduces the largest measured ambiguity: 1,735 still-open
+  lifecycle candidates;
+- expiry enables time-to-expiry and late-window behavior without changing
+  Wallet Score, Watchlist, or copyability classifications;
+- expiry has lower hidden-assumption risk than full history, liquidity,
+  execution-delay, or queue modelling;
+- resolved outcome is high value but should follow expiry context to avoid
+  misinterpretation as performance or trading evidence.
+
+Next research task: Wallet Market Expiry Join Sprint v1. It should add
+report-only public expiry context to existing bounded wallet lifecycle
+evidence and measure join coverage. It must not modify Wallet Score, tune
+thresholds, rank wallets for trading, place orders, copy trades, connect
 wallets/private keys, inspect sealed holdout data, run holdout evaluation, or
 launch a capture campaign.

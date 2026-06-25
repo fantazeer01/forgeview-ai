@@ -959,3 +959,28 @@ only a research prioritization layer. Without expiry and resolved-outcome
 context, wallet lifecycles cannot yet distinguish final-resolution behavior,
 pre-expiry exits, realized side correctness, holding time, or whether observed
 behavior could be studied as a copy-trading hypothesis.
+
+## D-058: Market expiry is the next highest-information Wallet Intelligence layer
+
+Status: Accepted
+Decision: Wallet Intelligence Information Gain Sprint v1 ranks market expiry
+as the next missing information layer to implement. The sprint evaluated
+market expiry, resolved outcomes, full historical wallet activity,
+mark-to-market valuation, BTC/ETH/SOL reference alignment, execution delay,
+liquidity/slippage, queue/fill uncertainty, additional public endpoints, and
+external public provenance sources independently. It selected market expiry as
+the best one-week capability by information gain per engineering effort.
+
+Resolved market outcomes remain highly valuable but should follow expiry
+context so final-side evidence is not misinterpreted as profitability, market
+advantage, return, execution quality, or trading suitability. Full historical
+wallet activity is also high value but requires more engineering work than an
+expiry join. Wallet Score, Wallet Watchlist, and copyability classifications
+must remain unchanged during the expiry join task.
+
+Reason: The previous 30-wallet copyability sprint reconstructed 2,135
+lifecycle candidates, of which 1,735 were still-open. Expiry context directly
+reduces that dominant ambiguity, enables time-to-expiry and late-window
+analysis, improves lifecycle and watchlist interpretation, and has lower
+implementation risk than full-history pagination, liquidity reconstruction,
+execution-delay modelling, or queue-position estimation.
