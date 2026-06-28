@@ -1,6 +1,6 @@
 # Polymarket Architectural Decisions
 
-Last updated: June 26, 2026
+Last updated: June 28, 2026
 
 This append-only log records durable project choices and their rationale.
 Future sessions should add a decision when work changes architecture, data
@@ -1095,3 +1095,22 @@ evidence, thirteen were baseline-consistent, and eight lacked enough resolved
 positions. Retrospective selection, survivorship bias, bounded history,
 missing public visibility delay, unknown actionable time remaining, missing
 fill certainty, and incomplete wallet history prevent a stronger conclusion.
+
+## D-063: Balanced Repricing Batch 002 remains inconclusive without a random comparator
+
+Status: Accepted
+Decision: Balanced Repricing Evidence Collection Batch 002 is accepted as a
+complete, continuous, replay-compatible, and deterministically exported second
+development session. Its sprint conclusion is `INCONCLUSIVE`. The frozen
+balanced parameters remain unchanged, and the result does not authorize
+holdout evaluation, production modelling, live trading, or another capture.
+
+Reason: The existing 12-hour public-only session yielded 71 frozen-reason
+candidates, 42 validated signals, and 34 target-before-stop outcomes. Results
+were positive across all three assets and both sides, with +0.053571
+after-slippage expectancy and 0.280000 maximum drawdown. However, 40.85% of
+candidates disappeared under frozen validation, YES and BTC/ETH samples remain
+small, the 180-second horizon has no full coverage, weak evidence still lacks
+40 observed hours and 3 independent sessions, and no precommitted
+random-observation comparator was evaluated. Positive paper replay therefore
+strengthens directional evidence without deciding the master hypothesis.

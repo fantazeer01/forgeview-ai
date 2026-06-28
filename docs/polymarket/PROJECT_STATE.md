@@ -1,6 +1,6 @@
 # Polymarket Project State
 
-Last updated: June 26, 2026
+Last updated: June 28, 2026
 Canonical objective: [MASTER_OBJECTIVE.md](MASTER_OBJECTIVE.md)  
 Active task: [NEXT_TASK.md](NEXT_TASK.md)  
 Decision log: [DECISIONS.md](DECISIONS.md)
@@ -635,7 +635,7 @@ optimization, and trading remain unauthorized.
 
 ## Next actions
 
-The single active task is Wallet Score Fixture Review v1.
+The single active task is Wallet Activity Visibility Delay Sprint v1.
 Its scope and acceptance criteria are defined in `NEXT_TASK.md`.
 
 ## Latest metrics
@@ -1839,6 +1839,74 @@ Next active task:
 - Wallet Activity Visibility Delay Sprint v1. It should test H2 only for the
   four H1 above-baseline wallets before any broader wallet strategy work is
   justified.
+
+## Balanced Repricing Batch 002 Evidence Completion Sprint
+
+Balanced Repricing Evidence Collection Batch 002 is fully post-processed from
+the existing public-only session. No new capture was launched, frozen settings
+were unchanged, and sealed holdout data was not accessed.
+
+Artifacts:
+
+- source session:
+  `polymarket/runs/repricing_balanced_v1_batch_002/20260625_200724/session.jsonl`;
+- model and validation outputs:
+  `polymarket/models/repricing_research_v1/balanced_collection_batch_002/`;
+- dedicated data copy:
+  `polymarket/data/repricing_research_balanced_batch_002/`.
+
+Capture and replay validation:
+
+- configured / observed duration: 43,200.0 / 43,200.004030 seconds;
+- campaign completeness: `complete`, 100.0%;
+- checkpoints: 21,600 / 21,600, 100.0%;
+- continuity: `continuous`;
+- maximum checkpoint gap: 2.104670 seconds;
+- gaps over 10 / 60 / 300 seconds: 0 / 0 / 0;
+- fatal capture errors: 0;
+- replay compatibility: verified by exact evidence, completeness, and
+  continuity metrics.
+
+Frozen candidate flow:
+
+- raw events: 370,616;
+- lag measurements: 64,176;
+- candidate measurements matching the two frozen accepted reasons: 71;
+- validated and accepted repricing signals: 42;
+- favorable target-before-stop signals: 34;
+- candidate validation rejections: 29, or 40.85%;
+- post-candidate rejection reasons: 15 below the frozen 60-second dataset
+  expiry floor and 14 suppressed by the non-overlapping paper-position rule;
+- largest detector-level rejection: `polymarket_already_repriced`, 30,354.
+
+Signal results:
+
+- BTC / ETH / SOL: 8 / 12 / 22;
+- YES / NO: 8 / 34;
+- signals/hour: 3.539656;
+- win rate: 80.95%;
+- after-slippage P&L: +2.250000;
+- after-slippage expectancy: +0.053571 per signal;
+- maximum drawdown: 0.280000;
+- exits: 34 `repricing_target`, 8 `stop_loss`, 0 `timeout`;
+- horizon coverage 30s / 60s / 120s / 180s:
+  100.00% / 100.00% / 83.33% / 0.00%;
+- deterministic export: verified by identical repeated CSV and JSON hashes;
+- relevant tests: 3 / 3 passed;
+- full repository tests: 132 / 132 passed.
+
+Research conclusion: `INCONCLUSIVE`.
+
+Batch 002 strengthens directional development evidence because all three
+assets and both sides had positive after-slippage expectancy. It does not
+decide the master hypothesis that frozen repricing conditions outperform
+random observation because no precommitted random-observation comparator was
+evaluated. Weak evidence also still lacks 40 observed hours and 3 independent
+sessions. Frozen parameters remain valid for comparison and unchanged, but no
+edge, production, live-trading, holdout, or additional-capture authorization
+follows from this result.
+
+The canonical active task remains Wallet Activity Visibility Delay Sprint v1.
 
 ## State update protocol
 

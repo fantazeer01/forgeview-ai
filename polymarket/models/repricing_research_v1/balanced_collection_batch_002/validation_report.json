@@ -1,0 +1,61 @@
+{
+  "accepted_detector_reasons": {
+    "confidence_below_threshold": 31,
+    "qualified_external_move_not_repriced": 11
+  },
+  "batch": "balanced_repricing_evidence_batch_002",
+  "campaign_complete": true,
+  "candidate_disappearance_rate": 0.4084507042253521,
+  "candidate_events_after_reason_filter": 71,
+  "conclusion": "INCONCLUSIVE",
+  "conclusion_basis": "Batch 002 is independently positive, but no precommitted random-observation comparator was evaluated and weak evidence hours and independent-session gates remain unmet.",
+  "detector_rejection_reasons": {
+    "confidence_below_threshold": 60,
+    "external_move_below_threshold": 27265,
+    "late_entry_window": 10,
+    "near_expiry_insufficient_time": 6476,
+    "polymarket_already_repriced": 30354,
+    "qualified_external_move_not_repriced": 11
+  },
+  "deterministic_export": true,
+  "favorable_repricing_signals": 34,
+  "frozen_parameters": {
+    "accepted_reasons": [
+      "confidence_below_threshold",
+      "qualified_external_move_not_repriced"
+    ],
+    "conservative_slippage": 0.02,
+    "external_move_threshold_bps": 6.0,
+    "maximum_holding_window_seconds": 180.0,
+    "minimum_confidence": 0.45,
+    "minimum_dataset_expiry_seconds": 60.0,
+    "repricing_ratio": 0.65,
+    "repricing_target": 0.03,
+    "stop_loss": 0.03
+  },
+  "frozen_parameters_unchanged": true,
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "lag_measurement_count": 64176,
+  "observation_continuous": true,
+  "raw_event_count": 370616,
+  "rejected_after_candidate_filter": 29,
+  "replay_compatible": true,
+  "source_session": "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1_batch_002\\20260625_200724\\session.jsonl",
+  "test_results": {
+    "full_repository_tests": {
+      "failed": 0,
+      "passed": 132
+    },
+    "repricing_tests": {
+      "failed": 0,
+      "passed": 3
+    },
+    "runner": "python -m unittest"
+  },
+  "validated_and_accepted_events": 42,
+  "validation_reasons": {
+    "accepted_valid_signal": 42,
+    "below_minimum_dataset_expiry": 15,
+    "overlapping_open_position": 14
+  }
+}

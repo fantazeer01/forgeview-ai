@@ -1,0 +1,158 @@
+{
+  "accepted_valid_signals": 42,
+  "asset_counts": {
+    "BTC": 8,
+    "ETH": 12,
+    "SOL": 22
+  },
+  "asset_metrics": {
+    "BTC": {
+      "expectancy_after_conservative_slippage": 0.08249999999999998,
+      "pnl_after_conservative_slippage": 0.66,
+      "signals": 8,
+      "win_rate": 0.875,
+      "wins": 7
+    },
+    "ETH": {
+      "expectancy_after_conservative_slippage": 0.07500000000000001,
+      "pnl_after_conservative_slippage": 0.9,
+      "signals": 12,
+      "win_rate": 1.0,
+      "wins": 12
+    },
+    "SOL": {
+      "expectancy_after_conservative_slippage": 0.03136363636363635,
+      "pnl_after_conservative_slippage": 0.69,
+      "signals": 22,
+      "win_rate": 0.6818181818181818,
+      "wins": 15
+    }
+  },
+  "batch": "balanced_repricing_evidence_batch_002",
+  "campaign_completeness": {
+    "actual_utc_completion_timestamp": "2026-06-26T08:07:24.805666+00:00",
+    "actual_utc_start_timestamp": "2026-06-25T20:07:24.801636+00:00",
+    "coverage_percentage": 100.0,
+    "expected_duration_seconds": 43200.0,
+    "material_shortfall_seconds": 0.0,
+    "monotonic_elapsed_runtime_seconds": 43200.0,
+    "observed_utc_span_seconds": 43200.00403,
+    "rejection_reasons": [],
+    "status": "complete",
+    "wall_clock_discontinuities": [],
+    "wall_clock_discontinuity_count": 0
+  },
+  "candidate_disappearance_rate": 0.4084507042253521,
+  "candidate_events": 71,
+  "conclusion": "INCONCLUSIVE",
+  "dedicated_data_path": "D:\\ForgeViewAI\\polymarket\\data\\repricing_research_balanced_batch_002",
+  "deterministic_export": true,
+  "evidence_level": "SECOND_POSITIVE_SESSION_BELOW_WEAK_EVIDENCE_HOURS_AND_SESSION_GATES",
+  "exit_reasons": {
+    "repricing_target": 34,
+    "stop_loss": 8
+  },
+  "favorable_repricing_signals": 34,
+  "frozen_parameters_unchanged": true,
+  "hashes": {
+    "repricing_dataset/repricing_labels.csv": "f414c673c47a39faeef98635ec6e694fbb14e1eadfcb4b57034ee8268edc84b0",
+    "repricing_dataset/simulation_summary.json": "a94ce3bd5c6010a6b657b9307e01e30cefb0bf67a1bbd686ccfcf8d669d083a4",
+    "repricing_dataset_repeat/repricing_labels.csv": "f414c673c47a39faeef98635ec6e694fbb14e1eadfcb4b57034ee8268edc84b0",
+    "repricing_dataset_repeat/simulation_summary.json": "a94ce3bd5c6010a6b657b9307e01e30cefb0bf67a1bbd686ccfcf8d669d083a4",
+    "session.jsonl": "30dda21d57ecb25ed6adbc2a511561dd7408950998aeffcadbb19663161a27bd"
+  },
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "horizon_coverage": {
+    "120": 0.8333333333333334,
+    "180": 0.0,
+    "30": 1.0,
+    "60": 1.0
+  },
+  "largest_detector_rejection_reason": "polymarket_already_repriced",
+  "largest_post_candidate_rejection_reason": "below_minimum_dataset_expiry",
+  "model_dataset_path": "D:\\ForgeViewAI\\polymarket\\models\\repricing_research_v1\\balanced_collection_batch_002\\repricing_dataset",
+  "observation_continuity": {
+    "actual_checkpoint_count": 21600,
+    "checkpoint_coverage_percentage": 100.0,
+    "effective_observed_duration_seconds": 43198.010454,
+    "expected_checkpoint_count": 21600,
+    "fatal_capture_error_count": 0,
+    "first_observation_timestamp": "2026-06-25T20:07:24.803166+00:00",
+    "gaps_over_10_seconds": 0,
+    "gaps_over_300_seconds": 0,
+    "gaps_over_60_seconds": 0,
+    "last_observation_timestamp": "2026-06-26T08:07:22.813620+00:00",
+    "max_checkpoint_gap_seconds": 2.10467,
+    "rejection_reasons": [],
+    "session_completed_present": true,
+    "status": "continuous",
+    "terminal_gap_seconds": 1.992046
+  },
+  "rejected_after_candidate_filter": 29,
+  "replay_compatible": true,
+  "replay_path": "D:\\ForgeViewAI\\polymarket\\models\\repricing_research_v1\\balanced_collection_batch_002\\capture_replay",
+  "side_counts": {
+    "NO": 34,
+    "YES": 8
+  },
+  "side_metrics": {
+    "NO": {
+      "expectancy_after_conservative_slippage": 0.04558823529411764,
+      "pnl_after_conservative_slippage": 1.55,
+      "signals": 34,
+      "win_rate": 0.7941176470588235,
+      "wins": 27
+    },
+    "YES": {
+      "expectancy_after_conservative_slippage": 0.08750000000000002,
+      "pnl_after_conservative_slippage": 0.7,
+      "signals": 8,
+      "win_rate": 0.875,
+      "wins": 7
+    }
+  },
+  "source_session": "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1_batch_002\\20260625_200724\\session.jsonl",
+  "summary": {
+    "average_adverse_move": -0.19476190476190475,
+    "average_favorable_repricing": 0.3193809523809524,
+    "expectancy_per_signal": 0.05357142857142856,
+    "first_entry_timestamp": "2026-06-25T20:08:34.804565+00:00",
+    "last_entry_timestamp": "2026-06-26T08:00:30.814345+00:00",
+    "max_drawdown": 0.28,
+    "rows": 42,
+    "signals": 42,
+    "signals_per_hour": 3.5396564608614995,
+    "simulated_pnl_after_conservative_slippage": 2.25,
+    "simulated_pnl_before_fees_slippage": 3.09,
+    "win_rate": 0.8095238095238095,
+    "wins": 34
+  },
+  "test_results": {
+    "full_repository_tests": {
+      "failed": 0,
+      "passed": 132
+    },
+    "repricing_tests": {
+      "failed": 0,
+      "passed": 3
+    },
+    "runner": "python -m unittest"
+  },
+  "validated_events": 42,
+  "validation_rejection_reasons": {
+    "below_minimum_dataset_expiry": 15,
+    "overlapping_open_position": 14
+  },
+  "weak_evidence_gate_status": {
+    "drawdown_no_more_than_2_5x_pnl": true,
+    "expectancy_after_slippage_at_least_0_005": true,
+    "independent_sessions_at_least_3": false,
+    "no_side_worse_than_minus_0_005": true,
+    "observed_hours_at_least_40": false,
+    "positive_expectancy_in_at_least_2_assets": true,
+    "signals_at_least_100": false,
+    "signals_per_asset_at_least_25": false,
+    "signals_per_side_at_least_35": false
+  },
+  "weak_evidence_reached": false
+}

@@ -1,7 +1,7 @@
 # Polymarket Repricing Research v1
 
 Status: Implemented  
-Date: June 24, 2026  
+Date: June 28, 2026
 Scope: Development-only research module, separate from outcome prediction
 
 ## Purpose
@@ -555,6 +555,78 @@ Evidence level:
 Weak development evidence is not reached. The result remains development-only
 and does not authorize production model training, holdout evaluation, live
 trading, wallet/private-key access, or changes to the frozen balanced stratum.
+
+## Balanced Repricing Evidence Batch 002
+
+Balanced Repricing Evidence Collection Batch 002 is stored under:
+
+- source session:
+  `polymarket/runs/repricing_balanced_v1_batch_002/20260625_200724/session.jsonl`;
+- capture replay:
+  `polymarket/models/repricing_research_v1/balanced_collection_batch_002/capture_replay/`;
+- primary and repeated repricing exports:
+  `polymarket/models/repricing_research_v1/balanced_collection_batch_002/repricing_dataset/`
+  and `repricing_dataset_repeat/`;
+- dedicated data copy:
+  `polymarket/data/repricing_research_balanced_batch_002/`;
+- final report:
+  `polymarket/models/repricing_research_v1/balanced_collection_batch_002/batch_002_summary.md`.
+
+Frozen settings were unchanged: 6 bps external move, 0.65 repricing ratio,
+0.45 minimum confidence, 60-second minimum dataset expiry, 180-second maximum
+holding window, and the two precommitted accepted reasons.
+
+Validation results:
+
+- campaign completeness: `complete`, 100.0%;
+- observation continuity: `continuous`, 21,600 / 21,600 checkpoints;
+- maximum checkpoint gap: 2.104670 seconds;
+- fatal capture errors: 0;
+- replay compatibility: verified;
+- deterministic export: verified;
+- `repricing_labels.csv` SHA-256:
+  `f414c673c47a39faeef98635ec6e694fbb14e1eadfcb4b57034ee8268edc84b0`;
+- `simulation_summary.json` SHA-256:
+  `a94ce3bd5c6010a6b657b9307e01e30cefb0bf67a1bbd686ccfcf8d669d083a4`;
+- source session SHA-256:
+  `30dda21d57ecb25ed6adbc2a511561dd7408950998aeffcadbb19663161a27bd`.
+
+Candidate flow:
+
+- 64,176 lag measurements;
+- 71 candidates after the frozen accepted-reason filter;
+- 42 validated and accepted repricing signals;
+- 29 post-candidate rejections, or 40.85%;
+- 15 rejected below the 60-second dataset expiry floor;
+- 14 rejected by the non-overlapping paper-position rule;
+- 34 of 42 accepted signals reached the repricing target before the stop.
+
+Signal results:
+
+- BTC / ETH / SOL: 8 / 12 / 22;
+- YES / NO: 8 / 34;
+- signals/hour: 3.539656;
+- win rate: 80.95%;
+- simulated P&L before fees/slippage: +3.090000;
+- simulated P&L after conservative slippage: +2.250000;
+- after-slippage expectancy: +0.053571 per signal;
+- maximum drawdown: 0.280000;
+- exits: 34 `repricing_target`, 8 `stop_loss`, 0 `timeout`;
+- horizon coverage 30s / 60s / 120s / 180s:
+  100.00% / 100.00% / 83.33% / 0.00%.
+
+Per-asset and side after-slippage expectancy was positive in every observed
+segment. BTC / ETH / SOL expectancy was +0.082500 / +0.075000 / +0.031364;
+YES / NO expectancy was +0.087500 / +0.045588.
+
+Conclusion: `INCONCLUSIVE`.
+
+Batch 002 strengthens directional development evidence but does not test a
+precommitted random-observation comparator, so it cannot decide whether frozen
+conditions identify genuine opportunities better than random observation.
+Weak evidence also still lacks the required observed hours and independent
+sessions. The frozen settings remain unchanged, the holdout remains sealed,
+and no additional capture or edge claim is authorized.
 
 ## Missing Data
 
