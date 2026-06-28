@@ -1633,3 +1633,53 @@ Evidence-driven successor:
 - Wallet Detection-To-Expiry Feasibility Sprint v1 should join the two target
   first-seen rows to public expiry metadata and determine whether H3 is
   technically measurable before any larger prospective batch.
+
+## Wallet First-Seen Prospective Experiment v1
+
+Wallet First-Seen Prospective Experiment v1 is complete.
+
+Purpose:
+
+- implement the reproducible prospective observation system;
+- do not evaluate H2;
+- do not launch a new observation window.
+
+System behavior:
+
+- observes only the four frozen H1 wallets;
+- polls only public unauthenticated Data API activity;
+- persists every completed poll payload and timing record transactionally;
+- persists every newly observed trade with stable identity and provenance;
+- keeps first-seen timestamps immutable;
+- resumes the same active run without resetting deadline or request budget;
+- rejects duplicate polls and duplicate trade insertion;
+- closes expired interrupted runs before starting a new bounded run;
+- exports deterministically ordered CSV evidence.
+
+Frozen bounds:
+
+- polling interval: 5 seconds minimum;
+- run duration: 300 seconds maximum;
+- request count: 240 maximum;
+- page size: 100 maximum;
+- configured request rate: 8 per 10 seconds, 0.80% of the documented Data API
+  general limit.
+
+Artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/first_seen_prospective_v1/wallet_first_seen_dataset.csv`;
+- `polymarket/models/wallet_intelligence_v1/first_seen_prospective_v1/wallet_first_seen_validation.json`;
+- `polymarket/models/wallet_intelligence_v1/first_seen_prospective_v1/wallet_first_seen_design_report.md`.
+
+Validation result:
+
+- all gates passed;
+- local SQLite persistence initialized;
+- dataset rows: 0;
+- H2 evaluated: false.
+
+Remaining blocker:
+
+- insufficient prospective target five-minute observations. A future bounded
+  collection can now accumulate the timestamps needed to evaluate H2 and then
+  H3 without redesigning the observer.

@@ -425,7 +425,14 @@ polling-quantized first-seen upper bounds of 15.894 and 16.041 seconds. This
 establishes that H2 is technically measurable prospectively, but the two-row
 target sample cannot support or reject H2.
 
-The next milestone is a direct H3 test:
+Wallet First-Seen Prospective Experiment v1 now provides the restart-safe
+observation system required for future H2 evidence: transactional SQLite poll
+payloads, immutable first-seen trades, persisted run bounds, restart recovery,
+duplicate protection, and deterministic export. The sprint did not run a new
+public observation window and did not evaluate H2.
+
+The next Wallet Intelligence milestone remains a direct H3 test after a
+future bounded H2 evidence collection:
 
 > Enough time remains after public detection to act.
 

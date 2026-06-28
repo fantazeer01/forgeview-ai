@@ -66,6 +66,12 @@ from polymarket.wallet_intelligence.first_seen import (
     analyze_first_seen_snapshots,
     run_first_seen_from_snapshots,
 )
+from polymarket.wallet_intelligence.first_seen_prospective import (
+    ProspectiveFirstSeenStore,
+    prepare_prospective_experiment,
+    render_dataset,
+    validate_restart_and_duplicates,
+)
 
 
 class FakeClient:
@@ -1766,6 +1772,76 @@ class WalletFirstSeenDetectionTests(unittest.TestCase):
             self.assertTrue(second["validation"]["deterministic_report_render"])
             self.assertTrue(second["validation"]["public_read_only_endpoint_only"])
             self.assertEqual(first["reproducibility_hashes"], second["reproducibility_hashes"])
+
+
+class WalletFirstSeenProspectiveTests(unittest.TestCase):
+    def test_restart_and_duplicate_fixture_passes(self):
+        validation = validate_restart_and_duplicates()
+        self.assertTrue(all(validation.values()))
+
+    def test_active_run_resumes_without_resetting_bounds(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "observer.sqlite3"
+            with ProspectiveFirstSeenStore(path) as store:
+                first = store.start_or_resume_run(
+                    started_at_utc="2026-06-28T12:00:00.000+00:00",
+                    duration_seconds=300,
+                    poll_interval_seconds=5,
+                    page_limit=100,
+                    max_requests=240,
+                )
+            with ProspectiveFirstSeenStore(path) as store:
+                resumed = store.start_or_resume_run(
+                    started_at_utc="2026-06-28T12:02:00.000+00:00",
+                    duration_seconds=60,
+                    poll_interval_seconds=10,
+                    page_limit=10,
+                    max_requests=10,
+                )
+                self.assertEqual(first["run_id"], resumed["run_id"])
+                self.assertEqual(resumed["deadline_at_utc"], "2026-06-28T12:05:00.000+00:00")
+                self.assertEqual(resumed["max_requests"], 240)
+
+    def test_expired_run_closes_and_starts_new_bound(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "observer.sqlite3"
+            with ProspectiveFirstSeenStore(path) as store:
+                first = store.start_or_resume_run(
+                    started_at_utc="2026-06-28T12:00:00.000+00:00",
+                    duration_seconds=300,
+                    poll_interval_seconds=5,
+                    page_limit=100,
+                    max_requests=240,
+                )
+                second = store.start_or_resume_run(
+                    started_at_utc="2026-06-28T13:00:00.000+00:00",
+                    duration_seconds=60,
+                    poll_interval_seconds=10,
+                    page_limit=10,
+                    max_requests=10,
+                )
+                self.assertNotEqual(first["run_id"], second["run_id"])
+                self.assertEqual(second["deadline_at_utc"], "2026-06-28T13:01:00.000+00:00")
+                first_status = store.connection.execute(
+                    "SELECT status FROM runs WHERE run_id=?", (first["run_id"],)
+                ).fetchone()[0]
+                self.assertEqual(first_status, "complete")
+
+    def test_prepare_writes_empty_deterministic_research_artifacts(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            db = root / "data" / "observer.sqlite3"
+            output = root / "models"
+            first = prepare_prospective_experiment(db_path=db, output_dir=output)
+            first_files = {path.name: path.read_bytes() for path in output.iterdir()}
+            second = prepare_prospective_experiment(db_path=db, output_dir=output)
+            second_files = {path.name: path.read_bytes() for path in output.iterdir()}
+            self.assertEqual(first_files, second_files)
+            self.assertFalse(first["h2_evaluated"])
+            self.assertTrue(second["all_validation_passed"])
+            self.assertEqual(render_dataset([]), (output / "wallet_first_seen_dataset.csv").read_text(encoding="utf-8"))
+            self.assertTrue((output / "wallet_first_seen_validation.json").exists())
+            self.assertTrue((output / "wallet_first_seen_design_report.md").exists())
 
 
 if __name__ == "__main__":

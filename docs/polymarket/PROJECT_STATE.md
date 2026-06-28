@@ -2010,8 +2010,8 @@ remained sealed, and no threshold or detector change was made.
 Wallet Activity Visibility Delay Sprint v1 is complete and leaves H2
 `INCONCLUSIVE` because the retrospective activity export has no publication
 or first-seen timestamp. Wallet Detection-To-Expiry Feasibility Sprint v1
-is now the canonical active task in `NEXT_TASK.md`. The restart-safe repricing
-paper core remains planned but is not the active task.
+remains the planned Wallet Intelligence successor. The canonical repository
+task in `NEXT_TASK.md` is the restart-safe repricing paper core.
 
 ## Wallet Activity Visibility Delay Sprint v1
 
@@ -2106,6 +2106,93 @@ Next active task:
 - Wallet Detection-To-Expiry Feasibility Sprint v1, using the committed two
   five-minute first-seen rows as a feasibility sample before any larger
   prospective evidence batch.
+
+## Restart-Safe Repricing Paper Trading Core v1
+
+Restart-Safe Repricing Paper Trading Core v1 is complete.
+
+Implementation and artifacts:
+
+- `polymarket/repricing_research/paper_core.py`
+- `polymarket/models/repricing_research_v1/restart_safe_paper_core_v1/restart_recovery_report.md`
+- `polymarket/models/repricing_research_v1/restart_safe_paper_core_v1/restart_recovery_validation.json`
+- `tests/polymarket/test_repricing_paper_core.py`
+
+Measured validation:
+
+- raw v5-shaped events are committed before state transitions;
+- signal admission, position state, realized paper PnL, and processed cursor
+  update atomically in SQLite;
+- open positions survive restart, closed positions remain closed, and repeated
+  ingestion or recovery creates no duplicate signal, position, trade, or PnL;
+- six admission/open and three close interruption cases recover
+  deterministically;
+- frozen fixture signals, exits, and PnL match the offline repricing simulator;
+- v5 lifecycle closure exits an open paper position at the last durable quote;
+- a frozen-strategy fingerprint mismatch fails closed;
+- 11 repricing tests and 146 repository tests pass.
+
+No public campaign was launched. Detector logic and thresholds were not
+changed, and sealed holdout remains untouched. The core is not a 24/7 paper
+engine yet: it still needs a read-only v5 event-stream adapter, lifecycle
+supervision, session rotation, telemetry, daily statistics, and a soak test.
+
+Next active task:
+
+- Integrate Restart-Safe Repricing Paper Core with v5 Event Stream v1.
+
+## Wallet First-Seen Prospective Experiment v1
+
+Wallet First-Seen Prospective Experiment v1 is complete as an implementation
+and fixture-validation sprint. It did not launch another observation window
+and did not evaluate H2.
+
+Implementation:
+
+- restart-safe SQLite store under the local runtime path
+  `polymarket/data/wallet_intelligence/first_seen_prospective_v1/observer.sqlite3`;
+- every completed poll persists request/response timestamps, endpoint status,
+  raw payload JSON, payload hash, row count, and error before analysis;
+- every new trade persists wallet, asset, condition, token, transaction hash,
+  trade timestamp, first-seen timestamp, poll timestamp, endpoint, and raw
+  provenance;
+- active run deadline, request count, wallet baselines, and next poll cycle
+  survive restart;
+- immutable global trade identities and unique poll keys prevent duplicate
+  first-seen rows and duplicate poll insertion;
+- expired interrupted runs close before a new bounded run starts;
+- CLI observation requires explicit `--observe`; preparation mode makes no
+  public requests.
+
+Bounded configuration:
+
+- four frozen H1 wallets only;
+- public unauthenticated Data API activity endpoint only;
+- 5-second polling interval;
+- maximum 300 seconds, 240 requests, and 100 rows per wallet poll;
+- configured 8 requests per 10 seconds, or 0.80% of the documented Data API
+  general limit.
+
+Artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/first_seen_prospective_v1/wallet_first_seen_dataset.csv`;
+- `polymarket/models/wallet_intelligence_v1/first_seen_prospective_v1/wallet_first_seen_validation.json`;
+- `polymarket/models/wallet_intelligence_v1/first_seen_prospective_v1/wallet_first_seen_design_report.md`.
+
+Validation:
+
+- restart safe: passed;
+- duplicate safe: passed;
+- every completed poll persisted: passed;
+- first-seen timestamp immutable: passed;
+- deterministic export: passed;
+- H2 evaluated: false;
+- initialized dataset rows: 0.
+
+Remaining Wallet Intelligence blocker:
+
+- a future explicitly authorized bounded collection must gather enough target
+  five-minute first-seen observations before H2 or H3 can be evaluated.
 
 ## State update protocol
 

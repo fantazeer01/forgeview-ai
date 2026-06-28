@@ -1213,3 +1213,49 @@ first-seen upper bounds of 15.894 and 16.041 seconds. The endpoint also showed
 440 page-range misses and 322 reappearances, making startup and live-window
 classification mandatory. The method is feasible, but two target rows cannot
 support or reject H2.
+
+## D-068: Repricing paper state uses a journaled SQLite transition ledger
+
+Status: Accepted
+Decision: Frozen repricing paper execution state is persisted in a separate
+SQLite ledger. Every raw source event is committed before processing; signal
+admission, position open or close, realized paper PnL, and the processed event
+cursor then commit in one transaction. Recovery replays only unprocessed
+journal rows. Database uniqueness constraints enforce one signal identity,
+one position per signal, one close per position, and no overlapping open
+position for the same market and side.
+
+The ledger stores and verifies a SHA-256 fingerprint of the frozen strategy
+contract. A mismatched fingerprint fails closed. Existing v5 lifecycle closure
+is accepted as an expiry transition and uses the last durable market quote.
+This design remains paper-only and separate from v5 generic shadow trades.
+
+Reason: Seven dedicated restart tests prove that open positions survive,
+closed positions never reopen, duplicate input does not duplicate state or
+PnL, and interruptions before or after admission, open, close, and cursor
+commit recover deterministically. Fixture output matches the existing offline
+frozen simulator. The next task may add only a read-only v5 event-stream
+adapter; it may not change detector logic, thresholds, or launch a campaign.
+
+## D-069: Prospective first-seen state is transactional and restart bounded
+
+Status: Accepted
+Decision: Future H2 collection must use the restart-safe prospective observer
+implemented in Wallet First-Seen Prospective Experiment v1. Every completed
+poll is committed transactionally with raw payload and timing provenance
+before analysis. Trade identity is globally unique, first-seen time is
+immutable, and run deadline/request budget survive interruption. Startup rows
+remain run baselines rather than new trades.
+
+The observer is restricted to the four frozen H1 wallets, public unauthenticated
+Data API GET requests, at least 5 seconds between four-wallet cycles, and at
+most 300 seconds, 240 requests, and 100 rows per wallet poll in one run. A
+public run requires the explicit CLI `--observe` flag. Runtime SQLite state is
+local and excluded from Git; deterministic CSV and validation reports are the
+portable research artifacts.
+
+Reason: Fixture validation proved restart recovery, expired-run rollover,
+duplicate poll rejection, duplicate trade rejection, immutable first-seen
+timestamps, complete poll persistence, and repeatable export. No new public
+collection occurred, the initialized dataset is empty, and H2 was not
+evaluated.

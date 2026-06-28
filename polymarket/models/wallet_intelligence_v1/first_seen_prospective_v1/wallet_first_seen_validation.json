@@ -1,0 +1,48 @@
+{
+  "all_validation_passed": true,
+  "api_limits": {
+    "configured_limit_utilization": 0.008,
+    "configured_requests_per_10_seconds": 8.0,
+    "data_api_general_limit_requests": 1000,
+    "documentation_checked_on": "2026-06-28",
+    "documentation_url": "https://docs.polymarket.com/api-reference/rate-limits",
+    "window_seconds": 10
+  },
+  "bounded_configuration": true,
+  "database_counts": {
+    "observations": 0,
+    "polls": 0,
+    "runs": 0,
+    "trades": 0
+  },
+  "database_path": "polymarket\\data\\wallet_intelligence\\first_seen_prospective_v1\\observer.sqlite3",
+  "dataset_sha256": "7716b7b273eb9a966cfad060df3f01f84641450db9b2c3906fe35ab4ef7a0ddd",
+  "deterministic_export": true,
+  "duplicate_safe": true,
+  "endpoint": {
+    "authentication": "none",
+    "documentation_url": "https://docs.polymarket.com/api-reference/introduction",
+    "method": "GET",
+    "url": "https://data-api.polymarket.com/activity"
+  },
+  "every_poll_persisted": true,
+  "first_seen_immutable": true,
+  "h2_evaluated": false,
+  "max_duration_seconds": 300.0,
+  "max_requests": 240,
+  "no_authenticated_endpoints": true,
+  "no_trading_or_orders": true,
+  "page_limit": 100,
+  "poll_interval_seconds": 5.0,
+  "public_read_only_only": true,
+  "restart_safe": true,
+  "sqlite_journal_mode": "wal",
+  "task": "Wallet First-Seen Prospective Experiment v1",
+  "wallet_count": 4,
+  "wallets": [
+    "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e",
+    "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199",
+    "0x29a55c2bf8efd1029c001477b34be47d3ca37752",
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+  ]
+}

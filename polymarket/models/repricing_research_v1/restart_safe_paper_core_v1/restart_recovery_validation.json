@@ -1,0 +1,46 @@
+{
+  "artifact": "restart_safe_repricing_paper_core_v1",
+  "date": "2026-06-28",
+  "detector_logic_changed": false,
+  "frozen_parameters_changed": false,
+  "holdout_accessed": false,
+  "public_campaign_launched": false,
+  "result": "PASS",
+  "strategy_fingerprint": "d5d389be45d472628aab06b3aeeb281593e74d48b82902e12712047c91fec010",
+  "validation": {
+    "closed_position_not_reopened": true,
+    "duplicate_pnl_prevented": true,
+    "duplicate_position_prevented": true,
+    "duplicate_signal_prevented": true,
+    "fingerprint_mismatch_fails_closed": true,
+    "fixture_equivalent_to_offline_simulator": true,
+    "lifecycle_expiry_uses_last_durable_quote": true,
+    "open_position_survives_restart": true,
+    "pending_journal_replay_deterministic": true
+  },
+  "failure_boundaries": {
+    "close": [
+      "after_trade_close",
+      "before_cursor_commit",
+      "after_cursor_commit"
+    ],
+    "open": [
+      "after_raw_persist",
+      "before_signal_admission",
+      "after_signal_admission",
+      "after_position_open",
+      "before_cursor_commit",
+      "after_cursor_commit"
+    ]
+  },
+  "focused_tests": {
+    "command": "python -m unittest tests.polymarket.test_repricing_research tests.polymarket.test_repricing_paper_core -q",
+    "passed": 11,
+    "failed": 0
+  },
+  "full_tests": {
+    "command": "python -m unittest discover -s tests -q",
+    "passed": 146,
+    "failed": 0
+  }
+}

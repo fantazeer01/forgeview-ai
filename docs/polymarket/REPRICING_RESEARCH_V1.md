@@ -735,6 +735,36 @@ No continuous run is authorized until the causal paper core demonstrates
 offline replay equivalence and crash-safe idempotency. Frozen parameters,
 evidence gates, and holdout policy remain unchanged.
 
+## Restart-Safe Paper Core v1
+
+The local restart-safe execution foundation is implemented under
+`polymarket/repricing_research/paper_core.py`. It is separate from v5 generic
+shadow execution and preserves the frozen repricing contract unchanged.
+
+Durability rules:
+
+- journal each raw event before applying a state transition;
+- atomically commit admission, position state, realized paper PnL, and the
+  processed cursor;
+- replay only unprocessed journal rows after restart;
+- enforce unique signal, position, and close identities in SQLite;
+- enforce one open position per market and side in SQLite;
+- restore open positions and never reopen a closed signal;
+- verify the frozen strategy fingerprint and fail closed on mismatch;
+- close on target, stop, timeout, or v5 lifecycle expiry using a durable quote.
+
+Validation passed for open-position restoration, duplicate suppression,
+closed-position idempotency, nine injected interruption cases, lifecycle
+expiry, strategy mismatch refusal, and exact fixture equivalence with the
+offline simulator. Eleven repricing tests and 146 repository tests pass.
+Artifacts are under
+`polymarket/models/repricing_research_v1/restart_safe_paper_core_v1/`.
+
+This does not authorize continuous operation. A read-only v5 stream adapter,
+process supervision, rotation, telemetry, daily statistics, and sustained soak
+validation remain missing. No campaign, Telegram integration, wallet
+connection, real order, holdout access, or parameter change occurred.
+
 ## Missing Data
 
 The current evidence is missing:

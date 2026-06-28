@@ -43,6 +43,12 @@ from .first_seen import (
     DEFAULT_POLL_INTERVAL_SECONDS,
     run_first_seen_experiment,
 )
+from .first_seen_prospective import (
+    DEFAULT_PROSPECTIVE_DB,
+    DEFAULT_PROSPECTIVE_OUTPUT,
+    prepare_prospective_experiment,
+    run_prospective_observer,
+)
 
 
 DEFAULT_INPUT = Path("polymarket/wallet_intelligence/watched_wallets.example.csv")
@@ -168,6 +174,18 @@ def build_parser() -> argparse.ArgumentParser:
     first_seen.add_argument("--poll-interval", type=float, default=DEFAULT_POLL_INTERVAL_SECONDS)
     first_seen.add_argument("--page-limit", type=int, default=DEFAULT_PAGE_LIMIT)
     first_seen.add_argument("--max-requests", type=int, default=DEFAULT_MAX_REQUESTS)
+
+    prospective = subparsers.add_parser(
+        "wallet-first-seen-prospective",
+        help="Prepare or explicitly run the restart-safe bounded prospective observer.",
+    )
+    prospective.add_argument("--database", type=Path, default=DEFAULT_PROSPECTIVE_DB)
+    prospective.add_argument("--output", type=Path, default=DEFAULT_PROSPECTIVE_OUTPUT)
+    prospective.add_argument("--observe", action="store_true")
+    prospective.add_argument("--duration", type=float, default=DEFAULT_DURATION_SECONDS)
+    prospective.add_argument("--poll-interval", type=float, default=DEFAULT_POLL_INTERVAL_SECONDS)
+    prospective.add_argument("--page-limit", type=int, default=DEFAULT_PAGE_LIMIT)
+    prospective.add_argument("--max-requests", type=int, default=DEFAULT_MAX_REQUESTS)
     return parser
 
 
@@ -323,6 +341,24 @@ def main(argv: list[str] | None = None) -> int:
                 sort_keys=True,
             )
         )
+        return 0
+    if args.command == "wallet-first-seen-prospective":
+        if args.observe:
+            result = run_prospective_observer(
+                client=PolymarketPublicClient(delay_seconds=0.0, timeout_seconds=10),
+                db_path=args.database,
+                output_dir=args.output,
+                duration_seconds=args.duration,
+                poll_interval_seconds=args.poll_interval,
+                page_limit=args.page_limit,
+                max_requests=args.max_requests,
+            )
+        else:
+            result = prepare_prospective_experiment(
+                db_path=args.database,
+                output_dir=args.output,
+            )
+        print(json.dumps(result, indent=2, sort_keys=True))
         return 0
     parser.error(f"unknown command {args.command}")
     return 2

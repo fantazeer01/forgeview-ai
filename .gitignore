@@ -37,3 +37,8 @@ polymarket/data/**/input_sessions/
 **/*.jsonl
 **/*.parquet
 **/*.log
+
+# Local transactional research state
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
