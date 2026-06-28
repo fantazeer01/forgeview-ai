@@ -1481,3 +1481,67 @@ Reason: Windows AC sleep and hibernate were both disabled, free disk was
 all three restart drills passed, and stale/write fault injection stopped
 closed. Forty-five Repricing tests and 191 repository tests passed. No soak,
 live trade, detector change, threshold change, or holdout access occurred.
+
+## D-079: Real-money capital progresses through research, proof, and scale
+
+Status: Accepted
+Decision: Future real-money deployment uses three Capital Stages. Capital
+Stage 0 is research, replay, offline testing, and paper trading with $0
+real-money risk. Capital Stage 1 begins only after successful paper evidence
+and explicit approval, using approximately $3-$5 per trade or the platform
+minimum if higher. Its purpose is to verify real execution against paper
+assumptions, not maximize profit. Capital Stage 2 begins only after stable
+Stage 1 behavior and increases size gradually under predefined rules.
+
+Reason: Separating execution proof from scaling prevents promising paper
+results from becoming an uncontrolled capital decision.
+
+## D-080: Per-trade risk is capped at 1% of current trading capital
+
+Status: Accepted
+Decision: No trade may risk more than 1% of current trading capital regardless
+of signal confidence. If the platform minimum exceeds that ceiling, the system
+remains in paper mode unless use of the smallest permitted size receives
+explicit approval. This platform-minimum case is the sole exception.
+
+Reason: Confidence estimates do not eliminate model, market, liquidity, or
+operational risk. A fixed capital-relative ceiling bounds single-trade damage.
+
+## D-081: Real execution stops new entries on loss or integrity failures
+
+Status: Accepted
+Decision: A future real-money system must stop opening new trades when any
+configured daily-loss, consecutive-loss, critical-infrastructure, API/data,
+data-consistency, duplicate-position, restart-recovery, or unexpected
+order/execution-state condition triggers. Numeric loss thresholds may be set
+after paper statistics exist, but they must be predefined, paper-validated,
+documented, and approved before Capital Stage 1.
+
+Reason: A system with uncertain state or breached loss limits must fail closed
+instead of attempting to trade through the fault.
+
+## D-082: Automated strategies prohibit discretionary manual trading
+
+Status: Accepted
+Decision: Once launched, an automated strategy permits no manual trade opening,
+manual trade closing, or emotion-driven parameter change. Every parameter
+change requires a hypothesis, reproducible test, paper-trading validation, and
+documented decision. Operational shutdown controls remain required but must not
+become a discretionary trading interface.
+
+Reason: Manual intervention invalidates reproducibility, bypasses tested risk
+controls, and turns isolated outcomes into unreviewed strategy changes.
+
+## D-083: Automation and engineering priority are strategy agnostic
+
+Status: Accepted
+Decision: ForgeViewAI minimizes manual work through automated data collection,
+signal generation, paper trading, statistics, and reporting. Eventual real
+execution may be automated only after evidence and explicit authorization.
+Engineering priority follows the fastest reproducible evidence-backed path to
+profitable BTC/ETH/SOL five-minute trading, not loyalty to Repricing, Wallet
+Intelligence, or any other branch. Rejected branches may be frozen; supported
+branches receive higher priority.
+
+Reason: Automation improves repeatability, while strategy-agnostic allocation
+prevents sunk cost or preference from overriding evidence.

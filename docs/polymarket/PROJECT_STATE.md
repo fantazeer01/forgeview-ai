@@ -35,6 +35,15 @@ This governance change does not alter any research result, detector logic,
 Wallet implementation, Repricing implementation, holdout boundary, or current
 prohibition on real-money execution.
 
+Risk Management Principles v1 are now recorded in `RISK_MANAGEMENT.md`.
+Current capital status is **Capital Stage 0 - Research** with **$0 real-money
+risk**. Any future real-money system, regardless of strategy branch, must pass
+Capital Stage 1 proof before Capital Stage 2 scale, cap risk at 1% of current
+trading capital per trade, stop new entries on configured loss or integrity
+conditions, prohibit discretionary manual trading, and use documented change
+control. No implementation or execution authorization follows from this policy
+record.
+
 Repository consolidation note: `research/probability-lab` is now maintained as
 a normal folder inside the root ForgeViewAI repository. Its nested Git metadata
 was removed, project files were preserved, and ForgeViewAI is the only Git

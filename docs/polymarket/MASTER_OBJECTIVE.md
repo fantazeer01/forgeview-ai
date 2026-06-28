@@ -15,10 +15,11 @@ Future engineering sessions must read these documents in order:
 
 1. `MASTER_OBJECTIVE.md` - permanent objective and gates.
 2. `RESEARCH_PRINCIPLES.md` - strategic hypothesis filter.
-3. `PROJECT_STATE.md` - measured current status and blockers.
-4. `NEXT_TASK.md` - the single authorized active task.
-5. `DECISIONS.md` - durable architecture and policy decisions.
-6. `RESEARCH_BACKLOG.md` - future ideas that are not yet active.
+3. `RISK_MANAGEMENT.md` - capital stages and real-money risk policy.
+4. `PROJECT_STATE.md` - measured current status and blockers.
+5. `NEXT_TASK.md` - the single authorized active task.
+6. `DECISIONS.md` - durable architecture and policy decisions.
+7. `RESEARCH_BACKLOG.md` - future ideas that are not yet active.
 
 After completing work, update the state, decisions, and next-task documents in
 the same change. Code is not fully handed off while those documents are stale.
@@ -314,8 +315,13 @@ or thresholds selected using final-test performance.
 
 ## 11. Risk management requirements
 
+`RISK_MANAGEMENT.md` is the canonical policy for any future real-money
+system. It applies equally to Repricing, Wallet Intelligence, and any future
+strategy branch.
+
 Current mandatory controls:
 
+- Capital Stage 0 with $0 real-money risk;
 - no real trading;
 - no wallet or private-key handling;
 - no order-placement code;
@@ -328,12 +334,23 @@ Requirements for any future execution proposal:
 
 - separate, explicitly authorized execution repository or module boundary;
 - independent code and risk review;
+- progression through Capital Stage 1 proof before Capital Stage 2 scale;
+- no more than 1% of current trading capital at risk on one trade;
+- initial proof sizing of approximately $3-$5 per trade, or the platform
+  minimum if higher and explicitly approved when it exceeds the 1% ceiling;
 - maximum position, market, asset, daily loss, and drawdown limits;
+- configured stops for consecutive losses, infrastructure failures, API/data
+  failures, data inconsistency, duplicate positions, restart recovery failure,
+  and unexpected order or execution state;
 - liquidity and maximum-spread filters;
 - stale-data, clock-drift, disconnect, and quote-integrity circuit breakers;
 - automatic kill switch and manual shutdown procedure;
 - reconciliation, audit logs, and alerting;
-- staged capital limits with rollback criteria.
+- staged capital limits with rollback criteria;
+- no discretionary manual opening, closing, or emotion-driven parameter
+  changes;
+- hypothesis, test, paper validation, and documented approval before any
+  parameter change.
 
 No research result automatically authorizes real-money deployment.
 

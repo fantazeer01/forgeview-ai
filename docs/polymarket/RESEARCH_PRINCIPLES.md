@@ -57,6 +57,18 @@ repricing, are supporting paths for finding or rejecting profitable strategies.
    A task that cannot say what uncertainty it reduces should stay in the
    backlog.
 
+9. Strategy selection is evidence-driven.
+   ForgeViewAI is not loyal to Repricing, Wallet Intelligence, or any named
+   branch. Reject and freeze branches that fail their evidence gates; prioritize
+   branches that provide the fastest reproducible path toward profitable
+   BTC/ETH/SOL five-minute trading.
+
+10. Repeated operations should be automated.
+    Prefer automated collection, signals, paper trading, statistics, and
+    reporting when automation preserves auditability and fail-closed behavior.
+    Real execution remains prohibited until separately authorized under
+    `RISK_MANAGEMENT.md`.
+
 ## Core Hypotheses
 
 ### H1: Some public wallets consistently make better decisions than random.
