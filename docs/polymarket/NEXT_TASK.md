@@ -7,57 +7,58 @@ This file contains exactly one active task. A future Codex session must read
 `RESEARCH_PRINCIPLES.md`, `MASTER_OBJECTIVE.md`, `PROJECT_STATE.md`,
 `DECISIONS.md`, and `WALLET_INTELLIGENCE_RESEARCH_V1.md` before starting it.
 
-## Active task: Wallet H2/H3 Prospective Evidence Accumulation Sprint v1
+## Active task: Wallet H2/H3 Gate-Bound Evidence Collection Sprint v1
 
-### Hypothesis under test
+### Hypotheses under test
 
-Public activity from the four frozen H1 wallets is observable with a
-repeatable delay distribution and leaves at least 60 seconds before expiry for
-a meaningful share of target five-minute BTC/ETH/SOL trades.
+- H2: public wallet activity becomes observable quickly enough;
+- H3: enough time remains after detection to support future execution
+  feasibility research.
 
 ### Objective
 
-Use the existing restart-safe first-seen observer to accumulate enough bounded
-prospective evidence to retest H2 visibility delay and H3 decision-window
-feasibility. Collect evidence only; do not change scoring, thresholds, or
-execution assumptions.
+Collect the next bounded tranche with the existing restart-safe observer and
+evaluate the frozen H2/H3 decision framework. This is evidence collection,
+not new engineering and not an automatic commitment to exhaust the budget.
 
-### Frozen scope
+### Frozen collection rules
 
 1. Observe only the four frozen H1 wallets.
-2. Use only the approved public unauthenticated Data API activity endpoint.
-3. Preserve the 5-second polling interval, 100-row page limit, 300-second run
-   limit, and 240-request run limit.
-4. Stop after 30 eligible prospective BTC/ETH/SOL five-minute trades or 20
-   bounded runs, whichever occurs first.
-5. Persist every poll and first-seen trade through the existing transactional
-   SQLite observer.
-6. Join eligible rows to public Gamma expiry metadata and preserve source
-   provenance.
-7. Report H2 delay and H3 decision-window distributions using the frozen
-   60-second sufficient and 30-second marginal boundaries.
-8. Keep every run restart safe, duplicate safe, deterministic, and separately
-   auditable.
+2. Keep the existing public endpoint, 5-second polling, 100-row page, 300-second
+   session, and 240-request session limits unchanged.
+3. Preserve every poll, first-seen trade, stable identity, and Gamma expiry
+   provenance through existing components.
+4. Run at most 10 additional bounded sessions in this sprint.
+5. Stop earlier if the cumulative eligible sample reaches 100 rows.
+6. Recompute the framework after the tranche; do not alter any gate.
+7. Preserve session and UTC-date diversity explicitly.
+
+### Decision rules
+
+- continue only if H2/H3 remain inconclusive and fewer than 60 total sessions
+  have been consumed;
+- graduate only if both support gates and every minimum evidence gate pass;
+- freeze if either rejection gate passes;
+- freeze if the 60-session total budget is exhausted without minimum evidence;
+- no automatic collection-budget extension.
 
 ### Forbidden
 
-- no wallet/private-key connection, authentication, order placement, or live
-  trading;
-- no copy-trade automation;
-- no Wallet Score or Watchlist change;
-- no profitability, expected-return, alpha, or investment claim;
-- no execution-quality, slippage, fill, liquidity, or queue estimate;
+- no Wallet Score, Watchlist, polling, endpoint, threshold, or hypothesis
+  change;
+- no wallet/private-key use, authentication, order placement, copy automation,
+  or live trading;
+- no profitability, alpha, expected-return, or investment claim;
+- no execution, slippage, liquidity, fill, or queue simulation;
 - no sealed holdout access or evaluation;
-- no permanent monitoring or unbounded collection.
+- no permanent or unbounded monitoring.
 
 ### Acceptance criteria
 
-- at least 30 eligible target rows are collected, or the 20-run bound is
-  reached and the shortfall is reported;
-- every eligible row has stable identity, trade time, first-seen time, expiry,
-  and source provenance;
-- deterministic exports and duplicate/restart validation pass;
-- H2 and H3 each receive exactly one evidence-backed conclusion from
-  `SUPPORTED`, `REJECTED`, or `INCONCLUSIVE`;
+- no more than 10 bounded sessions are attempted;
+- cumulative evidence and every framework gate are reported deterministically;
+- H2 and H3 each receive exactly one current conclusion;
+- the program receives exactly one action: `CONTINUE`,
+  `GRADUATE_TO_ENGINEERING`, or `FREEZE`;
 - all Wallet Intelligence and repository tests pass;
 - exactly one active successor task remains.

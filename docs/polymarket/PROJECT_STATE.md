@@ -2273,6 +2273,51 @@ Evidence-driven successor:
 - use the existing restart-safe observer and frozen decision-window
   thresholds without changing Wallet Score or simulating execution.
 
+## Wallet H2/H3 Decision Framework Sprint v1
+
+Wallet H2/H3 Decision Framework Sprint v1 is complete. It defines when the
+Wallet Intelligence branch continues, graduates, or freezes without changing
+the observer, polling, Wallet Score, or either hypothesis.
+
+Artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/h2_h3_decision_framework_v1/wallet_h2_h3_decision_framework.md`;
+- `polymarket/models/wallet_intelligence_v1/h2_h3_decision_framework_v1/wallet_h2_h3_progress.json`;
+- `polymarket/models/wallet_intelligence_v1/h2_h3_decision_framework_v1/wallet_h2_h3_remaining_evidence.md`.
+
+Minimum final-decision evidence:
+
+- 100 eligible prospective five-minute trades;
+- 3 distinct wallets with at least 10 rows each and no wallet above 60%;
+- 10 bounded sessions across 5 UTC dates;
+- 2 assets with at least 20 rows each;
+- at least 95% timestamp, expiry-join, and request completeness;
+- 100% stable identity uniqueness;
+- two-sided 95% Wilson confidence intervals.
+
+Current automatic evaluation:
+
+- H2: 2/2 within 30 seconds, point estimate 100%, Wilson interval
+  34.24%-100%, `INCONCLUSIVE`;
+- H3: 1/2 with at least 60 seconds remaining, point estimate 50%, Wilson
+  interval 9.45%-90.55%, `INCONCLUSIVE`;
+- current action: `CONTINUE`;
+- remaining headline evidence: 98 trades, 2 wallets, 9 minimum-gate sessions,
+  and 4 UTC dates;
+- observed rate implies approximately 49 additional five-minute sessions, or
+  245 minutes, but that estimate comes from one session and is not a forecast.
+
+Stop/go policy:
+
+- graduate only if both H2 and H3 satisfy their support gates;
+- freeze if either satisfies its rejection gate;
+- freeze if 60 total bounded sessions finish without minimum evidence;
+- evaluate every 10 sessions and never extend the budget automatically.
+
+Next active task:
+
+- Wallet H2/H3 Gate-Bound Evidence Collection Sprint v1.
+
 ## State update protocol
 
 At the end of every completed active task:

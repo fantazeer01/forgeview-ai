@@ -1305,3 +1305,32 @@ record handling, frozen DOWN/NO timeout and slippage behavior, source
 replacement/truncation refusal, and equivalence between interrupted and
 uninterrupted ingestion. This decision changes no detector behavior or frozen
 parameter and does not authorize a continuous process or campaign.
+
+## D-072: H2/H3 decisions use confidence, diversity, and a finite collection budget
+
+Status: Accepted
+Decision: The provisional 30-row H3 floor in D-070 is superseded for final
+H2/H3 decisions. Support or rejection now requires 100 eligible prospective
+five-minute trades, 3 represented wallets with at least 10 rows each, no
+wallet above 60% of rows, 10 sessions, 5 UTC dates, 2 assets with at least 20
+rows each, 95% timestamp/expiry/request completeness, and 100% stable identity
+uniqueness. Primary proportions use two-sided 95% Wilson intervals.
+
+H2 support requires at least 80% observed within 30 seconds and a Wilson lower
+bound of at least 70%; rejection requires no more than 50% and a Wilson upper
+bound of at most 60%. H3 support requires at least 70% retaining 60 seconds
+and a Wilson lower bound of at least 60%; rejection requires no more than 30%
+and a Wilson upper bound of at most 40%.
+
+The branch continues only while evidence is inconclusive and the budget
+remains. It graduates only when both hypotheses are supported, and then only
+to bounded execution-feasibility engineering. It freezes if either hypothesis
+is rejected or if 60 total five-minute sessions fail to satisfy minimum
+evidence. Progress is evaluated every 10 sessions and the budget cannot extend
+automatically.
+
+Reason: Current H2 evidence is 2/2 with a 34.24%-100% Wilson interval; current
+H3 evidence is 1/2 with a 9.45%-90.55% interval. Point estimates therefore do
+not distinguish weak from strong underlying rates. A 100-row floor gives a
+worst-case approximate 95% proportion margin of 9.8 percentage points, while
+wallet, asset, date, and session gates reduce concentration risk.

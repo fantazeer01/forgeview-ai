@@ -449,6 +449,16 @@ liquidity, fill, and queue latency. The next Wallet Intelligence milestone is
 therefore bounded prospective evidence accumulation to at least 30 eligible
 target trades, not a scoring or execution expansion.
 
+Wallet H2/H3 Decision Framework Sprint v1 supersedes that provisional
+30-trade target with a confidence-based gate. A final H2/H3 decision now
+requires 100 eligible trades, at least 3 wallets, 10 sessions, 5 UTC dates,
+2 assets, and 95% timestamp/expiry completeness. Two-sided 95% Wilson
+intervals govern support and rejection. Collection has a hard cap of 60 total
+five-minute sessions; failure to satisfy minimum evidence within that budget
+freezes the wallet-copy branch for insufficient observable opportunity
+density. Both H2 and H3 must be supported before any execution-feasibility
+engineering may begin.
+
 Exit criteria:
 
 - restrict prospective observation to the four H1 above-baseline wallets;

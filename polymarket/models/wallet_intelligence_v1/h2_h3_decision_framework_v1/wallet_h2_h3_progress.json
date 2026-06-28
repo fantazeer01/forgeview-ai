@@ -1,0 +1,139 @@
+{
+  "action": "CONTINUE",
+  "current_evidence": {
+    "assets": {
+      "BTC": 1,
+      "SOL": 1
+    },
+    "distinct_utc_dates": 1,
+    "distinct_wallets": 1,
+    "eligible_trades": 2,
+    "expiry_join_completeness": 1.0,
+    "first_seen_timestamp_completeness": 1.0,
+    "observation_sessions": 1,
+    "stable_identity_uniqueness": 1.0,
+    "trade_timestamp_completeness": 1.0,
+    "wallet_trade_counts": {
+      "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e": 2
+    }
+  },
+  "decision_budget": {
+    "evaluation_cadence_sessions": 10,
+    "maximum_total_sessions": 60,
+    "stop_on_freeze_or_graduation": true
+  },
+  "gates": {
+    "confidence_interval": "two_sided_95_percent_wilson",
+    "h2": {
+      "rejected": {
+        "maximum_point_estimate": 0.5,
+        "maximum_wilson_upper_bound": 0.6
+      },
+      "success_definition": "first_seen_delay_seconds <= 30",
+      "supported": {
+        "minimum_point_estimate": 0.8,
+        "minimum_wilson_lower_bound": 0.7
+      }
+    },
+    "h3": {
+      "rejected": {
+        "maximum_point_estimate": 0.3,
+        "maximum_wilson_upper_bound": 0.4
+      },
+      "success_definition": "decision_window_seconds >= 60",
+      "supported": {
+        "minimum_point_estimate": 0.7,
+        "minimum_wilson_lower_bound": 0.6
+      }
+    },
+    "minimum_evidence": {
+      "distinct_utc_dates": 5,
+      "distinct_wallets": 3,
+      "eligible_trades": 100,
+      "expiry_join_completeness": 0.95,
+      "first_seen_timestamp_completeness": 0.95,
+      "maximum_largest_wallet_share": 0.6,
+      "minimum_assets": 2,
+      "minimum_eligible_trades_per_asset": 20,
+      "minimum_eligible_trades_per_wallet": 10,
+      "observation_sessions": 10,
+      "public_request_success_rate": 0.95,
+      "stable_identity_uniqueness": 1.0,
+      "trade_timestamp_completeness": 0.95
+    }
+  },
+  "gate_progress": {
+    "asset_count": {
+      "current": 2,
+      "required": 2,
+      "satisfied": true
+    },
+    "asset_minimum_rows": {
+      "current_minimum": 1,
+      "required": 20,
+      "satisfied": false
+    },
+    "distinct_dates": {
+      "current": 1,
+      "required": 5,
+      "satisfied": false
+    },
+    "distinct_wallets": {
+      "current": 1,
+      "required": 3,
+      "satisfied": false
+    },
+    "eligible_trades": {
+      "current": 2,
+      "required": 100,
+      "satisfied": false
+    },
+    "observation_sessions": {
+      "current": 1,
+      "required": 10,
+      "satisfied": false
+    },
+    "quality_completeness": {
+      "satisfied": true
+    },
+    "wallet_minimum_rows": {
+      "current_minimum": 2,
+      "required": 10,
+      "satisfied": false
+    }
+  },
+  "h2": {
+    "conclusion": "INCONCLUSIVE",
+    "point_estimate": 1.0,
+    "successes": 2,
+    "trials": 2,
+    "wilson_95": {
+      "lower": 0.3423802275,
+      "upper": 1.0
+    }
+  },
+  "h3": {
+    "conclusion": "INCONCLUSIVE",
+    "point_estimate": 0.5,
+    "successes": 1,
+    "trials": 2,
+    "wilson_95": {
+      "lower": 0.0945312057,
+      "upper": 0.9054687943
+    }
+  },
+  "remaining_evidence": {
+    "additional_distinct_dates": 4,
+    "additional_distinct_wallets": 2,
+    "additional_eligible_trades": 98,
+    "additional_sessions_minimum_gate": 9,
+    "estimated_additional_sessions_at_observed_rate": 49,
+    "estimated_additional_observation_minutes": 245,
+    "minimum_additional_rows_to_meet_wallet_distribution_gate": 28
+  },
+  "sources": {
+    "decision_window_summary": "polymarket/models/wallet_intelligence_v1/decision_window_v1/wallet_decision_window_summary.json",
+    "first_seen_summary": "polymarket/models/wallet_intelligence_v1/first_seen_detection_v1/wallet_first_seen_summary.json"
+  },
+  "task": "Wallet H2/H3 Decision Framework Sprint v1"
+}

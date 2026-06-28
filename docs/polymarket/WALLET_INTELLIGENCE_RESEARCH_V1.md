@@ -1725,3 +1725,52 @@ Evidence-driven successor:
   bounded five-minute sessions;
 - preserve the existing observer and frozen thresholds; do not alter Wallet
   Score or infer profitability.
+
+## Wallet H2/H3 Decision Framework Sprint v1
+
+Wallet H2/H3 Decision Framework Sprint v1 is complete and supersedes the
+provisional 30-row/20-session accumulation target for final decisions.
+
+Decision evidence gate:
+
+- 100 eligible prospective BTC/ETH/SOL five-minute trades;
+- 3 wallets, at least 10 rows per represented wallet, no wallet above 60%;
+- 10 sessions over 5 UTC dates;
+- 2 assets with at least 20 rows each;
+- at least 95% timestamp, Gamma expiry, and request completeness;
+- 100% stable identity uniqueness;
+- two-sided 95% Wilson intervals for both primary proportions.
+
+H2 primary measure:
+
+- success row: first-seen delay no more than 30 seconds;
+- support: at least 80%, Wilson lower bound at least 70%;
+- reject: no more than 50%, Wilson upper bound at most 60%.
+
+H3 primary measure:
+
+- success row: at least 60 seconds from first observation to expiry;
+- support: at least 70%, Wilson lower bound at least 60%;
+- reject: no more than 30%, Wilson upper bound at most 40%.
+
+Current evaluation:
+
+- H2: 2/2, 100%, Wilson 34.24%-100%, `INCONCLUSIVE`;
+- H3: 1/2, 50%, Wilson 9.45%-90.55%, `INCONCLUSIVE`;
+- action: `CONTINUE`;
+- additional minimum evidence: 98 trades, 2 wallets, 9 sessions, 4 dates;
+- at the observed two-trades-per-session rate, approximately 49 additional
+  sessions or 245 minutes would be needed, but this one-session estimate is
+  not a forecast.
+
+Stop/go outcome:
+
+- `GRADUATE_TO_ENGINEERING` only if both hypotheses are supported;
+- `FREEZE` if either is rejected;
+- `FREEZE` if 60 total bounded sessions fail to satisfy minimum evidence;
+- otherwise `CONTINUE`, with evaluation every 10 sessions and no automatic
+  budget extension.
+
+Graduation authorizes only bounded execution-delay, liquidity, slippage, and
+fill-feasibility research. It does not authorize trading or a profitability
+claim.
