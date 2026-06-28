@@ -71,6 +71,14 @@ a documented review and renewed evidence. Capital preservation takes priority
 over continuous trading. No implementation, detector, threshold, strategy, or
 execution authorization was changed.
 
+ForgeViewAI KPI Framework v1 is now recorded in `KPI_FRAMEWORK.md` as the
+canonical project dashboard definition. It measures five strategy-agnostic
+groups: Research Health, Strategy Health, Trading Quality, Infrastructure
+Health, and Business Progress. The framework requires explicit provenance,
+measurement windows, paper/live separation, per-strategy readiness, and visible
+unknown or blocked states. It defines no numeric targets and adds no dashboard
+implementation, strategy change, detector change, or trading authorization.
+
 Repository consolidation note: `research/probability-lab` is now maintained as
 a normal folder inside the root ForgeViewAI repository. Its nested Git metadata
 was removed, project files were preserved, and ForgeViewAI is the only Git

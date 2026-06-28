@@ -1693,3 +1693,32 @@ accepting uncontrolled risk.
 
 Reason: Strategy preference, sunk cost, or urgency to reach the profit target
 must not weaken shutdown decisions.
+
+## D-096: Project health uses five canonical KPI groups
+
+Status: Accepted
+Decision: The ForgeViewAI Polymarket project dashboard uses five canonical,
+strategy-agnostic KPI groups. Research Health tracks active, supported,
+rejected, and inconclusive hypotheses. Strategy Health tracks current stage,
+paper readiness, real-money readiness, and last evidence review for every
+strategy. Trading Quality tracks expectancy, drawdown, trade count, and
+paper/live status. Infrastructure Health tracks uptime, restart reliability,
+duplicate protection, integrity checks, and API health. Business Progress
+tracks current capital stage, current trading license level, active strategy,
+and next required milestone.
+
+Reason: A fixed dashboard vocabulary makes project health comparable across
+strategies without making any strategy the default.
+
+## D-097: KPI reporting preserves provenance and governance boundaries
+
+Status: Accepted
+Decision: Every KPI snapshot must identify observation time, evidence cutoff,
+source evidence, and whether values are measured, unavailable, or not
+applicable. Strategy, paper/live, asset, and evidence-window boundaries remain
+separate. Missing values are not inferred, aggregate metrics cannot hide a
+mandatory failure, and the KPI framework defines no numeric target or trading
+authorization.
+
+Reason: Dashboard convenience must not weaken evidence lineage, conceal risk,
+or turn descriptive metrics into promotion criteria.
