@@ -1,0 +1,131 @@
+{
+  "action": "CONTINUE",
+  "automation_status": "ready",
+  "decision_contract": {
+    "confidence_interval": "two_sided_95_percent_wilson",
+    "h2": {
+      "reject": {
+        "maximum_point_estimate": 0.5,
+        "maximum_wilson_upper": 0.6
+      },
+      "success_definition": "first_seen_delay_seconds <= 30",
+      "support": {
+        "minimum_point_estimate": 0.8,
+        "minimum_wilson_lower": 0.7
+      }
+    },
+    "h3": {
+      "reject": {
+        "maximum_point_estimate": 0.3,
+        "maximum_wilson_upper": 0.4
+      },
+      "success_definition": "decision_window_seconds >= 60",
+      "support": {
+        "minimum_point_estimate": 0.7,
+        "minimum_wilson_lower": 0.6
+      }
+    },
+    "maximum_sessions": 60,
+    "minimum_eligible_trades": 100
+  },
+  "evidence": {
+    "completeness": {
+      "gamma_expiry": 1.0,
+      "public_request_success_rate": 1.0,
+      "stable_identity_uniqueness": 1.0,
+      "trade_and_first_seen_timestamps": 1.0
+    },
+    "diversity": {
+      "asset_trade_counts": {
+        "BTC": 1,
+        "SOL": 1
+      },
+      "assets": 2,
+      "dates": 1,
+      "largest_wallet_share": 1.0,
+      "utc_dates": [
+        "2026-06-28"
+      ],
+      "wallet_trade_counts": {
+        "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e": 2
+      },
+      "wallets": 1
+    },
+    "eligible_trades": 2,
+    "h2_measurable_trades": 2,
+    "h3_measurable_trades": 2,
+    "request_counts": {
+      "failed": 0,
+      "successful": 240
+    }
+  },
+  "frozen_runtime": {
+    "max_requests_per_session": 240,
+    "maximum_sessions": 60,
+    "page_limit": 100,
+    "poll_interval_seconds": 5.0,
+    "session_duration_seconds": 300.0
+  },
+  "h2": {
+    "conclusion": "INCONCLUSIVE",
+    "point_estimate": 1.0,
+    "successes": 2,
+    "trials": 2,
+    "wilson_95": {
+      "lower": 0.34238022750665303,
+      "upper": 1.0
+    }
+  },
+  "h3": {
+    "conclusion": "INCONCLUSIVE",
+    "point_estimate": 0.5,
+    "successes": 1,
+    "trials": 2,
+    "wilson_95": {
+      "lower": 0.09453120573423074,
+      "upper": 0.9054687942657693
+    }
+  },
+  "minimum_evidence": {
+    "gates": {
+      "asset_count": true,
+      "dates": false,
+      "eligible_trades": false,
+      "expiry_completeness": true,
+      "identity_uniqueness": true,
+      "request_completeness": true,
+      "sessions": false,
+      "timestamp_completeness": true,
+      "trades_per_asset": false,
+      "trades_per_wallet": false,
+      "wallet_concentration": false,
+      "wallet_count": false
+    },
+    "passed": false
+  },
+  "persistent_state": {
+    "accumulator_database": "polymarket\\data\\wallet_intelligence\\first_seen_prospective_v1\\accumulator.sqlite3",
+    "observer_counts": {
+      "observations": 0,
+      "polls": 0,
+      "runs": 0,
+      "trades": 0
+    },
+    "observer_database": "polymarket\\data\\wallet_intelligence\\first_seen_prospective_v1\\observer.sqlite3",
+    "session_records": []
+  },
+  "process_id": 0,
+  "remaining": {
+    "dates": 4,
+    "eligible_trades": 98,
+    "sessions": 9,
+    "wallets": 2
+  },
+  "sessions": {
+    "completed": 1,
+    "maximum": 60,
+    "remaining": 59
+  },
+  "stop_reason": "",
+  "task": "Wallet Autonomous Evidence Accumulator v1"
+}

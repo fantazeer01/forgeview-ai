@@ -1357,3 +1357,28 @@ failed-closed invalid input, pre-requested graceful stop, deterministic health
 output, and the CLI dry-run contract. Continuous unattended operation remains
 unauthorized until Repricing Paper Runtime Supervision And Soak Sprint v1
 adds supervision controls and produces soak evidence.
+
+## D-074: H2/H3 accumulation is autonomous but remains hard bounded
+
+Status: Accepted
+Decision: The H2/H3 accumulator uses a separate local SQLite control ledger
+beside the existing prospective observer database. Session 1 is the committed
+feasibility experiment; autonomous numbering begins at session 2. An
+`IMMEDIATE` SQLite reservation returns an existing active session on restart
+and prevents competing session allocation. Poll and trade evidence remains in
+the existing observer database rather than being copied into another source
+of truth.
+
+After every completed session, the accumulator condition-matches public Gamma
+expiry metadata, evaluates the unchanged D-072 gates, and atomically replaces
+`wallet_progress.json`, `wallet_progress_report.md`, and
+`wallet_gate_status.json`. It stops when both hypotheses are supported, either
+is rejected, or 60 sessions are complete. Background launch is a detached
+wrapper around the same bounded `run` command; it is not permanent monitoring
+and cannot extend the evidence budget.
+
+Reason: Fixture tests prove persistent numbering, restart reuse, deterministic
+status output without polling, frozen support and rejection paths, and an
+end-to-end session-60 stop. Current status remains `ready` with 2 eligible
+trades, 1 completed session, and 59 sessions remaining. No public session was
+launched in the implementation sprint.

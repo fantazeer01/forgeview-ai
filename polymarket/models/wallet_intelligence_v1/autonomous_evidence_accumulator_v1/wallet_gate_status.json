@@ -1,0 +1,73 @@
+{
+  "action": "CONTINUE",
+  "automatic_stop": {
+    "reject_reached": false,
+    "session_budget_exhausted": false,
+    "support_reached": false
+  },
+  "decision_contract": {
+    "confidence_interval": "two_sided_95_percent_wilson",
+    "h2": {
+      "reject": {
+        "maximum_point_estimate": 0.5,
+        "maximum_wilson_upper": 0.6
+      },
+      "success_definition": "first_seen_delay_seconds <= 30",
+      "support": {
+        "minimum_point_estimate": 0.8,
+        "minimum_wilson_lower": 0.7
+      }
+    },
+    "h3": {
+      "reject": {
+        "maximum_point_estimate": 0.3,
+        "maximum_wilson_upper": 0.4
+      },
+      "success_definition": "decision_window_seconds >= 60",
+      "support": {
+        "minimum_point_estimate": 0.7,
+        "minimum_wilson_lower": 0.6
+      }
+    },
+    "maximum_sessions": 60,
+    "minimum_eligible_trades": 100
+  },
+  "h2": {
+    "conclusion": "INCONCLUSIVE",
+    "point_estimate": 1.0,
+    "successes": 2,
+    "trials": 2,
+    "wilson_95": {
+      "lower": 0.34238022750665303,
+      "upper": 1.0
+    }
+  },
+  "h3": {
+    "conclusion": "INCONCLUSIVE",
+    "point_estimate": 0.5,
+    "successes": 1,
+    "trials": 2,
+    "wilson_95": {
+      "lower": 0.09453120573423074,
+      "upper": 0.9054687942657693
+    }
+  },
+  "minimum_evidence": {
+    "gates": {
+      "asset_count": true,
+      "dates": false,
+      "eligible_trades": false,
+      "expiry_completeness": true,
+      "identity_uniqueness": true,
+      "request_completeness": true,
+      "sessions": false,
+      "timestamp_completeness": true,
+      "trades_per_asset": false,
+      "trades_per_wallet": false,
+      "wallet_concentration": false,
+      "wallet_count": false
+    },
+    "passed": false
+  },
+  "stop_reason": ""
+}

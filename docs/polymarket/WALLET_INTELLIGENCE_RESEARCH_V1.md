@@ -1774,3 +1774,45 @@ Stop/go outcome:
 Graduation authorizes only bounded execution-delay, liquidity, slippage, and
 fill-feasibility research. It does not authorize trading or a profitability
 claim.
+
+## Wallet Autonomous Evidence Accumulator v1
+
+Wallet Autonomous Evidence Accumulator v1 is implemented and fixture
+validated. It automates evidence collection only; hypotheses, decision gates,
+polling, endpoints, and Wallet Score remain unchanged.
+
+Durable behavior:
+
+- local SQLite control state and session ledger;
+- session 1 reserved for the committed feasibility experiment;
+- automatic numbering from session 2 through the hard session-60 cap;
+- restart reuses an active session rather than allocating another;
+- existing prospective observer database remains the poll/trade source of
+  truth;
+- condition-matched Gamma expiries are cached with provenance;
+- H2/H3 Wilson, completeness, wallet, asset, date, and session gates are
+  recomputed after every completed session;
+- three progress artifacts are replaced atomically after every session;
+- detached `start` and foreground `run` execute the same bounded loop.
+
+Terminal behavior:
+
+- both H2 and H3 supported: stop with `GRADUATE_TO_ENGINEERING`;
+- either rejected: stop with `FREEZE`;
+- 60 sessions exhausted: stop with `FREEZE`;
+- otherwise continue automatically.
+
+Current status:
+
+- `ready`, not publicly launched;
+- 2 eligible trades;
+- 1 represented wallet;
+- 1 completed session;
+- 59 sessions remaining;
+- H2 and H3 both `INCONCLUSIVE`;
+- observer runtime contains zero new sessions and zero new trades.
+
+Validation includes deterministic no-poll status, persistent/restart-safe
+numbering, support/reject paths, and an end-to-end session-60 stop. The next
+task is a controlled public launch of the already frozen accumulator, not more
+accumulator engineering.

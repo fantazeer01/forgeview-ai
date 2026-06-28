@@ -2318,6 +2318,66 @@ Next active task:
 
 - Wallet H2/H3 Gate-Bound Evidence Collection Sprint v1.
 
+## Wallet Autonomous Evidence Accumulator v1
+
+Wallet Autonomous Evidence Accumulator v1 is complete as an implementation
+and fixture-validation sprint. No public observation session was launched.
+
+Implementation:
+
+- `polymarket/wallet_intelligence/evidence_accumulator.py`;
+- `wallet-evidence-accumulator status` computes progress without polling;
+- `wallet-evidence-accumulator run` executes bounded sessions until a frozen
+  terminal gate;
+- `wallet-evidence-accumulator start` launches that same loop as a detached
+  background process;
+- local SQLite persists control state, automatic session numbering, restart
+  state, per-session results, stop reason, process ID, and Gamma expiry cache;
+- the existing observer SQLite remains the sole source for polls and newly
+  observed trades;
+- progress and gate artifacts are atomically replaced after every completed
+  session.
+
+Artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/autonomous_evidence_accumulator_v1/wallet_progress.json`;
+- `polymarket/models/wallet_intelligence_v1/autonomous_evidence_accumulator_v1/wallet_progress_report.md`;
+- `polymarket/models/wallet_intelligence_v1/autonomous_evidence_accumulator_v1/wallet_gate_status.json`.
+
+Current automatic progress:
+
+- automation status: `ready`;
+- current action: `CONTINUE`;
+- eligible trades: 2 / 100;
+- represented wallets: 1 / 3;
+- completed sessions: 1 / 60;
+- remaining session budget: 59;
+- H2: 2/2, `INCONCLUSIVE`;
+- H3: 1/2, `INCONCLUSIVE`;
+- observer database runs/polls/new trades: 0 / 0 / 0;
+- required artifact exports are byte-repeatable across consecutive status
+  runs.
+
+Automatic stop behavior:
+
+- both hypotheses supported: `GRADUATE_TO_ENGINEERING` and stop;
+- either hypothesis rejected: `FREEZE` and stop;
+- session 60 without a terminal decision: `FREEZE` and stop;
+- database reservation prevents competing session numbers and an interrupted
+  active session resumes under the same number.
+
+Validation:
+
+- support, rejection, and budget-exhaustion branches passed fixture tests;
+- an end-to-end session-60 fixture ran exactly one final session, emitted
+  `FREEZE`, and persisted stopped state;
+- no hypothesis, threshold, polling setting, endpoint, or Wallet Score logic
+  changed.
+
+Next active task:
+
+- Wallet Autonomous Evidence Accumulator Controlled Launch v1.
+
 ## Managed Repricing Paper Runtime Loop v1
 
 Managed Repricing Paper Runtime Loop v1 is complete for bounded, fixture-driven

@@ -459,6 +459,16 @@ freezes the wallet-copy branch for insufficient observable opportunity
 density. Both H2 and H3 must be supported before any execution-feasibility
 engineering may begin.
 
+Wallet Autonomous Evidence Accumulator v1 now automates that frozen decision
+contract without changing it. A local transactional session ledger wraps the
+existing restart-safe observer, assigns session numbers, accumulates the two
+committed seed rows plus new public observations, caches condition-matched
+Gamma expiries, evaluates H2/H3 after every completed session, and stops on
+support, rejection, or session 60. `status` is read-only, `run` operates to a
+terminal gate, and `start` launches the same bounded loop detached. The
+automation is implemented and fixture-validated but has not been publicly
+launched; current evidence remains two trades and one session.
+
 Exit criteria:
 
 - restrict prospective observation to the four H1 above-baseline wallets;

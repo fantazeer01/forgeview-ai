@@ -54,6 +54,13 @@ from .decision_window import (
     DEFAULT_DECISION_WINDOW_OUTPUT,
     run_wallet_decision_window_sprint,
 )
+from .evidence_accumulator import (
+    DEFAULT_ACCUMULATOR_DB,
+    DEFAULT_ACCUMULATOR_OUTPUT,
+    launch_accumulator_background,
+    prepare_accumulator_progress,
+    run_autonomous_accumulator,
+)
 
 
 DEFAULT_INPUT = Path("polymarket/wallet_intelligence/watched_wallets.example.csv")
@@ -198,6 +205,15 @@ def build_parser() -> argparse.ArgumentParser:
     )
     decision_window.add_argument("--input", type=Path, default=DEFAULT_DECISION_WINDOW_INPUT)
     decision_window.add_argument("--output", type=Path, default=DEFAULT_DECISION_WINDOW_OUTPUT)
+
+    accumulator = subparsers.add_parser(
+        "wallet-evidence-accumulator",
+        help="Run or inspect the autonomous bounded H2/H3 evidence accumulator.",
+    )
+    accumulator.add_argument("action", choices=("status", "run", "start"), nargs="?", default="status")
+    accumulator.add_argument("--accumulator-database", type=Path, default=DEFAULT_ACCUMULATOR_DB)
+    accumulator.add_argument("--observer-database", type=Path, default=DEFAULT_PROSPECTIVE_DB)
+    accumulator.add_argument("--output", type=Path, default=DEFAULT_ACCUMULATOR_OUTPUT)
     return parser
 
 
@@ -380,6 +396,29 @@ def main(argv: list[str] | None = None) -> int:
                 sort_keys=True,
             )
         )
+        return 0
+    if args.command == "wallet-evidence-accumulator":
+        if args.action == "run":
+            result = run_autonomous_accumulator(
+                activity_client=PolymarketPublicClient(delay_seconds=0.0, timeout_seconds=10),
+                metadata_client=PublicMarketMetadataClient(delay_seconds=0.02),
+                accumulator_db=args.accumulator_database,
+                observer_db=args.observer_database,
+                output_dir=args.output,
+            )
+        elif args.action == "start":
+            result = launch_accumulator_background(
+                accumulator_db=args.accumulator_database,
+                observer_db=args.observer_database,
+                output_dir=args.output,
+            )
+        else:
+            result = prepare_accumulator_progress(
+                accumulator_db=args.accumulator_database,
+                observer_db=args.observer_database,
+                output_dir=args.output,
+            )
+        print(json.dumps(result, indent=2, sort_keys=True))
         return 0
     parser.error(f"unknown command {args.command}")
     return 2

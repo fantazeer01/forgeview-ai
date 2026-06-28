@@ -3,6 +3,7 @@ import hashlib
 import json
 import tempfile
 import unittest
+from datetime import datetime
 from pathlib import Path
 
 from polymarket.wallet_intelligence.client import PublicResponse
@@ -77,6 +78,14 @@ from polymarket.wallet_intelligence.decision_window import (
     build_decision_windows,
     classify_decision_window,
     run_wallet_decision_window_sprint,
+)
+from polymarket.wallet_intelligence.evidence_accumulator import (
+    EvidenceAccumulatorStore,
+    background_command,
+    build_accumulated_evidence,
+    evaluate_h2_h3_gates,
+    prepare_accumulator_progress,
+    run_autonomous_accumulator,
 )
 
 
@@ -1932,6 +1941,138 @@ class WalletDecisionWindowTests(unittest.TestCase):
                 second["reproducibility_hashes"]["wallet_decision_window_report_md_sha256"],
                 hashlib.sha256((output / "wallet_decision_window_report.md").read_bytes()).hexdigest(),
             )
+
+
+class WalletAutonomousEvidenceAccumulatorTests(unittest.TestCase):
+    def test_session_numbering_is_persistent_and_restart_safe(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "accumulator.sqlite3"
+            with EvidenceAccumulatorStore(path) as store:
+                first = store.reserve_session("2026-06-28T15:00:00.000+00:00")
+            with EvidenceAccumulatorStore(path) as store:
+                resumed = store.reserve_session("2026-06-28T15:01:00.000+00:00")
+                self.assertEqual(first["session_number"], 2)
+                self.assertEqual(resumed["session_number"], 2)
+                store.complete_session(
+                    2,
+                    completed_at_utc="2026-06-28T15:05:00.000+00:00",
+                    observer_run_id="run-2",
+                    eligible_trades=2,
+                    action="CONTINUE",
+                )
+                third = store.reserve_session("2026-06-28T15:10:00.000+00:00")
+                self.assertEqual(third["session_number"], 3)
+
+    @staticmethod
+    def _gate_rows(h2_successes, h3_successes):
+        rows = []
+        wallets = ["0xa", "0xb", "0xc"]
+        assets = ["BTC", "ETH"]
+        for index in range(100):
+            rows.append(
+                {
+                    "trade_identity": f"trade-{index:03d}",
+                    "wallet_id": wallets[index % 3],
+                    "asset_class": assets[index % 2],
+                    "market_slug": f"btc-updown-5m-{index}",
+                    "first_seen": f"2026-06-{20 + index % 5:02d}T12:00:00.000+00:00",
+                    "delay_seconds": 20.0 if index < h2_successes else 40.0,
+                    "window_seconds": 80.0 if index < h3_successes else 20.0,
+                    "gamma_verified_expiry": True,
+                }
+            )
+        return rows
+
+    def test_support_reject_and_budget_stop_are_frozen(self):
+        requests = {"successful": 1000, "failed": 0}
+        supported = evaluate_h2_h3_gates(self._gate_rows(80, 70), session_count=10, request_counts=requests)
+        self.assertEqual(supported["h2"]["conclusion"], "SUPPORTED")
+        self.assertEqual(supported["h3"]["conclusion"], "SUPPORTED")
+        self.assertEqual(supported["action"], "GRADUATE_TO_ENGINEERING")
+
+        rejected = evaluate_h2_h3_gates(self._gate_rows(50, 70), session_count=10, request_counts=requests)
+        self.assertEqual(rejected["h2"]["conclusion"], "REJECTED")
+        self.assertEqual(rejected["action"], "FREEZE")
+
+        underpowered = evaluate_h2_h3_gates(self._gate_rows(79, 69)[:20], session_count=60, request_counts=requests)
+        self.assertEqual(underpowered["stop_reason"], "SESSION_BUDGET_EXHAUSTED")
+        self.assertEqual(underpowered["action"], "FREEZE")
+
+    def test_current_progress_is_repeatable_and_does_not_poll(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            accumulator_db = root / "accumulator.sqlite3"
+            observer_db = root / "observer.sqlite3"
+            output = root / "output"
+            first = prepare_accumulator_progress(
+                accumulator_db=accumulator_db,
+                observer_db=observer_db,
+                output_dir=output,
+            )
+            first_files = {path.name: path.read_bytes() for path in output.iterdir()}
+            second = prepare_accumulator_progress(
+                accumulator_db=accumulator_db,
+                observer_db=observer_db,
+                output_dir=output,
+            )
+            second_files = {path.name: path.read_bytes() for path in output.iterdir()}
+            self.assertEqual(first_files, second_files)
+            self.assertEqual(
+                set(first_files),
+                {"wallet_progress.json", "wallet_progress_report.md", "wallet_gate_status.json"},
+            )
+            self.assertEqual(first["evidence"]["eligible_trades"], 2)
+            self.assertEqual(first["sessions"]["completed"], 1)
+            self.assertEqual(first["sessions"]["remaining"], 59)
+            self.assertEqual(second["action"], "CONTINUE")
+
+    def test_autonomous_loop_stops_at_session_sixty(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            accumulator_db = root / "accumulator.sqlite3"
+            observer_db = root / "observer.sqlite3"
+            output = root / "output"
+            with EvidenceAccumulatorStore(accumulator_db) as store:
+                with store.connection:
+                    store.connection.executemany(
+                        """INSERT INTO accumulator_sessions
+                        (session_number, status, started_at_utc, completed_at_utc)
+                        VALUES (?, 'complete', ?, ?)""",
+                        [
+                            (
+                                number,
+                                f"2026-06-28T{number % 24:02d}:00:00.000+00:00",
+                                f"2026-06-28T{number % 24:02d}:05:00.000+00:00",
+                            )
+                            for number in range(2, 60)
+                        ],
+                    )
+            calls = []
+
+            def runner(**kwargs):
+                calls.append(kwargs)
+                return {}
+
+            result = run_autonomous_accumulator(
+                activity_client=object(),
+                metadata_client=object(),
+                accumulator_db=accumulator_db,
+                observer_db=observer_db,
+                output_dir=output,
+                session_runner=runner,
+                now=lambda: datetime.fromisoformat("2026-06-29T12:00:00+00:00"),
+            )
+            self.assertEqual(len(calls), 1)
+            self.assertEqual(result["sessions"]["completed"], 60)
+            self.assertEqual(result["action"], "FREEZE")
+            self.assertEqual(result["stop_reason"], "SESSION_BUDGET_EXHAUSTED")
+            self.assertEqual(result["automation_status"], "stopped")
+
+    def test_background_command_runs_frozen_accumulator(self):
+        command = background_command(Path("a.sqlite3"), Path("o.sqlite3"), Path("output"))
+        self.assertIn("wallet-evidence-accumulator", command)
+        self.assertIn("run", command)
+        self.assertNotIn("--poll-interval", command)
 
 
 if __name__ == "__main__":
