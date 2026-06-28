@@ -1382,3 +1382,35 @@ status output without polling, frozen support and rejection paths, and an
 end-to-end session-60 stop. Current status remains `ready` with 2 eligible
 trades, 1 completed session, and 59 sessions remaining. No public session was
 launched in the implementation sprint.
+
+## D-075: Sustainable automated profit is the governing objective
+
+Status: Accepted
+Decision: ForgeViewAI Polymarket work is governed by the business objective of
+building an automated system capable of generating sustainable profit on BTC,
+ETH, and SOL five-minute markets. The long-term milestone is at least $10,000
+in cumulative realized profit. Research, engineering, AI, data collection,
+modelling, and infrastructure are supporting tools rather than independent end
+goals.
+
+Every sprint must either increase expected profitability or remove a blocker
+preventing profitable automated trading. A sprint satisfying neither criterion
+must not be pursued. Progress is measured through five ordered stages:
+statistical edge demonstrated, continuous paper-trading MVP, long-duration
+positive paper performance, controlled live deployment if justified, and the
+$10,000 cumulative profit target.
+
+This decision supersedes D-061 only where D-061 makes public-wallet hypothesis
+testing the project's highest-level strategic objective. Its evidence rules,
+named wallet hypotheses, and rejection discipline remain valid as one
+supporting research path. This decision does not alter research results,
+detector logic, Wallet or Repricing implementations, sealed-holdout policy, or
+current execution prohibitions. Controlled live deployment still requires
+separate authorization and the production-readiness and risk gates in
+`MASTER_OBJECTIVE.md`.
+
+Reason: The previous governance correctly constrained weak research and
+unnecessary infrastructure, but it treated research validation as the end
+state. Explicit business stages keep evidence quality and safety controls while
+making profitability, reliable automation, and disciplined capital deployment
+the measures of project progress.

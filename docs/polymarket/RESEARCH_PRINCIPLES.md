@@ -1,40 +1,44 @@
 # Polymarket Research Principles
 
 Status: Active
-Last updated: June 26, 2026
+Last updated: June 28, 2026
 Authority: Strategic research filter for ForgeViewAI Polymarket work
 
-ForgeViewAI is a research project, not an infrastructure project and not a
-general wallet analytics product.
+ForgeViewAI is a profit-seeking automation project, not a research project for
+its own sake, not an infrastructure project, and not a general wallet analytics
+product.
 
-The only strategic question is:
+The governing business objective is:
 
-> Can we build a statistically justified, reproducible strategy for the
-> five-minute BTC, ETH, and SOL Polymarket markets using only public wallet
-> activity?
+> Build an automated system capable of generating sustainable profit on
+> Polymarket five-minute BTC, ETH, and SOL markets and progress toward $10,000
+> in cumulative realized profit.
 
-Every future task must either move the project closer to a profitable
-strategy or disprove a hypothesis quickly enough to stop wasting effort.
+Research questions, including public wallet activity and short-horizon
+repricing, are supporting paths for finding or rejecting profitable strategies.
 
 ## Core Principles
 
-1. Profit-first research.
-   Research work is valuable only if it helps determine whether a public
-   wallet-activity strategy can produce positive expected value after realistic
-   costs, delays, and liquidity limits.
+1. Profit-First.
+   Every sprint must either increase expected profitability or remove a blocker
+   preventing profitable automated trading. A sprint satisfying neither
+   criterion must not be pursued. Research, engineering, AI, data collection,
+   and infrastructure are justified only as tools for meeting this test.
 
 2. Evidence before engineering.
    Build only the smallest tool or artifact needed to test the current
    hypothesis. Prefer measured evidence over broader systems.
 
-3. One research hypothesis per sprint.
-   Every sprint must name exactly one primary hypothesis and define the
-   evidence that would confirm or reject it.
+3. One profitability hypothesis or blocker per sprint.
+   Every sprint must name exactly one primary profitability hypothesis or one
+   blocker preventing profitable automated trading, with a measurable decision
+   or completion condition.
 
 4. Every sprint ends with a clear answer.
-   Acceptable sprint conclusions are `supported`, `rejected`, or
-   `inconclusive_with_next_blocker`. Reports should not end with vague
-   platform-building recommendations.
+   Hypothesis conclusions are `supported`, `rejected`, or
+   `inconclusive_with_next_blocker`. Blocker-removal conclusions are
+   `removed`, `not_removed`, or `inconclusive_with_next_blocker`. Reports
+   should not end with vague platform-building recommendations.
 
 5. Infrastructure exists only to test hypotheses.
    Data ingestion, joins, metrics, and reports are justified only by expected
@@ -171,10 +175,10 @@ Responsible future sprint:
 
 Before starting any new sprint, write down:
 
-- the one hypothesis under test;
-- the expected information gain;
+- the one profitability hypothesis or blocker under test;
+- the expected profitability gain or blocker reduction;
 - the minimum artifact needed;
-- the rejection condition;
-- why this sprint matters for a future profitable strategy.
+- the rejection or completion condition;
+- why this sprint matters for profitable automated trading.
 
 If those fields cannot be filled in, the task is not ready.

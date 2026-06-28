@@ -7,14 +7,33 @@ Decision log: [DECISIONS.md](DECISIONS.md)
 
 ## Current stage
 
-Stage 9 - Public wallet strategy hypothesis testing.
+Business Stage 1 - Statistical edge demonstrated: in progress.
 
-Strategic reset: ForgeViewAI Polymarket work is now governed by
-`RESEARCH_PRINCIPLES.md`. The project is not a general infrastructure project
-or wallet analytics product. Every future sprint must test one named
-hypothesis about whether public wallet activity can support a statistically
-justified, reproducible strategy for five-minute BTC, ETH, and SOL markets, or
-reject that hypothesis quickly.
+Supporting technical stage: Stage 9 - Public wallet strategy hypothesis
+testing. Continuous repricing paper-trading components are also under active
+development, but the continuous paper-trading MVP gate is not yet complete.
+
+Profit-first governance reset: the primary objective is to build an automated
+system capable of generating sustainable profit on Polymarket BTC, ETH, and
+SOL five-minute markets, with a long-term target of $10,000 in cumulative
+realized profit. Research, engineering, AI, data collection, and infrastructure
+are supporting tools. Every sprint must increase expected profitability or
+remove a blocker preventing profitable automated trading; work satisfying
+neither criterion must not be pursued.
+
+Current business-stage status:
+
+| Stage | Status |
+|---|---|
+| Statistical edge demonstrated | In progress |
+| Continuous paper-trading MVP | In progress |
+| Long-duration positive paper performance | Not started |
+| Controlled live deployment, if justified | Not started |
+| $10,000 cumulative profit target | Not started |
+
+This governance change does not alter any research result, detector logic,
+Wallet implementation, Repricing implementation, holdout boundary, or current
+prohibition on real-money execution.
 
 Repository consolidation note: `research/probability-lab` is now maintained as
 a normal folder inside the root ForgeViewAI repository. Its nested Git metadata

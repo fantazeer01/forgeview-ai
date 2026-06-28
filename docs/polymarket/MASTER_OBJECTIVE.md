@@ -1,13 +1,13 @@
 # Polymarket Project - Master Objective
 
 Status: Active  
-Last updated: June 26, 2026
+Last updated: June 28, 2026
 Authority: Permanent source of truth for the ForgeViewAI Polymarket project
 
-This document defines why the project exists, what constitutes success, and
-which gates must be passed before the system can progress from research to any
-production consideration. If another Polymarket document conflicts with this
-one, this document takes precedence.
+This document defines why the project exists, what constitutes business
+success, and which gates must be passed before the system can progress from
+research through paper trading to any controlled live deployment. If another
+Polymarket document conflicts with this one, this document takes precedence.
 
 ## Project guidance hierarchy
 
@@ -25,27 +25,37 @@ the same change. Code is not fully handed off while those documents are stale.
 
 ## 1. Mission
 
-Determine whether ForgeViewAI can build a statistically justified,
-reproducible strategy for the five-minute BTC, ETH, and SOL Polymarket
-markets using only public wallet activity.
+Build an automated system capable of generating sustainable profit on
+Polymarket five-minute BTC, ETH, and SOL markets.
 
-The project must distinguish a genuine wallet-activity edge from random
-participation, survivorship bias, public-data delays, incomplete wallet
-history, simulation artifacts, data errors, liquidity limits, market-regime
-luck, and overfitting.
+Sustainable profit means positive net expectancy that persists after realistic
+fees, spread, slippage, latency, liquidity constraints, operational costs, and
+risk limits. The system must distinguish a genuine edge from random
+participation, survivorship bias, public-data delays, incomplete history,
+simulation artifacts, data errors, market-regime luck, and overfitting.
 
 ## 2. Final business objective
 
-Create a defensible research process that can either validate or reject a
-public-wallet strategy for BTC, ETH, and SOL five-minute UP/DOWN markets.
+Generate at least **$10,000 in cumulative realized profit** through a
+controlled, automated Polymarket system trading BTC, ETH, and SOL five-minute
+markets.
 
-The research system may support a future decision about limited capital
-deployment only after every production-readiness gate in this document is
-passed and a separate execution project is explicitly authorized. The current
-repository is research and shadow simulation only. It must not contain wallet,
-private-key, order-placement, or real-money execution capability.
+This target does not authorize premature capital deployment. Statistical edge,
+continuous paper operation, long-duration positive paper performance, and
+independent production-readiness approval must precede any controlled live
+deployment. The current repository remains research and paper simulation only;
+wallet, private-key, authenticated trading, and real-money order-placement
+capability require a separately authorized execution phase with explicit risk
+controls.
 
-## 3. Research objective
+## 3. Supporting disciplines
+
+Research, engineering, AI, data collection, modelling, and infrastructure are
+tools for reaching the business objective. They are not independent end goals.
+Work in these areas is justified only when it increases expected profitability
+or removes a blocker preventing profitable automated trading.
+
+## 4. Research objective
 
 Answer the following question with empirical evidence:
 
@@ -82,7 +92,17 @@ descriptive research only. It must remain separated from outcome prediction,
 repricing validation, live trading, wallet execution, production modelling,
 and sealed holdout evaluation.
 
-## 4. Success metrics
+## 5. Success metrics
+
+Business success:
+
+- positive net expectancy after executable costs;
+- repeatable profitability across assets, sessions, and market regimes;
+- controlled drawdown and bounded capital exposure;
+- reliable autonomous operation with monitoring, reconciliation, and shutdown
+  controls;
+- cumulative realized profit of at least $10,000 after controlled live
+  deployment is explicitly authorized.
 
 Research success:
 
@@ -129,9 +149,23 @@ Model and strategy success:
 
 These are minimum gates, not guarantees of production suitability.
 
-## 5. Development stages
+## 6. Measurable project stages
 
-| Stage | Purpose | Status |
+| Stage | Completion gate | Current status |
+|---|---|---|
+| 1. Statistical edge demonstrated | A frozen strategy shows positive net expectancy after conservative executable costs across precommitted out-of-sample, stress, and prospective validation gates | In progress |
+| 2. Continuous paper-trading MVP | The frozen strategy runs continuously with durable state, restart recovery, monitoring, reconciliation, and no duplicate or missed transitions | In progress |
+| 3. Long-duration positive paper performance | At least 30 consecutive days of stable prospective paper operation remain profitable within predefined drawdown and reliability limits | Not started |
+| 4. Controlled live deployment, if justified | Independent technical and risk approval authorizes bounded capital, hard loss limits, circuit breakers, reconciliation, and rollback | Not started |
+| 5. $10,000 cumulative profit target | Controlled live operation records at least $10,000 in cumulative realized profit after all costs | Not started |
+
+Stages may not be skipped. Passing a stage permits evaluation of the next
+stage; it does not guarantee that the next stage is safe or economically
+justified.
+
+### Technical development history
+
+| Technical stage | Purpose | Status |
 |---|---|---|
 | 1. Paper simulation | Deterministic signals, simulated trades, and P&L | Complete |
 | 2. Robustness validation | Noise, dropout, lag, slippage, and walk-forward testing | Complete |
@@ -146,10 +180,11 @@ These are minimum gates, not guarantees of production suitability.
 | 11. Extended shadow probation | Freeze a candidate and monitor it prospectively without retraining | Not started |
 | 12. Production-readiness review | Independent approval against all technical and risk gates | Not started |
 
-Stages may not be skipped because later-stage results depend on the integrity of
-earlier-stage evidence.
+These technical stages preserve project history and support the measurable
+business stages above. Completing a technical stage is not itself business
+success.
 
-## 6. Architecture map
+## 7. Architecture map
 
 ```text
 Public Polymarket data + external BTC/ETH/SOL reference data
@@ -200,7 +235,7 @@ Primary locations:
 Content Machine is a separate product area and must not be imported, modified,
 or used by Polymarket modules.
 
-## 7. Data quality requirements
+## 8. Data quality requirements
 
 Every modelling row must have:
 
@@ -228,7 +263,7 @@ Proxy labels based on external reference returns are acceptable for dataset
 engineering, but authoritative Polymarket resolution labels are required
 before a production-readiness claim.
 
-## 8. Model quality requirements
+## 9. Model quality requirements
 
 No complex model should be introduced before simple baselines are measured.
 The minimum comparison set is:
@@ -259,7 +294,7 @@ stability, and executable-cost stress. A positive paper replay is not an edge
 claim unless precommitted repricing evidence gates and prospective validation
 requirements are met.
 
-## 9. Validation requirements
+## 10. Validation requirements
 
 Validation must include:
 
@@ -277,7 +312,7 @@ A result is invalid if it depends on shuffled time splits, duplicate windows,
 future information, post-resolution values, mock observations in the holdout,
 or thresholds selected using final-test performance.
 
-## 10. Risk management requirements
+## 11. Risk management requirements
 
 Current mandatory controls:
 
@@ -302,7 +337,7 @@ Requirements for any future execution proposal:
 
 No research result automatically authorizes real-money deployment.
 
-## 11. Definition of proven edge
+## 12. Definition of proven edge
 
 An edge is proven only when all of the following are true:
 
@@ -328,7 +363,7 @@ precommitted strong development evidence floor and then survives a separate
 prospective or untouched repricing validation period with executable-cost
 stress. No repricing result authorizes real-money deployment.
 
-## 12. Definition of production readiness
+## 13. Definition of production readiness
 
 Production readiness is stricter than proven edge. It requires:
 
@@ -344,7 +379,7 @@ Production readiness is stricter than proven edge. It requires:
 The project is not production-ready while it contains only research and shadow
 engines.
 
-## 13. Current project status
+## 14. Current project status
 
 As of June 26, 2026:
 
@@ -402,13 +437,13 @@ As of June 26, 2026:
 - the smoke decision is `READY_FOR_PRODUCTION_CAPTURE` for research evidence
   collection only.
 
-The research tooling is operational, but the project is being reset around
-profit-first hypothesis testing. No future sprint should exist merely to add
-metrics, joins, or reports. The next task must directly test a core public
-wallet-activity hypothesis or reject it quickly. No model, strategy, alpha,
-or profitability claim is currently justified.
+The research tooling is operational, but the project is now governed by the
+profit-first business objective. No future sprint should exist merely to add
+metrics, joins, or reports. Each sprint must increase expected profitability
+or remove a blocker preventing profitable automated trading. No model,
+strategy, alpha, or profitability claim is currently justified.
 
-## 14. Next milestone
+## 15. Next milestone
 
 ### Wallet Detection-To-Expiry Feasibility Sprint v1
 
