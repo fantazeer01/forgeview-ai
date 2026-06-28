@@ -836,6 +836,55 @@ repository NEXT_TASK remains the wallet branch task under the one-task policy.
 No detector, threshold, campaign, holdout, Telegram, wallet/private-key, order
 placement, or real-money execution path changed.
 
+## Continuous Paper Trading MVP v1
+
+The continuous paper-only entrypoint is implemented in
+`polymarket/repricing_research/runtime_mvp.py` and installed as:
+
+```text
+repricing-runtime-mvp --config <runtime.json>
+```
+
+One JSON configuration controls the v5 session path, state/output directories,
+poll interval, optional dry-run bounds, and restart budget/backoff. Runtime
+paths are derived consistently for the paper ledger, lock, status, heartbeat,
+daily summary, and unified JSONL log.
+
+Startup validation requires valid configuration, holdout-separated paths, a
+complete structurally valid v5 event, writable state/output directories, a
+recoverable SQLite ledger, and the frozen strategy fingerprint. An OS-level
+byte-range lock prevents duplicate processes and is released by the operating
+system after process death.
+
+Supervision rules are fail closed:
+
+- explicit temporary source unavailability may restart within budget;
+- malformed streams, source replacement/truncation, fingerprint mismatch,
+  state-integrity failure, and unexpected exceptions do not restart;
+- unclean process restart retains the prior session ID and increments restart
+  count;
+- Ctrl+C/termination requests graceful shutdown and never force-closes a paper
+  position.
+
+The heartbeat includes liveness, last poll/event/successful processing,
+detector and paper-core state, event/signal/position counts, duplicate count,
+last error, and strategy fingerprint. The UTC daily summary contains runtime
+duration, events, valid/rejected signals, opened/closed/current positions,
+failures, and restarts, with duration split across midnight. The unified log
+records startup, health, failures, process recovery, and stop.
+
+Eleven dedicated MVP tests pass. The combined Repricing suite passes 39 tests and
+the full repository suite passes 185 tests. Committed validation outputs live
+under `polymarket/models/repricing_research_v1/continuous_runtime_mvp_v1/`.
+
+Status is `PASS_BOUNDED_DRY_RUN`; no continuous public paper run occurred. The
+next Repricing task is **Run First 24-Hour Repricing Paper Soak Preflight v1**.
+It must verify power, disk, source/session rotation, stale-event thresholds,
+restart drills, and reconciliation before a separately authorized soak.
+
+No detector, threshold, strategy, holdout, Telegram, wallet/private-key, order
+placement, or live-money path changed.
+
 ## Missing Data
 
 The current evidence is missing:

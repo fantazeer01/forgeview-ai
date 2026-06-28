@@ -1437,3 +1437,25 @@ and deterministic restart status. It found no new target trade, so evidence
 correctly remained unchanged and the live Gamma cache had no eligible join.
 The launch exposed and fixed the runtime-provenance display issue without
 changing collection or decision behavior.
+
+## D-077: Continuous repricing MVP restarts only explicit transient failures
+
+Status: Accepted
+Decision: Continuous Repricing Paper Trading MVP v1 is configured from one JSON
+file and runs under an OS byte-range single-instance lock. Automatic restart is
+limited to explicit temporary v5 source unavailability and the configured
+restart budget. Malformed input, source mutation/truncation, frozen-fingerprint
+mismatch, ledger integrity errors, and unexpected exceptions stop closed.
+
+An unclean supervisor process restart reuses the prior session identity and
+increments restart count. Graceful process shutdown never synthesizes a paper
+exit. Status, heartbeat, daily summary, and the unified log are operational
+evidence; they do not redefine detector admission or strategy performance.
+Daily runtime duration is split at exact UTC day boundaries.
+
+Reason: Eleven MVP tests prove configuration loading, preflight, holdout-path
+refusal, lock exclusion/reuse, full-stack bounded outputs, recoverable restart,
+unrecoverable fail-closed behavior, process-session continuity, UTC midnight
+accounting, valid/rejected signal summaries, and the single-config CLI. This
+completes bounded MVP engineering
+but does not substitute for a supervised 24-hour public paper soak.

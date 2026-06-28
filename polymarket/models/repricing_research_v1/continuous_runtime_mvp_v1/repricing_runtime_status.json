@@ -1,0 +1,21 @@
+{
+  "last_error": null,
+  "preflight": {
+    "configuration_valid": true,
+    "detector_state": "FROZEN_CONFIG_VERIFIED",
+    "directories_writable": true,
+    "open_positions": 0,
+    "paper_core_state": "RECOVERABLE",
+    "pending_events": 0,
+    "session_readable": true,
+    "status": "PASS",
+    "strategy_fingerprint": "d5d389be45d472628aab06b3aeeb281593e74d48b82902e12712047c91fec010"
+  },
+  "process_id": 0,
+  "restart_count": 0,
+  "runtime_alive": false,
+  "session_id": "repricing-mvp-validation-fixture",
+  "status": "STOPPED",
+  "updated_at_utc": "2026-06-28T18:00:00+00:00",
+  "validation_scope": "bounded_fixture_dry_run"
+}

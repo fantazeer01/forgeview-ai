@@ -2502,6 +2502,51 @@ The required Repricing successor is **Repricing Paper Runtime Supervision And
 Soak Sprint v1**. It remains planned branch work because the sole global task
 in `NEXT_TASK.md` is Wallet H2/H3 Gate-Bound Evidence Collection Sprint v1.
 
+## Continuous Repricing Paper Trading MVP v1
+
+Continuous Repricing Paper Trading MVP v1 is complete at bounded dry-run
+validation level.
+
+Implementation and committed outputs:
+
+- `polymarket/repricing_research/runtime_mvp.py`;
+- `tests/polymarket/test_repricing_runtime_mvp.py`;
+- `repricing-runtime-mvp --config <runtime.json>`;
+- `polymarket/models/repricing_research_v1/continuous_runtime_mvp_v1/repricing_runtime_status.json`;
+- `polymarket/models/repricing_research_v1/continuous_runtime_mvp_v1/repricing_runtime_heartbeat.json`;
+- `polymarket/models/repricing_research_v1/continuous_runtime_mvp_v1/repricing_runtime_summary.json`;
+- `polymarket/models/repricing_research_v1/continuous_runtime_mvp_v1/repricing_runtime_mvp_report.md`.
+
+Operational behavior:
+
+- one JSON file defines source, state/output paths, cadence, bounds, dry-run,
+  and restart policy;
+- startup validates configuration, holdout separation, complete v5 input,
+  writable directories, recoverable SQLite state, and frozen fingerprint;
+- an OS byte-range lock rejects a competing runtime process and releases on
+  normal exit or process death;
+- temporary source unavailability restarts within the configured budget;
+- malformed/source-integrity/fingerprint/state failures stop closed;
+- unclean process restart reuses the prior session ID and increments restart
+  count;
+- Ctrl+C/termination requests graceful shutdown without force-closing paper
+  positions;
+- atomic status and heartbeat, UTC daily summary, and unified JSONL log are
+  updated throughout the run;
+- daily duration is split exactly at UTC midnight boundaries;
+- 39 repricing tests and 185 repository tests pass.
+
+Validation status is `PASS_BOUNDED_DRY_RUN`. No 24-hour run was launched. No
+detector, frozen threshold, strategy, holdout, wallet/private-key, Telegram,
+or live-trading behavior changed.
+
+Remaining Repricing blockers are 24-hour launch preflight, v5 producer/session
+rotation procedure, stale-event/write-latency thresholds, supervised restart
+drills with open positions, and one reconciled 24-hour paper soak. The branch
+successor is **Run First 24-Hour Repricing Paper Soak Preflight v1**. The sole
+global task remains Wallet Autonomous Evidence Accumulator Canonical
+Background Run v1 under repository policy.
+
 ## State update protocol
 
 At the end of every completed active task:

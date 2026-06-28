@@ -1,0 +1,20 @@
+{
+  "daily": {
+    "2026-06-28": {
+      "current_open_positions": 0,
+      "events_received": 3,
+      "positions_closed": 1,
+      "positions_opened": 1,
+      "rejected_signals": 0,
+      "restart_count": 0,
+      "runtime_duration_seconds": 0.0,
+      "runtime_failures": 0,
+      "valid_signals": 1
+    }
+  },
+  "generated_at_utc": "2026-06-28T18:00:00+00:00",
+  "last_error": null,
+  "restart_count": 0,
+  "session_id": "repricing-mvp-validation-fixture",
+  "validation_scope": "bounded_fixture_dry_run"
+}

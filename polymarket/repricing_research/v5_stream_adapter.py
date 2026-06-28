@@ -15,12 +15,17 @@ class V5StreamValidationError(ValueError):
     """Raised when a v5 JSONL source cannot be resumed safely."""
 
 
+class V5StreamUnavailableError(RuntimeError):
+    """Raised when a configured stream is temporarily unavailable."""
+
+
 @dataclass(frozen=True)
 class V5StreamSyncResult:
     source_id: str
     source_path: str
     verified_events: int
     ingested_events: int
+    ingested_lag_measurements: int
     last_event_index: int | None
     last_event_timestamp: str | None
     deferred_trailing_bytes: int
@@ -42,10 +47,11 @@ class V5JsonlPaperAdapter:
         self._next_event_index = 0
         self._last_timestamp: datetime | None = None
         self._initialized = False
+        self._last_sync_lag_measurements = 0
 
     def sync(self) -> V5StreamSyncResult:
         if not self.session_path.is_file():
-            raise V5StreamValidationError(
+            raise V5StreamUnavailableError(
                 f"v5 session does not exist: {self.session_path}"
             )
         size = self.session_path.stat().st_size
@@ -54,6 +60,8 @@ class V5JsonlPaperAdapter:
 
         verified = 0
         ingested = 0
+        lag_measurements = 0
+        self._last_sync_lag_measurements = 0
         deferred = 0
         cursor = self.core.source_cursor(self.source_id)
         with self.session_path.open("rb") as handle:
@@ -88,6 +96,9 @@ class V5JsonlPaperAdapter:
                         self.source_id, self._next_event_index, event
                     )
                     ingested += 1
+                    if event["event"] == "lag_measurement":
+                        lag_measurements += 1
+                        self._last_sync_lag_measurements += 1
                     cursor = self._next_event_index
                 self._last_timestamp = timestamp
                 self._next_event_index += 1
@@ -104,6 +115,7 @@ class V5JsonlPaperAdapter:
             source_path=str(self.session_path),
             verified_events=verified,
             ingested_events=ingested,
+            ingested_lag_measurements=lag_measurements,
             last_event_index=committed,
             last_event_timestamp=(
                 self._last_timestamp.isoformat()
@@ -118,6 +130,10 @@ class V5JsonlPaperAdapter:
             self._last_timestamp.isoformat()
             if self._last_timestamp is not None else None
         )
+
+    @property
+    def last_sync_lag_measurements(self) -> int:
+        return self._last_sync_lag_measurements
 
     def _register_source(self, event: dict[str, Any]) -> None:
         canonical = json.dumps(event, sort_keys=True, separators=(",", ":"))

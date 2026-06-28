@@ -1,0 +1,11 @@
+{
+  "dry_run": true,
+  "max_polls": 1,
+  "max_restarts": 3,
+  "max_runtime_seconds": null,
+  "output_directory": "./runtime_output",
+  "poll_interval_seconds": 1.0,
+  "restart_backoff_seconds": 1.0,
+  "session_path": "./session.jsonl",
+  "state_directory": "./runtime_state"
+}

@@ -11,12 +11,20 @@ from .paper_core import (
 from .v5_stream_adapter import (
     V5JsonlPaperAdapter,
     V5StreamSyncResult,
+    V5StreamUnavailableError,
     V5StreamValidationError,
 )
 from .paper_runtime import (
     ManagedRepricingPaperRuntime,
     PaperRuntimeConfig,
     PaperRuntimeHealth,
+)
+from .runtime_mvp import (
+    ContinuousRepricingPaperMVP,
+    RepricingRuntimeMVPConfig,
+    RuntimeAlreadyRunningError,
+    RuntimeInstanceLock,
+    validate_runtime_preflight,
 )
 
 __all__ = [
@@ -29,10 +37,16 @@ __all__ = [
     "StrategyFingerprintMismatch",
     "V5JsonlPaperAdapter",
     "V5StreamSyncResult",
+    "V5StreamUnavailableError",
     "V5StreamValidationError",
     "ManagedRepricingPaperRuntime",
     "PaperRuntimeConfig",
     "PaperRuntimeHealth",
+    "ContinuousRepricingPaperMVP",
+    "RepricingRuntimeMVPConfig",
+    "RuntimeAlreadyRunningError",
+    "RuntimeInstanceLock",
+    "validate_runtime_preflight",
     "build_repricing_dataset",
     "simulate_repricing_strategy",
 ]
