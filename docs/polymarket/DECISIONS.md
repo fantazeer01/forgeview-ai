@@ -1609,3 +1609,39 @@ preference, or prior engineering investment.
 
 Reason: Strategy-agnostic licensing keeps capital focused on the fastest
 reproducible path toward profitable BTC/ETH/SOL five-minute trading.
+
+## D-089: Paper trading and predefined gates precede every first real trade
+
+Status: Accepted
+Decision: No ForgeViewAI strategy may execute a real-money trade until paper
+trading is complete and every predefined mandatory evidence gate for that
+strategy has passed. Gate categories may include sufficient paper-trade sample,
+positive expectancy, acceptable drawdown, infrastructure stability,
+deterministic recovery, zero unresolved integrity failures, reproducible
+exports, successful long-duration runs, and successful restart tests. Evidence
+thresholds are not created by this decision.
+
+Reason: Real-money eligibility must follow reproducible evidence rather than a
+promising result, implementation readiness, or operator judgment.
+
+## D-090: Mandatory evidence gates are evaluated automatically where possible
+
+Status: Accepted
+Decision: Every mandatory gate must have a durable result linked to source
+evidence and must be evaluated automatically where possible. A gate requiring
+manual review must receive an explicit documented result. Missing, incomplete,
+stale, ambiguous, unresolved, or unevaluated evidence does not satisfy a gate.
+
+Reason: Automatic and durable evaluation reduces discretion and makes the
+promotion decision reproducible and auditable.
+
+## D-091: Failed gates block CEO approval and apply to every strategy
+
+Status: Accepted
+Decision: Failure of any mandatory evidence gate blocks promotion to real
+trading. CEO approval is required only after every mandatory gate passes and
+can never override a failed, unresolved, or unevaluated gate. This process
+applies equally to Repricing, Wallet Intelligence, and every future strategy.
+
+Reason: Approval is the final authorization after evidence, not a mechanism for
+bypassing evidence or granting a favored strategy an exception.

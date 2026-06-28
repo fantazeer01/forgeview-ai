@@ -21,6 +21,10 @@ with zero real-money risk.
 capital stages. Its promotion and demotion rules are subordinate to the risk
 limits in this document.
 
+`EVIDENCE_GATES.md` defines the mandatory process that must pass before the
+first real-money trade. CEO approval occurs only after all mandatory gates pass
+and cannot override a failed, unresolved, or unevaluated gate.
+
 ## 2. Capital stages
 
 ### Capital Stage 0 - Research
@@ -66,7 +70,25 @@ when loss, expectancy, drawdown, infrastructure, data, execution, or emergency
 stop conditions trigger. `CAPITAL_SCALING.md` is canonical for the detailed
 license definitions.
 
-## 4. Maximum risk per trade
+## 4. Evidence gates for the first real-money trade
+
+Paper trading must always precede real trading. Before Level 2 micro real
+trading may be authorized, the candidate must pass every predefined mandatory
+evidence gate. Gate categories may include paper sample sufficiency, positive
+expectancy, acceptable drawdown, infrastructure stability, deterministic
+recovery, zero unresolved integrity failures, reproducible exports,
+long-duration operation, and restart testing.
+
+Gates must be evaluated automatically where possible. Failure, non-evaluation,
+or unresolved status of any mandatory gate blocks promotion. Documented CEO
+approval is required only after every mandatory gate passes and may never
+override a failed gate. These rules apply equally to Repricing, Wallet
+Intelligence, and every future strategy.
+
+`EVIDENCE_GATES.md` is canonical for this process and introduces no new numeric
+thresholds.
+
+## 5. Maximum risk per trade
 
 No single trade may risk more than 1% of current trading capital, regardless of
 signal confidence. Position sizing must use the lower of the strategy's
@@ -74,7 +96,7 @@ approved size and the 1% risk ceiling. The sole exception is the platform
 minimum described in Capital Stage 1, and it requires explicit approval;
 without that approval, the system remains in paper mode.
 
-## 5. Daily and session risk stops
+## 6. Daily and session risk stops
 
 A real-money system must stop opening new trades when any configured stop
 condition triggers. Required stop categories are:
@@ -94,7 +116,7 @@ paper trading, and approved before Capital Stage 1 begins. Triggered stops fail
 closed and require documented recovery criteria before new real-money entries
 resume.
 
-## 6. No discretionary manual trading
+## 7. No discretionary manual trading
 
 After an automated strategy is launched:
 
@@ -111,7 +133,7 @@ Every parameter change requires, in order:
 3. paper-trading validation;
 4. a documented decision.
 
-## 7. Automation preference
+## 8. Automation preference
 
 Manual operating work must be minimized. The target operating model is:
 
@@ -126,7 +148,7 @@ Manual operating work must be minimized. The target operating model is:
 Automation must preserve fail-closed behavior, auditability, deterministic
 recovery, and human shutdown capability.
 
-## 8. Strategy-agnostic capital allocation
+## 9. Strategy-agnostic capital allocation
 
 ForgeViewAI is not committed to Repricing, Wallet Intelligence, or any other
 named strategy. Engineering priority follows the fastest reproducible,
@@ -138,7 +160,7 @@ evidence-backed path toward profitable BTC, ETH, and SOL five-minute trading.
 - all branches must satisfy the same capital-stage and risk controls before
   real-money deployment.
 
-## 9. Change control
+## 10. Change control
 
 Risk limits, capital-stage gates, stop categories, and execution parameters may
 change only through a documented governance decision. No research result or

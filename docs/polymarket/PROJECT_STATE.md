@@ -52,6 +52,15 @@ predefined evidence gates; degradation triggers automatic demotion or pause.
 No strategy currently has Level 2 or higher authorization, and this policy
 update does not authorize execution.
 
+Evidence Gates for Real Trading v1 are now recorded in `EVIDENCE_GATES.md`.
+Paper trading is mandatory before any real-money transition. Every predefined
+mandatory gate must pass, with automatic evaluation where possible, before CEO
+approval may be requested. A failed, unresolved, or unevaluated mandatory gate
+blocks promotion and cannot be overridden by CEO approval. The process applies
+equally to Repricing, Wallet Intelligence, and future strategies. No numeric
+threshold, implementation, strategy, detector, or execution authorization was
+added by this governance update.
+
 Repository consolidation note: `research/probability-lab` is now maintained as
 a normal folder inside the root ForgeViewAI repository. Its nested Git metadata
 was removed, project files were preserved, and ForgeViewAI is the only Git
