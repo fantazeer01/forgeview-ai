@@ -756,7 +756,7 @@ Durability rules:
 Validation passed for open-position restoration, duplicate suppression,
 closed-position idempotency, nine injected interruption cases, lifecycle
 expiry, strategy mismatch refusal, and exact fixture equivalence with the
-offline simulator. Eleven repricing tests and 146 repository tests pass.
+offline simulator. Eleven repricing tests and 147 repository tests pass.
 Artifacts are under
 `polymarket/models/repricing_research_v1/restart_safe_paper_core_v1/`.
 

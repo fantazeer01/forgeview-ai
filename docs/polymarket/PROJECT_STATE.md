@@ -2130,7 +2130,7 @@ Measured validation:
 - frozen fixture signals, exits, and PnL match the offline repricing simulator;
 - v5 lifecycle closure exits an open paper position at the last durable quote;
 - a frozen-strategy fingerprint mismatch fails closed;
-- 11 repricing tests and 146 repository tests pass.
+- 11 repricing tests and 147 repository tests pass.
 
 No public campaign was launched. Detector logic and thresholds were not
 changed, and sealed holdout remains untouched. The core is not a 24/7 paper
