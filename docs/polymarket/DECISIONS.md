@@ -1,6 +1,6 @@
 # Polymarket Architectural Decisions
 
-Last updated: June 28, 2026
+Last updated: June 29, 2026
 
 This append-only log records durable project choices and their rationale.
 Future sessions should add a decision when work changes architecture, data
@@ -1722,3 +1722,38 @@ authorization.
 
 Reason: Dashboard convenience must not weaken evidence lineage, conceal risk,
 or turn descriptive metrics into promotion criteria.
+
+## D-098: Foundation is complete and launch blockers govern Phase 1
+
+Status: Accepted
+Decision: The Foundation Phase is complete. ForgeViewAI enters Phase 1 - First
+Automated Dollar, governed by Objective Alpha: the first fully autonomous paper
+trade from signal generation through result recording without human
+intervention. `LAUNCH_BLOCKERS.md` becomes the primary operational planning
+tool, and `ALPHA_READINESS.md` becomes the single readiness dashboard.
+
+Reason: The project now has sufficient research, persistence, recovery,
+governance, and runtime foundations to prioritize integrated launch progress
+over additional architectural breadth.
+
+## D-099: Every engineering sprint identifies its launch-blocker impact
+
+Status: Accepted
+Decision: Every future engineering sprint must identify the unique launch
+blocker it removes or reduces, record the expected exit-condition impact before
+work starts, and update the blocker and Alpha readiness state when evidence is
+available.
+
+Reason: Explicit blocker ownership prevents infrastructure work from becoming
+an end in itself and keeps engineering aligned with Objective Alpha.
+
+## D-100: Non-launch work requires explicit CEO justification
+
+Status: Accepted
+Decision: If a sprint does not reduce a launch blocker or increase
+evidence-based confidence toward Objective Alpha, it requires explicit CEO
+justification before authorization. Evidence has priority over feature count
+and architectural completeness.
+
+Reason: Phase 1 must reduce the distance to an autonomous signal-to-result
+paper cycle rather than accumulate unvalidated features or infrastructure.

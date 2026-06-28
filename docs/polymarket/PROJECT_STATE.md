@@ -1,11 +1,26 @@
 # Polymarket Project State
 
-Last updated: June 28, 2026
+Last updated: June 29, 2026
 Canonical objective: [MASTER_OBJECTIVE.md](MASTER_OBJECTIVE.md)  
 Active task: [NEXT_TASK.md](NEXT_TASK.md)  
 Decision log: [DECISIONS.md](DECISIONS.md)
 
 ## Current stage
+
+Strategic phase: **Phase 1 - First Automated Dollar**.
+
+The **Foundation Phase is complete**. The current strategic objective is
+Objective Alpha:
+
+> The first fully autonomous paper trade from signal generation through result
+> recording without human intervention.
+
+Launch impact now takes priority over architectural completeness.
+`LAUNCH_BLOCKERS.md` is the primary operational planning tool, and
+`ALPHA_READINESS.md` is the single readiness dashboard. Alpha readiness
+tracking is active with categorical values only; no percentage readiness is
+used. This transition changes project prioritization, not detector logic,
+Wallet logic, Repricing logic, frozen parameters, or execution authorization.
 
 Business Stage 1 - Statistical edge demonstrated: in progress.
 

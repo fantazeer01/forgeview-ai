@@ -1,7 +1,7 @@
 # Polymarket Research Principles
 
 Status: Active
-Last updated: June 28, 2026
+Last updated: June 29, 2026
 Authority: Strategic research filter for ForgeViewAI Polymarket work
 
 ForgeViewAI is a profit-seeking automation project, not a research project for
@@ -16,6 +16,8 @@ The governing business objective is:
 
 Research questions, including public wallet activity and short-horizon
 repricing, are supporting paths for finding or rejecting profitable strategies.
+During Phase 1, research exists to eliminate launch blockers or increase
+evidence-based confidence toward Objective Alpha.
 
 ## Core Principles
 
@@ -25,9 +27,10 @@ repricing, are supporting paths for finding or rejecting profitable strategies.
    criterion must not be pursued. Research, engineering, AI, data collection,
    and infrastructure are justified only as tools for meeting this test.
 
-2. Evidence before engineering.
+2. Evidence before engineering and feature count.
    Build only the smallest tool or artifact needed to test the current
-   hypothesis. Prefer measured evidence over broader systems.
+   hypothesis. Evidence has priority over feature count, broader systems, and
+   architectural completeness.
 
 3. One profitability hypothesis or blocker per sprint.
    Every sprint must name exactly one primary profitability hypothesis or one
@@ -68,6 +71,11 @@ repricing, are supporting paths for finding or rejecting profitable strategies.
     reporting when automation preserves auditability and fail-closed behavior.
     Real execution remains prohibited until separately authorized under
     `RISK_MANAGEMENT.md`.
+
+11. Research eliminates launch blockers.
+    Every Phase 1 research task must identify the launch blocker it reduces or
+    the uncertainty it removes on the path to Objective Alpha. Research that
+    does neither requires explicit CEO justification.
 
 ## Core Hypotheses
 

@@ -1,7 +1,7 @@
 # Polymarket Project - Master Objective
 
 Status: Active  
-Last updated: June 28, 2026
+Last updated: June 29, 2026
 Authority: Permanent source of truth for the ForgeViewAI Polymarket project
 
 This document defines why the project exists, what constitutes business
@@ -17,10 +17,12 @@ Future engineering sessions must read these documents in order:
 2. `RESEARCH_PRINCIPLES.md` - strategic hypothesis filter.
 3. `RISK_MANAGEMENT.md` - capital stages and real-money risk policy.
 4. `CAPITAL_SCALING.md` - trading license levels and promotion/demotion rules.
-5. `PROJECT_STATE.md` - measured current status and blockers.
-6. `NEXT_TASK.md` - the single authorized active task.
-7. `DECISIONS.md` - durable architecture and policy decisions.
-8. `RESEARCH_BACKLOG.md` - future ideas that are not yet active.
+5. `LAUNCH_BLOCKERS.md` - canonical Phase 1 operational blockers.
+6. `ALPHA_READINESS.md` - Objective Alpha readiness dashboard.
+7. `PROJECT_STATE.md` - measured current status and blockers.
+8. `NEXT_TASK.md` - the single authorized active task.
+9. `DECISIONS.md` - durable architecture and policy decisions.
+10. `RESEARCH_BACKLOG.md` - future ideas that are not yet active.
 
 After completing work, update the state, decisions, and next-task documents in
 the same change. Code is not fully handed off while those documents are stale.
@@ -56,6 +58,23 @@ Research, engineering, AI, data collection, modelling, and infrastructure are
 tools for reaching the business objective. They are not independent end goals.
 Work in these areas is justified only when it increases expected profitability
 or removes a blocker preventing profitable automated trading.
+
+## Current strategic phase
+
+The **Foundation Phase is complete**. ForgeViewAI is now in **Phase 1 - First
+Automated Dollar**.
+
+Phase 1 is governed by Objective Alpha:
+
+> The first fully autonomous paper trade from signal generation through result
+> recording without human intervention.
+
+Engineering priority is determined by launch impact, not architectural
+completeness. `LAUNCH_BLOCKERS.md` is the primary operational planning tool and
+`ALPHA_READINESS.md` is the single readiness dashboard. Every future
+engineering sprint must identify the launch blocker it removes or reduces. A
+sprint that does neither and does not increase evidence-based confidence toward
+Objective Alpha requires explicit CEO justification.
 
 ## 4. Research objective
 
@@ -458,11 +477,11 @@ As of June 26, 2026:
 - the smoke decision is `READY_FOR_PRODUCTION_CAPTURE` for research evidence
   collection only.
 
-The research tooling is operational, but the project is now governed by the
-profit-first business objective. No future sprint should exist merely to add
-metrics, joins, or reports. Each sprint must increase expected profitability
-or remove a blocker preventing profitable automated trading. No model,
-strategy, alpha, or profitability claim is currently justified.
+The Foundation Phase is complete and the project is now in Phase 1 - First
+Automated Dollar. No future sprint should exist merely to add metrics, joins,
+reports, or architectural completeness. Engineering is prioritized by launch
+impact against Objective Alpha. No model, strategy, alpha, or profitability
+claim is currently justified.
 
 ## 15. Next milestone
 
