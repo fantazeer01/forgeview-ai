@@ -410,31 +410,33 @@ or profitability claim is currently justified.
 
 ## 14. Next milestone
 
-### Wallet Activity Visibility Delay Sprint v1
+### Wallet Detection-To-Expiry Feasibility Sprint v1
 
-The next milestone is a direct H2 test:
+Wallet Activity Visibility Delay Sprint v1 tested H2 over 3,431 fast-crypto
+trade rows from 20 H1-classified wallets. Trade occurrence and retrospective
+fetch timestamps were complete, but publication or first-seen timestamps were
+absent for every row. H2 is therefore `INCONCLUSIVE`: retrieval age cannot be
+substituted for public API latency.
 
-> Public wallet actions become visible quickly enough.
+The next milestone is a direct H3 test:
 
-Wallet Outcome Skill Baseline Sprint v1 left H1 `INCONCLUSIVE`: four wallets
-cleared conservative above-baseline outcome gates, but the evidence also found
-below-baseline wallets, many baseline-consistent wallets, and major
-retrospective-data risks. The next sprint must test whether those four
-candidate wallets were visible early enough to remain useful for future
-strategy research.
+> Enough time remains after public detection to act.
+
+It must first record a bounded prospective first-seen timestamp for each newly
+observed public activity row. Without that timestamp, detection-to-expiry is
+not measurable and the sprint must stop without interpreting retrospective
+fetch age as latency.
 
 Exit criteria:
 
-- restrict analysis to the four H1 above-baseline wallets;
-- use existing public wallet activity, lifecycle, and outcome join artifacts;
-- measure first visible wallet activity timestamp versus market expiry;
+- restrict prospective observation to the four H1 above-baseline wallets;
+- remain public, read-only, bounded, and research-only;
+- record trade timestamp, local first-seen timestamp, fetch completion
+  timestamp, market expiry, and stable trade identity;
+- measure first-seen-to-expiry only for prospectively observed rows;
 - report the share of candidate actions visible with at least 60, 120, and
   180 seconds remaining;
-- report whether H2 is `SUPPORTED`, `REJECTED`, or `INCONCLUSIVE`;
-- if H2 is rejected, recommend stopping or sharply narrowing public-wallet
-  strategy research;
-- if H2 is supported or still useful but incomplete, recommend the next sprint
-  that most directly tests H3;
+- report whether H3 is `SUPPORTED`, `REJECTED`, or `INCONCLUSIVE`;
 - do not change Wallet Score, tune thresholds, rank wallets for trading,
   compute ROI, Sharpe, market advantage, mark-to-market values, or execution
   quality;
@@ -442,5 +444,4 @@ Exit criteria:
   repricing datasets, validation data, and sealed holdout data.
 
 No trade copying, wallet/private-key use, live trading, holdout evaluation,
-production model training, broad scraping, or automatic capture campaign is
-authorized.
+production model training, or broad scraping is authorized.

@@ -29,6 +29,12 @@ from .outcome_skill import (
     DEFAULT_WALLET_SKILL_WATCHLIST_INPUT,
     run_wallet_outcome_skill_baseline,
 )
+from .visibility_delay import (
+    DEFAULT_VISIBILITY_OUTPUT,
+    DEFAULT_VISIBILITY_SKILL_INPUT,
+    DEFAULT_VISIBILITY_TRADE_INPUT,
+    run_wallet_visibility_delay_sprint,
+)
 
 
 DEFAULT_INPUT = Path("polymarket/wallet_intelligence/watched_wallets.example.csv")
@@ -136,6 +142,14 @@ def build_parser() -> argparse.ArgumentParser:
     skill.add_argument("--output", type=Path, default=DEFAULT_WALLET_SKILL_OUTPUT)
     skill.add_argument("--score-csv", type=Path, default=DEFAULT_WALLET_SKILL_SCORE_INPUT)
     skill.add_argument("--watchlist-csv", type=Path, default=DEFAULT_WALLET_SKILL_WATCHLIST_INPUT)
+
+    visibility = subparsers.add_parser(
+        "wallet-visibility-delay",
+        help="Run the H2 retrospective wallet visibility-delay sprint.",
+    )
+    visibility.add_argument("--skill-csv", type=Path, default=DEFAULT_VISIBILITY_SKILL_INPUT)
+    visibility.add_argument("--trade-csv", type=Path, default=DEFAULT_VISIBILITY_TRADE_INPUT)
+    visibility.add_argument("--output", type=Path, default=DEFAULT_VISIBILITY_OUTPUT)
     return parser
 
 
@@ -257,6 +271,19 @@ def main(argv: list[str] | None = None) -> int:
                     output_dir=args.output,
                     score_csv=args.score_csv,
                     watchlist_csv=args.watchlist_csv,
+                ),
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return 0
+    if args.command == "wallet-visibility-delay":
+        print(
+            json.dumps(
+                run_wallet_visibility_delay_sprint(
+                    skill_csv=args.skill_csv,
+                    trade_csv=args.trade_csv,
+                    output_dir=args.output,
                 ),
                 indent=2,
                 sort_keys=True,

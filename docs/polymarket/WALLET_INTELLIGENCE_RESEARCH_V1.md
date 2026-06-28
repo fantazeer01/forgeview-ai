@@ -1539,3 +1539,51 @@ Meaning:
   outcome-quality gates;
 - the only justified successor is H2 visibility-delay testing on those four
   wallets, not broader wallet analytics.
+
+## Wallet Activity Visibility Delay Sprint v1
+
+Wallet Activity Visibility Delay Sprint v1 is complete.
+
+Artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/activity_visibility_delay_v1/wallet_visibility_delay.csv`
+- `polymarket/models/wallet_intelligence_v1/activity_visibility_delay_v1/wallet_visibility_delay_summary.json`
+- `polymarket/models/wallet_intelligence_v1/activity_visibility_delay_v1/wallet_visibility_delay_report.md`
+
+Evidence groups and rows:
+
+- Group A, above-baseline: 4 wallets and 684 trades;
+- Group B, baseline: 13 wallets and 2,228 trades;
+- Group C, below-baseline: 3 wallets and 519 trades;
+- total: 20 wallets and 3,431 BTC/ETH/SOL fast Up/Down trades.
+
+Timestamp findings:
+
+- trade event time: 3,431 of 3,431 rows;
+- source fetch time: 3,431 of 3,431 rows;
+- publication or first-seen time: 0 of 3,431 rows;
+- transaction hash and deterministic within-wallet ordering: 3,431 of 3,431
+  rows;
+- measurable publication delay: 0 rows;
+- unknown publication timing: 3,431 rows.
+
+The retrospective retrieval-lag diagnostic had an 18-second minimum,
+22,207-second median, 778,179.988925-second mean, and 11,200,902-second
+maximum. These values describe how old each trade was when its bounded page
+was fetched. They do not measure Data API publication latency and cannot be
+used to compare stronger and weaker wallet visibility.
+
+Final H2 conclusion:
+
+- `INCONCLUSIVE`.
+
+Biggest blocker:
+
+- public retrospective activity rows do not expose publication or first-seen
+  time.
+
+Evidence-driven successor:
+
+- Wallet Detection-To-Expiry Feasibility Sprint v1 must collect bounded
+  prospective first-seen timestamps for the four H1 above-baseline wallets
+  before testing whether enough time remains after detection.

@@ -1114,3 +1114,24 @@ small, the 180-second horizon has no full coverage, weak evidence still lacks
 40 observed hours and 3 independent sessions, and no precommitted
 random-observation comparator was evaluated. Positive paper replay therefore
 strengthens directional evidence without deciding the master hypothesis.
+
+## D-064: Retrospective fetch time is not public visibility time
+
+Status: Accepted
+Decision: Wallet Activity Visibility Delay Sprint v1 classifies H2 as
+`INCONCLUSIVE`. `activity_timestamp` is the trade event time and
+`source_fetch_timestamp` is the time a bounded retrospective page was fetched.
+Neither field records when a trade first became publicly observable. Future
+Wallet Intelligence work must not use their difference as API publication
+latency or compare wallet visibility speed from that difference.
+
+The next authorized task is Wallet Detection-To-Expiry Feasibility Sprint v1.
+It must use a bounded prospective local first-seen timestamp before computing
+detection-to-expiry. It remains public, read-only, and research-only.
+
+Reason: The H2 sprint analyzed 3,431 fast-crypto trade rows across 20 wallets.
+Trade and fetch timestamps were complete, but publication/first-seen time was
+missing for all 3,431 rows. Retrospective retrieval lag ranged from 18 to
+11,200,902 seconds and varied sharply by H1 group because bounded pages
+contained trades of different ages. Those values are batch-composition
+evidence, not API-latency evidence.

@@ -56,6 +56,11 @@ from polymarket.wallet_intelligence.outcome_skill import (
     run_wallet_outcome_skill_baseline,
     validate_wallet_outcome_skill,
 )
+from polymarket.wallet_intelligence.visibility_delay import (
+    build_wallet_visibility_delay,
+    run_wallet_visibility_delay_sprint,
+    validate_wallet_visibility_delay,
+)
 
 
 class FakeClient:
@@ -1538,6 +1543,117 @@ class WalletOutcomeSkillBaselineTests(unittest.TestCase):
             self.assertTrue((output_dir / "wallet_skill_baseline.csv").exists())
             self.assertTrue((output_dir / "wallet_skill_summary.json").exists())
             self.assertTrue((output_dir / "wallet_skill_report.md").exists())
+
+
+class WalletActivityVisibilityDelayTests(unittest.TestCase):
+    def _skill(self, wallet_id, classification):
+        return {
+            "wallet_id": wallet_id,
+            "profile_url": f"https://polymarket.com/{wallet_id}",
+            "evidence_classification": classification,
+        }
+
+    def _trade(self, wallet_id, timestamp, *, publication_timestamp=""):
+        return {
+            "wallet_id": wallet_id,
+            "profile_url": f"https://polymarket.com/{wallet_id}",
+            "source_endpoint": "https://data-api.polymarket.com/activity",
+            "source_endpoint_name": "activity_primary",
+            "activity_type": "TRADE",
+            "activity_timestamp": str(timestamp),
+            "activity_datetime_utc": "",
+            "publication_timestamp": publication_timestamp,
+            "transaction_hash": f"0xtx-{wallet_id}-{timestamp}",
+            "condition_id": f"0xcondition-{timestamp}",
+            "token_id": f"token-{timestamp}",
+            "asset_id": f"token-{timestamp}",
+            "market_slug": f"btc-updown-{timestamp}",
+            "event_slug": f"btc-updown-{timestamp}",
+            "outcome": "Up",
+            "side": "BUY",
+            "price": "0.5",
+            "size": "10",
+            "market_type": "fast_crypto_up_down",
+            "asset_class": "BTC",
+            "up_down_market": "true",
+            "source_fetch_timestamp": "2026-06-25T19:00:00+00:00",
+            "dedupe_key": f"dedupe-{wallet_id}-{timestamp}",
+        }
+
+    def _fixtures(self):
+        skills = [
+            self._skill("0xabove", "above_baseline_evidence"),
+            self._skill("0xbase", "sample_size_consistent_with_baseline"),
+            self._skill("0xbelow", "below_baseline_evidence"),
+            self._skill("0xsmall", "insufficient_evidence"),
+        ]
+        trades = [
+            self._trade("0xabove", 1782413100),
+            self._trade("0xbase", 1782413200, publication_timestamp="1782413205"),
+            self._trade("0xbelow", 1782413300),
+            self._trade("0xsmall", 1782413400),
+        ]
+        return skills, trades
+
+    def test_visibility_delay_keeps_publication_and_fetch_time_distinct(self):
+        skills, trades = self._fixtures()
+        rows, summary = build_wallet_visibility_delay(skills, trades)
+        by_wallet = {row["wallet_id"]: row for row in rows}
+        self.assertEqual(len(rows), 3)
+        self.assertEqual(by_wallet["0xabove"]["delay_measurement_status"], "unknown_missing_publication_timestamp")
+        self.assertEqual(by_wallet["0xabove"]["measurable_publication_delay_seconds"], "")
+        self.assertTrue(by_wallet["0xabove"]["retrospective_retrieval_lag_seconds"])
+        self.assertEqual(by_wallet["0xbase"]["measurable_publication_delay_seconds"], "5.000000")
+        self.assertEqual(summary["measured_publication_delay_seconds"]["count"], 1)
+        self.assertEqual(summary["timestamp_completeness"]["unknown_timing_count"], 2)
+        self.assertEqual(summary["final_conclusion"], "INCONCLUSIVE")
+
+    def test_visibility_delay_validation_confirms_groups_and_ordering(self):
+        skills, trades = self._fixtures()
+        rows, _ = build_wallet_visibility_delay(skills, list(reversed(trades)))
+        metadata = {
+            row["wallet_id"]: {
+                "wallet_group": row["wallet_group"],
+                "wallet_group_label": row["wallet_group_label"],
+            }
+            for row in rows
+        }
+        validation = validate_wallet_visibility_delay(rows, metadata)
+        self.assertTrue(validation["deterministic_ordering"])
+        self.assertTrue(validation["event_sequences_consecutive"])
+        self.assertTrue(validation["no_publication_fetch_substitution"])
+        self.assertTrue(validation["evidence_groups_present"])
+
+    def test_visibility_delay_sprint_writes_repeatable_outputs(self):
+        skills, trades = self._fixtures()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            skill_csv = root / "skill.csv"
+            trade_csv = root / "trades.csv"
+            output_dir = root / "visibility"
+            with skill_csv.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=list(skills[0].keys()))
+                writer.writeheader()
+                writer.writerows(skills)
+            with trade_csv.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=list(trades[0].keys()))
+                writer.writeheader()
+                writer.writerows(trades)
+            first = run_wallet_visibility_delay_sprint(skill_csv, trade_csv, output_dir)
+            hashes = dict(first["reproducibility_hashes"])
+            first_exports = {
+                path.name: path.read_bytes() for path in output_dir.iterdir() if path.is_file()
+            }
+            second = run_wallet_visibility_delay_sprint(skill_csv, trade_csv, output_dir)
+            self.assertEqual(hashes, second["reproducibility_hashes"])
+            self.assertEqual(
+                first_exports,
+                {path.name: path.read_bytes() for path in output_dir.iterdir() if path.is_file()},
+            )
+            self.assertTrue(second["validation"]["repeatable_export"])
+            self.assertTrue((output_dir / "wallet_visibility_delay.csv").exists())
+            self.assertTrue((output_dir / "wallet_visibility_delay_summary.json").exists())
+            self.assertTrue((output_dir / "wallet_visibility_delay_report.md").exists())
 
 
 if __name__ == "__main__":

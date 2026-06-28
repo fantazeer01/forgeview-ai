@@ -1906,7 +1906,48 @@ sessions. Frozen parameters remain valid for comparison and unchanged, but no
 edge, production, live-trading, holdout, or additional-capture authorization
 follows from this result.
 
-The canonical active task remains Wallet Activity Visibility Delay Sprint v1.
+Wallet Activity Visibility Delay Sprint v1 is complete and leaves H2
+`INCONCLUSIVE` because the retrospective activity export has no publication
+or first-seen timestamp. The canonical active task is now Wallet
+Detection-To-Expiry Feasibility Sprint v1.
+
+## Wallet Activity Visibility Delay Sprint v1
+
+Wallet Activity Visibility Delay Sprint v1 is complete.
+
+Artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/activity_visibility_delay_v1/wallet_visibility_delay.csv`
+- `polymarket/models/wallet_intelligence_v1/activity_visibility_delay_v1/wallet_visibility_delay_summary.json`
+- `polymarket/models/wallet_intelligence_v1/activity_visibility_delay_v1/wallet_visibility_delay_report.md`
+
+Observed evidence:
+
+- 20 H1-classified wallets were analyzed: 4 above-baseline, 13 baseline, and
+  3 below-baseline;
+- 3,431 BTC/ETH/SOL fast Up/Down trade rows were analyzed;
+- Group A contributed 684 rows, Group B 2,228, and Group C 519;
+- all 3,431 rows had trade timestamps, fetch timestamps, transaction hashes,
+  and deterministic event ordering;
+- zero rows had a publication or first-seen timestamp;
+- true publication-delay minimum, median, mean, and maximum are unavailable;
+- all 3,431 publication delays are unknown;
+- retrospective retrieval lag ranged from 18 to 11,200,902 seconds, with a
+  22,207-second median and 778,179.988925-second mean, but this measures batch
+  retrieval age rather than API latency.
+
+Conclusion:
+
+- H2 is `INCONCLUSIVE`;
+- stronger, baseline, and weaker wallet visibility speed cannot be compared
+  from the existing retrospective evidence;
+- selection bias, bounded history, second-resolution activity time, and the
+  absence of publication/first-seen time prevent a visibility claim.
+
+Next active task:
+
+- Wallet Detection-To-Expiry Feasibility Sprint v1, which must use bounded
+  prospective first-seen timestamps before measuring remaining time.
 
 ## State update protocol
 

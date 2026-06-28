@@ -1,6 +1,6 @@
 # Polymarket Next Task
 
-Last updated: June 26, 2026
+Last updated: June 28, 2026
 Task status: ACTIVE
 
 This file contains exactly one active task. A future Codex session must read
@@ -8,95 +8,53 @@ This file contains exactly one active task. A future Codex session must read
 `DECISIONS.md`, `REPRICING_RESEARCH_V1.md`, and
 `WALLET_INTELLIGENCE_RESEARCH_V1.md` before starting it.
 
-## Active task: Wallet Activity Visibility Delay Sprint v1
+## Active task: Wallet Detection-To-Expiry Feasibility Sprint v1
 
 ### Hypothesis under test
 
-H2: Public wallet actions become visible quickly enough.
+H3: Enough time remains after public wallet activity is first detected to
+support future strategy research.
+
+### Evidence basis
+
+Wallet Activity Visibility Delay Sprint v1 analyzed 3,431 fast-crypto trades
+and found complete trade/fetch timestamps but zero publication or first-seen
+timestamps. H2 remains `INCONCLUSIVE`; retrospective fetch age is not API
+latency.
 
 ### Objective
 
-Use existing public wallet trade-history, lifecycle, and outcome-skill
-artifacts to test whether the four H1 above-baseline wallets have activity
-timestamps that appear early enough to support future strategy research.
-
-This is a falsification sprint. Assume H2 is false unless public activity
-timestamps show that candidate wallet actions are visible with enough time
-remaining to be studied further.
+Run the smallest bounded prospective public read-only observation needed to
+record local first-seen times for newly visible activity from the four H1
+above-baseline wallets, join those observations to market expiry, and test
+whether meaningful time remains after detection.
 
 ### Required scope
 
-1. Read:
-   - `docs/polymarket/RESEARCH_PRINCIPLES.md`;
-   - `docs/polymarket/MASTER_OBJECTIVE.md`;
-   - `docs/polymarket/PROJECT_STATE.md`;
-   - `docs/polymarket/DECISIONS.md`;
-   - `docs/polymarket/WALLET_INTELLIGENCE_RESEARCH_V1.md`;
-   - `polymarket/models/wallet_intelligence_v1/outcome_skill_baseline_v1/wallet_skill_baseline.csv`;
-   - `polymarket/models/wallet_intelligence_v1/outcome_skill_baseline_v1/wallet_skill_summary.json`;
-   - `polymarket/data/wallet_intelligence/trade_history_broader_v1/trade_history_normalized.csv`;
-   - `polymarket/models/wallet_intelligence_v1/market_outcome_resolution_v1/market_outcome_join.csv`.
-2. Restrict the main analysis to H1 above-baseline wallets:
-   - `0x088df3b7e5c1b5c2d4b7dc760863153480cf025e`;
-   - `0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199`;
-   - `0x29a55c2bf8efd1029c001477b34be47d3ca37752`;
-   - `0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a`.
-3. Use existing artifacts only unless a missing field makes H2 impossible to
-   evaluate. Do not launch broad ingestion, capture, crawling, or live
-   monitoring.
-4. Compute visibility-delay evidence:
-   - first visible wallet activity timestamp per lifecycle candidate;
-   - market expiry timestamp when available;
-   - time from first visible activity to expiry;
-   - share of candidate actions visible with at least 60, 120, and 180 seconds
-     remaining;
-   - unresolved or missing timestamp fraction;
-   - per-wallet sample counts.
-5. Clearly separate:
-   - observed timestamp evidence;
-   - unknown public feed latency;
-   - unknown human/automation reaction time;
-   - unknown fill feasibility;
-   - unknown slippage/liquidity;
-   - unknown complete-history bias.
-6. Do not compute or claim:
-   - PnL;
-   - ROI;
-   - realized profit;
-   - Sharpe;
-   - expected value;
-   - alpha;
-   - market advantage;
-   - copyability success;
-   - execution quality;
-   - trading suitability;
-   - trading recommendations.
-7. Do not modify Wallet Score, Wallet Watchlist, strategy thresholds, live
-   systems, wallet/private-key handling, order placement, capture campaigns,
-   production models, sealed holdout artifacts, or holdout evaluation.
-8. End with exactly one conclusion for H2:
-   - `SUPPORTED`;
-   - `REJECTED`;
-   - `INCONCLUSIVE`.
+1. Observe only the four H1 above-baseline wallets already recorded in the H1
+   and H2 artifacts.
+2. Define a strict time, request, and row bound before observation begins.
+3. Record local request start, response completion, first-seen, trade event,
+   and market expiry timestamps with stable transaction identity.
+4. Deduplicate repeated observations without replacing the earliest
+   first-seen timestamp.
+5. Report detection-to-expiry distributions and shares with at least 60, 120,
+   and 180 seconds remaining.
+6. Separate observed network/API delay bounds from local polling interval,
+   clock uncertainty, reaction time, fill uncertainty, liquidity, and
+   slippage.
+7. End with exactly one H3 conclusion: `SUPPORTED`, `REJECTED`, or
+   `INCONCLUSIVE`.
+8. Do not copy trades, place orders, connect wallets/private keys, modify
+   Wallet Score or Watchlist, inspect sealed holdout outcomes, run holdout
+   evaluation, or claim profitability, alpha, execution quality, or trading
+   suitability.
 9. Run Wallet Intelligence tests and the full test suite.
-
-### Outputs
-
-Produce deterministic artifacts under:
-
-`polymarket/models/wallet_intelligence_v1/activity_visibility_delay_v1/`
-
-Include:
-
-- `wallet_activity_visibility_delay.csv`
-- `wallet_activity_visibility_summary.json`
-- `wallet_activity_visibility_report.md`
 
 ### Acceptance criteria
 
-- The sprint answers H2 as `SUPPORTED`, `REJECTED`, or `INCONCLUSIVE`.
-- If H2 is rejected, the next task must stop or sharply narrow public-wallet
-  strategy research.
-- If H2 is supported or inconclusive with useful remaining evidence, the next
-  task should test H3 directly.
-- Exactly one active successor task remains in this file after completion.
+- prospective first-seen provenance is present for every measured row;
+- no retrospective fetch timestamp is treated as first-seen evidence;
+- exports and ordering are deterministic;
+- the sprint directly answers H3 or names the single measured blocker;
+- exactly one active successor task remains after completion.

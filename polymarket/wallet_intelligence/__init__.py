@@ -17,6 +17,7 @@ from .lifecycle_metrics import run_lifecycle_metrics
 from .wallet_score import run_wallet_score_fixture
 from .wallet_watchlist import run_wallet_watchlist
 from .copyability_sprint import run_wallet_copyability_sprint
+from .visibility_delay import run_wallet_visibility_delay_sprint
 
 __all__ = [
     "LIFECYCLE_POSITION_FIELDS",
@@ -35,5 +36,6 @@ __all__ = [
     "run_wallet_score_fixture",
     "run_wallet_watchlist",
     "run_wallet_copyability_sprint",
+    "run_wallet_visibility_delay_sprint",
     "summarize_outputs",
 ]
