@@ -1645,3 +1645,51 @@ applies equally to Repricing, Wallet Intelligence, and every future strategy.
 
 Reason: Approval is the final authorization after evidence, not a mechanism for
 bypassing evidence or granting a favored strategy an exception.
+
+## D-092: Every strategy continuously re-earns permission to trade
+
+Status: Accepted
+Decision: No strategy is permanent. Every active strategy must continuously
+maintain its approved evidence, risk, execution, and integrity conditions.
+Automatic pause conditions include evidence gates no longer being satisfied,
+sustained negative expectancy, drawdown beyond predefined limits, abnormal
+execution behavior, infrastructure integrity failures, repeated restart
+failures, API instability, duplicate execution risk, corrupted data, and
+missing critical market data.
+
+Reason: Historical success or prior promotion cannot justify continued capital
+exposure after the evidence or operating assumptions degrade.
+
+## D-093: Every future trading system requires an immediate global stop
+
+Status: Accepted
+Decision: Every future real-money system must support an immediate global
+trading stop that prevents further automated trading activity and invokes its
+predefined safe shutdown behavior. Emergency-stop authority is a risk control,
+not a discretionary manual trading path.
+
+Reason: A system-wide hazard requires one unambiguous way to stop exposure
+without waiting for strategy-specific logic.
+
+## D-094: Shutdown returns a strategy to paper trading and blocks auto-resume
+
+Status: Accepted
+Decision: A paused real-money strategy returns to Trading License Level 1 paper
+trading. It may not resume real-money trading automatically. Resumption
+requires a documented review of the shutdown cause, corrective evidence,
+revalidation of every applicable mandatory gate, and the normal promotion and
+approval process.
+
+Reason: Restarting from a prior license would bypass the evidence needed to
+show that the shutdown cause is actually resolved.
+
+## D-095: Capital preservation overrides continuous trading
+
+Status: Accepted
+Decision: Shutdown policy applies equally to Repricing, Wallet Intelligence,
+and every future strategy. Capital preservation is more important than
+continuous trading, and ForgeViewAI prefers missing opportunities over
+accepting uncontrolled risk.
+
+Reason: Strategy preference, sunk cost, or urgency to reach the profit target
+must not weaken shutdown decisions.

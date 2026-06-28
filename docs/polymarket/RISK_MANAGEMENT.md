@@ -25,6 +25,10 @@ limits in this document.
 first real-money trade. CEO approval occurs only after all mandatory gates pass
 and cannot override a failed, unresolved, or unevaluated gate.
 
+`STRATEGY_SHUTDOWN_POLICY.md` defines continuous trading permission, automatic
+pause conditions, global emergency stop requirements, and the documented
+review required before a paused strategy may return from paper trading.
+
 ## 2. Capital stages
 
 ### Capital Stage 0 - Research
@@ -88,7 +92,25 @@ Intelligence, and every future strategy.
 `EVIDENCE_GATES.md` is canonical for this process and introduces no new numeric
 thresholds.
 
-## 5. Maximum risk per trade
+## 5. Strategy shutdown and resumption
+
+No strategy has permanent permission to trade. Every strategy must
+continuously maintain its approved evidence and integrity conditions.
+Automatic pause conditions include evidence-gate failure, sustained negative
+expectancy, excessive drawdown, abnormal execution, infrastructure or API
+instability, repeated restart failure, duplicate execution risk, corrupted
+data, and missing critical market data.
+
+Every future trading system must support an immediate global trading stop. A
+paused real-money strategy returns to Trading License Level 1 paper trading
+and may not resume automatically. Resumption requires a documented review,
+corrective evidence, revalidation of applicable gates, and the normal promotion
+and approval process.
+
+Capital preservation takes priority over continuous trading. Missing an
+opportunity is preferable to accepting uncontrolled risk.
+
+## 6. Maximum risk per trade
 
 No single trade may risk more than 1% of current trading capital, regardless of
 signal confidence. Position sizing must use the lower of the strategy's
@@ -96,7 +118,7 @@ approved size and the 1% risk ceiling. The sole exception is the platform
 minimum described in Capital Stage 1, and it requires explicit approval;
 without that approval, the system remains in paper mode.
 
-## 6. Daily and session risk stops
+## 7. Daily and session risk stops
 
 A real-money system must stop opening new trades when any configured stop
 condition triggers. Required stop categories are:
@@ -116,7 +138,7 @@ paper trading, and approved before Capital Stage 1 begins. Triggered stops fail
 closed and require documented recovery criteria before new real-money entries
 resume.
 
-## 7. No discretionary manual trading
+## 8. No discretionary manual trading
 
 After an automated strategy is launched:
 
@@ -133,7 +155,7 @@ Every parameter change requires, in order:
 3. paper-trading validation;
 4. a documented decision.
 
-## 8. Automation preference
+## 9. Automation preference
 
 Manual operating work must be minimized. The target operating model is:
 
@@ -148,7 +170,7 @@ Manual operating work must be minimized. The target operating model is:
 Automation must preserve fail-closed behavior, auditability, deterministic
 recovery, and human shutdown capability.
 
-## 9. Strategy-agnostic capital allocation
+## 10. Strategy-agnostic capital allocation
 
 ForgeViewAI is not committed to Repricing, Wallet Intelligence, or any other
 named strategy. Engineering priority follows the fastest reproducible,
@@ -160,7 +182,7 @@ evidence-backed path toward profitable BTC, ETH, and SOL five-minute trading.
 - all branches must satisfy the same capital-stage and risk controls before
   real-money deployment.
 
-## 10. Change control
+## 11. Change control
 
 Risk limits, capital-stage gates, stop categories, and execution parameters may
 change only through a documented governance decision. No research result or

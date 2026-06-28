@@ -61,6 +61,16 @@ equally to Repricing, Wallet Intelligence, and future strategies. No numeric
 threshold, implementation, strategy, detector, or execution authorization was
 added by this governance update.
 
+Strategy Shutdown Policy v1 is now recorded in
+`STRATEGY_SHUTDOWN_POLICY.md`. No strategy has permanent trading permission.
+Future systems must pause automatically when evidence, expectancy, drawdown,
+execution, infrastructure, restart, API, duplicate-execution, or critical-data
+conditions degrade, and must support an immediate global stop. A paused
+real-money strategy returns to Level 1 paper trading and cannot resume without
+a documented review and renewed evidence. Capital preservation takes priority
+over continuous trading. No implementation, detector, threshold, strategy, or
+execution authorization was changed.
+
 Repository consolidation note: `research/probability-lab` is now maintained as
 a normal folder inside the root ForgeViewAI repository. Its nested Git metadata
 was removed, project files were preserved, and ForgeViewAI is the only Git
