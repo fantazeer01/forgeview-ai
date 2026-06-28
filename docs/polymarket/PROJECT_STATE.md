@@ -635,7 +635,7 @@ optimization, and trading remain unauthorized.
 
 ## Next actions
 
-The single active task is Wallet Activity Visibility Delay Sprint v1.
+The single active task is Wallet Detection-To-Expiry Feasibility Sprint v1.
 Its scope and acceptance criteria are defined in `NEXT_TASK.md`.
 
 ## Latest metrics
@@ -1905,6 +1905,56 @@ evaluated. Weak evidence also still lacks 40 observed hours and 3 independent
 sessions. Frozen parameters remain valid for comparison and unchanged, but no
 edge, production, live-trading, holdout, or additional-capture authorization
 follows from this result.
+
+## Balanced Repricing Random Baseline Sprint v1
+
+Balanced Repricing Random Baseline Sprint v1 tested the frozen repricing
+detector against a predefined random-entry reference using only completed
+Batch 001 and Batch 002 public sessions.
+
+Artifacts:
+
+- `polymarket/models/repricing_research_v1/balanced_random_baseline_v1/random_baseline_results.csv`;
+- `polymarket/models/repricing_research_v1/balanced_random_baseline_v1/random_baseline_summary.json`;
+- `polymarket/models/repricing_research_v1/balanced_random_baseline_v1/random_baseline_report.md`.
+
+Baseline specification:
+
+- 1,000 deterministic Monte Carlo trials, seed `20260628`;
+- 172 entries per trial over 24.000000 observed hours;
+- exact matching to detector counts by batch, asset, side, and 60-second
+  expiry bucket;
+- uniform random timing over eligible public snapshots;
+- identical 60-second minimum expiry, 180-second timeout, 0.03 target, 0.03
+  stop, 0.02 slippage, and non-overlapping same-market/same-side paper rule;
+- signal density matched by design at 7.166667 signals/hour.
+
+Measured comparison:
+
+- detector: 172 signals, 110 wins, 63.9535% win rate, +0.022401
+  after-slippage expectancy, 0.875 maximum drawdown;
+- random mean: 47.8692% win rate, -0.019607 after-slippage expectancy,
+  3.495447 maximum drawdown;
+- random 95% win-rate interval: 40.6977% to 54.6512%;
+- random 95% expectancy interval: -0.029563 to -0.011226;
+- detector minus random: +16.0843 percentage points win rate and +0.042008
+  expectancy;
+- no random trial matched detector expectancy or win rate;
+- one-sided finite-trial exceedance probability: 0.000999 for each metric;
+- all three output artifacts reproduced byte-for-byte on an independent run;
+- repricing tests: 4 / 4 passed;
+- full repository tests: 136 / 136 passed.
+
+Conclusion: `SUPPORTED` under the predefined development-only random-timing
+baseline. The positive expectancy is not explained by random entry timing
+alone under this matched control.
+
+The conclusion remains exposed to two-session sample size, adjacent market
+regimes, serially correlated snapshots, uniform-snapshot baseline choice,
+development selection bias, midpoint-like paper prices, and absent executable
+fill, depth, queue, and fee evidence. It is not a proven edge and does not
+authorize frozen-parameter changes, holdout evaluation, production modelling,
+live trading, or another capture.
 
 Wallet Activity Visibility Delay Sprint v1 is complete and leaves H2
 `INCONCLUSIVE` because the retrospective activity export has no publication

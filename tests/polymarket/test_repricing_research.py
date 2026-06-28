@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import json
 import tempfile
 import unittest
@@ -11,6 +12,11 @@ from polymarket.repricing_research import (
     simulate_repricing_strategy,
 )
 from polymarket.repricing_research.cli import build_parser
+from polymarket.repricing_research.random_baseline import (
+    RandomBaselineConfig,
+    run_random_baseline,
+    write_random_baseline_outputs,
+)
 
 
 class RepricingResearchTests(unittest.TestCase):
@@ -65,6 +71,35 @@ class RepricingResearchTests(unittest.TestCase):
             rows = build_repricing_dataset([session])
             self.assertEqual(len(rows), 1)
             self.assertEqual(rows[0].source_session, str(session))
+
+    def test_random_baseline_is_deterministic_and_distribution_matched(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            detector = root / "detector.csv"
+            self._write_random_baseline_session(session)
+            self._write_detector_rows(detector)
+            config = RandomBaselineConfig(trials=20, seed=7)
+
+            first_rows, first_summary = run_random_baseline(
+                [detector], [session], config
+            )
+            second_rows, second_summary = run_random_baseline(
+                [detector], [session], config
+            )
+
+            self.assertEqual(first_rows, second_rows)
+            self.assertEqual(first_summary, second_summary)
+            self.assertEqual(first_summary["sample_size"], 2)
+            self.assertEqual(
+                first_summary["matched_batch_asset_side_counts"],
+                {"batch_001:BTC:NO": 1, "batch_001:BTC:YES": 1},
+            )
+            outputs = write_random_baseline_outputs(
+                root / "output", first_rows, first_summary
+            )
+            self.assertEqual(set(outputs), {"results", "summary", "report"})
+            self.assertTrue(all(Path(path).exists() for path in outputs.values()))
 
     def _write_session(
         self,
@@ -142,6 +177,53 @@ class RepricingResearchTests(unittest.TestCase):
                 "cross_asset_yes_dispersion": 0.02,
             },
         }
+
+    def _write_random_baseline_session(self, path: Path) -> None:
+        events = [{
+            "event": "session_started",
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "payload": {},
+        }]
+        for market, minute in (("m1", 0), ("m2", 5), ("m3", 10)):
+            for offset, yes_price in ((0, 0.45), (30, 0.50), (60, 0.55), (90, 0.48)):
+                timestamp = (
+                    f"2026-01-01T00:{minute + offset // 60:02d}:"
+                    f"{offset % 60:02d}+00:00"
+                )
+                events.append({
+                    "event": "polymarket_snapshot",
+                    "timestamp": timestamp,
+                    "payload": {
+                        "asset": "BTC",
+                        "market_id": market,
+                        "yes_price": yes_price,
+                        "no_price": 1.0 - yes_price,
+                        "seconds_to_expiry": 240 - offset,
+                    },
+                })
+        events.append({
+            "event": "session_completed",
+            "timestamp": "2026-01-01T00:15:00+00:00",
+            "payload": {},
+        })
+        with path.open("w", encoding="utf-8") as handle:
+            for event in events:
+                handle.write(json.dumps(event, sort_keys=True) + "\n")
+
+    def _write_detector_rows(self, path: Path) -> None:
+        fields = [
+            "entry_timestamp", "asset", "side", "time_to_expiry_seconds",
+            "repriced_favorably", "simulated_pnl_before_slippage",
+            "simulated_pnl_after_slippage",
+        ]
+        rows = [
+            ["2026-01-01T00:00:00+00:00", "BTC", "YES", 240, True, 0.05, 0.03],
+            ["2026-01-01T00:05:00+00:00", "BTC", "NO", 240, False, -0.03, -0.05],
+        ]
+        with path.open("w", newline="", encoding="utf-8") as handle:
+            writer = csv.writer(handle)
+            writer.writerow(fields)
+            writer.writerows(rows)
 
 
 if __name__ == "__main__":

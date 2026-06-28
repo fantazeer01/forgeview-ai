@@ -1,0 +1,133 @@
+{
+  "baseline_specification": {
+    "conservative_slippage": 0.02,
+    "decision_rule": {
+      "INCONCLUSIVE": "all other measured outcomes",
+      "REJECTED": "detector expectancy and win rate both fail to exceed random means",
+      "SUPPORTED": "detector expectancy and win rate both exceed random 97.5th percentiles"
+    },
+    "distribution_matching": "exact detector count by batch, asset, side, and expiry bucket in every trial",
+    "entry_sampling": "uniform over eligible public snapshots within matched batch, asset, side, and 60-second expiry bucket",
+    "expiry_bucket_seconds": 60,
+    "max_holding_seconds": 180.0,
+    "min_seconds_to_expiry": 60.0,
+    "position_rule": "unique entry and no overlapping position for the same batch, market, and side",
+    "repricing_target": 0.03,
+    "seed": 20260628,
+    "stop_loss": 0.03,
+    "trials": 1000
+  },
+  "conclusion": "SUPPORTED",
+  "confidence_limitations": [
+    "Only two independent 12-hour sessions and 172 detector signals are available.",
+    "Snapshot observations are serially correlated within five-minute markets.",
+    "The baseline reuses the same two observed market regimes and cannot test regime persistence.",
+    "Uniform snapshot sampling is one defensible random-timing definition, not the only possible random baseline.",
+    "Midpoint-like public prices do not establish executable fills, queue position, depth consumption, or fees.",
+    "Signal density is matched by design and therefore is a control variable, not an independent advantage test.",
+    "Detector datasets were selected by frozen rules on development sessions and remain exposed to development selection bias."
+  ],
+  "detector": {
+    "expectancy_after_slippage": 0.02240116279069767,
+    "max_drawdown": 0.875,
+    "pnl_after_slippage": 3.853,
+    "pnl_before_slippage": 7.293,
+    "sample_size": 172,
+    "signals_per_hour": 7.16666655045718,
+    "win_rate": 0.6395348837209303,
+    "wins": 110
+  },
+  "differences": {
+    "expectancy_absolute": 0.042008494186046505,
+    "expectancy_relative_to_absolute_baseline": 2.142489119963136,
+    "max_drawdown_absolute": -2.620447,
+    "signal_density_absolute": 0.0,
+    "win_rate_absolute": 0.16084302325581395,
+    "win_rate_relative": 0.33600534402137616
+  },
+  "frozen_parameters_unchanged": true,
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "hypothesis": "Observed positive expectancy is not explained by random entry timing alone.",
+  "inputs": {
+    "detector_csvs": [
+      "polymarket\\data\\repricing_research_balanced_batch_001\\repricing_labels.csv",
+      "polymarket\\data\\repricing_research_balanced_batch_002\\repricing_labels.csv"
+    ],
+    "sessions": [
+      "polymarket\\runs\\repricing_balanced_v1\\20260624_154206\\session.jsonl",
+      "polymarket\\runs\\repricing_balanced_v1_batch_002\\20260625_200724\\session.jsonl"
+    ]
+  },
+  "invalidation_search": {
+    "detector_bias": "tested only against random timing with matched distributions",
+    "market_regime": "not testable with two adjacent sessions",
+    "sampling_bias": "possible from uniform snapshot weighting and serial correlation",
+    "selection_bias": "not eliminated; detector and baseline use development sessions",
+    "small_sample_effects": "material with 172 signals and two sessions",
+    "survivorship_bias": "reduced by sampling all eligible observed markets, not eliminated outside captured sessions"
+  },
+  "matched_batch_asset_side_counts": {
+    "batch_001:BTC:NO": 14,
+    "batch_001:BTC:YES": 23,
+    "batch_001:ETH:NO": 15,
+    "batch_001:ETH:YES": 14,
+    "batch_001:SOL:NO": 42,
+    "batch_001:SOL:YES": 22,
+    "batch_002:BTC:NO": 8,
+    "batch_002:ETH:NO": 8,
+    "batch_002:ETH:YES": 4,
+    "batch_002:SOL:NO": 18,
+    "batch_002:SOL:YES": 4
+  },
+  "matched_batch_expiry_bucket_counts": {
+    "batch_001:120": 35,
+    "batch_001:180": 33,
+    "batch_001:240": 36,
+    "batch_001:60": 26,
+    "batch_002:120": 7,
+    "batch_002:180": 10,
+    "batch_002:240": 18,
+    "batch_002:60": 7
+  },
+  "observed_hours": 24.00000038916666,
+  "one_sided_monte_carlo_p_values": {
+    "expectancy_at_least_detector": 0.000999000999000999,
+    "win_rate_at_least_detector": 0.000999000999000999
+  },
+  "random_baseline": {
+    "expectancy_after_slippage": {
+      "maximum": -0.007377906976744189,
+      "mean": -0.01960733139534884,
+      "median": -0.019562500000000003,
+      "minimum": -0.034034883720930234,
+      "p2_5": -0.029563372093023253,
+      "p97_5": -0.011225944767441858
+    },
+    "max_drawdown": {
+      "maximum": 5.864,
+      "mean": 3.495447,
+      "median": 3.48675,
+      "minimum": 1.4515,
+      "p2_5": 2.0978624999999997,
+      "p97_5": 5.165125
+    },
+    "signals_per_hour": {
+      "maximum": 7.16666655045718,
+      "mean": 7.16666655045718,
+      "median": 7.16666655045718,
+      "minimum": 7.16666655045718,
+      "p2_5": 7.16666655045718,
+      "p97_5": 7.16666655045718
+    },
+    "win_rate": {
+      "maximum": 0.5872093023255814,
+      "mean": 0.4786918604651163,
+      "median": 0.48255813953488375,
+      "minimum": 0.3488372093023256,
+      "p2_5": 0.4069767441860465,
+      "p97_5": 0.5465116279069767
+    }
+  },
+  "sample_size": 172,
+  "sprint": "balanced_repricing_random_baseline_v1"
+}

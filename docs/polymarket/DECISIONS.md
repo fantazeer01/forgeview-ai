@@ -1135,3 +1135,30 @@ missing for all 3,431 rows. Retrospective retrieval lag ranged from 18 to
 11,200,902 seconds and varied sharply by H1 group because bounded pages
 contained trades of different ages. Those values are batch-composition
 evidence, not API-latency evidence.
+
+## D-065: Frozen repricing timing beats the predefined matched random baseline
+
+Status: Accepted
+Decision: Balanced Repricing Random Baseline Sprint v1 classifies the narrow
+development hypothesis as `SUPPORTED`: on Batch 001 and Batch 002, frozen
+detector entries outperform a predefined random-entry timing reference matched
+exactly by batch, asset, side, expiry bucket, signal count, slippage, target,
+stop, timeout, and paper-position constraints.
+
+This decision does not change detector logic, thresholds, evidence gates,
+holdout policy, production status, or execution boundaries. It supports only
+the statement that random timing alone did not explain the measured detector
+result under this one declared baseline.
+
+Reason: Across 172 detector signals and 24 observed hours, detector win rate
+was 63.9535% and after-slippage expectancy was +0.022401. Across 1,000
+deterministic matched random trials, mean win rate was 47.8692% and mean
+expectancy was -0.019607; the random 97.5th percentiles were 54.6512% and
+-0.011226. No random trial reached either detector metric, so both one-sided
+finite-trial exceedance probabilities were 0.000999. The detector also had
+lower maximum drawdown, 0.875 versus a 3.495447 random mean.
+
+The evidence remains limited to two adjacent development sessions, 172
+detector signals, serially correlated snapshots, one uniform-snapshot baseline
+definition, and non-executable public paper prices. Selection, regime,
+sampling, fill, depth, queue, fee, and live-latency risks remain unresolved.

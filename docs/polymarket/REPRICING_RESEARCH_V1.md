@@ -628,6 +628,65 @@ Weak evidence also still lacks the required observed hours and independent
 sessions. The frozen settings remain unchanged, the holdout remains sealed,
 and no additional capture or edge claim is authorized.
 
+## Balanced Repricing Random Baseline Sprint v1
+
+The random-baseline falsification artifacts are stored under:
+
+- `polymarket/models/repricing_research_v1/balanced_random_baseline_v1/random_baseline_results.csv`;
+- `polymarket/models/repricing_research_v1/balanced_random_baseline_v1/random_baseline_summary.json`;
+- `polymarket/models/repricing_research_v1/balanced_random_baseline_v1/random_baseline_report.md`.
+
+Predefined baseline:
+
+- 1,000 deterministic trials with seed `20260628`;
+- exactly 172 signals per trial;
+- exact distribution match by source batch, BTC/ETH/SOL, YES/NO, and
+  60-second expiry bucket;
+- random entry timing sampled uniformly from eligible public snapshots;
+- 60-second minimum expiry, 180-second maximum hold, 0.03 target, 0.03 stop,
+  0.02 conservative slippage, and no overlapping same-market/same-side paper
+  position;
+- identical signal density of 7.166667 signals/hour by design.
+
+Detector result across Batch 001 and Batch 002:
+
+- sample size: 172 signals over 24.000000 observed hours;
+- wins: 110;
+- win rate: 63.9535%;
+- after-slippage P&L: +3.853000;
+- after-slippage expectancy: +0.022401;
+- maximum drawdown: 0.875000.
+
+Random baseline result:
+
+- mean win rate: 47.8692%;
+- 95% win-rate interval: 40.6977% to 54.6512%;
+- mean after-slippage expectancy: -0.019607;
+- 95% expectancy interval: -0.029563 to -0.011226;
+- mean maximum drawdown: 3.495447;
+- 95% maximum-drawdown interval: 2.097862 to 5.165125;
+- no random trial matched detector expectancy or win rate;
+- one-sided exceedance probability: 0.000999 for each metric.
+
+Observed differences:
+
+- win rate: +16.0843 percentage points versus random mean;
+- expectancy: +0.042008 versus random mean;
+- detector drawdown: 2.620447 below random mean;
+- signal density: no difference by construction.
+
+Conclusion: `SUPPORTED` under this predefined development-only baseline. The
+observed positive expectancy is not explained by random entry timing alone in
+the two captured sessions.
+
+This is not a proven repricing edge. The result remains vulnerable to the two
+adjacent sessions, small independent-session count, serial correlation,
+uniform snapshot weighting, alternative random-baseline definitions,
+development selection bias, market-regime persistence, midpoint-like paper
+prices, and absent executable fills, queue position, depth consumption, fees,
+and live latency. Frozen parameters and evidence gates remain unchanged; the
+holdout remains sealed.
+
 ## Missing Data
 
 The current evidence is missing:
