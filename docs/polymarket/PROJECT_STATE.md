@@ -44,6 +44,14 @@ conditions, prohibit discretionary manual trading, and use documented change
 control. No implementation or execution authorization follows from this policy
 record.
 
+Capital Scaling and Trading License Levels v1 are now recorded in
+`CAPITAL_SCALING.md`. Levels 0-1 retain $0 real capital, Level 2 defines micro
+execution at approximately $3-$5 per trade or the platform minimum, and Levels
+3-5 define approximate $10, $25, and $50 position sizes. Promotion requires
+predefined evidence gates; degradation triggers automatic demotion or pause.
+No strategy currently has Level 2 or higher authorization, and this policy
+update does not authorize execution.
+
 Repository consolidation note: `research/probability-lab` is now maintained as
 a normal folder inside the root ForgeViewAI repository. Its nested Git metadata
 was removed, project files were preserved, and ForgeViewAI is the only Git

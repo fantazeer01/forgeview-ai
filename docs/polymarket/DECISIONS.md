@@ -1545,3 +1545,67 @@ branches receive higher priority.
 
 Reason: Automation improves repeatability, while strategy-agnostic allocation
 prevents sunk cost or preference from overriding evidence.
+
+## D-084: Trading licenses refine capital stages into Levels 0-5
+
+Status: Accepted
+Decision: ForgeViewAI uses six Trading License Levels. Level 0 is offline
+research with $0 real capital and no paper requirement. Level 1 is automated
+paper trading with $0 real capital and is mandatory before real trading. Level
+2 is micro real trading at approximately $3-$5 per trade or the platform
+minimum. Levels 3, 4, and 5 use approximate position sizes of $10, $25, and $50
+per trade respectively. Higher levels require a future CEO decision.
+
+Levels 0-1 map to Capital Stage 0, Level 2 maps to Capital Stage 1, and Levels
+3-5 map to Capital Stage 2. The license ladder does not alter the 1% default
+risk cap or its explicitly approved platform-minimum exception.
+
+Reason: A finer ladder separates paper validation, real execution proof, and
+gradual scaling without replacing the existing risk-stage policy.
+
+## D-085: License promotion requires predefined evidence gates
+
+Status: Accepted
+Decision: Promotion requires a predefined minimum completed-trade count,
+positive expectancy, acceptable drawdown, no critical infrastructure failures,
+no duplicate-position incidents, no restart recovery failures, and stable
+execution behavior. Numeric thresholds may be defined after paper statistics
+are available, but must be documented and validated before use. The first
+real-money transition from Level 1 to Level 2 requires documented CEO approval.
+
+Reason: Promotion must follow reproducible evidence rather than recent outcomes
+or operator discretion.
+
+## D-086: Quality degradation automatically demotes or pauses trading
+
+Status: Accepted
+Decision: A future trading system must automatically reduce its license level
+or pause new trading after a daily loss stop, consecutive-loss stop, negative
+expectancy over a predefined window, excessive drawdown, infrastructure
+integrity failure, API/data reliability failure, unexpected execution behavior,
+or manual emergency stop. Recovery and re-promotion gates must be predefined.
+
+Reason: Capital exposure must decrease when strategy quality or system
+integrity deteriorates.
+
+## D-087: Trading license levels cannot be raised emotionally
+
+Status: Accepted
+Decision: Position size may not increase because of perceived confidence, a
+recent lucky streak, impatience, a desire to reach $10,000 faster, or an
+undocumented manual override. Every increase must follow the promotion and
+change-control process.
+
+Reason: Emotional scaling converts short-term variance into uncontrolled risk
+and invalidates the evidence basis for capital allocation.
+
+## D-088: Every strategy earns the same capital license through evidence
+
+Status: Accepted
+Decision: Trading License Levels apply equally to Repricing, Wallet
+Intelligence, and every future Polymarket strategy. A strategy earns capital
+allocation only through evidence and receives no exception for sunk cost,
+preference, or prior engineering investment.
+
+Reason: Strategy-agnostic licensing keeps capital focused on the fastest
+reproducible path toward profitable BTC/ETH/SOL five-minute trading.

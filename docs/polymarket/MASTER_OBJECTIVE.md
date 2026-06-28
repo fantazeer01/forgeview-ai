@@ -16,10 +16,11 @@ Future engineering sessions must read these documents in order:
 1. `MASTER_OBJECTIVE.md` - permanent objective and gates.
 2. `RESEARCH_PRINCIPLES.md` - strategic hypothesis filter.
 3. `RISK_MANAGEMENT.md` - capital stages and real-money risk policy.
-4. `PROJECT_STATE.md` - measured current status and blockers.
-5. `NEXT_TASK.md` - the single authorized active task.
-6. `DECISIONS.md` - durable architecture and policy decisions.
-7. `RESEARCH_BACKLOG.md` - future ideas that are not yet active.
+4. `CAPITAL_SCALING.md` - trading license levels and promotion/demotion rules.
+5. `PROJECT_STATE.md` - measured current status and blockers.
+6. `NEXT_TASK.md` - the single authorized active task.
+7. `DECISIONS.md` - durable architecture and policy decisions.
+8. `RESEARCH_BACKLOG.md` - future ideas that are not yet active.
 
 After completing work, update the state, decisions, and next-task documents in
 the same change. Code is not fully handed off while those documents are stale.
@@ -317,7 +318,8 @@ or thresholds selected using final-test performance.
 
 `RISK_MANAGEMENT.md` is the canonical policy for any future real-money
 system. It applies equally to Repricing, Wallet Intelligence, and any future
-strategy branch.
+strategy branch. `CAPITAL_SCALING.md` defines the subordinate Trading License
+Levels 0-5 and their promotion and demotion rules.
 
 Current mandatory controls:
 
@@ -335,6 +337,8 @@ Requirements for any future execution proposal:
 - separate, explicitly authorized execution repository or module boundary;
 - independent code and risk review;
 - progression through Capital Stage 1 proof before Capital Stage 2 scale;
+- progression through Trading License Level 1 paper evidence before Level 2
+  micro real trading, followed by gated Levels 3-5;
 - no more than 1% of current trading capital at risk on one trade;
 - initial proof sizing of approximately $3-$5 per trade, or the platform
   minimum if higher and explicitly approved when it exceeds the 1% ceiling;

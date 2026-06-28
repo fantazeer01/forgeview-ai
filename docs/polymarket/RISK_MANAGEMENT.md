@@ -17,6 +17,10 @@ system derived from Repricing Research or Wallet Intelligence. It does not
 authorize real-money execution. The project is currently in Capital Stage 0,
 with zero real-money risk.
 
+`CAPITAL_SCALING.md` defines the Trading License Levels used within these
+capital stages. Its promotion and demotion rules are subordinate to the risk
+limits in this document.
+
 ## 2. Capital stages
 
 ### Capital Stage 0 - Research
@@ -47,7 +51,22 @@ approval.
 - scaling decisions must be evidence-based and must not be changed in response
   to emotion or isolated outcomes.
 
-## 3. Maximum risk per trade
+## 3. Trading License Levels
+
+The six-level license ladder maps to the capital stages as follows:
+
+- Levels 0-1: Capital Stage 0, with $0 real capital;
+- Level 2: Capital Stage 1 proof, at approximately $3-$5 per trade or the
+  platform minimum if higher;
+- Levels 3-5: Capital Stage 2 scale, at approximate position sizes of $10,
+  $25, and $50 per trade.
+
+Promotion requires predefined evidence gates. Demotion or pause is automatic
+when loss, expectancy, drawdown, infrastructure, data, execution, or emergency
+stop conditions trigger. `CAPITAL_SCALING.md` is canonical for the detailed
+license definitions.
+
+## 4. Maximum risk per trade
 
 No single trade may risk more than 1% of current trading capital, regardless of
 signal confidence. Position sizing must use the lower of the strategy's
@@ -55,7 +74,7 @@ approved size and the 1% risk ceiling. The sole exception is the platform
 minimum described in Capital Stage 1, and it requires explicit approval;
 without that approval, the system remains in paper mode.
 
-## 4. Daily and session risk stops
+## 5. Daily and session risk stops
 
 A real-money system must stop opening new trades when any configured stop
 condition triggers. Required stop categories are:
@@ -75,7 +94,7 @@ paper trading, and approved before Capital Stage 1 begins. Triggered stops fail
 closed and require documented recovery criteria before new real-money entries
 resume.
 
-## 5. No discretionary manual trading
+## 6. No discretionary manual trading
 
 After an automated strategy is launched:
 
@@ -92,7 +111,7 @@ Every parameter change requires, in order:
 3. paper-trading validation;
 4. a documented decision.
 
-## 6. Automation preference
+## 7. Automation preference
 
 Manual operating work must be minimized. The target operating model is:
 
@@ -107,7 +126,7 @@ Manual operating work must be minimized. The target operating model is:
 Automation must preserve fail-closed behavior, auditability, deterministic
 recovery, and human shutdown capability.
 
-## 7. Strategy-agnostic capital allocation
+## 8. Strategy-agnostic capital allocation
 
 ForgeViewAI is not committed to Repricing, Wallet Intelligence, or any other
 named strategy. Engineering priority follows the fastest reproducible,
@@ -119,7 +138,7 @@ evidence-backed path toward profitable BTC, ETH, and SOL five-minute trading.
 - all branches must satisfy the same capital-stage and risk controls before
   real-money deployment.
 
-## 8. Change control
+## 9. Change control
 
 Risk limits, capital-stage gates, stop categories, and execution parameters may
 change only through a documented governance decision. No research result or
