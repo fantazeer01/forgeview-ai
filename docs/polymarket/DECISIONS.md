@@ -1281,3 +1281,27 @@ wallet. Their Gamma-verified first-seen-to-expiry windows were 85.106 and
 44.959 seconds, producing one sufficient and one marginal classification, but
 zero observations with 120 seconds remaining. This establishes measurability,
 not practical copy-trading compatibility.
+
+## D-071: v5 repricing ingestion verifies its committed source prefix
+
+Status: Accepted
+Decision: The frozen repricing paper core consumes existing v5 JSONL through a
+separate read-only adapter. A normalized absolute session path defines stable
+source identity. The SQLite ledger persists the source path, first canonical
+event hash, and first timestamp; every signal also records source ID and event
+index, while the raw journal retains the canonical event.
+
+On restart, the adapter verifies the complete committed prefix against the raw
+journal before accepting appended events. Source replacement, committed-event
+mutation, truncation before the cursor, malformed complete records, invalid
+ordering, and unsupported asset snapshots fail closed. An incomplete trailing
+line is deferred because it may be an in-progress v5 append. Duplicate
+delivery remains idempotent through existing event, signal, position, and
+trade uniqueness constraints.
+
+Reason: Nine dedicated adapter tests establish conversion, audit lineage,
+duplicate suppression, open and closed restart behavior, invalid and partial
+record handling, frozen DOWN/NO timeout and slippage behavior, source
+replacement/truncation refusal, and equivalence between interrupted and
+uninterrupted ingestion. This decision changes no detector behavior or frozen
+parameter and does not authorize a continuous process or campaign.

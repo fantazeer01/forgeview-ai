@@ -765,6 +765,38 @@ process supervision, rotation, telemetry, daily statistics, and sustained soak
 validation remain missing. No campaign, Telegram integration, wallet
 connection, real order, holdout access, or parameter change occurred.
 
+## v5 Event Stream Integration v1
+
+The restart-safe paper core now consumes existing v5 `session.jsonl` streams
+through `polymarket/repricing_research/v5_stream_adapter.py`.
+
+The adapter:
+
+- tails only complete UTF-8 JSONL records and defers a partial trailing write;
+- validates required v5 event fields and timezone-aware chronological order;
+- persists stable source identity and immutable first-event metadata;
+- verifies all committed source events against the raw journal after restart;
+- resumes appended events after the durable source cursor;
+- fails closed on source replacement, committed-prefix mutation, truncation,
+  malformed complete input, invalid ordering, or unsupported assets;
+- preserves raw detector events and the frozen paper-core fingerprint without
+  recomputing signals or changing thresholds;
+- provides lineage from paper position/trade through signal and source event
+  index to the canonical raw event and absolute source path.
+
+Validation covers duplicate delivery, open and closed restart recovery,
+appended resume, invalid and partial records, source replacement/truncation,
+DOWN-to-NO timeout/slippage behavior, and equality between interrupted and
+uninterrupted ingestion. Twenty repricing tests and 159 repository tests
+pass. Artifacts are under
+`polymarket/models/repricing_research_v1/v5_paper_core_integration_v1/`.
+
+This adapter is not a process supervisor and does not authorize continuous
+operation. A single-instance runtime loop, graceful shutdown, session
+rotation, heartbeat/stale-feed/disk/write telemetry, daily statistics, and a
+supervised soak remain missing. No detector, threshold, campaign, holdout,
+Telegram, wallet, or real-money execution path changed.
+
 ## Missing Data
 
 The current evidence is missing:

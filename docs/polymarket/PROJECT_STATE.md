@@ -2141,6 +2141,42 @@ Next active task:
 
 - Integrate Restart-Safe Repricing Paper Core with v5 Event Stream v1.
 
+## v5 Repricing Paper Core Integration v1
+
+Integrate Restart-Safe Repricing Paper Core with v5 Event Stream v1 is
+complete.
+
+Implementation and artifacts:
+
+- `polymarket/repricing_research/v5_stream_adapter.py`;
+- `tests/polymarket/test_repricing_v5_stream_adapter.py`;
+- `polymarket/models/repricing_research_v1/v5_paper_core_integration_v1/v5_paper_core_integration_report.md`;
+- `polymarket/models/repricing_research_v1/v5_paper_core_integration_v1/v5_paper_core_validation.json`.
+
+Measured validation:
+
+- complete v5 JSONL events convert directly into durable paper-core input;
+- stable source path identity, first-event hash, event index, and canonical raw
+  event provide end-to-end paper position audit lineage;
+- duplicate detector delivery creates no duplicate signal or position;
+- open and closed position state resumes deterministically after restart;
+- appended events resume after the durable source cursor;
+- committed-prefix mutation, source replacement, truncation, malformed
+  complete records, unsupported assets, and timestamp regression fail closed;
+- trailing partial writes are deferred until complete;
+- UP/YES, DOWN/NO, target, stop, timeout, overlap, and 0.02 slippage semantics
+  retain the frozen strategy fingerprint;
+- interrupted and uninterrupted ingestion produce identical business state;
+- 20 repricing tests and 159 repository tests pass.
+
+No detector logic or threshold changed. No campaign, Telegram integration,
+real-money execution, wallet/private-key path, or holdout access occurred.
+The integration is callable and append-resumable but is not yet a managed
+24/7 process. Repricing runtime lifecycle, health telemetry, session rotation,
+daily statistics, and soak validation remain planned blockers, not active
+tasks. The newer canonical project task remains Wallet H2/H3 Prospective
+Evidence Accumulation Sprint v1.
+
 ## Wallet First-Seen Prospective Experiment v1
 
 Wallet First-Seen Prospective Experiment v1 is complete as an implementation

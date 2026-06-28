@@ -144,6 +144,65 @@ class RestartSafePaperCore:
     def trades(self) -> list[dict[str, Any]]:
         return self._rows("SELECT * FROM trades ORDER BY exit_timestamp, trade_id")
 
+    def source_cursor(self, source_id: str) -> int | None:
+        row = self.connection.execute(
+            "SELECT last_event_index FROM source_cursors WHERE source_id = ?",
+            (source_id,),
+        ).fetchone()
+        return int(row["last_event_index"]) if row is not None else None
+
+    def register_stream_source(
+        self,
+        source_id: str,
+        source_path: str,
+        first_event_hash: str,
+        first_event_timestamp: str,
+    ) -> None:
+        with self.connection:
+            row = self.connection.execute(
+                "SELECT * FROM stream_sources WHERE source_id = ?", (source_id,)
+            ).fetchone()
+            expected = (source_path, first_event_hash, first_event_timestamp)
+            if row is not None:
+                actual = (
+                    row["source_path"],
+                    row["first_event_hash"],
+                    row["first_event_timestamp"],
+                )
+                if actual != expected:
+                    raise ValueError("stream source identity does not match ledger metadata")
+                return
+            self.connection.execute(
+                """
+                INSERT INTO stream_sources(
+                    source_id, source_path, first_event_hash, first_event_timestamp
+                ) VALUES (?, ?, ?, ?)
+                """,
+                (source_id, source_path, first_event_hash, first_event_timestamp),
+            )
+
+    def stream_source(self, source_id: str) -> dict[str, Any] | None:
+        row = self.connection.execute(
+            "SELECT * FROM stream_sources WHERE source_id = ?", (source_id,)
+        ).fetchone()
+        return dict(row) if row is not None else None
+
+    def verify_source_event(
+        self, source_id: str, event_index: int, event: dict[str, Any]
+    ) -> None:
+        row = self.connection.execute(
+            """
+            SELECT event_json FROM raw_events
+            WHERE source_id = ? AND event_index = ?
+            """,
+            (source_id, event_index),
+        ).fetchone()
+        if row is None:
+            raise ValueError("processed source event is missing from the raw journal")
+        canonical = json.dumps(event, sort_keys=True, separators=(",", ":"))
+        if row["event_json"] != canonical:
+            raise ValueError("source event differs from the committed raw journal")
+
     def validation_snapshot(self) -> dict[str, Any]:
         counts = {}
         for table in ("raw_events", "signals", "positions", "trades"):
@@ -404,6 +463,12 @@ class RestartSafePaperCore:
                 source_id TEXT PRIMARY KEY,
                 last_event_index INTEGER NOT NULL,
                 last_raw_id INTEGER NOT NULL
+            );
+            CREATE TABLE IF NOT EXISTS stream_sources(
+                source_id TEXT PRIMARY KEY,
+                source_path TEXT NOT NULL UNIQUE,
+                first_event_hash TEXT NOT NULL,
+                first_event_timestamp TEXT NOT NULL
             );
             CREATE TABLE IF NOT EXISTS latest_snapshots(
                 market_id TEXT PRIMARY KEY,

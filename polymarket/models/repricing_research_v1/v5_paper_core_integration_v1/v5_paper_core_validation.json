@@ -1,0 +1,36 @@
+{
+  "artifact": "v5_paper_core_integration_v1",
+  "date": "2026-06-28",
+  "detector_logic_changed": false,
+  "frozen_parameters_changed": false,
+  "holdout_accessed": false,
+  "live_trading_added": false,
+  "public_campaign_launched": false,
+  "result": "PASS",
+  "strategy_fingerprint": "d5d389be45d472628aab06b3aeeb281593e74d48b82902e12712047c91fec010",
+  "validation": {
+    "appended_event_resume": true,
+    "audit_lineage_complete": true,
+    "closed_position_not_reopened": true,
+    "duplicate_delivery_idempotent": true,
+    "frozen_contract_preserved": true,
+    "incomplete_trailing_record_deferred": true,
+    "interrupted_equals_uninterrupted": true,
+    "invalid_complete_record_fails_closed": true,
+    "non_finite_market_value_fails_closed": true,
+    "open_position_survives_restart": true,
+    "out_of_order_event_fails_closed": true,
+    "source_replacement_fails_closed": true,
+    "source_truncation_fails_closed": true
+  },
+  "focused_tests": {
+    "command": "python -m unittest tests.polymarket.test_repricing_research tests.polymarket.test_repricing_paper_core tests.polymarket.test_repricing_v5_stream_adapter -q",
+    "passed": 20,
+    "failed": 0
+  },
+  "full_tests": {
+    "command": "python -m unittest discover -s tests -q",
+    "passed": 159,
+    "failed": 0
+  }
+}

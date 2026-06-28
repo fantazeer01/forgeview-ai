@@ -8,6 +8,11 @@ from .paper_core import (
     RestartSafePaperCore,
     StrategyFingerprintMismatch,
 )
+from .v5_stream_adapter import (
+    V5JsonlPaperAdapter,
+    V5StreamSyncResult,
+    V5StreamValidationError,
+)
 
 __all__ = [
     "RepricingConfig",
@@ -17,6 +22,9 @@ __all__ = [
     "RepricingSimulationSummary",
     "RestartSafePaperCore",
     "StrategyFingerprintMismatch",
+    "V5JsonlPaperAdapter",
+    "V5StreamSyncResult",
+    "V5StreamValidationError",
     "build_repricing_dataset",
     "simulate_repricing_strategy",
 ]
