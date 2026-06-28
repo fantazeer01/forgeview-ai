@@ -635,7 +635,7 @@ optimization, and trading remain unauthorized.
 
 ## Next actions
 
-The single active task is Wallet Detection-To-Expiry Feasibility Sprint v1.
+The single active task is Implement Restart-Safe Repricing Paper Trading Core v1.
 Its scope and acceptance criteria are defined in `NEXT_TASK.md`.
 
 ## Latest metrics
@@ -1956,10 +1956,62 @@ fill, depth, queue, and fee evidence. It is not a proven edge and does not
 authorize frozen-parameter changes, holdout evaluation, production modelling,
 live trading, or another capture.
 
+## Repricing Continuous Paper Trading Readiness Sprint v1
+
+Repricing Continuous Paper Trading Readiness Sprint v1 reviewed the complete
+capture, detector, offline repricing, generic shadow, persistence, reporting,
+and notification paths without changing detector logic or frozen parameters.
+
+Artifacts:
+
+- `polymarket/models/repricing_research_v1/paper_trading_readiness_v1/repricing_paper_trading_gap.md`;
+- `polymarket/models/repricing_research_v1/paper_trading_readiness_v1/repricing_mvp_components.csv`;
+- `polymarket/models/repricing_research_v1/paper_trading_readiness_v1/repricing_launch_plan.md`.
+
+Measured readiness:
+
+- components reviewed: 18;
+- `READY`: 4;
+- `MINOR WORK`: 7;
+- `MAJOR WORK`: 7;
+- launch-blocking components: 13;
+- component estimate: 9.75 engineer-days;
+- planning range: 9-11 engineer-days plus a minimum 24-hour supervised soak;
+- earliest continuously running MVP: end of engineer-day 10;
+- earliest initial readiness evidence: day 11 after one complete soak;
+- repricing tests: 4 / 4 passed;
+- full repository tests: 136 / 136 passed.
+
+Current readiness: `NOT_READY`.
+
+The v5 capture substrate, public feeds, frozen lag measurements, raw evidence,
+continuity metrics, and replay are ready. The existing live v5 shadow strategy
+is not the frozen repricing strategy: it admits only qualified measurements,
+uses the generic v3 score engine and different slippage semantics, and closes
+positions by score or end of session. The frozen repricing reason admission,
+60-second floor, overlap rule, 0.03 target, 0.03 stop, 180-second timeout, and
+0.02 slippage are evaluated only after a session completes.
+
+Launch is blocked by missing causal repricing trade state, target/stop/timeout
+processing, transactional persistence, restart recovery, durable duplicate
+protection, daily statistics, health telemetry, Telegram notifications,
+single-instance supervision, session rotation, and failure/soak validation.
+
+The smallest safe architecture keeps v5 feeds and `LagDetector` unchanged,
+persists raw evidence first, and adds a separate frozen admission consumer,
+SQLite paper ledger, causal close state machine, event cursor recovery,
+telemetry outbox, UTC daily reports, and optional outbound Telegram adapter.
+
+The master readiness hypothesis is rejected for current software readiness.
+This is an engineering-readiness finding, not a rejection of the repricing
+research hypothesis. No capture or paper campaign was launched, the holdout
+remained sealed, and no threshold or detector change was made.
+
 Wallet Activity Visibility Delay Sprint v1 is complete and leaves H2
 `INCONCLUSIVE` because the retrospective activity export has no publication
-or first-seen timestamp. The canonical active task is now Wallet
-Detection-To-Expiry Feasibility Sprint v1.
+or first-seen timestamp. Wallet Detection-To-Expiry Feasibility Sprint v1
+is now the canonical active task in `NEXT_TASK.md`. The restart-safe repricing
+paper core remains planned but is not the active task.
 
 ## Wallet Activity Visibility Delay Sprint v1
 
@@ -1994,10 +2046,66 @@ Conclusion:
 - selection bias, bounded history, second-resolution activity time, and the
   absence of publication/first-seen time prevent a visibility claim.
 
-Next active task:
+Planned wallet successor:
 
 - Wallet Detection-To-Expiry Feasibility Sprint v1, which must use bounded
   prospective first-seen timestamps before measuring remaining time.
+
+## Wallet First-Seen Detection Sprint v1
+
+Wallet First-Seen Detection Sprint v1 is complete.
+
+Artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/first_seen_detection_v1/wallet_first_seen_dataset.csv`
+- `polymarket/models/wallet_intelligence_v1/first_seen_detection_v1/wallet_first_seen_summary.json`
+- `polymarket/models/wallet_intelligence_v1/first_seen_detection_v1/wallet_first_seen_report.md`
+
+Bounded experiment:
+
+- observation duration: 299.998 seconds;
+- wallets: the four frozen H1 above-baseline wallets;
+- endpoint: public unauthenticated Data API `/activity?type=TRADE`;
+- cadence: one four-wallet cycle every 5 seconds;
+- requests: 240 attempted, 240 successful, 0 failed;
+- configured request rate: 8 requests per 10 seconds, 0.80% of the documented
+  Data API general limit;
+- startup baseline: 400 unique identities;
+- response rows observed: 24,000.
+
+Measured evidence:
+
+- 124 identities not present in the startup pages appeared later;
+- 118 were historical page churn and were excluded from delay statistics;
+- 6 were trades executed in the live observation window;
+- all 6 had measurable polling-quantized first-seen upper bounds;
+- all-trade delay minimum / median / mean / maximum: 10.932 / 15.9675 /
+  19.749167 / 41.529 seconds;
+- 2 of the 6 trades were target five-minute markets;
+- five-minute delay minimum / median / mean / maximum: 15.894 / 15.9675 /
+  15.9675 / 16.041 seconds;
+- response latency minimum / median / mean / maximum: 149 / 283 /
+  322.329167 / 1,031 milliseconds;
+- duplicate observations: 23,476;
+- page-range missed observations: 440;
+- reappearances after a page gap: 322.
+
+Research conclusion:
+
+- `H2_MEASURABLE_PROSPECTIVELY`;
+- H2 can now be measured using local first-seen timestamps;
+- the experiment does not support or reject H2 because only two target
+  five-minute trades were observed;
+- first-seen delay is an upper bound containing API publication delay,
+  polling cadence, request duration, and clock uncertainty;
+- latest-100 page instability requires historical page churn to remain
+  excluded from future H2 evidence.
+
+Next active task:
+
+- Wallet Detection-To-Expiry Feasibility Sprint v1, using the committed two
+  five-minute first-seen rows as a feasibility sample before any larger
+  prospective evidence batch.
 
 ## State update protocol
 

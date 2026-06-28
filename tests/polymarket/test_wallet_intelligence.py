@@ -61,6 +61,11 @@ from polymarket.wallet_intelligence.visibility_delay import (
     run_wallet_visibility_delay_sprint,
     validate_wallet_visibility_delay,
 )
+from polymarket.wallet_intelligence.first_seen import (
+    STRONGEST_H1_WALLETS,
+    analyze_first_seen_snapshots,
+    run_first_seen_from_snapshots,
+)
 
 
 class FakeClient:
@@ -1654,6 +1659,113 @@ class WalletActivityVisibilityDelayTests(unittest.TestCase):
             self.assertTrue((output_dir / "wallet_visibility_delay.csv").exists())
             self.assertTrue((output_dir / "wallet_visibility_delay_summary.json").exists())
             self.assertTrue((output_dir / "wallet_visibility_delay_report.md").exists())
+
+
+class WalletFirstSeenDetectionTests(unittest.TestCase):
+    def _trade(self, timestamp, transaction_hash):
+        return {
+            "timestamp": timestamp,
+            "transactionHash": transaction_hash,
+            "conditionId": "0xcondition",
+            "asset": "token-up",
+            "slug": "btc-updown-5m-fixture",
+            "eventSlug": "btc-updown-5m-fixture",
+            "title": "Bitcoin Up or Down",
+            "outcome": "Up",
+            "side": "BUY",
+            "price": 0.55,
+            "size": 10,
+        }
+
+    def _snapshot(self, cycle, wallet, received, rows, *, status=200):
+        return {
+            "poll_cycle": cycle,
+            "poll_started_at_utc": received,
+            "wallet_id": wallet,
+            "request_started_at_utc": received,
+            "response_received_at_utc": received,
+            "status_code": status,
+            "source_endpoint": "https://data-api.polymarket.com/activity?type=TRADE",
+            "rows": rows,
+            "error": "" if status == 200 else "fixture failure",
+        }
+
+    def _snapshots(self):
+        wallet = STRONGEST_H1_WALLETS[0]
+        baseline = self._trade(1782413100, "0xbaseline")
+        new_trade = self._trade(1782413104, "0xnew")
+        return [
+            self._snapshot(1, wallet, "2026-06-25T18:45:01+00:00", [baseline]),
+            self._snapshot(2, wallet, "2026-06-25T18:45:06+00:00", [new_trade, baseline]),
+            self._snapshot(3, wallet, "2026-06-25T18:45:11+00:00", [new_trade, baseline]),
+        ]
+
+    def test_first_seen_excludes_baseline_and_measures_new_trade(self):
+        rows, summary = analyze_first_seen_snapshots(
+            self._snapshots(),
+            wallets=STRONGEST_H1_WALLETS,
+            experiment_started_at="2026-06-25T18:45:00+00:00",
+            experiment_completed_at="2026-06-25T18:45:15+00:00",
+            configured_duration_seconds=15,
+            poll_interval_seconds=5,
+            page_limit=100,
+            max_requests=12,
+        )
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["transaction_hash"], "0xnew")
+        self.assertEqual(rows[0]["first_seen_delay_seconds"], "2.000000")
+        self.assertEqual(rows[0]["delay_measurement_status"], "measured_upper_bound")
+        self.assertEqual(summary["baseline_unique_trades"], 1)
+        self.assertEqual(summary["duplicate_observations"], 3)
+        self.assertTrue(summary["can_h2_now_be_tested"])
+        self.assertEqual(summary["research_conclusion"], "H2_MEASURABLE_PROSPECTIVELY")
+
+    def test_first_seen_reports_failed_requests_and_missing_wallet_baselines(self):
+        snapshots = self._snapshots() + [
+            self._snapshot(
+                1,
+                STRONGEST_H1_WALLETS[1],
+                "2026-06-25T18:45:02+00:00",
+                [],
+                status=503,
+            )
+        ]
+        _, summary = analyze_first_seen_snapshots(
+            snapshots,
+            wallets=STRONGEST_H1_WALLETS,
+            experiment_started_at="2026-06-25T18:45:00+00:00",
+            experiment_completed_at="2026-06-25T18:45:15+00:00",
+            configured_duration_seconds=15,
+            poll_interval_seconds=5,
+            page_limit=100,
+            max_requests=12,
+        )
+        self.assertEqual(summary["requests_failed"], 1)
+        self.assertFalse(summary["api_consistency"]["all_wallet_baselines_established"])
+        self.assertEqual(len(summary["api_consistency"]["request_failures"]), 1)
+
+    def test_first_seen_snapshot_export_is_repeatable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "first-seen"
+            kwargs = {
+                "output_dir": output,
+                "wallets": STRONGEST_H1_WALLETS,
+                "experiment_started_at": "2026-06-25T18:45:00+00:00",
+                "experiment_completed_at": "2026-06-25T18:45:15+00:00",
+                "configured_duration_seconds": 15,
+                "poll_interval_seconds": 5,
+                "page_limit": 100,
+                "max_requests": 12,
+            }
+            first = run_first_seen_from_snapshots(self._snapshots(), **kwargs)
+            first_exports = {path.name: path.read_bytes() for path in output.iterdir()}
+            second = run_first_seen_from_snapshots(list(reversed(self._snapshots())), **kwargs)
+            second_exports = {path.name: path.read_bytes() for path in output.iterdir()}
+            self.assertEqual(first_exports, second_exports)
+            self.assertTrue(second["validation"]["deterministic_csv_render"])
+            self.assertTrue(second["validation"]["deterministic_report_render"])
+            self.assertTrue(second["validation"]["public_read_only_endpoint_only"])
+            self.assertEqual(first["reproducibility_hashes"], second["reproducibility_hashes"])
 
 
 if __name__ == "__main__":

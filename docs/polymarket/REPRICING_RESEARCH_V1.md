@@ -687,6 +687,54 @@ prices, and absent executable fills, queue position, depth consumption, fees,
 and live latency. Frozen parameters and evidence gates remain unchanged; the
 holdout remains sealed.
 
+## Continuous Paper Trading Readiness Sprint v1
+
+Readiness artifacts are stored under:
+
+- `polymarket/models/repricing_research_v1/paper_trading_readiness_v1/repricing_paper_trading_gap.md`;
+- `polymarket/models/repricing_research_v1/paper_trading_readiness_v1/repricing_mvp_components.csv`;
+- `polymarket/models/repricing_research_v1/paper_trading_readiness_v1/repricing_launch_plan.md`.
+
+Readiness classification:
+
+- 18 required components reviewed;
+- 4 `READY`;
+- 7 `MINOR WORK`;
+- 7 `MAJOR WORK`;
+- 13 launch blockers;
+- current status: `NOT_READY`;
+- estimated effort: 9-11 engineer-days plus a 24-hour supervised public paper
+  soak;
+- earliest continuously running MVP: engineer-day 10;
+- earliest initial readiness evidence: day 11.
+
+Ready foundations include public market discovery, async BTC/ETH/SOL reference
+and quote feeds, frozen lag measurement, append-only raw evidence, checkpoint
+continuity, failure recording, and deterministic replay.
+
+The primary blocker is semantic: v5 live shadow execution is generic
+score-based simulation, not frozen repricing execution. It does not admit
+`confidence_below_threshold` as a paper signal, uses different slippage and
+stake semantics, closes by score or session end, and does not implement the
+frozen 0.03 target, 0.03 stop, 180-second timeout, or 0.02 conservative
+slippage causally.
+
+The smallest approved architecture keeps detector code unchanged and adds:
+
+- a frozen causal admission consumer;
+- a transactional SQLite signal, position, trade, and cursor ledger;
+- target/stop/timeout close processing on each subsequent quote;
+- raw-event replay after the last committed cursor on restart;
+- durable duplicate and overlap constraints;
+- UTC daily statistics and equity summaries;
+- heartbeat, stale-feed, exception, disk, and write telemetry;
+- an optional persisted notification outbox and outbound Telegram adapter;
+- single-instance supervision, session rotation, and crash/soak tests.
+
+No continuous run is authorized until the causal paper core demonstrates
+offline replay equivalence and crash-safe idempotency. Frozen parameters,
+evidence gates, and holdout policy remain unchanged.
+
 ## Missing Data
 
 The current evidence is missing:

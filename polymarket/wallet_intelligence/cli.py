@@ -35,6 +35,14 @@ from .visibility_delay import (
     DEFAULT_VISIBILITY_TRADE_INPUT,
     run_wallet_visibility_delay_sprint,
 )
+from .first_seen import (
+    DEFAULT_DURATION_SECONDS,
+    DEFAULT_FIRST_SEEN_OUTPUT,
+    DEFAULT_MAX_REQUESTS,
+    DEFAULT_PAGE_LIMIT,
+    DEFAULT_POLL_INTERVAL_SECONDS,
+    run_first_seen_experiment,
+)
 
 
 DEFAULT_INPUT = Path("polymarket/wallet_intelligence/watched_wallets.example.csv")
@@ -150,6 +158,16 @@ def build_parser() -> argparse.ArgumentParser:
     visibility.add_argument("--skill-csv", type=Path, default=DEFAULT_VISIBILITY_SKILL_INPUT)
     visibility.add_argument("--trade-csv", type=Path, default=DEFAULT_VISIBILITY_TRADE_INPUT)
     visibility.add_argument("--output", type=Path, default=DEFAULT_VISIBILITY_OUTPUT)
+
+    first_seen = subparsers.add_parser(
+        "wallet-first-seen",
+        help="Run the bounded prospective public wallet first-seen experiment.",
+    )
+    first_seen.add_argument("--output", type=Path, default=DEFAULT_FIRST_SEEN_OUTPUT)
+    first_seen.add_argument("--duration", type=float, default=DEFAULT_DURATION_SECONDS)
+    first_seen.add_argument("--poll-interval", type=float, default=DEFAULT_POLL_INTERVAL_SECONDS)
+    first_seen.add_argument("--page-limit", type=int, default=DEFAULT_PAGE_LIMIT)
+    first_seen.add_argument("--max-requests", type=int, default=DEFAULT_MAX_REQUESTS)
     return parser
 
 
@@ -284,6 +302,22 @@ def main(argv: list[str] | None = None) -> int:
                     skill_csv=args.skill_csv,
                     trade_csv=args.trade_csv,
                     output_dir=args.output,
+                ),
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return 0
+    if args.command == "wallet-first-seen":
+        print(
+            json.dumps(
+                run_first_seen_experiment(
+                    client=PolymarketPublicClient(delay_seconds=0.0, timeout_seconds=10),
+                    output_dir=args.output,
+                    duration_seconds=args.duration,
+                    poll_interval_seconds=args.poll_interval,
+                    page_limit=args.page_limit,
+                    max_requests=args.max_requests,
                 ),
                 indent=2,
                 sort_keys=True,

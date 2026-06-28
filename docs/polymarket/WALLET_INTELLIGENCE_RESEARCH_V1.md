@@ -1587,3 +1587,49 @@ Evidence-driven successor:
 - Wallet Detection-To-Expiry Feasibility Sprint v1 must collect bounded
   prospective first-seen timestamps for the four H1 above-baseline wallets
   before testing whether enough time remains after detection.
+
+## Wallet First-Seen Detection Sprint v1
+
+Wallet First-Seen Detection Sprint v1 is complete.
+
+Artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/first_seen_detection_v1/wallet_first_seen_dataset.csv`
+- `polymarket/models/wallet_intelligence_v1/first_seen_detection_v1/wallet_first_seen_summary.json`
+- `polymarket/models/wallet_intelligence_v1/first_seen_detection_v1/wallet_first_seen_report.md`
+
+Experiment:
+
+- 299.998 seconds;
+- four frozen H1 wallets;
+- 5-second polling cycles;
+- public unauthenticated Data API activity endpoint only;
+- 240 requests attempted and 240 succeeded;
+- 24,000 response rows observed;
+- no trading, wallet connection, private key, authentication, or order path.
+
+First-seen evidence:
+
+- 400 startup baseline identities;
+- 124 identities appeared after startup;
+- 118 historical page-churn identities excluded;
+- 6 live-window trades with measurable first-seen upper bounds;
+- all-trade delay range: 10.932 to 41.529 seconds;
+- all-trade median / mean: 15.9675 / 19.749167 seconds;
+- 2 target five-minute trades, at 15.894 and 16.041 seconds;
+- 440 page-range misses and 322 reappearances demonstrate latest-page
+  instability despite a 100% HTTP success rate.
+
+Conclusion:
+
+- `H2_MEASURABLE_PROSPECTIVELY`;
+- prospective measurement is feasible;
+- H2 remains unsupported and unrejected because the target five-minute sample
+  is only two trades;
+- exact API publication time remains unknown between polls.
+
+Evidence-driven successor:
+
+- Wallet Detection-To-Expiry Feasibility Sprint v1 should join the two target
+  first-seen rows to public expiry metadata and determine whether H3 is
+  technically measurable before any larger prospective batch.

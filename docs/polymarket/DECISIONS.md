@@ -1162,3 +1162,54 @@ The evidence remains limited to two adjacent development sessions, 172
 detector signals, serially correlated snapshots, one uniform-snapshot baseline
 definition, and non-executable public paper prices. Selection, regime,
 sampling, fill, depth, queue, fee, and live-latency risks remain unresolved.
+
+## D-066: Continuous repricing paper trading requires a separate restart-safe core
+
+Status: Accepted
+Decision: The current repository is `NOT_READY` to run the frozen repricing
+strategy continuously in paper mode. Future implementation must not reuse v5
+generic shadow trades as repricing evidence. It must add a separate causal
+paper state machine around unchanged v5 feeds and `LagDetector`, with a
+transactional SQLite ledger, durable event cursor, restart recovery, persisted
+duplicate protection, daily statistics, health telemetry, and optional
+outbound notifications.
+
+The next authorized task is Implement Restart-Safe Repricing Paper Trading
+Core v1. It may implement frozen signal admission, paper entry/close state,
+persistence, recovery, and fixture replay equivalence only. It may not launch
+a public campaign, connect wallets, place orders, change detector logic or
+thresholds, open the sealed holdout, or add Telegram and service supervision
+before the causal core passes its acceptance gates.
+
+Reason: Of 18 required continuous-paper components, 4 are ready, 7 require
+minor work, and 7 require major work; 13 are launch blockers. Existing v5
+capture is reliable, but its live shadow engine accepts different signals,
+uses `EdgeScorer` and `DecisionEngine`, applies different stake/slippage
+semantics, and force-closes at session end. Frozen repricing target, stop,
+timeout, overlap, and accepted-reason behavior exists only in offline replay.
+Open positions and duplicate gates are memory-only, and no repricing restart
+recovery, daily ledger, supervisor, or Telegram notifier exists. Estimated
+effort is 9-11 engineer-days plus a 24-hour supervised soak.
+
+## D-067: H2 timing requires prospective first-seen evidence
+
+Status: Accepted
+Decision: Wallet First-Seen Detection Sprint v1 establishes that H2 is
+technically measurable only with prospectively recorded local first-seen
+timestamps. A measured value is a polling-quantized upper bound from public
+trade event time to response completion; it contains API publication delay,
+poll cadence, request duration, and local clock uncertainty. It is not an
+exact server publication timestamp.
+
+Historical identities that rotate into the latest-100 activity page after the
+startup snapshot must be classified as `historical_page_churn` and excluded
+from first-seen delay statistics. Future evidence must preserve that gate.
+
+Reason: The five-minute, four-wallet public experiment completed 240 of 240
+requests successfully and observed 24,000 response rows. Of 124 identities
+absent from startup pages, 118 were historical page churn and only 6 were
+executed during the live window. Two were target five-minute trades, with
+first-seen upper bounds of 15.894 and 16.041 seconds. The endpoint also showed
+440 page-range misses and 322 reappearances, making startup and live-window
+classification mandatory. The method is feasible, but two target rows cannot
+support or reject H2.

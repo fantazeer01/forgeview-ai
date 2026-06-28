@@ -17,33 +17,34 @@ support future strategy research.
 
 ### Evidence basis
 
-Wallet Activity Visibility Delay Sprint v1 analyzed 3,431 fast-crypto trades
-and found complete trade/fetch timestamps but zero publication or first-seen
-timestamps. H2 remains `INCONCLUSIVE`; retrospective fetch age is not API
-latency.
+Wallet First-Seen Detection Sprint v1 proved that prospective timing is
+measurable. A bounded five-minute run detected six live crypto Up/Down trades,
+including two target five-minute trades with polling-quantized first-seen
+upper bounds of 15.894 and 16.041 seconds. The target sample is too small to
+support or reject H2, but it is sufficient to test whether an expiry join can
+produce detection-to-expiry evidence.
 
 ### Objective
 
-Run the smallest bounded prospective public read-only observation needed to
-record local first-seen times for newly visible activity from the four H1
-above-baseline wallets, join those observations to market expiry, and test
-whether meaningful time remains after detection.
+Use the committed Wallet First-Seen dataset and existing public Gamma/CLOB
+market metadata paths to determine whether detection-to-expiry can be measured
+reliably for the two target five-minute rows.
 
 ### Required scope
 
-1. Observe only the four H1 above-baseline wallets already recorded in the H1
-   and H2 artifacts.
-2. Define a strict time, request, and row bound before observation begins.
-3. Record local request start, response completion, first-seen, trade event,
-   and market expiry timestamps with stable transaction identity.
-4. Deduplicate repeated observations without replacing the earliest
-   first-seen timestamp.
-5. Report detection-to-expiry distributions and shares with at least 60, 120,
-   and 180 seconds remaining.
-6. Separate observed network/API delay bounds from local polling interval,
-   clock uncertainty, reaction time, fill uncertainty, liquidity, and
-   slippage.
-7. End with exactly one H3 conclusion: `SUPPORTED`, `REJECTED`, or
+1. Use the existing
+   `polymarket/models/wallet_intelligence_v1/first_seen_detection_v1/wallet_first_seen_dataset.csv`.
+2. Restrict the primary analysis to rows where `observation_class` is
+   `new_live_window_trade` and `five_minute_market` is `true`.
+3. Join market expiry using existing public read-only Gamma/CLOB metadata
+   paths and stable condition, token, event, or market identifiers.
+4. Compute first-observation-to-expiry seconds and report whether at least 60,
+   120, and 180 seconds remained.
+5. Preserve first-seen delay as a polling-quantized upper bound; do not infer
+   exact server publication time.
+6. Do not launch another observation run unless the committed two-row evidence
+   is technically unusable for the join.
+7. End with exactly one feasibility conclusion: `SUPPORTED`, `REJECTED`, or
    `INCONCLUSIVE`.
 8. Do not copy trades, place orders, connect wallets/private keys, modify
    Wallet Score or Watchlist, inspect sealed holdout outcomes, run holdout
@@ -53,8 +54,9 @@ whether meaningful time remains after detection.
 
 ### Acceptance criteria
 
-- prospective first-seen provenance is present for every measured row;
-- no retrospective fetch timestamp is treated as first-seen evidence;
-- exports and ordering are deterministic;
-- the sprint directly answers H3 or names the single measured blocker;
+- every measured row preserves first-seen and expiry provenance;
+- historical page-churn rows are excluded;
+- deterministic joins and exports are verified;
+- the two-row result is labelled as feasibility evidence, not a strategy
+  conclusion;
 - exactly one active successor task remains after completion.

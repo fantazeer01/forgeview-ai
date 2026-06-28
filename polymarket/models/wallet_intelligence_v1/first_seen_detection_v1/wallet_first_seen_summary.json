@@ -1,0 +1,2510 @@
+{
+  "api_consistency": {
+    "all_wallet_baselines_established": true,
+    "missed_observation_definition": "A previously seen identity is absent while its trade timestamp remains within the current page timestamp range.",
+    "request_failures": [],
+    "successful_request_rate": 1.0
+  },
+  "baseline_unique_trades": 400,
+  "baseline_wallets_established": 4,
+  "can_h2_now_be_tested": true,
+  "conclusion_detail": "The bounded observer produced measurable trade-to-first-seen upper bounds. A larger preregistered prospective sample is still required before H2 can be supported or rejected.",
+  "configured_duration_seconds": 300.0,
+  "duplicate_observations": 23476,
+  "endpoint": {
+    "api_documentation_url": "https://docs.polymarket.com/api-reference/introduction",
+    "authentication": "none",
+    "method": "GET",
+    "query": "user=<wallet>&type=TRADE&limit=100&offset=0&sortBy=TIMESTAMP&sortDirection=DESC",
+    "url": "https://data-api.polymarket.com/activity"
+  },
+  "experiment_completed_at_utc": "2026-06-28T14:06:59.493+00:00",
+  "experiment_started_at_utc": "2026-06-28T14:01:59.495+00:00",
+  "first_seen_delay_seconds": {
+    "count": 6,
+    "maximum": 41.529,
+    "mean": 19.749167,
+    "median": 15.9675,
+    "minimum": 10.932
+  },
+  "five_minute_first_seen_delay_seconds": {
+    "count": 2,
+    "maximum": 16.041,
+    "mean": 15.9675,
+    "median": 15.9675,
+    "minimum": 15.894
+  },
+  "five_minute_trades_detected": 2,
+  "historical_page_churn_identities": 118,
+  "master_question": "What is the earliest moment at which a newly executed wallet trade becomes observable through public APIs?",
+  "max_requests": 240,
+  "measurable_first_seen_delays": 6,
+  "measurement_limits": [
+    "First-seen delay is an upper bound containing API publication delay, polling interval, request duration, and local clock error.",
+    "The experiment cannot identify the exact server publication timestamp between polls.",
+    "A bounded latest-100 page can omit older activity during bursts.",
+    "The selected wallets are retrospective H1 candidates and are not an unbiased wallet sample.",
+    "Historical identities rotating into the latest-100 page are excluded from first-seen delay statistics."
+  ],
+  "missed_observations": 440,
+  "new_trades_detected": 6,
+  "newly_observed_identities": 124,
+  "observed_duration_seconds": 299.998,
+  "page_limit": 100,
+  "poll_audit": [
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 1,
+      "response_latency_ms": 345.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 1,
+      "response_latency_ms": 784.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 1,
+      "response_latency_ms": 318.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 1,
+      "response_latency_ms": 416.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 2,
+      "response_latency_ms": 160.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 2,
+      "response_latency_ms": 270.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 2,
+      "response_latency_ms": 291.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 2,
+      "response_latency_ms": 179.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 3,
+      "response_latency_ms": 306.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 3,
+      "response_latency_ms": 186.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 3,
+      "response_latency_ms": 337.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 3,
+      "response_latency_ms": 194.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 4,
+      "response_latency_ms": 286.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 4,
+      "response_latency_ms": 204.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 4,
+      "response_latency_ms": 272.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 4,
+      "response_latency_ms": 260.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 5,
+      "response_latency_ms": 379.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 5,
+      "response_latency_ms": 323.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 5,
+      "response_latency_ms": 335.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 51,
+      "poll_cycle": 5,
+      "response_latency_ms": 386.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 6,
+      "response_latency_ms": 223.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 6,
+      "response_latency_ms": 283.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 6,
+      "response_latency_ms": 193.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 6,
+      "response_latency_ms": 366.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 7,
+      "response_latency_ms": 162.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 7,
+      "response_latency_ms": 233.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 7,
+      "response_latency_ms": 248.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 7,
+      "response_latency_ms": 307.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 8,
+      "response_latency_ms": 378.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 8,
+      "response_latency_ms": 277.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 8,
+      "response_latency_ms": 279.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 8,
+      "response_latency_ms": 316.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 9,
+      "response_latency_ms": 257.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 9,
+      "response_latency_ms": 321.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 9,
+      "response_latency_ms": 466.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 51,
+      "poll_cycle": 9,
+      "response_latency_ms": 384.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 10,
+      "response_latency_ms": 267.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 10,
+      "response_latency_ms": 253.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 10,
+      "response_latency_ms": 374.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 10,
+      "response_latency_ms": 292.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 11,
+      "response_latency_ms": 315.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 11,
+      "response_latency_ms": 226.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 11,
+      "response_latency_ms": 192.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 11,
+      "response_latency_ms": 250.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 12,
+      "response_latency_ms": 264.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 12,
+      "response_latency_ms": 220.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 12,
+      "response_latency_ms": 273.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 12,
+      "response_latency_ms": 247.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 13,
+      "response_latency_ms": 259.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 13,
+      "response_latency_ms": 218.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 13,
+      "response_latency_ms": 325.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 13,
+      "response_latency_ms": 320.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 14,
+      "response_latency_ms": 167.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 14,
+      "response_latency_ms": 263.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 14,
+      "response_latency_ms": 169.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 14,
+      "response_latency_ms": 234.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 15,
+      "response_latency_ms": 220.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 15,
+      "response_latency_ms": 253.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 15,
+      "response_latency_ms": 171.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 15,
+      "response_latency_ms": 189.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 16,
+      "response_latency_ms": 442.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 16,
+      "response_latency_ms": 587.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 16,
+      "response_latency_ms": 446.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 16,
+      "response_latency_ms": 390.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 17,
+      "response_latency_ms": 212.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 17,
+      "response_latency_ms": 298.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 17,
+      "response_latency_ms": 290.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 17,
+      "response_latency_ms": 271.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 18,
+      "response_latency_ms": 257.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 18,
+      "response_latency_ms": 187.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 18,
+      "response_latency_ms": 298.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 18,
+      "response_latency_ms": 332.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 19,
+      "response_latency_ms": 187.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 19,
+      "response_latency_ms": 556.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 19,
+      "response_latency_ms": 308.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 19,
+      "response_latency_ms": 271.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 56,
+      "poll_cycle": 20,
+      "response_latency_ms": 396.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 20,
+      "response_latency_ms": 319.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 20,
+      "response_latency_ms": 201.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 20,
+      "response_latency_ms": 581.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 21,
+      "response_latency_ms": 276.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 21,
+      "response_latency_ms": 290.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 21,
+      "response_latency_ms": 266.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 21,
+      "response_latency_ms": 269.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 22,
+      "response_latency_ms": 256.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 22,
+      "response_latency_ms": 288.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 22,
+      "response_latency_ms": 264.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 22,
+      "response_latency_ms": 177.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 23,
+      "response_latency_ms": 305.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 23,
+      "response_latency_ms": 610.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 23,
+      "response_latency_ms": 619.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 23,
+      "response_latency_ms": 482.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 56,
+      "poll_cycle": 24,
+      "response_latency_ms": 381.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 24,
+      "response_latency_ms": 558.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 24,
+      "response_latency_ms": 297.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 24,
+      "response_latency_ms": 254.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 25,
+      "response_latency_ms": 268.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 25,
+      "response_latency_ms": 310.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 25,
+      "response_latency_ms": 283.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 25,
+      "response_latency_ms": 377.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 26,
+      "response_latency_ms": 298.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 26,
+      "response_latency_ms": 189.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 26,
+      "response_latency_ms": 174.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 26,
+      "response_latency_ms": 169.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 27,
+      "response_latency_ms": 157.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 27,
+      "response_latency_ms": 178.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 11,
+      "poll_cycle": 27,
+      "response_latency_ms": 354.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 27,
+      "response_latency_ms": 327.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 28,
+      "response_latency_ms": 545.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 28,
+      "response_latency_ms": 450.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 28,
+      "response_latency_ms": 176.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 28,
+      "response_latency_ms": 182.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 29,
+      "response_latency_ms": 272.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 29,
+      "response_latency_ms": 175.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 29,
+      "response_latency_ms": 381.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 29,
+      "response_latency_ms": 261.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 30,
+      "response_latency_ms": 182.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 30,
+      "response_latency_ms": 186.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 30,
+      "response_latency_ms": 276.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 30,
+      "response_latency_ms": 288.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 31,
+      "response_latency_ms": 283.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 31,
+      "response_latency_ms": 280.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 11,
+      "poll_cycle": 31,
+      "response_latency_ms": 455.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 51,
+      "poll_cycle": 31,
+      "response_latency_ms": 278.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 32,
+      "response_latency_ms": 752.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 32,
+      "response_latency_ms": 352.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 32,
+      "response_latency_ms": 263.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 32,
+      "response_latency_ms": 236.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 33,
+      "response_latency_ms": 322.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 33,
+      "response_latency_ms": 250.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 33,
+      "response_latency_ms": 172.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 33,
+      "response_latency_ms": 518.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 34,
+      "response_latency_ms": 412.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 34,
+      "response_latency_ms": 266.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 34,
+      "response_latency_ms": 271.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 34,
+      "response_latency_ms": 263.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 35,
+      "response_latency_ms": 256.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 35,
+      "response_latency_ms": 286.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 35,
+      "response_latency_ms": 385.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 51,
+      "poll_cycle": 35,
+      "response_latency_ms": 430.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 36,
+      "response_latency_ms": 455.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 36,
+      "response_latency_ms": 276.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 36,
+      "response_latency_ms": 283.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 36,
+      "response_latency_ms": 278.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 37,
+      "response_latency_ms": 331.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 37,
+      "response_latency_ms": 460.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 37,
+      "response_latency_ms": 344.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 37,
+      "response_latency_ms": 312.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 38,
+      "response_latency_ms": 257.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 38,
+      "response_latency_ms": 168.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 38,
+      "response_latency_ms": 261.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 38,
+      "response_latency_ms": 246.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 39,
+      "response_latency_ms": 269.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 39,
+      "response_latency_ms": 156.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 39,
+      "response_latency_ms": 325.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 39,
+      "response_latency_ms": 231.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 40,
+      "response_latency_ms": 347.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 40,
+      "response_latency_ms": 400.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 40,
+      "response_latency_ms": 271.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 40,
+      "response_latency_ms": 149.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 41,
+      "response_latency_ms": 317.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 41,
+      "response_latency_ms": 172.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 41,
+      "response_latency_ms": 400.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 41,
+      "response_latency_ms": 485.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 42,
+      "response_latency_ms": 477.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 42,
+      "response_latency_ms": 602.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 42,
+      "response_latency_ms": 443.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 42,
+      "response_latency_ms": 465.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 43,
+      "response_latency_ms": 190.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 43,
+      "response_latency_ms": 325.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 43,
+      "response_latency_ms": 474.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 43,
+      "response_latency_ms": 173.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 44,
+      "response_latency_ms": 480.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 44,
+      "response_latency_ms": 410.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 44,
+      "response_latency_ms": 204.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 44,
+      "response_latency_ms": 254.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 45,
+      "response_latency_ms": 187.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 45,
+      "response_latency_ms": 292.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 45,
+      "response_latency_ms": 258.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 45,
+      "response_latency_ms": 452.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 46,
+      "response_latency_ms": 229.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 46,
+      "response_latency_ms": 834.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 46,
+      "response_latency_ms": 572.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 51,
+      "poll_cycle": 46,
+      "response_latency_ms": 440.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 47,
+      "response_latency_ms": 186.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 47,
+      "response_latency_ms": 196.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 47,
+      "response_latency_ms": 248.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 47,
+      "response_latency_ms": 304.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 48,
+      "response_latency_ms": 347.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 48,
+      "response_latency_ms": 334.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 48,
+      "response_latency_ms": 322.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 48,
+      "response_latency_ms": 288.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 49,
+      "response_latency_ms": 559.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 49,
+      "response_latency_ms": 190.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 49,
+      "response_latency_ms": 246.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 49,
+      "response_latency_ms": 195.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 50,
+      "response_latency_ms": 469.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 50,
+      "response_latency_ms": 268.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 50,
+      "response_latency_ms": 624.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 51,
+      "poll_cycle": 50,
+      "response_latency_ms": 592.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 51,
+      "response_latency_ms": 684.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 51,
+      "response_latency_ms": 677.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 51,
+      "response_latency_ms": 351.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 51,
+      "response_latency_ms": 313.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 52,
+      "response_latency_ms": 312.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 52,
+      "response_latency_ms": 284.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 52,
+      "response_latency_ms": 195.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 52,
+      "response_latency_ms": 273.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 53,
+      "response_latency_ms": 239.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 53,
+      "response_latency_ms": 188.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 53,
+      "response_latency_ms": 252.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 53,
+      "response_latency_ms": 526.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 54,
+      "response_latency_ms": 211.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 54,
+      "response_latency_ms": 450.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 54,
+      "response_latency_ms": 349.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 54,
+      "response_latency_ms": 359.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 55,
+      "response_latency_ms": 846.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 55,
+      "response_latency_ms": 240.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 55,
+      "response_latency_ms": 270.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 55,
+      "response_latency_ms": 171.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 56,
+      "response_latency_ms": 340.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 56,
+      "response_latency_ms": 277.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 56,
+      "response_latency_ms": 271.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 56,
+      "response_latency_ms": 270.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 57,
+      "response_latency_ms": 476.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 57,
+      "response_latency_ms": 263.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 57,
+      "response_latency_ms": 168.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 57,
+      "response_latency_ms": 178.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 58,
+      "response_latency_ms": 257.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 58,
+      "response_latency_ms": 298.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 58,
+      "response_latency_ms": 217.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 58,
+      "response_latency_ms": 710.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 59,
+      "response_latency_ms": 472.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 59,
+      "response_latency_ms": 304.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 59,
+      "response_latency_ms": 319.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 59,
+      "response_latency_ms": 200.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 60,
+      "response_latency_ms": 1031.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 60,
+      "response_latency_ms": 322.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 60,
+      "response_latency_ms": 757.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752"
+    },
+    {
+      "error": "",
+      "missing_expected_rows": 0,
+      "poll_cycle": 60,
+      "response_latency_ms": 223.0,
+      "rows_returned": 100,
+      "status_code": 200,
+      "unique_rows_returned": 100,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+    }
+  ],
+  "poll_cycles_attempted": 60,
+  "poll_frequency_description": "one cycle every 5 seconds; one request per wallet per cycle",
+  "poll_interval_seconds": 5.0,
+  "rate_limit": {
+    "configured_limit_utilization": 0.008,
+    "configured_requests_per_10_seconds": 8.0,
+    "data_api_general_limit_requests": 1000,
+    "data_api_general_limit_window_seconds": 10,
+    "documentation_checked_on": "2026-06-28",
+    "documentation_url": "https://docs.polymarket.com/api-reference/rate-limits",
+    "enforcement_note": "Official documentation says excess requests are throttled on sliding windows."
+  },
+  "reappearances_after_gap": 322,
+  "recommended_next_hypothesis": "H3: Wallet Detection-To-Expiry Feasibility Sprint v1 after a preregistered H2 first-seen sample is large enough.",
+  "reproducibility_hashes": {
+    "wallet_first_seen_dataset_csv_sha256": "e98c6720482060222867940cddef872c9af79241109d0c050e0094e3bad01084",
+    "wallet_first_seen_report_md_sha256": "d32563ae8786d5a35ebeb8cdc17e3b7c9be5bd0ee4143976c30866f1d939a06f"
+  },
+  "requests_attempted": 240,
+  "requests_failed": 0,
+  "requests_successful": 240,
+  "research_conclusion": "H2_MEASURABLE_PROSPECTIVELY",
+  "response_latency_ms": {
+    "count": 240,
+    "maximum": 1031.0,
+    "mean": 322.329167,
+    "median": 283.0,
+    "minimum": 149.0
+  },
+  "response_rows_observed": 24000,
+  "task": "Wallet First-Seen Detection Sprint v1",
+  "unknown_first_seen_delays": 0,
+  "validation": {
+    "all_validation_passed": true,
+    "bounded_request_count": true,
+    "deterministic_csv_render": true,
+    "deterministic_ordering": true,
+    "deterministic_report_render": true,
+    "measured_delays_have_required_timestamps": true,
+    "measured_delays_non_negative": true,
+    "no_authenticated_or_execution_fields": true,
+    "only_approved_wallets": true,
+    "output_schema_complete": true,
+    "poll_interval_positive": true,
+    "public_read_only_endpoint_only": true,
+    "unique_trade_identities": true
+  },
+  "wallet_count": 4,
+  "wallets_observed": [
+    "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e",
+    "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199",
+    "0x29a55c2bf8efd1029c001477b34be47d3ca37752",
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a"
+  ]
+}

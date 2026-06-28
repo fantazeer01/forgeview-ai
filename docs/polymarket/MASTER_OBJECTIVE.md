@@ -418,14 +418,20 @@ fetch timestamps were complete, but publication or first-seen timestamps were
 absent for every row. H2 is therefore `INCONCLUSIVE`: retrieval age cannot be
 substituted for public API latency.
 
+Wallet First-Seen Detection Sprint v1 then ran a bounded five-minute
+prospective experiment over the four frozen H1 wallets. It detected six live
+crypto Up/Down trades, including two target five-minute trades with
+polling-quantized first-seen upper bounds of 15.894 and 16.041 seconds. This
+establishes that H2 is technically measurable prospectively, but the two-row
+target sample cannot support or reject H2.
+
 The next milestone is a direct H3 test:
 
 > Enough time remains after public detection to act.
 
-It must first record a bounded prospective first-seen timestamp for each newly
-observed public activity row. Without that timestamp, detection-to-expiry is
-not measurable and the sprint must stop without interpreting retrospective
-fetch age as latency.
+It must use the committed prospective first-seen evidence and public expiry
+metadata to determine whether detection-to-expiry is technically measurable.
+The initial two target rows are a feasibility sample only.
 
 Exit criteria:
 
