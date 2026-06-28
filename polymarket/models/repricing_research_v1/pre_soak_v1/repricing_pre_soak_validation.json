@@ -1,0 +1,82 @@
+{
+  "gates": {
+    "disk_reserve_pass": true,
+    "power_safe": true,
+    "preflight_write_latency_pass": true,
+    "restart_after_graceful_shutdown_pass": true,
+    "restart_during_processing_pass": true,
+    "restart_with_open_position_pass": true,
+    "session_rotation_pass": true,
+    "stale_event_guard_pass": true,
+    "write_latency_guard_pass": true
+  },
+  "holdout_accessed": false,
+  "live_trading_enabled": false,
+  "preflight": {
+    "configuration_valid": true,
+    "detector_state": "FROZEN_CONFIG_VERIFIED",
+    "directories_writable": true,
+    "free_disk_bytes": 35648344064,
+    "max_event_staleness_seconds": 30.0,
+    "max_write_latency_ms": 500.0,
+    "minimum_free_disk_bytes": 2147483648,
+    "open_positions": 0,
+    "paper_core_state": "RECOVERABLE",
+    "pending_events": 0,
+    "power": {
+      "commands": [
+        "powercfg /change standby-timeout-ac 0",
+        "powercfg /change hibernate-timeout-ac 0",
+        "powercfg /setacvalueindex SCHEME_CURRENT SUB_BUTTONS LIDACTION 0",
+        "powercfg /S SCHEME_CURRENT",
+        "powercfg /getactivescheme",
+        "powercfg /query SCHEME_CURRENT SUB_SLEEP"
+      ],
+      "hibernate_ac_seconds": 0,
+      "platform": "Windows",
+      "safe_for_overnight": true,
+      "sleep_ac_seconds": 0,
+      "warnings": []
+    },
+    "preflight_write_latency_ms": 0.694,
+    "session_path": "D:\\ForgeViewAI\\polymarket\\runs\\repricing_balanced_v1_batch_002\\20260625_200724\\session.jsonl",
+    "session_readable": true,
+    "session_rotation_enabled": true,
+    "status": "PASS",
+    "strategy_fingerprint": "d5d389be45d472628aab06b3aeeb281593e74d48b82902e12712047c91fec010"
+  },
+  "remaining_blockers": [],
+  "tests": {
+    "repricing": {
+      "failed": 0,
+      "passed": 45
+    },
+    "repository": {
+      "failed": 0,
+      "passed": 191
+    }
+  },
+  "restart_drills": {
+    "restart_after_graceful_shutdown": true,
+    "restart_during_processing": true,
+    "restart_with_open_position": true
+  },
+  "session_rotation": {
+    "passed": true,
+    "rotation_count": 1,
+    "selected_session_name": "20260628_170030"
+  },
+  "soak_launched": false,
+  "stale_event_guard": {
+    "failed_closed": true,
+    "passed": true,
+    "stale_event_detected": true
+  },
+  "verdict": "READY_FOR_24H_SOAK",
+  "verified_at_utc": "2026-06-28T17:26:14.307490+00:00",
+  "write_latency_guard": {
+    "failed_closed": true,
+    "last_error": "RuntimeError: health write latency exceeded runtime safety threshold",
+    "passed": true
+  }
+}

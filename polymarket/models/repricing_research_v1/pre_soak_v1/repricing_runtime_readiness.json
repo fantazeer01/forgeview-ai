@@ -1,0 +1,20 @@
+{
+  "gates": {
+    "disk_reserve_pass": true,
+    "power_safe": true,
+    "preflight_write_latency_pass": true,
+    "restart_after_graceful_shutdown_pass": true,
+    "restart_during_processing_pass": true,
+    "restart_with_open_position_pass": true,
+    "session_rotation_pass": true,
+    "stale_event_guard_pass": true,
+    "write_latency_guard_pass": true
+  },
+  "remaining_blockers": [],
+  "repricing_tests_passed": 45,
+  "repository_tests_passed": 191,
+  "soak_launched": false,
+  "holdout_accessed": false,
+  "live_trading_enabled": false,
+  "verdict": "READY_FOR_24H_SOAK"
+}

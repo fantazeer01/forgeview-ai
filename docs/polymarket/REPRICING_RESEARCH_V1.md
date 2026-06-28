@@ -885,6 +885,53 @@ restart drills, and reconciliation before a separately authorized soak.
 No detector, threshold, strategy, holdout, Telegram, wallet/private-key, order
 placement, or live-money path changed.
 
+## Pre-Soak Consolidation v1
+
+Repricing pre-soak engineering is complete with verdict
+`READY_FOR_24H_SOAK`.
+
+Production-mode preflight now enforces:
+
+- Windows AC sleep and hibernate disabled when required;
+- configurable minimum free disk, currently 2 GiB;
+- writable state and output directories with measured write latency;
+- complete valid v5 source input and automatic newest-session discovery;
+- recoverable SQLite state and the frozen strategy fingerprint;
+- strict separation from sealed/holdout paths.
+
+The managed runtime may use `session_root` instead of a fixed session file. It
+selects timestamped `*/session.jsonl` sources, excludes the copied `latest`
+directory, and rotates to a newer source without replacing the paper ledger.
+Rotation was fixture-validated while one paper position remained traceable and
+closed exactly once.
+
+Runtime safety thresholds are 30 seconds maximum source-event age and 500 ms
+maximum health-write latency. Either breach stops closed. Fault injection
+confirmed both guards.
+
+Required restart drills all pass:
+
+- open-position restart preserves one open position without duplication;
+- interruption after position creation replays the pending event and converges
+  to one open position;
+- graceful shutdown preserves the open position and a subsequent runtime closes
+  it exactly once.
+
+Measured readiness: AC sleep/hibernate 0/0 seconds, 35,648,344,064 bytes free,
+0.694 ms marker write latency, all nine readiness gates passed, no remaining
+engineering blocker. Forty-five Repricing tests and 191 repository tests pass.
+Artifacts are under
+`polymarket/models/repricing_research_v1/pre_soak_v1/`.
+
+The next Repricing task is **Run First 24-Hour Repricing Paper Soak v1**. It is
+not launched or globally active yet. The soak must remain paper-only and must
+reconcile raw events, runtime health, daily summaries, positions, trades,
+continuity, restarts, failures, and duplicate/lost transitions before any
+further readiness claim.
+
+No detector, threshold, strategy, holdout, wallet/private-key, Telegram,
+order-placement, or live-money behavior changed.
+
 ## Missing Data
 
 The current evidence is missing:

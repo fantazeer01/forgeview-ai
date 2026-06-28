@@ -3,12 +3,15 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import time
 import uuid
 from dataclasses import asdict, dataclass, replace
 from datetime import UTC, datetime, time as datetime_time, timedelta
 from pathlib import Path
 from typing import Any, Callable
+
+from polymarket.edge_engine_v5.power_preflight import inspect_windows_power
 
 from .paper_core import FrozenPaperConfig, RestartSafePaperCore
 from .paper_runtime import (
@@ -28,29 +31,40 @@ class RuntimeAlreadyRunningError(RuntimeError):
 
 @dataclass(frozen=True)
 class RepricingRuntimeMVPConfig:
-    session_path: Path
+    session_path: Path | None
     state_directory: Path
     output_directory: Path
+    session_root: Path | None = None
     poll_interval_seconds: float = 1.0
     max_polls: int | None = None
     max_runtime_seconds: float | None = None
     max_restarts: int = 3
     restart_backoff_seconds: float = 1.0
     dry_run: bool = False
+    minimum_free_disk_bytes: int = 2 * 1024 * 1024 * 1024
+    require_safe_power: bool = True
+    max_event_staleness_seconds: float = 30.0
+    max_write_latency_seconds: float = 0.5
 
     def __post_init__(self) -> None:
         if self.max_restarts < 0:
             raise ValueError("max restarts must be non-negative")
         if self.restart_backoff_seconds < 0:
             raise ValueError("restart backoff must be non-negative")
+        if self.session_path is None and self.session_root is None:
+            raise ValueError("session_path or session_root is required")
+        if self.minimum_free_disk_bytes <= 0:
+            raise ValueError("minimum free disk bytes must be positive")
         PaperRuntimeConfig(
-            session_path=self.session_path,
+            session_path=self.session_path or self.session_root / "session.jsonl",
             database_path=self.database_path,
             health_path=self.heartbeat_path,
             poll_interval_seconds=self.poll_interval_seconds,
             max_polls=self.max_polls,
             max_runtime_seconds=self.max_runtime_seconds,
             dry_run=self.dry_run,
+            max_event_staleness_seconds=self.max_event_staleness_seconds,
+            max_write_latency_seconds=self.max_write_latency_seconds,
         )
 
     @property
@@ -83,7 +97,7 @@ class RepricingRuntimeMVPConfig:
         payload = json.loads(source.read_text(encoding="utf-8"))
         if not isinstance(payload, dict):
             raise ValueError("runtime configuration must be a JSON object")
-        required = ("session_path", "state_directory", "output_directory")
+        required = ("state_directory", "output_directory")
         missing = [name for name in required if name not in payload]
         if missing:
             raise ValueError(f"runtime configuration missing: {', '.join(missing)}")
@@ -93,9 +107,16 @@ class RepricingRuntimeMVPConfig:
             return (source.parent / candidate).resolve() if not candidate.is_absolute() else candidate.resolve()
 
         return cls(
-            session_path=resolve(payload["session_path"]),
+            session_path=(
+                resolve(payload["session_path"])
+                if payload.get("session_path") is not None else None
+            ),
             state_directory=resolve(payload["state_directory"]),
             output_directory=resolve(payload["output_directory"]),
+            session_root=(
+                resolve(payload["session_root"])
+                if payload.get("session_root") is not None else None
+            ),
             poll_interval_seconds=float(payload.get("poll_interval_seconds", 1.0)),
             max_polls=(int(payload["max_polls"]) if payload.get("max_polls") is not None else None),
             max_runtime_seconds=(
@@ -105,6 +126,16 @@ class RepricingRuntimeMVPConfig:
             max_restarts=int(payload.get("max_restarts", 3)),
             restart_backoff_seconds=float(payload.get("restart_backoff_seconds", 1.0)),
             dry_run=bool(payload.get("dry_run", False)),
+            minimum_free_disk_bytes=int(
+                payload.get("minimum_free_disk_bytes", 2 * 1024 * 1024 * 1024)
+            ),
+            require_safe_power=bool(payload.get("require_safe_power", True)),
+            max_event_staleness_seconds=float(
+                payload.get("max_event_staleness_seconds", 30.0)
+            ),
+            max_write_latency_seconds=float(
+                payload.get("max_write_latency_seconds", 0.5)
+            ),
         )
 
 
@@ -312,6 +343,10 @@ class ContinuousRepricingPaperMVP:
     def run(self, *, install_signal_handlers: bool = True) -> dict[str, Any]:
         with RuntimeInstanceLock(self.config.lock_path):
             preflight = validate_runtime_preflight(self.config)
+            session_resolver = (
+                (lambda: resolve_latest_v5_session(self.config.session_root))
+                if self.config.session_root is not None else None
+            )
             session_id, startup_restarts = self._session_identity()
             outputs = RuntimeOutputManager(self.config, session_id, self.now)
             outputs.log("runtime_mvp_start", preflight=preflight)
@@ -329,7 +364,7 @@ class ContinuousRepricingPaperMVP:
                 outputs.log("runtime_mvp_process_recovery", restart_count=restart_count)
             while True:
                 runtime_config = PaperRuntimeConfig(
-                    session_path=self.config.session_path,
+                    session_path=Path(preflight["session_path"]),
                     database_path=self.config.database_path,
                     health_path=self.config.heartbeat_path,
                     poll_interval_seconds=self.config.poll_interval_seconds,
@@ -337,13 +372,17 @@ class ContinuousRepricingPaperMVP:
                     max_runtime_seconds=self.config.max_runtime_seconds,
                     dry_run=self.config.dry_run,
                     session_id=session_id,
+                    max_event_staleness_seconds=self.config.max_event_staleness_seconds,
+                    max_write_latency_seconds=self.config.max_write_latency_seconds,
                 )
                 outputs.begin_attempt()
-                runtime = self.runtime_factory(
-                    runtime_config,
-                    now=self.now,
-                    health_observer=outputs.observe_health,
-                )
+                runtime_kwargs = {
+                    "now": self.now,
+                    "health_observer": outputs.observe_health,
+                }
+                if session_resolver is not None:
+                    runtime_kwargs["session_resolver"] = session_resolver
+                runtime = self.runtime_factory(runtime_config, **runtime_kwargs)
                 try:
                     health = runtime.run(
                         install_signal_handlers=install_signal_handlers
@@ -418,17 +457,54 @@ class ContinuousRepricingPaperMVP:
         return self.session_id_factory(), 0
 
 
-def validate_runtime_preflight(config: RepricingRuntimeMVPConfig) -> dict[str, Any]:
+def resolve_latest_v5_session(session_root: Path | None) -> Path:
+    if session_root is None or not session_root.is_dir():
+        raise V5StreamUnavailableError(f"v5 session root does not exist: {session_root}")
+    candidates = [
+        path for path in session_root.glob("*/session.jsonl")
+        if path.parent.name != "latest" and path.is_file()
+    ]
+    if not candidates:
+        direct = session_root / "session.jsonl"
+        if direct.is_file():
+            return direct.resolve()
+        raise V5StreamUnavailableError(
+            f"v5 session root contains no session.jsonl: {session_root}"
+        )
+    return max(
+        candidates,
+        key=lambda path: (path.stat().st_mtime_ns, path.parent.name),
+    ).resolve()
+
+
+def validate_runtime_preflight(
+    config: RepricingRuntimeMVPConfig,
+    *,
+    power_inspector=inspect_windows_power,
+    disk_usage=shutil.disk_usage,
+    write_clock: Callable[[], float] = time.perf_counter,
+) -> dict[str, Any]:
     protected = ("holdout", "sealed")
-    paths = (config.session_path, config.state_directory, config.output_directory)
+    paths = tuple(
+        path for path in (
+            config.session_path,
+            config.session_root,
+            config.state_directory,
+            config.output_directory,
+        ) if path is not None
+    )
     if any(token in str(path).casefold() for path in paths for token in protected):
         raise ValueError("runtime paths may not reference sealed holdout locations")
-    if not config.session_path.is_file():
+    session_path = (
+        resolve_latest_v5_session(config.session_root)
+        if config.session_root is not None else config.session_path
+    )
+    if session_path is None or not session_path.is_file():
         raise V5StreamUnavailableError(
-            f"v5 session does not exist: {config.session_path}"
+            f"v5 session does not exist: {session_path}"
         )
     first_event = None
-    with config.session_path.open("rb") as handle:
+    with session_path.open("rb") as handle:
         for raw in handle:
             if raw.endswith(b"\n") and raw.strip():
                 first_event = V5JsonlPaperAdapter._decode_event(raw, 0)
@@ -436,11 +512,28 @@ def validate_runtime_preflight(config: RepricingRuntimeMVPConfig) -> dict[str, A
                 break
     if first_event is None:
         raise ValueError("v5 session has no complete event")
+    maximum_write_latency = 0.0
     for directory in (config.state_directory, config.output_directory):
         directory.mkdir(parents=True, exist_ok=True)
         marker = directory / f".repricing-preflight-{os.getpid()}.tmp"
+        started = write_clock()
         marker.write_text("ok", encoding="ascii")
         marker.unlink()
+        maximum_write_latency = max(maximum_write_latency, write_clock() - started)
+    disk = disk_usage(config.state_directory)
+    if disk.free < config.minimum_free_disk_bytes:
+        raise ValueError(
+            f"free disk space {disk.free} is below required {config.minimum_free_disk_bytes}"
+        )
+    if maximum_write_latency > config.max_write_latency_seconds:
+        raise ValueError(
+            "preflight write latency exceeds runtime safety threshold"
+        )
+    power = power_inspector()
+    if config.require_safe_power and not power.safe_for_overnight:
+        raise ValueError(
+            "Windows power configuration is not safe for overnight runtime"
+        )
     with RestartSafePaperCore(config.database_path) as core:
         fingerprint = core.config.fingerprint
         core_state = core.validation_snapshot()
@@ -452,6 +545,14 @@ def validate_runtime_preflight(config: RepricingRuntimeMVPConfig) -> dict[str, A
         "configuration_valid": True,
         "directories_writable": True,
         "session_readable": True,
+        "session_path": str(session_path.resolve()),
+        "session_rotation_enabled": config.session_root is not None,
+        "power": power.to_dict(),
+        "free_disk_bytes": disk.free,
+        "minimum_free_disk_bytes": config.minimum_free_disk_bytes,
+        "preflight_write_latency_ms": round(maximum_write_latency * 1000.0, 3),
+        "max_write_latency_ms": config.max_write_latency_seconds * 1000.0,
+        "max_event_staleness_seconds": config.max_event_staleness_seconds,
         "detector_state": "FROZEN_CONFIG_VERIFIED",
         "paper_core_state": "RECOVERABLE",
         "strategy_fingerprint": fingerprint,

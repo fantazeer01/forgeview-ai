@@ -166,6 +166,7 @@ class ManagedRepricingPaperRuntimeTests(unittest.TestCase):
             ),
             now=lambda: FIXED_NOW,
             monotonic=lambda: 0.0,
+            write_clock=lambda: 0.0,
         )
 
     @classmethod

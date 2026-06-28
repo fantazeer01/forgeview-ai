@@ -24,6 +24,8 @@ class PaperRuntimeConfig:
     max_runtime_seconds: float | None = None
     dry_run: bool = False
     session_id: str = ""
+    max_event_staleness_seconds: float | None = None
+    max_write_latency_seconds: float | None = None
 
     def __post_init__(self) -> None:
         if self.poll_interval_seconds < 0:
@@ -34,6 +36,16 @@ class PaperRuntimeConfig:
             raise ValueError("max runtime must be positive")
         if self.dry_run and self.max_polls is None and self.max_runtime_seconds is None:
             raise ValueError("dry run requires a poll or runtime bound")
+        if (
+            self.max_event_staleness_seconds is not None
+            and self.max_event_staleness_seconds <= 0
+        ):
+            raise ValueError("event staleness threshold must be positive")
+        if (
+            self.max_write_latency_seconds is not None
+            and self.max_write_latency_seconds <= 0
+        ):
+            raise ValueError("write latency threshold must be positive")
 
 
 @dataclass
@@ -63,6 +75,9 @@ class PaperRuntimeHealth:
     strategy_fingerprint: str | None
     detector_state: str
     paper_core_state: str
+    session_rotation_count: int
+    stale_event_detected: bool
+    last_write_latency_ms: float | None
     dry_run: bool
 
 
@@ -76,11 +91,17 @@ class ManagedRepricingPaperRuntime:
         now: Callable[[], datetime] | None = None,
         monotonic: Callable[[], float] | None = None,
         health_observer: Callable[[PaperRuntimeHealth], None] | None = None,
+        session_resolver: Callable[[], Path] | None = None,
+        write_clock: Callable[[], float] | None = None,
     ) -> None:
         self.config = config
         self._now = now or (lambda: datetime.now(timezone.utc))
         self._monotonic = monotonic or time.monotonic
         self._health_observer = health_observer
+        self._session_resolver = session_resolver
+        self._write_clock = write_clock or time.perf_counter
+        self._write_guard_tripped = False
+        self._last_health_write_latency_ms: float | None = None
         self._stop_requested = threading.Event()
         self._health: PaperRuntimeHealth | None = None
 
@@ -119,13 +140,17 @@ class ManagedRepricingPaperRuntime:
             strategy_fingerprint=None,
             detector_state="NOT_INITIALIZED",
             paper_core_state="NOT_INITIALIZED",
+            session_rotation_count=0,
+            stale_event_detected=False,
+            last_write_latency_ms=None,
             dry_run=self.config.dry_run,
         )
-        self._write_health()
-        handlers = self._install_signal_handlers() if install_signal_handlers else {}
+        handlers = {}
         core: RestartSafePaperCore | None = None
         started_monotonic = self._monotonic()
         try:
+            self._write_health()
+            handlers = self._install_signal_handlers() if install_signal_handlers else {}
             core = RestartSafePaperCore(self.config.database_path)
             adapter = V5JsonlPaperAdapter(self.config.session_path, core)
             self._health.strategy_fingerprint = core.config.fingerprint
@@ -139,6 +164,12 @@ class ManagedRepricingPaperRuntime:
             while not self._stop_requested.is_set():
                 if self._limit_reached(started_monotonic):
                     break
+                if self._session_resolver is not None:
+                    resolved = self._session_resolver().resolve()
+                    if resolved != adapter.session_path:
+                        adapter = V5JsonlPaperAdapter(resolved, core)
+                        self._health.source_path = str(resolved)
+                        self._health.session_rotation_count += 1
                 before = core.validation_snapshot()
                 self._health.last_poll_timestamp = self._timestamp()
                 try:
@@ -174,6 +205,7 @@ class ManagedRepricingPaperRuntime:
                     0, result.ingested_lag_measurements - valid_signals
                 )
                 self._health.last_event_timestamp = result.last_event_timestamp
+                self._enforce_event_freshness(result.last_event_timestamp)
                 self._health.last_successful_processing_timestamp = self._timestamp()
                 self._health.polls_completed += 1
                 self._write_health()
@@ -231,13 +263,40 @@ class ManagedRepricingPaperRuntime:
         path = self.config.health_path
         path.parent.mkdir(parents=True, exist_ok=True)
         temporary = path.with_suffix(path.suffix + ".tmp")
+        self._health.last_write_latency_ms = self._last_health_write_latency_ms
+        started = self._write_clock()
         temporary.write_text(
             json.dumps(asdict(self._health), indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
         )
         temporary.replace(path)
+        elapsed = self._write_clock() - started
+        self._last_health_write_latency_ms = round(elapsed * 1000.0, 3)
         if self._health_observer is not None:
             self._health_observer(self._health)
+        if (
+            self.config.max_write_latency_seconds is not None
+            and elapsed > self.config.max_write_latency_seconds
+            and not self._write_guard_tripped
+        ):
+            self._write_guard_tripped = True
+            raise RuntimeError(
+                "health write latency exceeded runtime safety threshold"
+            )
+
+    def _enforce_event_freshness(self, timestamp: str | None) -> None:
+        if (
+            self.config.dry_run
+            or self.config.max_event_staleness_seconds is None
+            or timestamp is None
+        ):
+            return
+        age = (self._now() - datetime.fromisoformat(timestamp)).total_seconds()
+        if age > self.config.max_event_staleness_seconds:
+            self._health.stale_event_detected = True
+            raise RuntimeError(
+                f"last v5 event is stale by {age:.3f} seconds"
+            )
 
     def _timestamp(self) -> str:
         value = self._now()

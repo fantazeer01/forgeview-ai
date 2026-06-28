@@ -1459,3 +1459,25 @@ unrecoverable fail-closed behavior, process-session continuity, UTC midnight
 accounting, valid/rejected signal summaries, and the single-config CLI. This
 completes bounded MVP engineering
 but does not substitute for a supervised 24-hour public paper soak.
+
+## D-078: Repricing is ready for an explicitly authorized 24-hour paper soak
+
+Status: Accepted
+Decision: Repricing Pre-Soak Consolidation v1 classifies the runtime
+`READY_FOR_24H_SOAK`. Production-mode startup requires safe Windows AC sleep
+and hibernate settings, at least 2 GiB free disk, writable state/output paths,
+a valid v5 source, a recoverable ledger, and the frozen strategy fingerprint.
+The runtime resolves the newest timestamped session under its source root and
+rotates adapters when a newer session appears.
+
+A source event older than 30 seconds or a health write exceeding 500 ms stops
+closed. Restart drills must preserve exactly one open position after normal
+restart, recover a transaction interrupted after position creation, and retain
+then close an open position across graceful shutdown. Every gate passed on the
+current machine; the 24-hour soak itself remains a separate explicit action.
+
+Reason: Windows AC sleep and hibernate were both disabled, free disk was
+35,648,344,064 bytes, marker write latency was 0.694 ms, session rotation and
+all three restart drills passed, and stale/write fault injection stopped
+closed. Forty-five Repricing tests and 191 repository tests passed. No soak,
+live trade, detector change, threshold change, or holdout access occurred.

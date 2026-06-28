@@ -3,9 +3,14 @@
   "max_polls": 1,
   "max_restarts": 3,
   "max_runtime_seconds": null,
+  "max_event_staleness_seconds": 30.0,
+  "max_write_latency_seconds": 0.5,
+  "minimum_free_disk_bytes": 2147483648,
   "output_directory": "./runtime_output",
   "poll_interval_seconds": 1.0,
+  "require_safe_power": true,
   "restart_backoff_seconds": 1.0,
-  "session_path": "./session.jsonl",
+  "session_path": null,
+  "session_root": "./v5_sessions",
   "state_directory": "./runtime_state"
 }

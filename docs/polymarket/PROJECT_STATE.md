@@ -2547,6 +2547,50 @@ successor is **Run First 24-Hour Repricing Paper Soak Preflight v1**. The sole
 global task remains Wallet Autonomous Evidence Accumulator Canonical
 Background Run v1 under repository policy.
 
+## Repricing Pre-Soak Consolidation v1
+
+Repricing Pre-Soak Consolidation v1 is complete with verdict
+`READY_FOR_24H_SOAK`.
+
+Implementation and artifacts:
+
+- `polymarket/repricing_research/pre_soak.py`;
+- `tests/polymarket/test_repricing_pre_soak.py`;
+- `polymarket/models/repricing_research_v1/pre_soak_v1/repricing_pre_soak_report.md`;
+- `polymarket/models/repricing_research_v1/pre_soak_v1/repricing_pre_soak_validation.json`;
+- `polymarket/models/repricing_research_v1/pre_soak_v1/repricing_runtime_readiness.json`.
+
+Measured machine preflight:
+
+- AC sleep / hibernate: 0 / 0 seconds, safe for overnight operation;
+- free disk: 35,648,344,064 bytes against a 2,147,483,648-byte floor;
+- marker write latency: 0.694 ms against a 500 ms ceiling;
+- stale-event ceiling: 30 seconds;
+- source-root rotation: enabled and selected the latest timestamped v5 session;
+- frozen strategy fingerprint: verified;
+- pending events / open positions in the temporary readiness ledger: 0 / 0.
+
+Completed engineering gates:
+
+- automatic latest-session discovery and live adapter rotation;
+- stale-event fail-closed guard;
+- health-write latency fail-closed guard;
+- restart with an open position;
+- restart after interruption during position creation;
+- restart after graceful shutdown followed by a close event;
+- power, disk, writable-path, source, ledger, and fingerprint preflight;
+- 45 Repricing tests and 191 repository tests pass.
+
+No engineering blockers remain before an explicitly authorized 24-hour soak.
+The soak itself was not launched and remains the next Repricing branch task:
+**Run First 24-Hour Repricing Paper Soak v1**. Its completion must reconcile
+raw events, heartbeats, daily summaries, positions, trades, failures, restarts,
+continuity, and duplicate/lost transitions. The sole global task remains
+Wallet Autonomous Evidence Accumulator Canonical Background Run v1.
+
+No detector, threshold, strategy, holdout, wallet/private-key, Telegram, or
+live-trading boundary changed.
+
 ## State update protocol
 
 At the end of every completed active task:

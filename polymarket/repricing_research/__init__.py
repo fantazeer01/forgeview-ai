@@ -25,7 +25,9 @@ from .runtime_mvp import (
     RuntimeAlreadyRunningError,
     RuntimeInstanceLock,
     validate_runtime_preflight,
+    resolve_latest_v5_session,
 )
+from .pre_soak import run_open_position_restart_drills, run_pre_soak_verification
 
 __all__ = [
     "RepricingConfig",
@@ -47,6 +49,9 @@ __all__ = [
     "RuntimeAlreadyRunningError",
     "RuntimeInstanceLock",
     "validate_runtime_preflight",
+    "resolve_latest_v5_session",
+    "run_open_position_restart_drills",
+    "run_pre_soak_verification",
     "build_repricing_dataset",
     "simulate_repricing_strategy",
 ]

@@ -16,6 +16,7 @@ from polymarket.repricing_research import (
 )
 from polymarket.repricing_research.paper_runtime import PaperRuntimeHealth
 from polymarket.repricing_research.runtime_mvp import RuntimeOutputManager, build_parser
+from polymarket.edge_engine_v5.power_preflight import PowerPreflight
 
 
 FIXED_NOW = datetime(2026, 6, 28, 18, 0, 0, tzinfo=UTC)
@@ -272,6 +273,8 @@ class ContinuousRepricingPaperMVPTests(unittest.TestCase):
             max_restarts=max_restarts,
             restart_backoff_seconds=0.0,
             dry_run=True,
+            minimum_free_disk_bytes=1,
+            require_safe_power=False,
         )
 
     @staticmethod
@@ -303,6 +306,9 @@ class ContinuousRepricingPaperMVPTests(unittest.TestCase):
             strategy_fingerprint=FrozenFingerprint.VALUE,
             detector_state="FROZEN_CONFIG_VERIFIED",
             paper_core_state="CLOSED_RECOVERABLE",
+            session_rotation_count=0,
+            stale_event_detected=False,
+            last_write_latency_ms=0.0,
             dry_run=True,
         )
 
