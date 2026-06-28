@@ -2194,6 +2194,49 @@ Remaining Wallet Intelligence blocker:
 - a future explicitly authorized bounded collection must gather enough target
   five-minute first-seen observations before H2 or H3 can be evaluated.
 
+## Wallet Decision Window Sprint v1
+
+Wallet Decision Window Sprint v1 is complete and tested the H3 feasibility
+hypothesis using only committed prospective first-seen evidence.
+
+Artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/decision_window_v1/wallet_decision_window.csv`;
+- `polymarket/models/wallet_intelligence_v1/decision_window_v1/wallet_decision_window_summary.json`;
+- `polymarket/models/wallet_intelligence_v1/decision_window_v1/wallet_decision_window_report.md`.
+
+Observed evidence:
+
+- eligible prospective five-minute trades: 2;
+- represented wallets: 1;
+- assets: BTC 1, SOL 1;
+- Gamma-verified first-seen-to-expiry windows: 85.106 and 44.959 seconds;
+- minimum / median / mean / maximum: 44.959 / 65.0325 / 65.0325 /
+  85.106 seconds;
+- sufficient (`>=60s`): 1;
+- marginal (`>=30s` and `<60s`): 1;
+- insufficient (`<30s`): 0;
+- shares at 60 / 120 / 180 seconds: 50% / 0% / 0%.
+
+Conclusion:
+
+- `INCONCLUSIVE`;
+- the observed windows are not uniformly incompatible with future automated
+  copy-trading research, but two trades from one wallet cannot establish an
+  actionable distribution;
+- exact API publication time remains unknown within the 5-second polling
+  interval;
+- execution, order-submission, fill, slippage, liquidity, and queue latency
+  remain unmeasured.
+
+Evidence-driven successor:
+
+- Wallet H2/H3 Prospective Evidence Accumulation Sprint v1;
+- stop when 30 eligible target five-minute observations are accumulated or
+  after 20 bounded five-minute sessions, whichever occurs first;
+- use the existing restart-safe observer and frozen decision-window
+  thresholds without changing Wallet Score or simulating execution.
+
 ## State update protocol
 
 At the end of every completed active task:

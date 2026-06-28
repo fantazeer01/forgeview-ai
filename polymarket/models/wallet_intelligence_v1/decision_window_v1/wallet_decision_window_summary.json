@@ -1,0 +1,78 @@
+{
+  "asset_counts": {
+    "BTC": 1,
+    "SOL": 1
+  },
+  "classification_counts": {
+    "insufficient_decision_window": 0,
+    "marginal_decision_window": 1,
+    "sufficient_decision_window": 1
+  },
+  "compatibility_answer": "The two observed windows are not uniformly incompatible with future automated copy-trading research, but the sample is too small and execution latency is unmeasured; compatibility remains inconclusive.",
+  "decision_window_distribution": {
+    "120_to_under_180_seconds": 0,
+    "180_seconds_or_more": 0,
+    "30_to_under_60_seconds": 1,
+    "60_to_under_120_seconds": 1,
+    "under_30_seconds": 0
+  },
+  "decision_window_seconds": {
+    "count": 2,
+    "maximum": 85.106,
+    "mean": 65.0325,
+    "median": 65.0325,
+    "minimum": 44.959
+  },
+  "excluded_rows": {
+    "first_seen_after_expiry": 0,
+    "missing_expiry": 0,
+    "missing_first_seen_timestamp": 0,
+    "non_five_minute_market": 4,
+    "non_prospective_or_page_churn": 118
+  },
+  "hypothesis": "After a wallet trade becomes observable, enough usable decision time remains before market expiry to allow practical copy-trading.",
+  "input_csv": "polymarket\\models\\wallet_intelligence_v1\\first_seen_detection_v1\\wallet_first_seen_dataset.csv",
+  "known_timing_uncertainty": "First-seen is response completion and therefore an upper-bound observation time quantized by the 5-second poll cadence; exact API publication time is unknown.",
+  "limitations": [
+    "The 5-second polling cadence makes first-seen time a bounded observation rather than exact API publication time.",
+    "API publication time within each poll interval is unknown.",
+    "The observation window lasted only five minutes.",
+    "Only two eligible five-minute trades were observed, both from one wallet.",
+    "Execution, decision, order-submission, fill, slippage, liquidity, and queue latency were not measured.",
+    "The selected wallet cohort is retrospective and subject to selection bias."
+  ],
+  "minimum_conclusive_sample": 30,
+  "observed_trades": 2,
+  "poll_interval_seconds": 5.0,
+  "recommended_next_hypothesis": "H2/H3 Prospective Evidence Accumulation Sprint v1: collect a preregistered minimum of 30 target five-minute observations with the existing restart-safe observer before retesting actionable time.",
+  "reproducibility_hashes": {
+    "wallet_decision_window_csv_sha256": "727d9c2b6b32ea670d7c6facd94f4b0e17d7d5f98be0d9503b4ec04c9246a874",
+    "wallet_decision_window_report_md_sha256": "79c0a7e29d8af95620dfdc2dcee8fba4b369dacb6fc3df3c16e40dc433708dbc"
+  },
+  "research_conclusion": "INCONCLUSIVE",
+  "shares_at_project_gates": {
+    "at_least_120_seconds": 0.0,
+    "at_least_180_seconds": 0.0,
+    "at_least_60_seconds": 0.5
+  },
+  "task": "Wallet Decision Window Sprint v1",
+  "threshold_justification": "Sixty seconds is the pre-existing H3 project gate and equals twelve 5-second poll intervals. Thirty seconds is a conservative marginal boundary equal to six poll intervals; execution latency is deliberately not estimated.",
+  "thresholds_seconds": {
+    "insufficient_below": 30.0,
+    "marginal_minimum": 30.0,
+    "sufficient_minimum": 60.0
+  },
+  "validation": {
+    "all_validation_passed": true,
+    "all_windows_non_negative": true,
+    "classification_vocabulary_bounded": true,
+    "deterministic_csv_render": true,
+    "deterministic_ordering": true,
+    "every_trade_classified": true,
+    "evidence_backed_conclusion": true,
+    "expiry_evidence_present": true,
+    "no_profitability_or_investment_claims": true,
+    "repeatable_report_render": true
+  },
+  "wallet_count": 1
+}

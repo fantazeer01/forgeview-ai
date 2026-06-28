@@ -1683,3 +1683,45 @@ Remaining blocker:
 - insufficient prospective target five-minute observations. A future bounded
   collection can now accumulate the timestamps needed to evaluate H2 and then
   H3 without redesigning the observer.
+
+## Wallet Decision Window Sprint v1
+
+Wallet Decision Window Sprint v1 is complete.
+
+Input evidence:
+
+- the completed bounded first-seen dataset supplied six prospective live
+  observations;
+- two were eligible BTC/SOL five-minute trades;
+- the newer restart-safe prospective dataset remains initialized with zero
+  observations and was not treated as evidence;
+- both eligible condition IDs and the 14:05 UTC expiry were cross-checked
+  against public Gamma market metadata.
+
+Measured decision windows:
+
+- 85.106 seconds, SOL;
+- 44.959 seconds, BTC;
+- minimum / median / mean / maximum: 44.959 / 65.0325 / 65.0325 /
+  85.106 seconds;
+- sufficient (`>=60s`): 1;
+- marginal (`>=30s`, `<60s`): 1;
+- insufficient (`<30s`): 0;
+- at least 60 / 120 / 180 seconds: 50% / 0% / 0%.
+
+Final conclusion:
+
+- `INCONCLUSIVE`;
+- the two rows prove first-seen-to-expiry is technically measurable and do
+  not show universal incompatibility;
+- they do not establish practical actionability because both came from one
+  wallet, the sample is two, first-seen remains polling-quantized, and no
+  execution, fill, slippage, liquidity, or queue latency was measured.
+
+Evidence-driven successor:
+
+- Wallet H2/H3 Prospective Evidence Accumulation Sprint v1;
+- preregister a minimum of 30 eligible target rows and a hard stop of 20
+  bounded five-minute sessions;
+- preserve the existing observer and frozen thresholds; do not alter Wallet
+  Score or infer profitability.

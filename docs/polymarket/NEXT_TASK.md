@@ -5,59 +5,59 @@ Task status: ACTIVE
 
 This file contains exactly one active task. A future Codex session must read
 `RESEARCH_PRINCIPLES.md`, `MASTER_OBJECTIVE.md`, `PROJECT_STATE.md`,
-`DECISIONS.md`, and `REPRICING_RESEARCH_V1.md` before starting it.
+`DECISIONS.md`, and `WALLET_INTELLIGENCE_RESEARCH_V1.md` before starting it.
 
-## Active task: Integrate Restart-Safe Repricing Paper Core with v5 Event Stream v1
+## Active task: Wallet H2/H3 Prospective Evidence Accumulation Sprint v1
 
 ### Hypothesis under test
 
-The proven restart-safe repricing state machine can consume the existing v5
-event stream through a thin read-only adapter without changing event order,
-detector decisions, frozen parameters, or recovery guarantees.
+Public activity from the four frozen H1 wallets is observable with a
+repeatable delay distribution and leaves at least 60 seconds before expiry for
+a meaningful share of target five-minute BTC/ETH/SOL trades.
 
 ### Objective
 
-Add the smallest local adapter that tails or replays an existing v5 JSONL
-stream into `RestartSafePaperCore`. Prove deterministic resume from the stored
-source cursor and identical final ledger state for uninterrupted and
-interrupted fixture runs. Do not launch a public capture or continuous paper
-campaign.
+Use the existing restart-safe first-seen observer to accumulate enough bounded
+prospective evidence to retest H2 visibility delay and H3 decision-window
+feasibility. Collect evidence only; do not change scoring, thresholds, or
+execution assumptions.
 
-### Required scope
+### Frozen scope
 
-1. Add a read-only v5 JSONL adapter with stable source identity and event index.
-2. Resume from the durable ledger cursor without skipping or duplicating an
-   event.
-3. Refuse source truncation, source replacement, malformed ordering, and
-   strategy fingerprint mismatch.
-4. Preserve raw-event-before-transition durability and all existing database
-   uniqueness constraints.
-5. Test clean replay, mid-stream restart, appended-event resume, duplicate
-   delivery, malformed input, and source replacement.
-6. Compare uninterrupted and restarted ledger signals, positions, trades,
-   cursors, and realized paper PnL.
-7. Keep all outputs separate from canonical outcome data, microstructure data,
-   wallet research, and sealed holdout paths.
-8. Run repricing tests and the full repository suite.
+1. Observe only the four frozen H1 wallets.
+2. Use only the approved public unauthenticated Data API activity endpoint.
+3. Preserve the 5-second polling interval, 100-row page limit, 300-second run
+   limit, and 240-request run limit.
+4. Stop after 30 eligible prospective BTC/ETH/SOL five-minute trades or 20
+   bounded runs, whichever occurs first.
+5. Persist every poll and first-seen trade through the existing transactional
+   SQLite observer.
+6. Join eligible rows to public Gamma expiry metadata and preserve source
+   provenance.
+7. Report H2 delay and H3 decision-window distributions using the frozen
+   60-second sufficient and 30-second marginal boundaries.
+8. Keep every run restart safe, duplicate safe, deterministic, and separately
+   auditable.
 
 ### Forbidden
 
-- no detector or threshold changes;
-- no parameter optimization;
-- no public capture or continuous campaign;
-- no holdout access or evaluation;
-- no wallet, private key, authentication, order placement, or live trading;
-- no Telegram, daily reporting, statistics dashboard, supervisor, deployment,
-  or 24-hour soak work in this sprint;
-- no merge into canonical training data.
+- no wallet/private-key connection, authentication, order placement, or live
+  trading;
+- no copy-trade automation;
+- no Wallet Score or Watchlist change;
+- no profitability, expected-return, alpha, or investment claim;
+- no execution-quality, slippage, fill, liquidity, or queue estimate;
+- no sealed holdout access or evaluation;
+- no permanent monitoring or unbounded collection.
 
 ### Acceptance criteria
 
-- uninterrupted and restart-resumed fixture ingestion produce identical
-  signals, positions, trades, cursors, and realized paper PnL;
-- source replacement or truncation fails closed;
-- repeated adapter startup is idempotent;
-- detector source and frozen parameters remain unchanged;
-- sealed holdout remains untouched;
-- all repricing and repository tests pass;
-- exactly one active successor task remains after completion.
+- at least 30 eligible target rows are collected, or the 20-run bound is
+  reached and the shortfall is reported;
+- every eligible row has stable identity, trade time, first-seen time, expiry,
+  and source provenance;
+- deterministic exports and duplicate/restart validation pass;
+- H2 and H3 each receive exactly one evidence-backed conclusion from
+  `SUPPORTED`, `REJECTED`, or `INCONCLUSIVE`;
+- all Wallet Intelligence and repository tests pass;
+- exactly one active successor task remains.

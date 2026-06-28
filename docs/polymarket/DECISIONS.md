@@ -1259,3 +1259,25 @@ duplicate poll rejection, duplicate trade rejection, immutable first-seen
 timestamps, complete poll persistence, and repeatable export. No new public
 collection occurred, the initialized dataset is empty, and H2 was not
 evaluated.
+
+## D-070: H3 decision-window thresholds are descriptive and sample gated
+
+Status: Accepted
+Decision: Wallet Decision Window v1 classifies a prospective first-seen trade
+as `sufficient_decision_window` with at least 60 seconds remaining,
+`marginal_decision_window` with at least 30 but fewer than 60 seconds, and
+`insufficient_decision_window` with fewer than 30 seconds. Sixty seconds is
+the pre-existing H3 project gate and equals twelve 5-second polling intervals;
+30 seconds is a descriptive lower boundary equal to six polling intervals.
+Neither threshold represents measured execution feasibility.
+
+H3 may not be supported or rejected until at least 30 eligible prospective
+five-minute observations exist. Until then, decision-window output must remain
+`INCONCLUSIVE` and must report polling granularity, API publication
+uncertainty, cohort selection, and missing execution/liquidity latency.
+
+Reason: The only committed feasibility evidence contains two trades from one
+wallet. Their Gamma-verified first-seen-to-expiry windows were 85.106 and
+44.959 seconds, producing one sufficient and one marginal classification, but
+zero observations with 120 seconds remaining. This establishes measurability,
+not practical copy-trading compatibility.

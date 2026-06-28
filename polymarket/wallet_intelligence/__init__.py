@@ -20,6 +20,7 @@ from .copyability_sprint import run_wallet_copyability_sprint
 from .visibility_delay import run_wallet_visibility_delay_sprint
 from .first_seen import run_first_seen_experiment
 from .first_seen_prospective import prepare_prospective_experiment, run_prospective_observer
+from .decision_window import run_wallet_decision_window_sprint
 
 __all__ = [
     "LIFECYCLE_POSITION_FIELDS",
@@ -42,5 +43,6 @@ __all__ = [
     "run_first_seen_experiment",
     "prepare_prospective_experiment",
     "run_prospective_observer",
+    "run_wallet_decision_window_sprint",
     "summarize_outputs",
 ]

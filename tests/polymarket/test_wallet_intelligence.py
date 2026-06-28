@@ -1,4 +1,5 @@
 import csv
+import hashlib
 import json
 import tempfile
 import unittest
@@ -71,6 +72,11 @@ from polymarket.wallet_intelligence.first_seen_prospective import (
     prepare_prospective_experiment,
     render_dataset,
     validate_restart_and_duplicates,
+)
+from polymarket.wallet_intelligence.decision_window import (
+    build_decision_windows,
+    classify_decision_window,
+    run_wallet_decision_window_sprint,
 )
 
 
@@ -1842,6 +1848,90 @@ class WalletFirstSeenProspectiveTests(unittest.TestCase):
             self.assertEqual(render_dataset([]), (output / "wallet_first_seen_dataset.csv").read_text(encoding="utf-8"))
             self.assertTrue((output / "wallet_first_seen_validation.json").exists())
             self.assertTrue((output / "wallet_first_seen_design_report.md").exists())
+
+
+class WalletDecisionWindowTests(unittest.TestCase):
+    @staticmethod
+    def _rows():
+        return [
+            {
+                "wallet_id": "0xwallet",
+                "observation_class": "new_live_window_trade",
+                "first_observation_timestamp_utc": "2026-06-28T14:03:34.894+00:00",
+                "trade_datetime_utc": "2026-06-28T14:03:19.000+00:00",
+                "trade_timestamp": "1782655399",
+                "first_seen_delay_seconds": "15.894000",
+                "poll_interval_seconds": "5.000000",
+                "market_slug": "sol-updown-5m-1782655200",
+                "condition_id": "0x5c5809ee85b49a9b63716f7cf6f47d42df09a0df1ccbc350dfda9209fea277f4",
+                "token_id": "token-sol",
+                "transaction_hash": "0xtx-sol",
+                "trade_identity": "trade-sol",
+                "asset_class": "SOL",
+                "five_minute_market": "true",
+            },
+            {
+                "wallet_id": "0xwallet",
+                "observation_class": "new_live_window_trade",
+                "first_observation_timestamp_utc": "2026-06-28T14:04:15.041+00:00",
+                "trade_datetime_utc": "2026-06-28T14:03:59.000+00:00",
+                "trade_timestamp": "1782655439",
+                "first_seen_delay_seconds": "16.041000",
+                "poll_interval_seconds": "5.000000",
+                "market_slug": "btc-updown-5m-1782655200",
+                "condition_id": "0x2fece38d8afd7a75c250cb52406e22841c40fad48190ba431f212bdecdab7067",
+                "token_id": "token-btc",
+                "transaction_hash": "0xtx-btc",
+                "trade_identity": "trade-btc",
+                "asset_class": "BTC",
+                "five_minute_market": "true",
+            },
+            {
+                "wallet_id": "0xwallet",
+                "observation_class": "historical_page_churn",
+                "first_observation_timestamp_utc": "2026-06-28T14:04:00.000+00:00",
+                "market_slug": "btc-updown-5m-1782655200",
+                "five_minute_market": "true",
+            },
+        ]
+
+    def test_classifies_frozen_decision_window_thresholds(self):
+        self.assertEqual(classify_decision_window(60), "sufficient_decision_window")
+        self.assertEqual(classify_decision_window(30), "marginal_decision_window")
+        self.assertEqual(classify_decision_window(29.999), "insufficient_decision_window")
+
+    def test_builds_only_prospective_five_minute_windows(self):
+        rows, exclusions = build_decision_windows(self._rows())
+        self.assertEqual([row["decision_window_seconds"] for row in rows], ["85.106000", "44.959000"])
+        self.assertEqual(
+            [row["decision_window_classification"] for row in rows],
+            ["sufficient_decision_window", "marginal_decision_window"],
+        )
+        self.assertEqual(exclusions["non_prospective_or_page_churn"], 1)
+        self.assertTrue(all(row["expiry_join_confidence"] == "high" for row in rows))
+
+    def test_sprint_outputs_are_repeatable_and_inconclusive(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_csv = root / "first_seen.csv"
+            fields = sorted({key for row in self._rows() for key in row})
+            with input_csv.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fields)
+                writer.writeheader()
+                writer.writerows(self._rows())
+            output = root / "output"
+            first = run_wallet_decision_window_sprint(input_csv, output)
+            first_files = {path.name: path.read_bytes() for path in output.iterdir()}
+            second = run_wallet_decision_window_sprint(input_csv, output)
+            second_files = {path.name: path.read_bytes() for path in output.iterdir()}
+            self.assertEqual(first_files, second_files)
+            self.assertEqual(first["research_conclusion"], "INCONCLUSIVE")
+            self.assertEqual(first["classification_counts"]["sufficient_decision_window"], 1)
+            self.assertTrue(second["validation"]["all_validation_passed"])
+            self.assertEqual(
+                second["reproducibility_hashes"]["wallet_decision_window_report_md_sha256"],
+                hashlib.sha256((output / "wallet_decision_window_report.md").read_bytes()).hexdigest(),
+            )
 
 
 if __name__ == "__main__":

@@ -49,6 +49,11 @@ from .first_seen_prospective import (
     prepare_prospective_experiment,
     run_prospective_observer,
 )
+from .decision_window import (
+    DEFAULT_DECISION_WINDOW_INPUT,
+    DEFAULT_DECISION_WINDOW_OUTPUT,
+    run_wallet_decision_window_sprint,
+)
 
 
 DEFAULT_INPUT = Path("polymarket/wallet_intelligence/watched_wallets.example.csv")
@@ -186,6 +191,13 @@ def build_parser() -> argparse.ArgumentParser:
     prospective.add_argument("--poll-interval", type=float, default=DEFAULT_POLL_INTERVAL_SECONDS)
     prospective.add_argument("--page-limit", type=int, default=DEFAULT_PAGE_LIMIT)
     prospective.add_argument("--max-requests", type=int, default=DEFAULT_MAX_REQUESTS)
+
+    decision_window = subparsers.add_parser(
+        "wallet-decision-window",
+        help="Measure prospective first-seen time remaining before five-minute market expiry.",
+    )
+    decision_window.add_argument("--input", type=Path, default=DEFAULT_DECISION_WINDOW_INPUT)
+    decision_window.add_argument("--output", type=Path, default=DEFAULT_DECISION_WINDOW_OUTPUT)
     return parser
 
 
@@ -359,6 +371,15 @@ def main(argv: list[str] | None = None) -> int:
                 output_dir=args.output,
             )
         print(json.dumps(result, indent=2, sort_keys=True))
+        return 0
+    if args.command == "wallet-decision-window":
+        print(
+            json.dumps(
+                run_wallet_decision_window_sprint(args.input, args.output),
+                indent=2,
+                sort_keys=True,
+            )
+        )
         return 0
     parser.error(f"unknown command {args.command}")
     return 2

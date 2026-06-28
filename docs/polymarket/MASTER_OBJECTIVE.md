@@ -440,6 +440,15 @@ It must use the committed prospective first-seen evidence and public expiry
 metadata to determine whether detection-to-expiry is technically measurable.
 The initial two target rows are a feasibility sample only.
 
+Wallet Decision Window Sprint v1 joined those two rows to Gamma-verified
+expiry metadata. Their first-seen-to-expiry windows were 85.106 and 44.959
+seconds: one met the frozen 60-second sufficient threshold and one was
+marginal. No row had 120 seconds remaining. H3 is `INCONCLUSIVE` because the
+sample contains only two trades from one wallet and excludes execution,
+liquidity, fill, and queue latency. The next Wallet Intelligence milestone is
+therefore bounded prospective evidence accumulation to at least 30 eligible
+target trades, not a scoring or execution expansion.
+
 Exit criteria:
 
 - restrict prospective observation to the four H1 above-baseline wallets;
