@@ -1868,3 +1868,31 @@ sprint validates unattended operation only and adds no research conclusion.
 Next task: launch the canonical bounded accumulator once, with canonical
 300-second sessions and no launch-only session cap, writing mutable runtime
 progress under ignored `output/` paths until a frozen stop condition is met.
+
+## Canonical Autonomous Accumulator Launch Status
+
+Operational snapshot at `2026-06-28T17:20:57Z`:
+
+- canonical detached accumulator started successfully;
+- background PID: `9476`;
+- canonical 300-second sessions and 5-second polling are active;
+- session 2 completed automatically after 240 durable polls;
+- session 3 started automatically without manual intervention;
+- process status: `running`;
+- completed sessions: 2 of 60;
+- remaining session budget: 58;
+- eligible evidence rows: 72 of 100;
+- H2: 2/72 successes, `INCONCLUSIVE`;
+- H3: 1/43 measurable successes, `INCONCLUSIVE`;
+- Gamma expiry completeness: 59.72%;
+- public request success rate: 100%;
+- current program action: `CONTINUE`;
+- SUPPORT, REJECT, and session-60 automatic stops remain active.
+
+Mutable runtime progress is isolated under
+`output/wallet_autonomous_canonical_v1/`. Canonical SQLite state remains under
+the ignored Wallet Intelligence data path. Query status with:
+
+```powershell
+python -m polymarket.wallet_intelligence wallet-evidence-accumulator status --accumulator-database polymarket/data/wallet_intelligence/first_seen_prospective_v1/accumulator.sqlite3 --observer-database polymarket/data/wallet_intelligence/first_seen_prospective_v1/observer.sqlite3 --observer-output output/wallet_autonomous_canonical_v1/observer --output output/wallet_autonomous_canonical_v1/runtime
+```
