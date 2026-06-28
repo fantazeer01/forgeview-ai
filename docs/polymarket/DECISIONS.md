@@ -1414,3 +1414,26 @@ unnecessary infrastructure, but it treated research validation as the end
 state. Explicit business stages keep evidence quality and safety controls while
 making profitability, reliable automation, and disciplined capital deployment
 the measures of project progress.
+
+## D-076: Controlled wallet launches are isolated and launch bounded
+
+Status: Accepted
+Decision: Operational validation may set a launch-only session cap and a
+shorter session duration while retaining the frozen 5-second polling interval,
+wallet cohort, endpoint, page limit, hypotheses, and H2/H3 decision contract.
+Development launches must use isolated accumulator and observer databases and
+must not consume canonical session budget or evidence.
+
+Every session links to its observer run. Status output derives the actual
+duration, polling interval, page limit, request ceiling, and request count from
+that persisted run rather than presenting canonical defaults as measured
+runtime. A launch cap ends the process in `ready` when the research action is
+still `CONTINUE`; SUPPORT, REJECT, and session-60 remain the only research
+terminal conditions.
+
+Reason: The first detached 15-second launch automatically completed session 2
+with 12 of 12 successful requests, four wallet baselines, 1,200 response rows,
+and deterministic restart status. It found no new target trade, so evidence
+correctly remained unchanged and the live Gamma cache had no eligible join.
+The launch exposed and fixed the runtime-provenance display issue without
+changing collection or decision behavior.

@@ -2397,6 +2397,71 @@ Next active task:
 
 - Wallet Autonomous Evidence Accumulator Controlled Launch v1.
 
+## Wallet Autonomous Evidence Accumulator Controlled Launch v1
+
+Wallet Autonomous Evidence Accumulator Controlled Launch v1 is complete.
+
+Artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/controlled_launch_v1/wallet_controlled_launch_report.md`;
+- `polymarket/models/wallet_intelligence_v1/controlled_launch_v1/wallet_runtime_validation.json`;
+- `polymarket/models/wallet_intelligence_v1/controlled_launch_v1/wallet_runtime_status.json`.
+
+Measured public launch:
+
+- detached process started once, PID 18296, and exited cleanly;
+- isolated development state preserved canonical evidence and budget;
+- automatic session number: 2;
+- observer run: `f9d8a73029135498ee276c2c`;
+- duration: 15 seconds;
+- polling interval: unchanged at 5 seconds;
+- poll cycles: 3;
+- public requests: 12 attempted, 12 successful;
+- wallet baselines: 4 of 4;
+- response rows: 1,200;
+- post-baseline observations persisted: 800;
+- every poll retained raw JSON and a SHA-256 payload hash;
+- new prospective/eligible trades: 0 / 0.
+
+Post-session state:
+
+- controlled session counter: 2;
+- controlled remaining budget: 58;
+- evidence remained 2 eligible trades, correctly unchanged;
+- H2 and H3 remained `INCONCLUSIVE`;
+- action remained `CONTINUE`;
+- process ID cleared and control returned to `ready`;
+- two fresh status processes reopened SQLite and emitted byte-identical
+  progress artifacts.
+
+Bounded correctness fix:
+
+- launch-only `--session-limit` and `--session-duration` options permit a
+  development smoke without altering canonical defaults;
+- polling remains fixed at 5 seconds;
+- status now derives the actual completed-session runtime from the linked
+  observer run, distinguishing the 15-second smoke from the canonical
+  300-second configuration.
+
+Gamma expiry cache:
+
+- live entries: 0 because no new target trade existed;
+- this is not a join failure;
+- condition-ID matching, expiry parsing, and durable cache persistence passed
+  a focused fixture test.
+
+Validation:
+
+- Wallet Intelligence tests: 55 passed;
+- full repository tests: 182 passed;
+- SUPPORT, REJECT, and session-60 stop behavior remains frozen and tested;
+- no hypothesis, threshold, polling interval, Wallet Score, or canonical
+  evidence changed.
+
+Next active task:
+
+- Wallet Autonomous Evidence Accumulator Canonical Background Run v1.
+
 ## Managed Repricing Paper Runtime Loop v1
 
 Managed Repricing Paper Runtime Loop v1 is complete for bounded, fixture-driven

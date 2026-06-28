@@ -1,0 +1,33 @@
+{
+  "all_required_validation_passed": true,
+  "automatic_progress_generation": true,
+  "automatic_session_numbering": true,
+  "automatic_status_reporting": true,
+  "automatic_stop_contract": {
+    "reject": true,
+    "session_60": true,
+    "support": true
+  },
+  "bounded_development_launch": true,
+  "canonical_evidence_isolated": true,
+  "detached_launch_succeeded": true,
+  "evidence_accumulation_correct": true,
+  "gamma_expiry_cache": {
+    "condition_match_fixture_passed": true,
+    "live_cache_entries": 0,
+    "live_path_exercised": false,
+    "live_path_not_required_without_target_trade": true
+  },
+  "gate_evaluation_after_session": true,
+  "hypotheses_unchanged": true,
+  "manual_intervention_between_launch_and_completion": false,
+  "poll_interval_seconds": 5.0,
+  "polling_interval_unchanged": true,
+  "progress_artifacts_repeatable_after_restart": true,
+  "public_read_only_requests": true,
+  "restart_safe_persistence": true,
+  "scoring_unchanged": true,
+  "session_counter_incremented": true,
+  "sqlite_poll_payload_persistence": true,
+  "thresholds_unchanged": true
+}

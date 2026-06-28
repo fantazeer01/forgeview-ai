@@ -504,6 +504,17 @@ terminal gate, and `start` launches the same bounded loop detached. The
 automation is implemented and fixture-validated but has not been publicly
 launched; current evidence remains two trades and one session.
 
+Wallet Autonomous Evidence Accumulator Controlled Launch v1 completed one
+real detached 15-second development session against isolated state. Session 2
+was assigned automatically, all 12 public requests succeeded, 1,200 response
+rows and raw payload hashes were persisted, progress regenerated without
+manual intervention, and the process exited cleanly at the launch cap. No new
+target trade appeared, so eligible evidence correctly remained two and the
+Gamma cache had no live join to perform. Canonical evidence and its 59-session
+budget remain untouched. The accumulator is operationally ready for one
+canonical bounded background run; this is automation evidence, not strategy
+or profitability evidence.
+
 Exit criteria:
 
 - restrict prospective observation to the four H1 above-baseline wallets;

@@ -232,6 +232,7 @@ def prepare_accumulator_progress(
             observer_rows = observer.export_rows()
             observer_counts = observer.counts()
             request_counts = _observer_request_counts(observer)
+            observer_run_configs = _observer_run_configs(observer)
         evidence = build_accumulated_evidence(
             _read_csv(seed_decision_windows), observer_rows, state.expiry_cache()
         )
@@ -239,6 +240,17 @@ def prepare_accumulator_progress(
             evidence,
             session_count=state.completed_session_count(),
             request_counts=_seed_and_observer_requests(seed_first_seen_summary, request_counts),
+        )
+        session_records = state.sessions()
+        for session in session_records:
+            session["observer_runtime"] = observer_run_configs.get(session["observer_run_id"], {})
+        last_runtime = next(
+            (
+                session["observer_runtime"]
+                for session in reversed(session_records)
+                if session["status"] == "complete" and session["observer_runtime"]
+            ),
+            {},
         )
         progress.update(
             {
@@ -249,8 +261,9 @@ def prepare_accumulator_progress(
                     "accumulator_database": str(accumulator_db),
                     "observer_database": str(observer_db),
                     "observer_counts": observer_counts,
-                    "session_records": state.sessions(),
+                    "session_records": session_records,
                 },
+                "last_completed_session_runtime": last_runtime,
                 "frozen_runtime": {
                     "poll_interval_seconds": DEFAULT_POLL_INTERVAL_SECONDS,
                     "session_duration_seconds": DEFAULT_DURATION_SECONDS,
@@ -277,8 +290,19 @@ def run_autonomous_accumulator(
     seed_first_seen_summary: Path = DEFAULT_SEED_FIRST_SEEN_SUMMARY,
     session_runner: Callable[..., dict[str, Any]] = run_prospective_observer,
     now: Callable[[], datetime] | None = None,
+    session_limit: int | None = None,
+    session_duration_seconds: float = DEFAULT_DURATION_SECONDS,
 ) -> dict[str, Any]:
+    if session_limit is not None and session_limit < 1:
+        raise ValueError("session_limit must be positive when provided")
+    if not 0 < session_duration_seconds <= DEFAULT_DURATION_SECONDS:
+        raise ValueError("session_duration_seconds exceeds the bounded maximum")
     now = now or (lambda: datetime.now(UTC))
+    max_requests = min(
+        DEFAULT_MAX_REQUESTS,
+        math.ceil(session_duration_seconds / DEFAULT_POLL_INTERVAL_SECONDS) * 4,
+    )
+    sessions_this_launch = 0
     progress = prepare_accumulator_progress(
         accumulator_db=accumulator_db,
         observer_db=observer_db,
@@ -286,7 +310,11 @@ def run_autonomous_accumulator(
         seed_decision_windows=seed_decision_windows,
         seed_first_seen_summary=seed_first_seen_summary,
     )
-    while progress["action"] == "CONTINUE" and progress["sessions"]["completed"] < MAX_SESSIONS:
+    while (
+        progress["action"] == "CONTINUE"
+        and progress["sessions"]["completed"] < MAX_SESSIONS
+        and (session_limit is None or sessions_this_launch < session_limit)
+    ):
         started = _iso(now())
         with EvidenceAccumulatorStore(accumulator_db) as state:
             session = state.reserve_session(started)
@@ -296,10 +324,10 @@ def run_autonomous_accumulator(
                 client=activity_client,
                 db_path=observer_db,
                 output_dir=observer_output,
-                duration_seconds=DEFAULT_DURATION_SECONDS,
+                duration_seconds=session_duration_seconds,
                 poll_interval_seconds=DEFAULT_POLL_INTERVAL_SECONDS,
                 page_limit=DEFAULT_PAGE_LIMIT,
-                max_requests=DEFAULT_MAX_REQUESTS,
+                max_requests=max_requests,
             )
             with EvidenceAccumulatorStore(accumulator_db) as state:
                 with ProspectiveFirstSeenStore(observer_db) as observer:
@@ -313,6 +341,7 @@ def run_autonomous_accumulator(
                 seed_decision_windows=seed_decision_windows,
                 seed_first_seen_summary=seed_first_seen_summary,
             )
+            sessions_this_launch += 1
             with EvidenceAccumulatorStore(accumulator_db) as state:
                 state.complete_session(
                     number,
@@ -355,7 +384,10 @@ def launch_accumulator_background(
     *,
     accumulator_db: Path = DEFAULT_ACCUMULATOR_DB,
     observer_db: Path = DEFAULT_PROSPECTIVE_DB,
+    observer_output: Path = DEFAULT_PROSPECTIVE_OUTPUT,
     output_dir: Path = DEFAULT_ACCUMULATOR_OUTPUT,
+    session_limit: int | None = None,
+    session_duration_seconds: float = DEFAULT_DURATION_SECONDS,
 ) -> dict[str, Any]:
     progress = prepare_accumulator_progress(
         accumulator_db=accumulator_db, observer_db=observer_db, output_dir=output_dir
@@ -367,7 +399,14 @@ def launch_accumulator_background(
         if int(current["process_id"]) and _pid_running(int(current["process_id"])):
             return {"started": False, "reason": "already_running", "process_id": current["process_id"]}
     output_dir.mkdir(parents=True, exist_ok=True)
-    command = background_command(accumulator_db, observer_db, output_dir)
+    command = background_command(
+        accumulator_db,
+        observer_db,
+        observer_output,
+        output_dir,
+        session_limit=session_limit,
+        session_duration_seconds=session_duration_seconds,
+    )
     stdout = (output_dir / "accumulator_stdout.log").open("ab")
     stderr = (output_dir / "accumulator_stderr.log").open("ab")
     kwargs: dict[str, Any] = {"stdin": subprocess.DEVNULL, "stdout": stdout, "stderr": stderr}
@@ -386,8 +425,16 @@ def launch_accumulator_background(
     return {"started": True, "process_id": process.pid, "command": command}
 
 
-def background_command(accumulator_db: Path, observer_db: Path, output_dir: Path) -> list[str]:
-    return [
+def background_command(
+    accumulator_db: Path,
+    observer_db: Path,
+    observer_output: Path,
+    output_dir: Path,
+    *,
+    session_limit: int | None = None,
+    session_duration_seconds: float = DEFAULT_DURATION_SECONDS,
+) -> list[str]:
+    command = [
         sys.executable,
         "-m",
         "polymarket.wallet_intelligence",
@@ -397,9 +444,16 @@ def background_command(accumulator_db: Path, observer_db: Path, output_dir: Path
         str(accumulator_db),
         "--observer-database",
         str(observer_db),
+        "--observer-output",
+        str(observer_output),
         "--output",
         str(output_dir),
+        "--session-duration",
+        str(session_duration_seconds),
     ]
+    if session_limit is not None:
+        command.extend(["--session-limit", str(session_limit)])
+    return command
 
 
 def build_accumulated_evidence(
@@ -700,6 +754,28 @@ def _seed_and_observer_requests(seed_summary: Path, observer: dict[str, int]) ->
 def _latest_observer_run_id(store: ProspectiveFirstSeenStore) -> str:
     row = store.connection.execute("SELECT run_id FROM runs ORDER BY started_at_utc DESC LIMIT 1").fetchone()
     return str(row[0]) if row else ""
+
+
+def _observer_run_configs(store: ProspectiveFirstSeenStore) -> dict[str, dict[str, Any]]:
+    configs: dict[str, dict[str, Any]] = {}
+    for row in store.connection.execute(
+        """SELECT run_id, started_at_utc, deadline_at_utc, completed_at_utc,
+        status, poll_interval_seconds, page_limit, max_requests, request_count
+        FROM runs ORDER BY started_at_utc"""
+    ):
+        started = _parse_datetime(str(row["started_at_utc"]))
+        deadline = _parse_datetime(str(row["deadline_at_utc"]))
+        configs[str(row["run_id"])] = {
+            "status": str(row["status"]),
+            "started_at_utc": str(row["started_at_utc"]),
+            "completed_at_utc": str(row["completed_at_utc"]),
+            "session_duration_seconds": (deadline - started).total_seconds() if started and deadline else None,
+            "poll_interval_seconds": float(row["poll_interval_seconds"]),
+            "page_limit": int(row["page_limit"]),
+            "max_requests": int(row["max_requests"]),
+            "request_count": int(row["request_count"]),
+        }
+    return configs
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:

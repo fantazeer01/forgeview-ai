@@ -85,6 +85,7 @@ from polymarket.wallet_intelligence.evidence_accumulator import (
     build_accumulated_evidence,
     evaluate_h2_h3_gates,
     prepare_accumulator_progress,
+    refresh_expiry_cache,
     run_autonomous_accumulator,
 )
 
@@ -2069,10 +2070,66 @@ class WalletAutonomousEvidenceAccumulatorTests(unittest.TestCase):
             self.assertEqual(result["automation_status"], "stopped")
 
     def test_background_command_runs_frozen_accumulator(self):
-        command = background_command(Path("a.sqlite3"), Path("o.sqlite3"), Path("output"))
+        command = background_command(
+            Path("a.sqlite3"), Path("o.sqlite3"), Path("observer-output"), Path("output")
+        )
         self.assertIn("wallet-evidence-accumulator", command)
         self.assertIn("run", command)
         self.assertNotIn("--poll-interval", command)
+
+    def test_development_launch_cap_does_not_change_polling(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            calls = []
+
+            def runner(**kwargs):
+                calls.append(kwargs)
+                return {}
+
+            result = run_autonomous_accumulator(
+                activity_client=object(),
+                metadata_client=object(),
+                accumulator_db=root / "accumulator.sqlite3",
+                observer_db=root / "observer.sqlite3",
+                output_dir=root / "output",
+                session_runner=runner,
+                session_limit=1,
+                session_duration_seconds=15,
+                now=lambda: datetime.fromisoformat("2026-06-29T12:00:00+00:00"),
+            )
+            self.assertEqual(len(calls), 1)
+            self.assertEqual(calls[0]["duration_seconds"], 15)
+            self.assertEqual(calls[0]["poll_interval_seconds"], 5)
+            self.assertEqual(calls[0]["max_requests"], 12)
+            self.assertEqual(result["sessions"]["completed"], 2)
+            self.assertEqual(result["action"], "CONTINUE")
+
+    def test_gamma_expiry_cache_requires_condition_match(self):
+        class MetadataClient:
+            def get_market_by_slug(self, slug):
+                return {
+                    "conditionId": "0xcondition",
+                    "endDate": "2026-06-29T12:05:00Z",
+                }
+
+        rows = [
+            {
+                "asset_class": "BTC",
+                "market_slug": "btc-updown-5m-1782734400",
+                "condition_id": "0xcondition",
+            }
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            with EvidenceAccumulatorStore(Path(tmp) / "accumulator.sqlite3") as store:
+                refresh_expiry_cache(
+                    rows,
+                    store,
+                    MetadataClient(),
+                    "2026-06-29T12:05:01.000+00:00",
+                )
+                cache = store.expiry_cache()
+                self.assertEqual(cache["btc-updown-5m-1782734400"]["condition_id"], "0xcondition")
+                self.assertEqual(cache["btc-updown-5m-1782734400"]["source"], "gamma_markets_slug")
 
 
 if __name__ == "__main__":

@@ -213,7 +213,10 @@ def build_parser() -> argparse.ArgumentParser:
     accumulator.add_argument("action", choices=("status", "run", "start"), nargs="?", default="status")
     accumulator.add_argument("--accumulator-database", type=Path, default=DEFAULT_ACCUMULATOR_DB)
     accumulator.add_argument("--observer-database", type=Path, default=DEFAULT_PROSPECTIVE_DB)
+    accumulator.add_argument("--observer-output", type=Path, default=DEFAULT_PROSPECTIVE_OUTPUT)
     accumulator.add_argument("--output", type=Path, default=DEFAULT_ACCUMULATOR_OUTPUT)
+    accumulator.add_argument("--session-limit", type=int, default=0)
+    accumulator.add_argument("--session-duration", type=float, default=DEFAULT_DURATION_SECONDS)
     return parser
 
 
@@ -404,13 +407,19 @@ def main(argv: list[str] | None = None) -> int:
                 metadata_client=PublicMarketMetadataClient(delay_seconds=0.02),
                 accumulator_db=args.accumulator_database,
                 observer_db=args.observer_database,
+                observer_output=args.observer_output,
                 output_dir=args.output,
+                session_limit=args.session_limit or None,
+                session_duration_seconds=args.session_duration,
             )
         elif args.action == "start":
             result = launch_accumulator_background(
                 accumulator_db=args.accumulator_database,
                 observer_db=args.observer_database,
+                observer_output=args.observer_output,
                 output_dir=args.output,
+                session_limit=args.session_limit or None,
+                session_duration_seconds=args.session_duration,
             )
         else:
             result = prepare_accumulator_progress(

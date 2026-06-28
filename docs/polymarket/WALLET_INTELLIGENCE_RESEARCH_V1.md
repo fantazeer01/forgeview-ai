@@ -1816,3 +1816,55 @@ Validation includes deterministic no-poll status, persistent/restart-safe
 numbering, support/reject paths, and an end-to-end session-60 stop. The next
 task is a controlled public launch of the already frozen accumulator, not more
 accumulator engineering.
+
+## Wallet Autonomous Evidence Accumulator Controlled Launch v1
+
+The first controlled launch is complete.
+
+Launch boundary:
+
+- detached public process;
+- one launch-bounded development session;
+- isolated accumulator and observer SQLite databases;
+- 15-second duration;
+- unchanged 5-second polling interval;
+- canonical evidence and session budget untouched.
+
+Measured operation:
+
+- session number 2 assigned automatically;
+- 3 poll cycles and 12 public requests;
+- 12 successful responses and zero failures;
+- all four wallet baselines established;
+- 1,200 response rows and 800 post-baseline observation links persisted;
+- raw payload JSON and hashes present for all polls;
+- zero newly observed trades;
+- zero new eligible five-minute trades;
+- no live Gamma cache entry was required;
+- process exited cleanly and returned state to `ready`.
+
+Evidence and gate status:
+
+- eligible trades remained 2;
+- H2 remained `INCONCLUSIVE`;
+- H3 remained `INCONCLUSIVE`;
+- action remained `CONTINUE`;
+- controlled state advanced to 2 sessions with 58 remaining;
+- canonical state remains 1 session with 59 remaining.
+
+Restart and reporting:
+
+- two fresh status processes reopened persistent state;
+- progress JSON, gate JSON, and Markdown hashes matched byte for byte;
+- status recovered the actual 15-second duration, 5-second polling, and 12
+  requests from the linked observer run;
+- automatic SUPPORT, REJECT, and session-60 stops remain unchanged and pass
+  tests.
+
+The live Gamma path was not exercised because no target trade appeared. Its
+condition-match and cache-persistence path passed a focused fixture. This
+sprint validates unattended operation only and adds no research conclusion.
+
+Next task: launch the canonical bounded accumulator once, with canonical
+300-second sessions and no launch-only session cap, writing mutable runtime
+progress under ignored `output/` paths until a frozen stop condition is met.

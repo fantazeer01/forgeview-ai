@@ -1,0 +1,63 @@
+{
+  "action": "CONTINUE",
+  "automation_status": "ready",
+  "canonical_evidence_unchanged": true,
+  "controlled_runtime": {
+    "accumulator_database": "output/wallet_controlled_launch_v1/accumulator.sqlite3",
+    "observer_database": "output/wallet_controlled_launch_v1/observer.sqlite3",
+    "output_directory": "output/wallet_controlled_launch_v1/runtime"
+  },
+  "evidence": {
+    "eligible_trades_after": 2,
+    "eligible_trades_before": 2,
+    "h2_conclusion": "INCONCLUSIVE",
+    "h3_conclusion": "INCONCLUSIVE",
+    "new_eligible_trades": 0,
+    "remaining_eligible_trades": 98
+  },
+  "expiry_cache": {
+    "condition_match_fixture_passed": true,
+    "entries": 0,
+    "live_path_status": "not_exercised_no_new_target_trade"
+  },
+  "launch": {
+    "detached": true,
+    "exited_cleanly": true,
+    "process_id": 18296,
+    "process_running_after_session": false,
+    "session_duration_seconds": 15.0,
+    "session_limit": 1
+  },
+  "observer": {
+    "baseline_wallets": 4,
+    "completed_runs": 1,
+    "first_request_at_utc": "2026-06-28T17:09:03.271+00:00",
+    "last_response_at_utc": "2026-06-28T17:09:14.371+00:00",
+    "max_requests": 12,
+    "new_trades": 0,
+    "page_limit": 100,
+    "payloads_with_hash_and_raw_json": 12,
+    "poll_cycles": 3,
+    "poll_interval_seconds": 5.0,
+    "polls_attempted": 12,
+    "polls_successful": 12,
+    "raw_response_rows": 1200,
+    "run_id": "f9d8a73029135498ee276c2c"
+  },
+  "progress_artifact_sha256": {
+    "wallet_gate_status.json": "78b7baabc516527c96c1ea1336bea170fe756413cbfbc7f78fd0ce6a1de745ee",
+    "wallet_progress.json": "5a06590c9ad05b131a949f4c56ccd469621260baddf51aaa6ffe2e3d32e63820",
+    "wallet_progress_report.md": "a052f683cc6c9e89cb3278cf6a2f9bbf1041275c10c7425f3b2089e67dd09093"
+  },
+  "remaining_session_budget_in_controlled_state": 58,
+  "restart_status_reads_repeatable": true,
+  "session": {
+    "action_after": "CONTINUE",
+    "completed_at_utc": "2026-06-28T17:09:18.357+00:00",
+    "error": "",
+    "number": 2,
+    "started_at_utc": "2026-06-28T17:09:03.136+00:00",
+    "status": "complete"
+  },
+  "task": "Wallet Autonomous Evidence Accumulator Controlled Launch v1"
+}
