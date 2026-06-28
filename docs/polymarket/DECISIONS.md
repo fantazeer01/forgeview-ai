@@ -1334,3 +1334,26 @@ H3 evidence is 1/2 with a 9.45%-90.55% interval. Point estimates therefore do
 not distinguish weak from strong underlying rates. A 100-row floor gives a
 worst-case approximate 95% proportion margin of 9.8 percentage points, while
 wallet, asset, date, and session gates reduce concentration risk.
+
+## D-073: Managed repricing runtime never force-closes on process shutdown
+
+Status: Accepted
+Decision: The managed repricing paper runtime owns one restart-safe core and
+one v5 JSONL adapter for its process lifetime. Each poll writes atomic health
+state, and Ctrl+C or termination requests a graceful stop where supported.
+Shutdown completes the current atomic operation, closes SQLite, and preserves
+open paper positions for deterministic restart recovery. It must not synthesize
+an exit or force-close a position merely because the process stops.
+
+Runtime telemetry is operational health, not strategy statistics. Accepted
+events are newly journaled valid v5 records; rejected events are complete
+records that fail stream validation; detector admission remains defined only
+by the frozen paper core. Position counters separately expose actual paper
+entries and exits.
+
+Reason: Eight dedicated runtime tests prove bounded start/stop, event flow,
+duplicate replay idempotency, open-position recovery and appended close,
+failed-closed invalid input, pre-requested graceful stop, deterministic health
+output, and the CLI dry-run contract. Continuous unattended operation remains
+unauthorized until Repricing Paper Runtime Supervision And Soak Sprint v1
+adds supervision controls and produces soak evidence.

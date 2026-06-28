@@ -22,6 +22,7 @@ class V5StreamSyncResult:
     verified_events: int
     ingested_events: int
     last_event_index: int | None
+    last_event_timestamp: str | None
     deferred_trailing_bytes: int
 
 
@@ -104,7 +105,18 @@ class V5JsonlPaperAdapter:
             verified_events=verified,
             ingested_events=ingested,
             last_event_index=committed,
+            last_event_timestamp=(
+                self._last_timestamp.isoformat()
+                if self._last_timestamp is not None else None
+            ),
             deferred_trailing_bytes=deferred,
+        )
+
+    @property
+    def last_event_timestamp(self) -> str | None:
+        return (
+            self._last_timestamp.isoformat()
+            if self._last_timestamp is not None else None
         )
 
     def _register_source(self, event: dict[str, Any]) -> None:

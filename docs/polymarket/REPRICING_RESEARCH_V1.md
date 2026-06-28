@@ -797,6 +797,45 @@ rotation, heartbeat/stale-feed/disk/write telemetry, daily statistics, and a
 supervised soak remain missing. No detector, threshold, campaign, holdout,
 Telegram, wallet, or real-money execution path changed.
 
+## Managed Paper Runtime Loop v1
+
+The paper-only runtime entrypoint is implemented in
+`polymarket/repricing_research/paper_runtime.py` and installed as
+`repricing-paper-runtime`.
+
+The runtime:
+
+- owns one v5 stream adapter and restart-safe paper core;
+- polls continuously or under explicit `--max-polls` / runtime bounds;
+- requires a bound in `--dry-run` mode;
+- restores open positions and pending journal state before polling;
+- persists all entries and exits through the existing transactional ledger;
+- treats duplicate source replay as idempotent;
+- handles Ctrl+C and termination as graceful stop requests where feasible;
+- closes SQLite without force-closing open positions;
+- atomically replaces health JSON after startup, each poll, failure, and stop;
+- fails closed and preserves the ledger when complete stream input is invalid.
+
+Health telemetry includes runtime start/stop, last poll/event timestamp,
+received/accepted/rejected and duplicate event counts, positions opened/closed,
+recovered/current open positions, completed polls, last error, source/database
+paths, frozen strategy fingerprint, and dry-run state. These are operational
+counters, not detector or performance optimization metrics.
+
+Eight runtime tests pass, including byte-deterministic bounded dry-run output
+under a fixed clock. The combined repricing suite passes 28 tests and the full
+repository suite passes 167 tests. Artifacts are under
+`polymarket/models/repricing_research_v1/paper_runtime_v1/`.
+
+Continuous unattended operation remains unauthorized. The required Repricing
+successor is **Repricing Paper Runtime Supervision And Soak Sprint v1**, which
+must address single-instance supervision, restart policy, session rotation,
+stale-feed/disk/write controls, and supervised soak evidence. The global
+repository NEXT_TASK remains the wallet branch task under the one-task policy.
+
+No detector, threshold, campaign, holdout, Telegram, wallet/private-key, order
+placement, or real-money execution path changed.
+
 ## Missing Data
 
 The current evidence is missing:

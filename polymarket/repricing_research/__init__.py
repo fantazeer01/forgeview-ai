@@ -13,6 +13,11 @@ from .v5_stream_adapter import (
     V5StreamSyncResult,
     V5StreamValidationError,
 )
+from .paper_runtime import (
+    ManagedRepricingPaperRuntime,
+    PaperRuntimeConfig,
+    PaperRuntimeHealth,
+)
 
 __all__ = [
     "RepricingConfig",
@@ -25,6 +30,9 @@ __all__ = [
     "V5JsonlPaperAdapter",
     "V5StreamSyncResult",
     "V5StreamValidationError",
+    "ManagedRepricingPaperRuntime",
+    "PaperRuntimeConfig",
+    "PaperRuntimeHealth",
     "build_repricing_dataset",
     "simulate_repricing_strategy",
 ]

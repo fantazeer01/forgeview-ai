@@ -26,6 +26,7 @@ validation-protocol = "polymarket.validation_protocol.cli:main"
 baseline-model = "polymarket.baseline_model.cli:main"
 baseline-diagnostics = "polymarket.baseline_diagnostics.cli:main"
 wallet-intelligence = "polymarket.wallet_intelligence.cli:main"
+repricing-paper-runtime = "polymarket.repricing_research.paper_runtime:main"
 
 [tool.setuptools.packages.find]
 include = ["polymarket*"]

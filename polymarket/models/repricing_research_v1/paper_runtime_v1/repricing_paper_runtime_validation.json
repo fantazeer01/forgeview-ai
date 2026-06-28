@@ -1,0 +1,54 @@
+{
+  "artifact": "managed_repricing_paper_runtime_loop_v1",
+  "date": "2026-06-28",
+  "detector_logic_changed": false,
+  "frozen_parameters_changed": false,
+  "holdout_accessed": false,
+  "live_trading_added": false,
+  "public_campaign_launched": false,
+  "result": "PASS_BOUNDED_DRY_RUN",
+  "strategy_fingerprint": "d5d389be45d472628aab06b3aeeb281593e74d48b82902e12712047c91fec010",
+  "continuous_unattended_runtime_authorized": false,
+  "health_fields": [
+    "status",
+    "runtime_start_timestamp",
+    "runtime_stop_timestamp",
+    "last_poll_timestamp",
+    "last_event_timestamp",
+    "events_received",
+    "events_accepted",
+    "events_rejected",
+    "duplicate_events_skipped",
+    "positions_opened",
+    "positions_closed",
+    "recovered_open_positions",
+    "current_open_positions",
+    "polls_completed",
+    "last_error",
+    "source_path",
+    "database_path",
+    "strategy_fingerprint",
+    "dry_run"
+  ],
+  "validation": {
+    "bounded_dry_run_deterministic": true,
+    "duplicate_replay_idempotent": true,
+    "event_flow_to_paper_core": true,
+    "graceful_stop_recoverable": true,
+    "health_written_atomically": true,
+    "invalid_stream_fails_closed": true,
+    "open_position_survives_restart": true,
+    "runtime_starts_and_stops_cleanly": true
+  },
+  "focused_tests": {
+    "command": "python -m unittest tests.polymarket.test_repricing_research tests.polymarket.test_repricing_paper_core tests.polymarket.test_repricing_v5_stream_adapter tests.polymarket.test_repricing_paper_runtime -q",
+    "passed": 28,
+    "failed": 0
+  },
+  "full_tests": {
+    "command": "python -m unittest discover -s tests -q",
+    "passed": 167,
+    "failed": 0
+  },
+  "repricing_successor": "Repricing Paper Runtime Supervision And Soak Sprint v1"
+}

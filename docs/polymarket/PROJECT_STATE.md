@@ -2318,6 +2318,46 @@ Next active task:
 
 - Wallet H2/H3 Gate-Bound Evidence Collection Sprint v1.
 
+## Managed Repricing Paper Runtime Loop v1
+
+Managed Repricing Paper Runtime Loop v1 is complete for bounded, fixture-driven
+paper operation.
+
+Implementation and artifacts:
+
+- `polymarket/repricing_research/paper_runtime.py`;
+- `tests/polymarket/test_repricing_paper_runtime.py`;
+- `polymarket/models/repricing_research_v1/paper_runtime_v1/repricing_paper_runtime_report.md`;
+- `polymarket/models/repricing_research_v1/paper_runtime_v1/repricing_paper_runtime_validation.json`;
+- `repricing-paper-runtime` command entrypoint.
+
+Measured validation:
+
+- the managed loop starts the v5 adapter and restart-safe core, processes
+  valid appended events, and persists paper positions and trades;
+- restart restores open positions and accepts subsequent close events without
+  duplication;
+- repeated source replay is idempotent;
+- Ctrl+C/termination support requests graceful shutdown where feasible;
+- shutdown closes SQLite without force-closing open paper positions;
+- invalid complete stream data fails closed and records the error;
+- health JSON is replaced atomically at startup, poll, failure, and shutdown;
+- bounded dry-run health output is byte deterministic under a fixed clock;
+- 28 repricing tests and 167 repository tests pass.
+
+Health fields cover runtime start/stop, last poll/event, accepted/rejected and
+duplicate event counts, positions opened/closed, recovered/current open
+positions, completed polls, last error, source/database paths, strategy
+fingerprint, and dry-run state.
+
+No detector logic or threshold changed. No campaign, real trade, Telegram
+integration, wallet/private-key path, or holdout access occurred. Unattended
+continuous operation is not authorized.
+
+The required Repricing successor is **Repricing Paper Runtime Supervision And
+Soak Sprint v1**. It remains planned branch work because the sole global task
+in `NEXT_TASK.md` is Wallet H2/H3 Gate-Bound Evidence Collection Sprint v1.
+
 ## State update protocol
 
 At the end of every completed active task:
