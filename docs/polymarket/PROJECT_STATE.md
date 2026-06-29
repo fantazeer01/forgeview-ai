@@ -2768,6 +2768,68 @@ No live trading, wallet/private-key path, model training, holdout inspection,
 holdout evaluation, detector change, threshold change, or strategy change
 occurred.
 
+## Repricing Runtime Backpressure And Liveness Fix v1
+
+The runtime blocker exposed by the first 24-hour soak is fixed at component and
+stress-validation level. Verdict: `READY_FOR_SECOND_24H_SOAK_PREFLIGHT`.
+
+Failure diagnosis:
+
+- heartbeat stopped at `2026-06-28T21:04:31.905461+00:00`, after
+  12,310.53587 seconds;
+- capture checkpoints continued until `2026-06-29T11:43:08.054053+00:00` and
+  capture completed at `2026-06-29T18:15:42.387630+00:00`;
+- the paper cursor continued to event 351,230 while telemetry was stale;
+- `V5JsonlPaperAdapter.sync()` consumed toward EOF from a growing file;
+- every event incurred one raw-journal commit and one apply/cursor commit under
+  `SQLite synchronous=FULL`;
+- heartbeat, stale-source, and maximum-runtime checks ran only after the
+  unbounded sync returned.
+
+Implemented safeguards:
+
+- bounded 1,000-event in-memory batches and one MiB maximum JSONL line size;
+- one atomic journal/apply/cursor transaction per batch;
+- 64 MiB uncommitted-backlog fail-closed ceiling;
+- in-transaction progress callbacks so a watchdog failure rolls back the batch;
+- independent 30-second processing-progress watchdog and independent runtime
+  deadline enforcement;
+- periodic progress heartbeat fields for batch size, backlog, progress time,
+  watchdog state, fatal code, and safe-shutdown marker;
+- durable `FAILED_CLOSED` safe-shutdown marker for liveness, backpressure,
+  source-validation, and terminal session-health failures;
+- explicit rejection of `session_completed` when campaign completeness or
+  observation continuity is unhealthy;
+- bounded, exactly-once committed-prefix restart and cursor catch-up.
+
+Validation:
+
+- telemetry-stall, overload, fail-closed marker, healthy long-run, incomplete
+  session health, and soak-scale cursor catch-up tests pass;
+- a 5,000-event healthy fixture and a 5,000 + 100 event restart/catch-up fixture
+  reconcile exactly;
+- 10,000 preserved soak events processed in 0.479278 seconds across ten
+  1,000-event batches, or 20,864.72 events/second;
+- Repricing tests: 51 passed;
+- full repository tests: 197 passed.
+
+Artifacts:
+
+- `polymarket/models/repricing_research_v1/runtime_backpressure_liveness_fix_v1/runtime_fix_report.md`;
+- `polymarket/models/repricing_research_v1/runtime_backpressure_liveness_fix_v1/runtime_fix_validation.json`.
+
+`ALPHA-B001`, `ALPHA-B004`, and `ALPHA-B007` remain `IN_PROGRESS` until a
+second unattended soak validates the fixes under live growth. `ALPHA-B002`
+remains resolved. No capture or soak was launched in this sprint.
+
+The next active task is **Run Second 24-Hour Repricing Paper Soak v1**. It is
+authorized only after a fresh green preflight and must demonstrate complete
+capture continuity, current heartbeat, bounded shutdown, and exact
+live-versus-offline reconciliation.
+
+No detector, threshold, strategy, fingerprint, evidence gate, holdout,
+wallet/private-key, order, or live-money behavior changed.
+
 ## State update protocol
 
 At the end of every completed active task:

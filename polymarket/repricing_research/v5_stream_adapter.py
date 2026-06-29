@@ -6,7 +6,7 @@ import math
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from .paper_core import RestartSafePaperCore
 
@@ -29,6 +29,14 @@ class V5StreamSyncResult:
     last_event_index: int | None
     last_event_timestamp: str | None
     deferred_trailing_bytes: int
+    processed_events: int
+    reached_eof: bool
+    remaining_bytes: int
+    batch_limit_reached: bool
+    replaying_committed_prefix: bool
+    session_completed_seen: bool
+    session_health_status: str | None
+    session_health_errors: tuple[str, ...]
 
 
 class V5JsonlPaperAdapter:
@@ -38,6 +46,8 @@ class V5JsonlPaperAdapter:
         self,
         session_path: str | Path,
         core: RestartSafePaperCore,
+        *,
+        max_line_bytes: int = 1024 * 1024,
     ) -> None:
         self.session_path = Path(session_path).resolve()
         self.core = core
@@ -48,8 +58,18 @@ class V5JsonlPaperAdapter:
         self._last_timestamp: datetime | None = None
         self._initialized = False
         self._last_sync_lag_measurements = 0
+        self._max_line_bytes = max_line_bytes
+        if self._max_line_bytes <= 0:
+            raise ValueError("maximum v5 line bytes must be positive")
 
-    def sync(self) -> V5StreamSyncResult:
+    def sync(
+        self,
+        *,
+        max_events: int | None = None,
+        progress_callback: Callable[[], None] | None = None,
+    ) -> V5StreamSyncResult:
+        if max_events is not None and max_events <= 0:
+            raise ValueError("maximum sync events must be positive")
         if not self.session_path.is_file():
             raise V5StreamUnavailableError(
                 f"v5 session does not exist: {self.session_path}"
@@ -59,62 +79,106 @@ class V5JsonlPaperAdapter:
             raise V5StreamValidationError("v5 session was truncated after synchronization")
 
         verified = 0
-        ingested = 0
         lag_measurements = 0
         self._last_sync_lag_measurements = 0
         deferred = 0
         cursor = self.core.source_cursor(self.source_id)
+        starting_cursor = cursor
+        local_offset = self._byte_offset
+        local_next_index = self._next_event_index
+        local_last_timestamp = self._last_timestamp
+        new_events: list[tuple[int, dict[str, Any]]] = []
+        processed_events = 0
+        reached_eof = False
+        session_completed_seen = False
+        session_health_status: str | None = None
+        session_health_errors: list[str] = []
         with self.session_path.open("rb") as handle:
-            handle.seek(self._byte_offset)
+            handle.seek(local_offset)
             while True:
-                line_start = handle.tell()
-                raw_line = handle.readline()
-                if not raw_line:
+                if max_events is not None and processed_events >= max_events:
                     break
+                line_start = handle.tell()
+                raw_line = handle.readline(self._max_line_bytes + 1)
+                if not raw_line:
+                    reached_eof = True
+                    break
+                if len(raw_line) > self._max_line_bytes:
+                    raise V5StreamValidationError(
+                        f"event {local_next_index} exceeds maximum line size"
+                    )
                 if not raw_line.endswith(b"\n"):
                     deferred = len(raw_line)
                     handle.seek(line_start)
                     break
-                event = self._decode_event(raw_line, self._next_event_index)
-                timestamp = self._validate_event(event, self._next_event_index)
-                if self._last_timestamp is not None and timestamp < self._last_timestamp:
+                event = self._decode_event(raw_line, local_next_index)
+                timestamp = self._validate_event(event, local_next_index)
+                if local_last_timestamp is not None and timestamp < local_last_timestamp:
                     raise V5StreamValidationError(
-                        f"event {self._next_event_index} timestamp is out of order"
+                        f"event {local_next_index} timestamp is out of order"
                     )
-                if self._next_event_index == 0:
+                if local_next_index == 0:
                     self._register_source(event)
-                if cursor is not None and self._next_event_index <= cursor:
+                if cursor is not None and local_next_index <= cursor:
                     try:
                         self.core.verify_source_event(
-                            self.source_id, self._next_event_index, event
+                            self.source_id, local_next_index, event
                         )
                     except ValueError as exc:
                         raise V5StreamValidationError(str(exc)) from exc
                     verified += 1
+                    if progress_callback is not None:
+                        progress_callback()
                 else:
-                    self.core.ingest_event(
-                        self.source_id, self._next_event_index, event
-                    )
-                    ingested += 1
+                    new_events.append((local_next_index, event))
                     if event["event"] == "lag_measurement":
                         lag_measurements += 1
-                        self._last_sync_lag_measurements += 1
-                    cursor = self._next_event_index
-                self._last_timestamp = timestamp
-                self._next_event_index += 1
-                self._byte_offset = handle.tell()
+                if event["event"] == "session_completed":
+                    session_completed_seen = True
+                    session_health_status, errors = self._session_health(event)
+                    session_health_errors.extend(errors)
+                local_last_timestamp = timestamp
+                local_next_index += 1
+                processed_events += 1
+                local_offset = handle.tell()
+
+        try:
+            self.core.ingest_event_batch(
+                self.source_id,
+                new_events,
+                progress_callback=progress_callback,
+            )
+        except ValueError as exc:
+            raise V5StreamValidationError(str(exc)) from exc
+        self._last_sync_lag_measurements = lag_measurements
+        self._last_timestamp = local_last_timestamp
+        self._next_event_index = local_next_index
+        self._byte_offset = local_offset
 
         committed = self.core.source_cursor(self.source_id)
-        if committed is not None and self._next_event_index <= committed:
+        stopped_at_batch_limit = (
+            max_events is not None and processed_events >= max_events
+        )
+        if (
+            committed is not None
+            and self._next_event_index <= committed
+            and not stopped_at_batch_limit
+        ):
             raise V5StreamValidationError(
                 "v5 session is truncated before the committed event cursor"
             )
         self._initialized = True
+        remaining_bytes = max(0, self.session_path.stat().st_size - self._byte_offset)
+        batch_limit_reached = (
+            max_events is not None
+            and processed_events >= max_events
+            and remaining_bytes > 0
+        )
         return V5StreamSyncResult(
             source_id=self.source_id,
             source_path=str(self.session_path),
             verified_events=verified,
-            ingested_events=ingested,
+            ingested_events=len(new_events),
             ingested_lag_measurements=lag_measurements,
             last_event_index=committed,
             last_event_timestamp=(
@@ -122,6 +186,16 @@ class V5JsonlPaperAdapter:
                 if self._last_timestamp is not None else None
             ),
             deferred_trailing_bytes=deferred,
+            processed_events=processed_events,
+            reached_eof=reached_eof,
+            remaining_bytes=remaining_bytes,
+            batch_limit_reached=batch_limit_reached,
+            replaying_committed_prefix=(
+                starting_cursor is not None and self._next_event_index <= starting_cursor
+            ),
+            session_completed_seen=session_completed_seen,
+            session_health_status=session_health_status,
+            session_health_errors=tuple(session_health_errors),
         )
 
     @property
@@ -134,6 +208,25 @@ class V5JsonlPaperAdapter:
     @property
     def last_sync_lag_measurements(self) -> int:
         return self._last_sync_lag_measurements
+
+    @property
+    def byte_offset(self) -> int:
+        return self._byte_offset
+
+    @staticmethod
+    def _session_health(event: dict[str, Any]) -> tuple[str | None, list[str]]:
+        payload = event.get("payload", {})
+        campaign = payload.get("campaign_completeness", {})
+        continuity = payload.get("observation_continuity", {})
+        campaign_status = campaign.get("status") if isinstance(campaign, dict) else None
+        continuity_status = continuity.get("status") if isinstance(continuity, dict) else None
+        errors: list[str] = []
+        if campaign_status not in {None, "complete"}:
+            errors.append(f"campaign_completeness:{campaign_status}")
+        if continuity_status not in {None, "continuous"}:
+            errors.append(f"observation_continuity:{continuity_status}")
+        status = "complete" if not errors else "incomplete"
+        return status, errors
 
     def _register_source(self, event: dict[str, Any]) -> None:
         canonical = json.dumps(event, sort_keys=True, separators=(",", ":"))

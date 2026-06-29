@@ -45,6 +45,10 @@ class RepricingRuntimeMVPConfig:
     require_safe_power: bool = True
     max_event_staleness_seconds: float = 30.0
     max_write_latency_seconds: float = 0.5
+    max_events_per_batch: int = 1000
+    max_backlog_bytes: int = 64 * 1024 * 1024
+    max_processing_stall_seconds: float = 30.0
+    heartbeat_interval_seconds: float = 5.0
 
     def __post_init__(self) -> None:
         if self.max_restarts < 0:
@@ -65,6 +69,11 @@ class RepricingRuntimeMVPConfig:
             dry_run=self.dry_run,
             max_event_staleness_seconds=self.max_event_staleness_seconds,
             max_write_latency_seconds=self.max_write_latency_seconds,
+            max_events_per_batch=self.max_events_per_batch,
+            max_backlog_bytes=self.max_backlog_bytes,
+            max_processing_stall_seconds=self.max_processing_stall_seconds,
+            heartbeat_interval_seconds=self.heartbeat_interval_seconds,
+            safe_shutdown_path=self.safe_shutdown_path,
         )
 
     @property
@@ -82,6 +91,10 @@ class RepricingRuntimeMVPConfig:
     @property
     def heartbeat_path(self) -> Path:
         return self.output_directory / "repricing_runtime_heartbeat.json"
+
+    @property
+    def safe_shutdown_path(self) -> Path:
+        return self.output_directory / "repricing_runtime_safe_shutdown.json"
 
     @property
     def summary_path(self) -> Path:
@@ -135,6 +148,16 @@ class RepricingRuntimeMVPConfig:
             ),
             max_write_latency_seconds=float(
                 payload.get("max_write_latency_seconds", 0.5)
+            ),
+            max_events_per_batch=int(payload.get("max_events_per_batch", 1000)),
+            max_backlog_bytes=int(
+                payload.get("max_backlog_bytes", 64 * 1024 * 1024)
+            ),
+            max_processing_stall_seconds=float(
+                payload.get("max_processing_stall_seconds", 30.0)
+            ),
+            heartbeat_interval_seconds=float(
+                payload.get("heartbeat_interval_seconds", 5.0)
             ),
         )
 
@@ -374,6 +397,11 @@ class ContinuousRepricingPaperMVP:
                     session_id=session_id,
                     max_event_staleness_seconds=self.config.max_event_staleness_seconds,
                     max_write_latency_seconds=self.config.max_write_latency_seconds,
+                    max_events_per_batch=self.config.max_events_per_batch,
+                    max_backlog_bytes=self.config.max_backlog_bytes,
+                    max_processing_stall_seconds=self.config.max_processing_stall_seconds,
+                    heartbeat_interval_seconds=self.config.heartbeat_interval_seconds,
+                    safe_shutdown_path=self.config.safe_shutdown_path,
                 )
                 outputs.begin_attempt()
                 runtime_kwargs = {
@@ -553,6 +581,11 @@ def validate_runtime_preflight(
         "preflight_write_latency_ms": round(maximum_write_latency * 1000.0, 3),
         "max_write_latency_ms": config.max_write_latency_seconds * 1000.0,
         "max_event_staleness_seconds": config.max_event_staleness_seconds,
+        "max_events_per_batch": config.max_events_per_batch,
+        "max_backlog_bytes": config.max_backlog_bytes,
+        "max_processing_stall_seconds": config.max_processing_stall_seconds,
+        "heartbeat_interval_seconds": config.heartbeat_interval_seconds,
+        "safe_shutdown_path": str(config.safe_shutdown_path.resolve()),
         "detector_state": "FROZEN_CONFIG_VERIFIED",
         "paper_core_state": "RECOVERABLE",
         "strategy_fingerprint": fingerprint,

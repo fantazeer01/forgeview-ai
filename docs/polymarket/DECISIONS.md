@@ -1806,3 +1806,25 @@ Reason: The source had only 75.3241% checkpoint coverage and a
 and the live ledger persisted 60 signals while offline export reconstructed
 73. Positive paper P&L cannot override continuity or exactly-once evidence
 failures.
+
+## D-103: Runtime liveness is independent of source throughput
+
+Status: Accepted
+Decision: Repricing stream consumption must be bounded by event count, line
+size, and backlog size. Raw journaling, paper transitions, and cursor movement
+commit atomically per bounded batch. A separate watchdog owns processing
+progress and runtime-deadline enforcement; a stalled batch must roll back and
+produce a durable `FAILED_CLOSED` marker before any later source event may be
+committed.
+
+A terminal source session is unsuccessful unless its own campaign completeness
+and observation continuity are healthy. Positive paper results, a live process,
+or a present `session_completed` record cannot override stale telemetry,
+backpressure overload, an incomplete source session, or live-versus-replay
+reconciliation failure.
+
+Reason: The first soak's consume-to-EOF call and per-event durable commits kept
+the managed loop from emitting heartbeat or enforcing its 24-hour bound. The
+fixed runtime processed 10,000 preserved events in ten bounded batches at
+20,864.72 events/second and passed stall, overload, rollback, terminal-health,
+and restart/catch-up tests without changing the frozen strategy.

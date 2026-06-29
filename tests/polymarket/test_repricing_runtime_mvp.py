@@ -309,6 +309,13 @@ class ContinuousRepricingPaperMVPTests(unittest.TestCase):
             session_rotation_count=0,
             stale_event_detected=False,
             last_write_latency_ms=0.0,
+            last_progress_timestamp=timestamp,
+            batch_events_processed=0,
+            batch_limit_reached=False,
+            backlog_bytes=0,
+            watchdog_triggered=False,
+            fatal_error_code=None,
+            safe_shutdown_marker_path="repricing_runtime_safe_shutdown.json",
             dry_run=True,
         )
 

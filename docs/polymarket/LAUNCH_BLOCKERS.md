@@ -31,7 +31,9 @@ auditable.
   without human action, duplicate state, or an unhandled integrity failure.
 - **Latest evidence:** First 24-Hour Repricing Paper Soak v1 failed: the
   heartbeat stopped after 12,310.53587 seconds, the process exceeded its bound,
-  and live processing missed 13 offline-reconstructable signals.
+  and live processing missed 13 offline-reconstructable signals. Bounded batch
+  ingestion and liveness controls now pass component and 10,000-event
+  preserved-stream validation; a second soak remains required for exit.
 - **Dependencies:** None.
 
 ## ALPHA-B002: Automated paper execution
@@ -74,7 +76,9 @@ auditable.
   integrity failures.
 - **Latest evidence:** Single-instance launch held, but the consumer remained
   CPU-active after heartbeat loss and beyond its configured runtime instead of
-  stopping closed.
+  stopping closed. The independent watchdog, deadline rollback, and durable
+  shutdown marker now pass fault-injection tests; unattended evidence remains
+  required.
 - **Dependencies:** ALPHA-B001, ALPHA-B003.
 
 ## ALPHA-B005: Telegram live alerts
@@ -117,7 +121,9 @@ auditable.
   operation and every critical stale, integrity, API, restart, or duplicate
   condition is visible and fail-closed.
 - **Latest evidence:** The heartbeat stopped after 12,310.53587 seconds without
-  a fail-closed transition while the process remained active.
+  a fail-closed transition while the process remained active. Progress
+  heartbeat, backlog diagnostics, and liveness fail-closed behavior now pass
+  stress tests; a second soak must verify sustained freshness.
 - **Dependencies:** ALPHA-B004.
 
 ## ALPHA-B008: End-to-end Objective Alpha evidence

@@ -18,6 +18,9 @@ from .paper_runtime import (
     ManagedRepricingPaperRuntime,
     PaperRuntimeConfig,
     PaperRuntimeHealth,
+    RuntimeBackpressureError,
+    RuntimeLivenessError,
+    RuntimeSessionHealthError,
 )
 from .runtime_mvp import (
     ContinuousRepricingPaperMVP,
@@ -44,6 +47,9 @@ __all__ = [
     "ManagedRepricingPaperRuntime",
     "PaperRuntimeConfig",
     "PaperRuntimeHealth",
+    "RuntimeBackpressureError",
+    "RuntimeLivenessError",
+    "RuntimeSessionHealthError",
     "ContinuousRepricingPaperMVP",
     "RepricingRuntimeMVPConfig",
     "RuntimeAlreadyRunningError",

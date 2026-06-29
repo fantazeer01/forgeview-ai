@@ -979,6 +979,44 @@ bounded shutdown, and cursor catch-up are fixture- and stress-validated.
 No detector logic, threshold, strategy, holdout, model, wallet/private-key,
 order-placement, or live-money behavior changed.
 
+## Runtime Backpressure And Liveness Fix v1
+
+The first soak failure was caused by an unbounded consume-to-EOF adapter call
+against a growing session plus two `SQLite synchronous=FULL` commits per source
+event. Heartbeat, source freshness, and maximum-runtime enforcement could run
+only after that call returned. Capture and ledger processing therefore
+continued after telemetry became unhealthy.
+
+The paper runtime now:
+
+- consumes at most 1,000 events per batch;
+- rejects JSONL lines above one MiB;
+- commits raw journal, paper transitions, and cursor once per atomic batch;
+- caps uncommitted source backlog at 64 MiB;
+- emits progress heartbeat diagnostics during in-flight processing;
+- runs an independent 30-second progress watchdog and runtime deadline;
+- rolls back an in-flight batch if liveness fails;
+- writes a durable `FAILED_CLOSED` safe-shutdown marker with a fatal code;
+- rejects incomplete terminal campaign or observation-continuity health;
+- resumes committed-prefix verification and appended catch-up in bounded,
+  exactly-once batches.
+
+Validation passed for telemetry stall, overload, fail-closed shutdown,
+incomplete terminal health, a 5,000-event healthy path, and a 5,000 + 100 event
+restart/catch-up path. A bounded validation against 10,000 events from the
+preserved failed-soak session completed in 0.479278 seconds at 20,864.72
+events/second with no watchdog trip. All 51 Repricing tests and all 197
+repository tests pass.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/runtime_backpressure_liveness_fix_v1/`.
+Verdict is `READY_FOR_SECOND_24H_SOAK_PREFLIGHT`. No new capture or soak was
+launched. The next task is **Run Second 24-Hour Repricing Paper Soak v1**.
+
+The frozen strategy fingerprint, detector logic, thresholds, target, stop,
+timeout, slippage, admission reasons, evidence gates, holdout boundary, and
+paper-only restriction remain unchanged.
+
 ## Missing Data
 
 The current evidence is missing:

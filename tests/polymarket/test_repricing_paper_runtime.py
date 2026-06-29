@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+import math
 import tempfile
+import time
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
@@ -10,6 +12,9 @@ from polymarket.repricing_research import (
     ManagedRepricingPaperRuntime,
     PaperRuntimeConfig,
     RestartSafePaperCore,
+    RuntimeBackpressureError,
+    RuntimeLivenessError,
+    RuntimeSessionHealthError,
     V5StreamValidationError,
 )
 from polymarket.repricing_research.paper_runtime import build_parser
@@ -153,6 +158,167 @@ class ManagedRepricingPaperRuntimeTests(unittest.TestCase):
         self.assertTrue(config.dry_run)
         self.assertEqual(config.max_polls, 1)
 
+    def test_simulated_telemetry_stall_trips_watchdog(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            self._write(session, self._events())
+
+            class StalledAdapter:
+                def __init__(self, path, _core):
+                    self.session_path = Path(path).resolve()
+                    self.last_sync_lag_measurements = 0
+                    self.last_event_timestamp = None
+
+                def sync(self, *, max_events, progress_callback):
+                    time.sleep(0.08)
+                    progress_callback()
+
+            runtime = ManagedRepricingPaperRuntime(
+                PaperRuntimeConfig(
+                    session_path=session,
+                    database_path=root / "paper.sqlite3",
+                    health_path=root / "health.json",
+                    max_polls=1,
+                    dry_run=True,
+                    max_processing_stall_seconds=0.03,
+                    heartbeat_interval_seconds=0.01,
+                ),
+                adapter_factory=StalledAdapter,
+            )
+
+            with self.assertRaises(RuntimeLivenessError):
+                runtime.run()
+
+            health = json.loads((root / "health.json").read_text(encoding="utf-8"))
+            marker = json.loads(
+                (root / "repricing_runtime_safe_shutdown.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertEqual(health["status"], "FAILED")
+            self.assertTrue(health["watchdog_triggered"])
+            self.assertEqual(health["fatal_error_code"], "TELEMETRY_STALLED")
+            self.assertEqual(marker["status"], "FAILED_CLOSED")
+
+    def test_backpressure_overload_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            self._write(session, self._diagnostic_events(20))
+            runtime = ManagedRepricingPaperRuntime(
+                PaperRuntimeConfig(
+                    session_path=session,
+                    database_path=root / "paper.sqlite3",
+                    health_path=root / "health.json",
+                    max_polls=20,
+                    dry_run=True,
+                    max_events_per_batch=1,
+                    max_backlog_bytes=1,
+                ),
+                now=lambda: FIXED_NOW,
+                monotonic=lambda: 0.0,
+                write_clock=lambda: 0.0,
+            )
+
+            with self.assertRaises(RuntimeBackpressureError):
+                runtime.run()
+
+            marker = json.loads(
+                (root / "repricing_runtime_safe_shutdown.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertEqual(marker["fatal_error_code"], "BACKPRESSURE_OVERLOAD")
+            with RestartSafePaperCore(root / "paper.sqlite3") as core:
+                self.assertEqual(core.validation_snapshot()["pending_events"], 0)
+
+    def test_fail_closed_shutdown_marker_is_durable(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            self._write(session, self._incomplete_session_events())
+            runtime = ManagedRepricingPaperRuntime(
+                PaperRuntimeConfig(
+                    session_path=session,
+                    database_path=root / "paper.sqlite3",
+                    health_path=root / "health.json",
+                    max_polls=1,
+                    dry_run=True,
+                ),
+                now=lambda: FIXED_NOW,
+                monotonic=lambda: 0.0,
+                write_clock=lambda: 0.0,
+            )
+
+            with self.assertRaises(RuntimeSessionHealthError):
+                runtime.run()
+
+            first = (root / "repricing_runtime_safe_shutdown.json").read_bytes()
+            marker = json.loads(first)
+            self.assertEqual(marker["fatal_error_code"], "SESSION_HEALTH_INCOMPLETE")
+            self.assertIn("observation_continuity:incomplete", marker["error"])
+            self.assertEqual(
+                first,
+                (root / "repricing_runtime_safe_shutdown.json").read_bytes(),
+            )
+
+    def test_healthy_long_run_processes_bounded_batches(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            events = self._diagnostic_events(5000)
+            self._write(session, events)
+            batch_size = 128
+            runtime = ManagedRepricingPaperRuntime(
+                PaperRuntimeConfig(
+                    session_path=session,
+                    database_path=root / "paper.sqlite3",
+                    health_path=root / "health.json",
+                    max_polls=math.ceil(len(events) / batch_size),
+                    dry_run=True,
+                    max_events_per_batch=batch_size,
+                ),
+                now=lambda: FIXED_NOW,
+                monotonic=lambda: 0.0,
+                write_clock=lambda: 0.0,
+            )
+
+            health = runtime.run()
+
+            self.assertEqual(health.status, "STOPPED")
+            self.assertEqual(health.events_received, 5000)
+            self.assertEqual(health.polls_completed, 40)
+            self.assertLessEqual(health.batch_events_processed, batch_size)
+            self.assertFalse((root / "repricing_runtime_safe_shutdown.json").exists())
+            with RestartSafePaperCore(root / "paper.sqlite3") as core:
+                self.assertEqual(core.validation_snapshot()["counts"]["raw_events"], 5000)
+
+    def test_incomplete_session_health_never_passes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            self._write(session, self._incomplete_session_events())
+            runtime = ManagedRepricingPaperRuntime(
+                PaperRuntimeConfig(
+                    session_path=session,
+                    database_path=root / "paper.sqlite3",
+                    health_path=root / "health.json",
+                    max_polls=1,
+                    dry_run=True,
+                ),
+                now=lambda: FIXED_NOW,
+                monotonic=lambda: 0.0,
+                write_clock=lambda: 0.0,
+            )
+
+            with self.assertRaises(RuntimeSessionHealthError):
+                runtime.run()
+
+            health = json.loads((root / "health.json").read_text(encoding="utf-8"))
+            self.assertEqual(health["status"], "FAILED")
+            self.assertEqual(health["fatal_error_code"], "SESSION_HEALTH_INCOMPLETE")
+
     @staticmethod
     def _runtime(root: Path, session: Path) -> ManagedRepricingPaperRuntime:
         return ManagedRepricingPaperRuntime(
@@ -190,6 +356,35 @@ class ManagedRepricingPaperRuntimeTests(unittest.TestCase):
                 },
             },
             cls._snapshot("2026-06-28T15:00:30+00:00", 0.54, 210),
+        ]
+
+    @staticmethod
+    def _diagnostic_events(count: int) -> list[dict[str, object]]:
+        return [
+            {
+                "event": "skipped",
+                "timestamp": "2026-06-28T15:00:00+00:00",
+                "payload": {"index": index, "reason": "fixture"},
+            }
+            for index in range(count)
+        ]
+
+    @staticmethod
+    def _incomplete_session_events() -> list[dict[str, object]]:
+        return [
+            {
+                "event": "session_started",
+                "timestamp": "2026-06-28T15:00:00+00:00",
+                "payload": {"mode": "public"},
+            },
+            {
+                "event": "session_completed",
+                "timestamp": "2026-06-28T15:01:00+00:00",
+                "payload": {
+                    "campaign_completeness": {"status": "incomplete_campaign"},
+                    "observation_continuity": {"status": "incomplete"},
+                },
+            },
         ]
 
     @staticmethod

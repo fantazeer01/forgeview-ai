@@ -6,7 +6,7 @@ import sqlite3
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from .simulator import SIGNAL_REASONS
 
@@ -95,6 +95,64 @@ class RestartSafePaperCore:
             )
         self._inject(fail_at, "after_raw_persist")
         self.recover(fail_at=fail_at)
+
+    def ingest_event_batch(
+        self,
+        source_id: str,
+        events: list[tuple[int, dict[str, Any]]],
+        *,
+        progress_callback: Callable[[], None] | None = None,
+    ) -> None:
+        """Atomically journal and apply a bounded, ordered source batch."""
+        if not events:
+            return
+        self.connection.execute("BEGIN IMMEDIATE")
+        try:
+            for event_index, event in events:
+                canonical = json.dumps(event, sort_keys=True, separators=(",", ":"))
+                existing = self.connection.execute(
+                    """
+                    SELECT id, event_json, processed FROM raw_events
+                    WHERE source_id = ? AND event_index = ?
+                    """,
+                    (source_id, event_index),
+                ).fetchone()
+                if existing is not None and existing["event_json"] != canonical:
+                    raise ValueError("event identity was reused with different content")
+                if existing is None:
+                    cursor = self.connection.execute(
+                        """
+                        INSERT INTO raw_events(source_id, event_index, event_json)
+                        VALUES (?, ?, ?)
+                        """,
+                        (source_id, event_index, canonical),
+                    )
+                    raw_id = int(cursor.lastrowid)
+                    processed = False
+                else:
+                    raw_id = int(existing["id"])
+                    processed = bool(existing["processed"])
+                if not processed:
+                    self._apply_event(source_id, event_index, event, None)
+                    self.connection.execute(
+                        "UPDATE raw_events SET processed = 1 WHERE id = ?", (raw_id,)
+                    )
+                self.connection.execute(
+                    """
+                    INSERT INTO source_cursors(source_id, last_event_index, last_raw_id)
+                    VALUES (?, ?, ?)
+                    ON CONFLICT(source_id) DO UPDATE SET
+                        last_event_index = excluded.last_event_index,
+                        last_raw_id = excluded.last_raw_id
+                    """,
+                    (source_id, event_index, raw_id),
+                )
+                if progress_callback is not None:
+                    progress_callback()
+            self.connection.commit()
+        except Exception:
+            self.connection.rollback()
+            raise
 
     def recover(self, fail_at: str | None = None) -> None:
         while True:

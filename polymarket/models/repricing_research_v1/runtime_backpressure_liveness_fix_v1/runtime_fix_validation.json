@@ -1,0 +1,59 @@
+{
+  "diagnosis": {
+    "backpressure_source": "unbounded consume-to-EOF loop plus two synchronous FULL SQLite commits per source event",
+    "capture_completed_at_utc": "2026-06-29T18:15:42.387630+00:00",
+    "capture_continued_after_telemetry_stall": true,
+    "last_healthy_runtime_seconds": 12310.53587,
+    "last_heartbeat_utc": "2026-06-28T21:04:31.905461+00:00",
+    "last_source_checkpoint_utc": "2026-06-29T11:43:08.054053+00:00",
+    "live_cursor_event_index_after_stall": 351230,
+    "missing_guards": [
+      "bounded adapter batch",
+      "backlog ceiling",
+      "in-batch progress heartbeat",
+      "independent processing watchdog",
+      "independent runtime deadline",
+      "durable safe-shutdown marker",
+      "terminal session-health rejection"
+    ]
+  },
+  "frozen_contract_unchanged": true,
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "launch_status": "NO_SOAK_LAUNCHED",
+  "runtime_defaults": {
+    "heartbeat_interval_seconds": 5.0,
+    "max_backlog_bytes": 67108864,
+    "max_events_per_batch": 1000,
+    "max_jsonl_line_bytes": 1048576,
+    "max_processing_stall_seconds": 30.0
+  },
+  "tests": {
+    "full_repository": {
+      "failed": 0,
+      "passed": 197
+    },
+    "repricing": {
+      "failed": 0,
+      "passed": 51
+    },
+    "required_paths": {
+      "backpressure_overload": "PASS",
+      "fail_closed_shutdown": "PASS",
+      "healthy_long_run": "PASS",
+      "incomplete_session_health": "PASS",
+      "soak_scale_cursor_catch_up": "PASS",
+      "telemetry_stall": "PASS"
+    }
+  },
+  "validation": {
+    "actual_soak_events_replayed": 10000,
+    "batch_events": 1000,
+    "elapsed_seconds": 0.479278,
+    "events_per_second": 20864.72,
+    "fatal_error_code": null,
+    "safe_shutdown_marker_created": false,
+    "status": "STOPPED",
+    "watchdog_triggered": false
+  },
+  "verdict": "READY_FOR_SECOND_24H_SOAK_PREFLIGHT"
+}

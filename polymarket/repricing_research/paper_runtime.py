@@ -11,7 +11,31 @@ from pathlib import Path
 from typing import Callable
 
 from .paper_core import RestartSafePaperCore
-from .v5_stream_adapter import V5JsonlPaperAdapter, V5StreamValidationError
+from .v5_stream_adapter import (
+    V5JsonlPaperAdapter,
+    V5StreamUnavailableError,
+    V5StreamValidationError,
+)
+
+
+class RuntimeSafetyError(RuntimeError):
+    """Base class for fail-closed runtime safety violations."""
+
+
+class RuntimeLivenessError(RuntimeSafetyError):
+    """Raised when processing progress stops while a batch is active."""
+
+
+class RuntimeBackpressureError(RuntimeSafetyError):
+    """Raised when uncommitted source backlog exceeds the configured bound."""
+
+
+class RuntimeSessionHealthError(RuntimeSafetyError):
+    """Raised when a completed source session fails its own health gates."""
+
+
+class RuntimeBoundReached(Exception):
+    """Internal clean-stop signal raised inside an in-flight transaction."""
 
 
 @dataclass(frozen=True)
@@ -26,6 +50,11 @@ class PaperRuntimeConfig:
     session_id: str = ""
     max_event_staleness_seconds: float | None = None
     max_write_latency_seconds: float | None = None
+    max_events_per_batch: int = 1000
+    max_backlog_bytes: int = 64 * 1024 * 1024
+    max_processing_stall_seconds: float = 30.0
+    heartbeat_interval_seconds: float = 5.0
+    safe_shutdown_path: Path | None = None
 
     def __post_init__(self) -> None:
         if self.poll_interval_seconds < 0:
@@ -46,6 +75,14 @@ class PaperRuntimeConfig:
             and self.max_write_latency_seconds <= 0
         ):
             raise ValueError("write latency threshold must be positive")
+        if self.max_events_per_batch <= 0:
+            raise ValueError("maximum events per batch must be positive")
+        if self.max_backlog_bytes <= 0:
+            raise ValueError("maximum backlog bytes must be positive")
+        if self.max_processing_stall_seconds <= 0:
+            raise ValueError("processing stall threshold must be positive")
+        if self.heartbeat_interval_seconds <= 0:
+            raise ValueError("heartbeat interval must be positive")
 
 
 @dataclass
@@ -78,6 +115,13 @@ class PaperRuntimeHealth:
     session_rotation_count: int
     stale_event_detected: bool
     last_write_latency_ms: float | None
+    last_progress_timestamp: str | None
+    batch_events_processed: int
+    batch_limit_reached: bool
+    backlog_bytes: int
+    watchdog_triggered: bool
+    fatal_error_code: str | None
+    safe_shutdown_marker_path: str
     dry_run: bool
 
 
@@ -93,6 +137,7 @@ class ManagedRepricingPaperRuntime:
         health_observer: Callable[[PaperRuntimeHealth], None] | None = None,
         session_resolver: Callable[[], Path] | None = None,
         write_clock: Callable[[], float] | None = None,
+        adapter_factory: Callable[..., V5JsonlPaperAdapter] | None = None,
     ) -> None:
         self.config = config
         self._now = now or (lambda: datetime.now(timezone.utc))
@@ -100,10 +145,21 @@ class ManagedRepricingPaperRuntime:
         self._health_observer = health_observer
         self._session_resolver = session_resolver
         self._write_clock = write_clock or time.perf_counter
+        self._adapter_factory = adapter_factory or V5JsonlPaperAdapter
         self._write_guard_tripped = False
         self._last_health_write_latency_ms: float | None = None
         self._stop_requested = threading.Event()
         self._health: PaperRuntimeHealth | None = None
+        self._watchdog_done = threading.Event()
+        self._deadline_reached = threading.Event()
+        self._fatal_event = threading.Event()
+        self._state_lock = threading.Lock()
+        self._processing_active = False
+        self._last_progress_monotonic = 0.0
+        self._last_heartbeat_monotonic = 0.0
+        self._fatal_code: str | None = None
+        self._fatal_message: str | None = None
+        self._watchdog_thread: threading.Thread | None = None
 
     def request_stop(self) -> None:
         self._stop_requested.set()
@@ -114,6 +170,10 @@ class ManagedRepricingPaperRuntime:
 
     def run(self, *, install_signal_handlers: bool = False) -> PaperRuntimeHealth:
         started_at = self._timestamp()
+        safe_shutdown_path = (
+            self.config.safe_shutdown_path
+            or self.config.health_path.with_name("repricing_runtime_safe_shutdown.json")
+        ).resolve()
         self._health = PaperRuntimeHealth(
             session_id=self.config.session_id,
             status="STARTING",
@@ -143,16 +203,25 @@ class ManagedRepricingPaperRuntime:
             session_rotation_count=0,
             stale_event_detected=False,
             last_write_latency_ms=None,
+            last_progress_timestamp=None,
+            batch_events_processed=0,
+            batch_limit_reached=False,
+            backlog_bytes=0,
+            watchdog_triggered=False,
+            fatal_error_code=None,
+            safe_shutdown_marker_path=str(safe_shutdown_path),
             dry_run=self.config.dry_run,
         )
         handlers = {}
         core: RestartSafePaperCore | None = None
         started_monotonic = self._monotonic()
+        self._last_progress_monotonic = started_monotonic
+        self._last_heartbeat_monotonic = started_monotonic
         try:
             self._write_health()
             handlers = self._install_signal_handlers() if install_signal_handlers else {}
             core = RestartSafePaperCore(self.config.database_path)
-            adapter = V5JsonlPaperAdapter(self.config.session_path, core)
+            adapter = self._adapter_factory(self.config.session_path, core)
             self._health.strategy_fingerprint = core.config.fingerprint
             self._health.detector_state = "FROZEN_CONFIG_VERIFIED"
             self._health.paper_core_state = "READY"
@@ -160,20 +229,36 @@ class ManagedRepricingPaperRuntime:
             self._health.current_open_positions = len(core.open_positions())
             self._health.status = "RUNNING"
             self._write_health()
+            self._watchdog_thread = threading.Thread(
+                target=self._watchdog_loop,
+                args=(started_monotonic,),
+                name="repricing-runtime-watchdog",
+                daemon=True,
+            )
+            self._watchdog_thread.start()
 
             while not self._stop_requested.is_set():
+                self._raise_if_fatal()
                 if self._limit_reached(started_monotonic):
                     break
                 if self._session_resolver is not None:
                     resolved = self._session_resolver().resolve()
                     if resolved != adapter.session_path:
-                        adapter = V5JsonlPaperAdapter(resolved, core)
+                        adapter = self._adapter_factory(resolved, core)
                         self._health.source_path = str(resolved)
                         self._health.session_rotation_count += 1
                 before = core.validation_snapshot()
                 self._health.last_poll_timestamp = self._timestamp()
+                self._health.batch_events_processed = 0
+                self._set_processing_active(True)
                 try:
-                    result = adapter.sync()
+                    result = adapter.sync(
+                        max_events=self.config.max_events_per_batch,
+                        progress_callback=self._processing_progress,
+                    )
+                except RuntimeBoundReached:
+                    self.request_stop()
+                    break
                 except V5StreamValidationError as exc:
                     after = core.validation_snapshot()
                     accepted = self._apply_ledger_delta(before, after)
@@ -192,6 +277,8 @@ class ManagedRepricingPaperRuntime:
                     self._health.status = "FAILED"
                     self._write_health()
                     raise
+                finally:
+                    self._set_processing_active(False)
                 after = core.validation_snapshot()
                 accepted = self._apply_ledger_delta(before, after)
                 valid_signals = (
@@ -205,22 +292,46 @@ class ManagedRepricingPaperRuntime:
                     0, result.ingested_lag_measurements - valid_signals
                 )
                 self._health.last_event_timestamp = result.last_event_timestamp
-                self._enforce_event_freshness(result.last_event_timestamp)
+                self._health.backlog_bytes = result.remaining_bytes
+                self._health.batch_limit_reached = result.batch_limit_reached
+                if (
+                    not result.replaying_committed_prefix
+                    and result.remaining_bytes > self.config.max_backlog_bytes
+                ):
+                    raise RuntimeBackpressureError(
+                        "v5 source backlog exceeded runtime safety threshold: "
+                        f"{result.remaining_bytes} > {self.config.max_backlog_bytes} bytes"
+                    )
+                if result.session_completed_seen and result.session_health_status != "complete":
+                    details = ", ".join(result.session_health_errors) or "unknown"
+                    raise RuntimeSessionHealthError(
+                        f"completed v5 session failed health gates: {details}"
+                    )
+                if result.reached_eof and result.remaining_bytes == 0:
+                    self._enforce_event_freshness(result.last_event_timestamp)
                 self._health.last_successful_processing_timestamp = self._timestamp()
+                self._health.last_progress_timestamp = self._timestamp()
                 self._health.polls_completed += 1
                 self._write_health()
+                self._raise_if_fatal()
                 if self._limit_reached(started_monotonic):
                     break
-                self._stop_requested.wait(self.config.poll_interval_seconds)
+                if result.remaining_bytes == 0:
+                    self._stop_requested.wait(self.config.poll_interval_seconds)
         except KeyboardInterrupt:
             self.request_stop()
         except Exception as exc:
+            self._record_fatal_exception(exc)
             if self._health.status != "FAILED":
                 self._health.status = "FAILED"
                 self._health.last_error = f"{type(exc).__name__}: {exc}"
                 self._write_health()
             raise
         finally:
+            self._set_processing_active(False)
+            self._watchdog_done.set()
+            if self._watchdog_thread is not None:
+                self._watchdog_thread.join(timeout=2.0)
             if core is not None:
                 self._health.current_open_positions = len(core.open_positions())
                 core.close()
@@ -258,6 +369,104 @@ class ManagedRepricingPaperRuntime:
             and self._monotonic() - started_monotonic
             >= self.config.max_runtime_seconds
         )
+
+    def _processing_progress(self) -> None:
+        if self._deadline_reached.is_set():
+            raise RuntimeBoundReached()
+        self._raise_if_fatal()
+        current = self._monotonic()
+        with self._state_lock:
+            self._last_progress_monotonic = current
+        self._health.last_progress_timestamp = self._timestamp()
+        self._health.batch_events_processed += 1
+        if current - self._last_heartbeat_monotonic >= self.config.heartbeat_interval_seconds:
+            self._last_heartbeat_monotonic = current
+            self._write_health()
+
+    def _set_processing_active(self, active: bool) -> None:
+        with self._state_lock:
+            self._processing_active = active
+            if active:
+                self._last_progress_monotonic = self._monotonic()
+
+    def _watchdog_loop(self, started_monotonic: float) -> None:
+        interval = min(0.25, self.config.max_processing_stall_seconds / 4.0)
+        while not self._watchdog_done.wait(max(0.01, interval)):
+            current = self._monotonic()
+            if (
+                self.config.max_runtime_seconds is not None
+                and current - started_monotonic >= self.config.max_runtime_seconds
+            ):
+                self._deadline_reached.set()
+                self._stop_requested.set()
+                return
+            with self._state_lock:
+                processing_active = self._processing_active
+                last_progress = self._last_progress_monotonic
+            if (
+                processing_active
+                and current - last_progress >= self.config.max_processing_stall_seconds
+            ):
+                self._trigger_fatal(
+                    "TELEMETRY_STALLED",
+                    "runtime processing made no progress within the liveness threshold",
+                )
+                return
+
+    def _trigger_fatal(self, code: str, message: str) -> None:
+        with self._state_lock:
+            if self._fatal_event.is_set():
+                return
+            self._fatal_code = code
+            self._fatal_message = message
+            self._fatal_event.set()
+        self._stop_requested.set()
+        self._write_safe_shutdown_marker(code, message)
+
+    def _raise_if_fatal(self) -> None:
+        if self._fatal_event.is_set():
+            raise RuntimeLivenessError(self._fatal_message or "runtime liveness failed")
+
+    def _record_fatal_exception(self, exc: Exception) -> None:
+        if isinstance(exc, V5StreamUnavailableError):
+            return
+        if isinstance(exc, RuntimeLivenessError):
+            code = self._fatal_code or "TELEMETRY_STALLED"
+        elif isinstance(exc, RuntimeBackpressureError):
+            code = "BACKPRESSURE_OVERLOAD"
+        elif isinstance(exc, RuntimeSessionHealthError):
+            code = "SESSION_HEALTH_INCOMPLETE"
+        elif isinstance(exc, V5StreamValidationError):
+            code = "SOURCE_VALIDATION_FAILED"
+        else:
+            code = "RUNTIME_FATAL_ERROR"
+        self._health.watchdog_triggered = isinstance(exc, RuntimeLivenessError)
+        self._health.fatal_error_code = code
+        self._write_safe_shutdown_marker(code, f"{type(exc).__name__}: {exc}")
+
+    def _write_safe_shutdown_marker(self, code: str, message: str) -> None:
+        path = Path(self._health.safe_shutdown_marker_path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = path.with_suffix(path.suffix + ".tmp")
+        temporary.write_text(
+            json.dumps(
+                {
+                    "database_path": self._health.database_path,
+                    "error": message,
+                    "fatal_error_code": code,
+                    "session_id": self._health.session_id,
+                    "source_path": self._health.source_path,
+                    "status": "FAILED_CLOSED",
+                    "strategy_fingerprint": self._health.strategy_fingerprint,
+                    "timestamp": self._timestamp(),
+                },
+                indent=2,
+                sort_keys=True,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        temporary.replace(path)
 
     def _write_health(self) -> None:
         path = self.config.health_path
@@ -336,6 +545,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-runtime-seconds", type=float)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--session-id", default="")
+    parser.add_argument("--max-events-per-batch", type=int, default=1000)
+    parser.add_argument("--max-backlog-bytes", type=int, default=64 * 1024 * 1024)
+    parser.add_argument("--max-processing-stall-seconds", type=float, default=30.0)
+    parser.add_argument("--heartbeat-interval-seconds", type=float, default=5.0)
+    parser.add_argument("--safe-shutdown", type=Path)
     return parser
 
 
@@ -350,6 +564,11 @@ def main(argv: list[str] | None = None) -> int:
         max_runtime_seconds=args.max_runtime_seconds,
         dry_run=args.dry_run,
         session_id=args.session_id,
+        max_events_per_batch=args.max_events_per_batch,
+        max_backlog_bytes=args.max_backlog_bytes,
+        max_processing_stall_seconds=args.max_processing_stall_seconds,
+        heartbeat_interval_seconds=args.heartbeat_interval_seconds,
+        safe_shutdown_path=args.safe_shutdown,
     )
     health = ManagedRepricingPaperRuntime(config).run(install_signal_handlers=True)
     print(json.dumps(asdict(health), indent=2, sort_keys=True))

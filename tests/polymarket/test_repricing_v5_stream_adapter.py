@@ -184,6 +184,40 @@ class RepricingV5StreamAdapterTests(unittest.TestCase):
                 uninterrupted = self._business_state(core)
             self.assertEqual(interrupted, uninterrupted)
 
+    def test_soak_scale_cursor_catch_up_is_bounded_and_exactly_once(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            database = root / "paper.sqlite3"
+            initial = [self._diagnostic_event(index) for index in range(5000)]
+            appended = [self._diagnostic_event(index) for index in range(5000, 5100)]
+            self._write(session, initial)
+            with RestartSafePaperCore(database) as core:
+                adapter = V5JsonlPaperAdapter(session, core)
+                while True:
+                    result = adapter.sync(max_events=127)
+                    self.assertLessEqual(result.processed_events, 127)
+                    if result.remaining_bytes == 0:
+                        break
+                self.assertEqual(core.validation_snapshot()["counts"]["raw_events"], 5000)
+
+            self._append(session, appended)
+            verified = ingested = 0
+            with RestartSafePaperCore(database) as recovered:
+                adapter = V5JsonlPaperAdapter(session, recovered)
+                while True:
+                    result = adapter.sync(max_events=127)
+                    verified += result.verified_events
+                    ingested += result.ingested_events
+                    self.assertLessEqual(result.processed_events, 127)
+                    if result.remaining_bytes == 0:
+                        break
+                snapshot = recovered.validation_snapshot()
+                self.assertEqual(verified, 5000)
+                self.assertEqual(ingested, 100)
+                self.assertEqual(snapshot["counts"]["raw_events"], 5100)
+                self.assertEqual(snapshot["pending_events"], 0)
+
     @staticmethod
     def _business_state(core: RestartSafePaperCore) -> dict[str, object]:
         return {
@@ -232,6 +266,14 @@ class RepricingV5StreamAdapterTests(unittest.TestCase):
                     "reason": "confidence_below_threshold",
                 },
             },
+        }
+
+    @staticmethod
+    def _diagnostic_event(index: int) -> dict[str, object]:
+        return {
+            "event": "skipped",
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "payload": {"index": index, "reason": "cursor_fixture"},
         }
 
     @staticmethod
