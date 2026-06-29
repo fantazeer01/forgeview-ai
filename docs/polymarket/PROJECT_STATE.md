@@ -681,10 +681,11 @@ Current measured baseline:
   trade aggressor data.
 - Combined Batch 001-002 development diagnostics did not beat YES price and
   remain too small or unstable to justify a candidate specification.
-- Repricing Research v1 has only a short existing-session smoke replay; it
-  lacks a larger repricing-focused sample, balanced asset/side coverage,
-  executable bid/ask exit modelling, fee/slippage stress grids, and
-  prospective frozen shadow evidence.
+- Repricing has 172 scientifically valid signals across two sessions and a
+  supported matched random-timing comparison, but remains below the frozen
+  40-hour and three-session weak-evidence gates. Its first 24-hour paper soak
+  failed capture continuity, heartbeat liveness, bounded shutdown, and exact
+  live-versus-replay reconciliation.
 - Wallet Intelligence H1 remains inconclusive. The canonical H2/H3 accumulator
   exhausted 60 sessions on one UTC date, and 299 of 382 gate rows were
   historical trades first surfaced by later API pages rather than trades
@@ -702,7 +703,8 @@ optimization, and trading remain unauthorized.
 
 ## Next actions
 
-The single active task is Run First 24-Hour Repricing Paper Soak v1.
+The single active task is Fix Repricing Runtime Backpressure And Liveness
+Fail-Closed v1.
 Its scope and acceptance criteria are defined in `NEXT_TASK.md`.
 
 ## Latest metrics
@@ -2690,6 +2692,81 @@ Wallet Intelligence is frozen under its precommitted session budget. The next
 global task is the already preflighted 24-hour Repricing paper soak, which has
 greater immediate information value for Objective Alpha. No Wallet code,
 threshold, hypothesis, score, or methodology changed in this review.
+
+## First 24-Hour Repricing Paper Soak v1
+
+The first authorized public-only Repricing paper soak is complete with verdict
+`FAILED_OPERATIONAL_INTEGRITY`. Exactly one source producer and one paper
+runtime were launched. Preflight passed with safe AC power, sufficient disk,
+writable state/output paths, source rotation enabled, zero recovered open
+positions, and frozen strategy fingerprint
+`d5d389be45d472628aab06b3aeeb281593e74d48b82902e12712047c91fec010`.
+
+GitHub-safe summary artifacts:
+
+- `polymarket/models/repricing_research_v1/paper_soak_v1_summary/soak_report.md`;
+- `polymarket/models/repricing_research_v1/paper_soak_v1_summary/soak_summary.json`;
+- `polymarket/models/repricing_research_v1/paper_soak_v1_summary/soak_validation.json`;
+- `polymarket/models/repricing_research_v1/paper_soak_v1_summary/reproducibility_hashes.json`.
+
+Source capture:
+
+- session:
+  `polymarket/runs/repricing_paper_soak_v1/20260628_173831/v5_sessions/20260628_173831/session.jsonl`;
+- configured duration: 86,400 seconds;
+- observed UTC span / monotonic runtime: 88,630.525266 / 88,632.328 seconds;
+- `session_completed`: present;
+- checkpoints: 32,540 / 43,200, or 75.3241%;
+- maximum checkpoint gap: 23,554.333577 seconds;
+- internal gaps over 300 seconds: one, lasting 4,112.812693 seconds;
+- terminal gap: 23,554.333577 seconds;
+- fatal capture errors: 0;
+- campaign status: `incomplete_campaign`.
+
+Runtime reconciliation:
+
+- last current heartbeat covered 12,310.53587 seconds and then stopped;
+- the runtime process remained CPU-active beyond its 24-hour bound instead of
+  stopping closed;
+- source cursor stopped at event 351,230 of 531,314;
+- SQLite integrity: `ok`;
+- live signals / positions / trades: 60 / 60 / 60;
+- all 60 positions closed, with zero open positions and zero duplicate
+  business keys;
+- deterministic offline export reconstructed 73 signals, exposing a
+  13-signal live-processing shortfall.
+
+Replay and export were each repeated and matched byte-for-byte. The descriptive
+offline result was 73 signals: BTC / ETH / SOL 13 / 17 / 43, YES / NO 26 / 47,
+80.82% win rate, +0.071432 after-slippage expectancy, +5.2145 after-slippage
+P&L, and 0.22 maximum drawdown. All 45 Repricing tests and all 191 repository
+tests pass. These rows are excluded from evidence-gate aggregation because
+source continuity and live reconciliation failed.
+
+Scientifically valid Repricing evidence remains 172 signals over 24 hours and
+two independent sessions. Signal, asset, side, expectancy, drawdown, and
+stability gates remain passed; weak evidence still fails the frozen 40-hour
+and three-session requirements.
+
+Objective Alpha impact:
+
+- `ALPHA-B002` is resolved by 60 autonomous, unique, fully closed public-input
+  paper trades under the frozen fingerprint;
+- `ALPHA-B001`, `ALPHA-B004`, `ALPHA-B006`, and `ALPHA-B007` remain in progress
+  because the consumer fell behind, heartbeat freshness stopped, bounded
+  shutdown failed, and the operating-day summary did not reconcile;
+- `ALPHA-B003` remains in progress because no integrated restart with an open
+  position occurred during this soak;
+- `ALPHA-B008` remains blocked.
+
+The next active task is **Fix Repricing Runtime Backpressure And Liveness
+Fail-Closed v1**. It must correct incremental source consumption, independent
+heartbeat/watchdog behavior, bounded shutdown, and deterministic cursor catch-up
+without changing the frozen detector or launching another soak.
+
+No live trading, wallet/private-key path, model training, holdout inspection,
+holdout evaluation, detector change, threshold change, or strategy change
+occurred.
 
 ## State update protocol
 

@@ -1,0 +1,47 @@
+{
+  "gates": {
+    "campaign_complete": false,
+    "capture_continuity": false,
+    "deterministic_export": true,
+    "deterministic_replay": true,
+    "frozen_strategy_fingerprint": true,
+    "ledger_integrity": true,
+    "live_and_offline_signal_reconciliation": false,
+    "live_trading_disabled": true,
+    "no_duplicate_positions_or_trades": true,
+    "no_open_positions": true,
+    "paper_signal_to_result_cycle": true,
+    "runtime_bounded_shutdown": false,
+    "runtime_heartbeat_continuity": false,
+    "sealed_holdout_untouched": true
+  },
+  "objective_alpha": {
+    "ALPHA-B001": "IN_PROGRESS",
+    "ALPHA-B002": "RESOLVED",
+    "ALPHA-B003": "IN_PROGRESS",
+    "ALPHA-B004": "IN_PROGRESS",
+    "ALPHA-B006": "IN_PROGRESS",
+    "ALPHA-B007": "IN_PROGRESS",
+    "ALPHA-B008": "BLOCKED"
+  },
+  "reconciliation": {
+    "live_cursor_event_index": 351230,
+    "live_signals": 60,
+    "offline_signals": 73,
+    "session_events": 531314,
+    "signal_shortfall": 13,
+    "sqlite_integrity_check": "ok"
+  },
+  "replay_status": "PASS_DETERMINISTIC",
+  "soak_verdict": "FAILED_OPERATIONAL_INTEGRITY",
+  "tests": {
+    "full_repository": {
+      "failed": 0,
+      "passed": 191
+    },
+    "repricing": {
+      "failed": 0,
+      "passed": 45
+    }
+  }
+}

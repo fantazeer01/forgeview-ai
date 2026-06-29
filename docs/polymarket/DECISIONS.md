@@ -1782,3 +1782,27 @@ Reason: The precommitted Wallet session budget is exhausted, the aggregate
 latency evidence is contaminated by historical page churn, and continuing the
 same collection would spend engineering effort without satisfying the date or
 prospective-provenance requirements.
+
+## D-102: Failed soak continuity and reconciliation evidence is not admissible
+
+Status: Accepted
+Decision: First 24-Hour Repricing Paper Soak v1 is classified
+`FAILED_OPERATIONAL_INTEGRITY`. Its deterministic 73-signal offline export is
+descriptive only and must not be added to frozen Repricing evidence gates.
+Scientifically valid aggregate evidence remains Batch 001 plus Batch 002 until
+a public session passes continuity and its live paper ledger reconciles exactly
+to deterministic replay.
+
+The next launch-blocker task must fix incremental JSONL consumption,
+heartbeat/watchdog independence, bounded shutdown, and deterministic cursor
+catch-up. It must preserve the frozen strategy fingerprint and may not launch a
+replacement soak. `ALPHA-B002` is resolved by 60 unique, autonomous, fully
+closed public-input paper trades; the continuous-engine, supervisor, daily
+reporting, health-monitoring, and end-to-end blockers remain unresolved.
+
+Reason: The source had only 75.3241% checkpoint coverage and a
+23,554.333577-second maximum gap. The live heartbeat stopped after
+12,310.53587 seconds, the process remained active beyond its configured bound,
+and the live ledger persisted 60 signals while offline export reconstructed
+73. Positive paper P&L cannot override continuity or exactly-once evidence
+failures.

@@ -25,13 +25,13 @@ Readiness is categorical. Percentages are prohibited.
 | Component | Owner | Readiness | Blocker reference | Notes |
 |---|---|---|---|---|
 | Signal generation path | Repricing | READY | None | Frozen detector capability exists; this does not authorize strategy changes. |
-| Continuous autonomous engine | Shared | IN_PROGRESS | ALPHA-B001 | Runtime components exist, but one unattended signal-to-result cycle is not yet proven. |
-| Automated paper execution | Repricing | IN_PROGRESS | ALPHA-B002 | Restart-safe paper components exist; live-input end-to-end completion remains unproven. |
+| Continuous autonomous engine | Shared | IN_PROGRESS | ALPHA-B001 | The first soak processed live input but lost heartbeat freshness, exceeded its bound, and missed 13 replayed signals. |
+| Automated paper execution | Repricing | READY | ALPHA-B002 | The first soak persisted 60 unique public-input positions and 60 closed trades under the frozen fingerprint. |
 | Restart-safe recovery | Repricing | IN_PROGRESS | ALPHA-B003 | Component tests pass; integrated recovery evidence remains required. |
-| Supervisor process | Infrastructure | IN_PROGRESS | ALPHA-B004 | Single-instance and bounded restart controls exist; unattended validation remains incomplete. |
+| Supervisor process | Infrastructure | IN_PROGRESS | ALPHA-B004 | Single-instance launch held, but the stalled consumer did not stop closed or honor bounded runtime. |
 | Telegram live alerts | Infrastructure | NOT_STARTED | ALPHA-B005 | No approved live alert path is integrated with the paper runtime. |
-| Daily automatic reporting | Shared | IN_PROGRESS | ALPHA-B006 | Daily summary capability exists; complete reconciled operating-day evidence remains required. |
-| Production health monitoring | Infrastructure | IN_PROGRESS | ALPHA-B007 | Health artifacts exist; unattended freshness and failure coverage remain incomplete. |
+| Daily automatic reporting | Shared | IN_PROGRESS | ALPHA-B006 | Daily output stopped with the stale heartbeat and did not reconcile the complete source. |
+| Production health monitoring | Infrastructure | IN_PROGRESS | ALPHA-B007 | Heartbeat freshness failed after 12,310.53587 seconds without a fail-closed transition. |
 | End-to-end Objective Alpha cycle | Shared | BLOCKED | ALPHA-B008 | Blocked by unresolved component blockers. |
 
 ## Update rule

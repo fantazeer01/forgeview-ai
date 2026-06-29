@@ -1,0 +1,20 @@
+{
+  "capture_replay": {
+    "deterministic_repeat_match": true,
+    "evidence_report.json": "eae59dd1b4d9063d2c4696726bfb54f160c530f0f08d2c64dc5d40a80cf4ff28",
+    "markets.csv": "a76797de98a657311d2a5a429d0489e4615f3b025c5eb3edb7a3b85d49949dbb",
+    "opportunities.csv": "aff8a795437878361366c0c1ba2085914b153aa448aef1ada44b2d44676a85d6",
+    "report.md": "333a8064cd82c055d04b4972fe7eddb4e8294f3c2570156c2cb5e985bce2d3b5",
+    "skipped_markets.csv": "a14a08218e8b66df156161f4efab71972bf575e5a12904fa9eee270fb438ffbf",
+    "trades.csv": "ab6e064c99a8d7a54622532c30cbfaf08b0f1d458e0da04f9ae2dfc7d3379f4b"
+  },
+  "repricing_export": {
+    "deterministic_repeat_match": true,
+    "repricing_labels.csv": "eb21a2714ea3598e6ce1df00afbc71cff8a1a4a5929c58dc5c14c8278683d740",
+    "simulation_summary.json": "e7e29818f24ff51425e1ac249f7bd053d542f5d6b0013c1af2a5a0f24c122afa"
+  },
+  "runtime_heartbeat.json": "3e34253a1db228ff0ec678ced6a2a92999988297c377c7b5f52f6247b77d600c",
+  "runtime_ledger.sqlite3": "22253f9b420cccb58e0b1ba493101e0d136e8f3661ae57898d08b99f7dd5665f",
+  "runtime_summary.json": "5aac7aa732f7117bbcd7767968881a6f1d4995c88c25b7488ae04e153fdb7712",
+  "session.jsonl": "20b0ba857f3061d17c7934dc73644d7d7d59240e84220dca2abb95e97af35935"
+}

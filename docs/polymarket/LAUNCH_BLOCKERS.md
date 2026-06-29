@@ -29,6 +29,9 @@ auditable.
 - **Blocking severity:** Critical
 - **Exit condition:** A bounded unattended run completes the full runtime loop
   without human action, duplicate state, or an unhandled integrity failure.
+- **Latest evidence:** First 24-Hour Repricing Paper Soak v1 failed: the
+  heartbeat stopped after 12,310.53587 seconds, the process exceeded its bound,
+  and live processing missed 13 offline-reconstructable signals.
 - **Dependencies:** None.
 
 ## ALPHA-B002: Automated paper execution
@@ -37,10 +40,13 @@ auditable.
 - **Description:** Qualified signals must create, manage, close, and record
   paper trades through the approved strategy semantics without manual action.
 - **Owner:** Repricing
-- **Current status:** IN_PROGRESS
+- **Current status:** RESOLVED
 - **Blocking severity:** Critical
 - **Exit condition:** A qualifying live-input signal produces one complete,
   auditable paper trade and recorded result under frozen strategy behavior.
+- **Exit evidence:** The first Repricing soak persisted 60 unique public-input
+  signals as 60 positions and 60 closed trades with no duplicate business keys
+  and no manual intervention.
 - **Dependencies:** ALPHA-B001.
 
 ## ALPHA-B003: Restart-safe recovery
@@ -66,6 +72,9 @@ auditable.
 - **Exit condition:** Supervised operation starts once, rejects a competing
   instance, recovers only approved transient failures, and stops closed on
   integrity failures.
+- **Latest evidence:** Single-instance launch held, but the consumer remained
+  CPU-active after heartbeat loss and beyond its configured runtime instead of
+  stopping closed.
 - **Dependencies:** ALPHA-B001, ALPHA-B003.
 
 ## ALPHA-B005: Telegram live alerts
@@ -91,6 +100,9 @@ auditable.
 - **Blocking severity:** Major
 - **Exit condition:** A completed operating day produces one deterministic,
   reconciled report covering paper trades, results, runtime, and failures.
+- **Latest evidence:** Daily output was generated, but stopped with the stale
+  heartbeat and did not reconcile the complete source or the 13-signal live
+  shortfall.
 - **Dependencies:** ALPHA-B002, ALPHA-B007.
 
 ## ALPHA-B007: Production health monitoring
@@ -104,6 +116,8 @@ auditable.
 - **Exit condition:** Health evidence remains current during unattended
   operation and every critical stale, integrity, API, restart, or duplicate
   condition is visible and fail-closed.
+- **Latest evidence:** The heartbeat stopped after 12,310.53587 seconds without
+  a fail-closed transition while the process remained active.
 - **Dependencies:** ALPHA-B004.
 
 ## ALPHA-B008: End-to-end Objective Alpha evidence

@@ -1,0 +1,70 @@
+{
+  "aggregate_evidence": {
+    "evidence_gate_result": "BELOW_WEAK_EVIDENCE_GATE",
+    "independent_sessions": 2,
+    "observed_hours": 24.00000038916666,
+    "signals": 172,
+    "soak_excluded_reason": "capture continuity and live-consumer reconciliation failed",
+    "weak_gate_minimum_hours": 40,
+    "weak_gate_minimum_sessions": 3
+  },
+  "descriptive_offline_export": {
+    "asset_counts": {
+      "BTC": 13,
+      "ETH": 17,
+      "SOL": 43
+    },
+    "expectancy_after_slippage": 0.07143150684931505,
+    "exit_reasons": {
+      "repricing_target": 59,
+      "stop_loss": 11,
+      "timeout": 3
+    },
+    "max_drawdown": 0.22,
+    "pnl_after_slippage": 5.2145,
+    "side_counts": {
+      "NO": 47,
+      "YES": 26
+    },
+    "signals": 73,
+    "win_rate": 0.8082191780821918
+  },
+  "frozen_parameters_unchanged": true,
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "live_runtime": {
+    "asset_counts": {
+      "BTC": 9,
+      "ETH": 15,
+      "SOL": 36
+    },
+    "closed_positions": 60,
+    "current_open_positions": 0,
+    "duplicate_business_keys": 0,
+    "expectancy_after_slippage": 0.051366666666666665,
+    "last_healthy_runtime_seconds": 12310.53587,
+    "max_drawdown": 0.2200000000000002,
+    "missed_offline_signals": 13,
+    "pnl_after_slippage": 3.082,
+    "side_counts": {
+      "NO": 42,
+      "YES": 18
+    },
+    "signals": 60,
+    "strategy_fingerprint": "d5d389be45d472628aab06b3aeeb281593e74d48b82902e12712047c91fec010",
+    "trades": 60,
+    "win_rate": 0.8
+  },
+  "session_path": "polymarket/runs/repricing_paper_soak_v1/20260628_173831/v5_sessions/20260628_173831/session.jsonl",
+  "soak_verdict": "FAILED_OPERATIONAL_INTEGRITY",
+  "source_capture": {
+    "actual_checkpoint_count": 32540,
+    "campaign_status": "incomplete_campaign",
+    "checkpoint_coverage_percentage": 75.3241,
+    "expected_checkpoint_count": 43200,
+    "fatal_capture_error_count": 0,
+    "max_checkpoint_gap_seconds": 23554.333577,
+    "monotonic_elapsed_runtime_seconds": 88632.328,
+    "observed_utc_span_seconds": 88630.525266,
+    "session_completed_present": true
+  }
+}

@@ -8,51 +8,47 @@ This file contains exactly one active task. A future Codex session must read
 `LAUNCH_BLOCKERS.md`, `ALPHA_READINESS.md`, `DECISIONS.md`, and
 `REPRICING_RESEARCH_V1.md` before starting it.
 
-## Active task: Run First 24-Hour Repricing Paper Soak v1
+## Active task: Fix Repricing Runtime Backpressure And Liveness Fail-Closed v1
 
 ### Objective
 
-Run the preflight-approved Repricing paper runtime for one bounded 24-hour
-period and determine whether it can sustain an unattended, restart-safe,
-fully auditable paper signal-to-result path. This task directly tests
-`ALPHA-B001`, `ALPHA-B002`, `ALPHA-B003`, `ALPHA-B004`, `ALPHA-B006`, and
-`ALPHA-B007` on the path to Objective Alpha.
+Remove the runtime integrity blocker exposed by First 24-Hour Repricing Paper
+Soak v1 without changing the frozen detector or launching another soak. The
+runtime must consume a growing v5 JSONL stream incrementally while heartbeat,
+watchdog, and bounded-shutdown controls remain independently responsive.
 
 ### Required scope
 
-1. Re-run the existing pre-soak readiness checks and launch only if every gate
-   remains green.
-2. Use the frozen Repricing strategy fingerprint and current continuous paper
-   runtime without changing detector logic, thresholds, or strategy behavior.
-3. Run paper-only for 24 hours against public v5 session input with automatic
-   latest-session rotation, stale-event protection, health monitoring, and
-   the existing restart budget.
-4. Preserve runtime state, heartbeat, logs, daily summaries, paper positions,
-   and paper trades durably throughout the soak.
-5. Reconcile raw accepted events, runtime health, summaries, positions, trades,
-   failures, restarts, continuity, and duplicate or lost transitions.
-6. Record whether a complete autonomous paper signal-to-result cycle occurred
-   and which Objective Alpha blockers gained exit evidence.
-7. Run Repricing tests and the full repository suite after the bounded soak.
+1. Replace whole-backlog-per-poll behavior with bounded incremental consumption
+   that durably advances the existing source cursor.
+2. Keep heartbeat and maximum-runtime enforcement responsive while backlog is
+   being consumed.
+3. Stop closed when heartbeat freshness, source progress, write latency, or the
+   configured runtime bound fails.
+4. Preserve restart-safe exactly-once signal, position, and trade behavior from
+   the existing SQLite ledger.
+5. Add deterministic catch-up tests from the soak-scale cursor boundary and a
+   stress fixture large enough to expose processing lag.
+6. Reconcile fixture live output exactly to offline adapter output with zero
+   missing or duplicate signals.
+7. Update Objective Alpha blocker evidence and run Repricing plus full tests.
 
 ### Forbidden
 
-- no live trading, authenticated trading endpoint, wallet, or private key;
-- no order placement or real-money capital;
-- no detector, threshold, strategy, fingerprint, or risk-policy change;
+- no second soak or capture campaign;
+- no detector, threshold, strategy, fingerprint, or evidence-gate change;
+- no live trading, wallet, private key, authentication, or order placement;
 - no sealed holdout inspection or evaluation;
-- no Wallet Intelligence evidence-method change;
-- no manual paper trade insertion or discretionary signal intervention.
+- no production model training;
+- no manual insertion or deletion of paper signals, positions, or trades.
 
 ### Acceptance criteria
 
-- the preflight remains `READY_FOR_24H_SOAK` before launch;
-- one bounded 24-hour paper soak completes or stops closed for a documented
-  integrity reason;
-- runtime state and health remain durable and restart-safe;
-- every accepted source event and paper state transition reconciles with no
-  unexplained duplicate or loss;
-- any completed paper trade is traceable from source event through result;
-- tests pass;
-- project state, launch blockers, Alpha readiness, decisions when needed, and
-  this file are updated with exactly one successor task.
+- heartbeat remains current during bounded backlog processing;
+- configured maximum runtime is enforced independently of adapter throughput;
+- injected stalls and stale progress stop closed with a durable error;
+- restart resumes from the committed cursor without duplicate or lost business
+  state;
+- live and offline fixture signals reconcile exactly;
+- Repricing and full repository tests pass;
+- exactly one active successor task remains.

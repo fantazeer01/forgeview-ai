@@ -923,13 +923,60 @@ engineering blocker. Forty-five Repricing tests and 191 repository tests pass.
 Artifacts are under
 `polymarket/models/repricing_research_v1/pre_soak_v1/`.
 
-The next Repricing task is **Run First 24-Hour Repricing Paper Soak v1**. It is
-not launched or globally active yet. The soak must remain paper-only and must
-reconcile raw events, runtime health, daily summaries, positions, trades,
-continuity, restarts, failures, and duplicate/lost transitions before any
-further readiness claim.
+At pre-soak completion, the next Repricing task was **Run First 24-Hour
+Repricing Paper Soak v1**. That launch state is superseded by the completed soak
+result below.
 
 No detector, threshold, strategy, holdout, wallet/private-key, Telegram,
+order-placement, or live-money behavior changed.
+
+## First 24-Hour Paper Soak v1
+
+The first authorized public-only Repricing paper soak completed with verdict
+`FAILED_OPERATIONAL_INTEGRITY`. Preflight passed and the frozen strategy
+fingerprint remained
+`d5d389be45d472628aab06b3aeeb281593e74d48b82902e12712047c91fec010`.
+Exactly one producer and one paper runtime were used.
+
+The source session emitted `session_completed` but failed continuity with
+32,540 / 43,200 checkpoints, 75.3241% coverage, an internal 4,112.812693-second
+gap, and a 23,554.333577-second terminal gap. Campaign status is
+`incomplete_campaign`; fatal capture errors are zero.
+
+The live ledger retained 60 unique signals, positions, and closed trades with
+SQLite integrity `ok`, no open positions, and no duplicate business keys. The
+heartbeat stopped after 12,310.53587 seconds while the consumer remained
+CPU-active beyond its configured 24-hour bound. Its cursor stopped at event
+351,230 of 531,314. Deterministic offline replay reconstructed 73 signals, so
+13 qualifying signals were not persisted by the live consumer.
+
+Repeated replay and repeated frozen export matched byte-for-byte. Descriptive
+offline metrics are:
+
+- signals: 73;
+- BTC / ETH / SOL: 13 / 17 / 43;
+- YES / NO: 26 / 47;
+- wins / win rate: 59 / 80.82%;
+- after-slippage expectancy: +0.071432;
+- after-slippage P&L: +5.2145;
+- maximum drawdown: 0.22;
+- exits: 59 repricing target, 11 stop loss, 3 timeout.
+
+All 45 Repricing tests and all 191 repository tests pass.
+
+The positive descriptive result is not admissible evidence because campaign
+continuity and live signal reconciliation failed. Frozen aggregate evidence
+therefore remains 172 signals, 24 observed hours, and two independent sessions.
+Weak evidence remains below gate because at least 40 hours and three valid
+sessions are required.
+
+Summary artifacts are under
+`polymarket/models/repricing_research_v1/paper_soak_v1_summary/`. The next task
+is **Fix Repricing Runtime Backpressure And Liveness Fail-Closed v1**. No second
+soak is authorized until incremental stream consumption, heartbeat liveness,
+bounded shutdown, and cursor catch-up are fixture- and stress-validated.
+
+No detector logic, threshold, strategy, holdout, model, wallet/private-key,
 order-placement, or live-money behavior changed.
 
 ## Missing Data
