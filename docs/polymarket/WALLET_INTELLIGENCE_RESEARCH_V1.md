@@ -1896,3 +1896,51 @@ the ignored Wallet Intelligence data path. Query status with:
 ```powershell
 python -m polymarket.wallet_intelligence wallet-evidence-accumulator status --accumulator-database polymarket/data/wallet_intelligence/first_seen_prospective_v1/accumulator.sqlite3 --observer-database polymarket/data/wallet_intelligence/first_seen_prospective_v1/observer.sqlite3 --observer-output output/wallet_autonomous_canonical_v1/observer --output output/wallet_autonomous_canonical_v1/runtime
 ```
+
+## Canonical Autonomous Accumulator Terminal Review
+
+The canonical process completed all 60 allowed sessions and stopped
+automatically with action `FREEZE`, reason `SESSION_BUDGET_EXHAUSTED`, and no
+remaining session budget. It is no longer running.
+
+Terminal accumulated evidence:
+
+- 382 target rows across four wallets;
+- 308 BTC, 49 ETH, and 25 SOL rows;
+- 14,247 successful public requests and 12 failures (99.9158% successful);
+- H2: 51/382, 13.35%, `INCONCLUSIVE`;
+- H3: 58/382, 15.18%, `INCONCLUSIVE`;
+- 11/12 minimum-evidence gates passed;
+- the five-date gate failed because every first observation occurred on June
+  28, 2026 UTC.
+
+The aggregate 382-row result is not a valid prospective estimate. A read-only
+audit of the canonical observer database found that 299 rows had trade
+timestamps before the session that first inserted them. The public activity
+page changed after each session baseline, allowing older, previously unseen
+page rows to enter the global trade table. These rows have very large apparent
+delays and expired decision windows; they are historical page churn, not
+evidence that publication itself took that long.
+
+The defensible diagnostic subset is 83 unique rows: 82 observer rows executed
+at or after their first observer session began and one preserved seed row not
+duplicated in the observer set. Its results are:
+
+- H2: 51/83 (61.45%), Wilson 95% 50.69%-71.19%;
+- H3: 58/83 (69.88%), Wilson 95% 59.31%-78.69%;
+- prospective observer delay: minimum 2.825 seconds, median 25.046 seconds,
+  mean 31.009 seconds, maximum 136.920 seconds;
+- prospective observer decision window: minimum -33.367 seconds, median
+  102.426 seconds, mean 108.259 seconds, maximum 288.939 seconds.
+
+This subset is diagnostic only and does not alter the frozen decision
+contract. It has fewer than 100 rows and only one UTC date. H2 remains below
+its support target; H3 is near but does not pass its support conditions. H1,
+H2, H3, structural-filter lift, execution delay, liquidity, slippage, and
+combined-strategy value therefore remain unresolved.
+
+Research disposition: freeze Wallet Intelligence after budget exhaustion.
+Resume only if materially new multi-date public evidence is available or an
+explicitly authorized sprint corrects historical-page admission and preserves
+the frozen hypotheses and thresholds. No profitability, alpha, copyability,
+or trading conclusion is supported.

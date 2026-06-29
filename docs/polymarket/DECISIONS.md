@@ -1757,3 +1757,28 @@ and architectural completeness.
 
 Reason: Phase 1 must reduce the distance to an autonomous signal-to-result
 paper cycle rather than accumulate unvalidated features or infrastructure.
+
+## D-101: Freeze Wallet Intelligence after terminal H2/H3 budget exhaustion
+
+Status: Accepted
+Decision: Wallet Intelligence is frozen after the canonical accumulator
+completed session 60 with `SESSION_BUDGET_EXHAUSTED`. It does not graduate to
+execution engineering. The frozen gate result remains formally inconclusive
+because only one of five required UTC dates was observed.
+
+The terminal 382-row aggregate must not be used as a prospective H2/H3
+estimate: a read-only provenance audit found 299 historical trades admitted
+after per-session baseline pages changed. The 83-row defensible diagnostic
+subset remains below the 100-row and five-date evidence gates, leaves H2 below
+support, and leaves H3 short of support. Neither diagnostic filtering nor this
+decision changes the frozen hypotheses, thresholds, or canonical artifacts.
+
+Wallet work may resume only for materially new multi-date evidence or an
+explicitly authorized integrity correction with clear information gain.
+Current engineering priority moves to the preflight-approved 24-hour Repricing
+paper soak because it directly reduces Objective Alpha launch blockers.
+
+Reason: The precommitted Wallet session budget is exhausted, the aggregate
+latency evidence is contaminated by historical page churn, and continuing the
+same collection would spend engineering effort without satisfying the date or
+prospective-provenance requirements.

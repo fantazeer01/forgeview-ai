@@ -1,57 +1,58 @@
 # Polymarket Next Task
 
-Last updated: June 28, 2026
+Last updated: June 29, 2026
 Task status: ACTIVE
 
 This file contains exactly one active task. A future Codex session must read
 `MASTER_OBJECTIVE.md`, `RESEARCH_PRINCIPLES.md`, `PROJECT_STATE.md`,
-`DECISIONS.md`, and `WALLET_INTELLIGENCE_RESEARCH_V1.md` before starting it.
+`LAUNCH_BLOCKERS.md`, `ALPHA_READINESS.md`, `DECISIONS.md`, and
+`REPRICING_RESEARCH_V1.md` before starting it.
 
-## Active task: Wallet Autonomous Evidence Accumulator Canonical Background Run v1
+## Active task: Run First 24-Hour Repricing Paper Soak v1
 
 ### Objective
 
-Start the operationally validated accumulator once against canonical local
-Wallet evidence state and allow it to collect autonomously until the frozen
-H2/H3 framework stops it. This is bounded evidence collection, not new
-engineering.
+Run the preflight-approved Repricing paper runtime for one bounded 24-hour
+period and determine whether it can sustain an unattended, restart-safe,
+fully auditable paper signal-to-result path. This task directly tests
+`ALPHA-B001`, `ALPHA-B002`, `ALPHA-B003`, `ALPHA-B004`, `ALPHA-B006`, and
+`ALPHA-B007` on the path to Objective Alpha.
 
 ### Required scope
 
-1. Verify canonical status is `ready`, action is `CONTINUE`, evidence is 2
-   trades, completed sessions are 1, and remaining budget is 59.
-2. Confirm no canonical accumulator PID is active.
-3. Launch exactly one detached process with canonical 300-second sessions, the
-   frozen 5-second polling interval, and no launch-only session cap.
-4. Write mutable runtime progress under ignored
-   `output/wallet_autonomous_canonical_v1/` paths; do not continuously rewrite
-   tracked model artifacts.
-5. Preserve the canonical accumulator and observer SQLite databases under the
-   existing ignored data path.
-6. Verify session 2 starts automatically and all poll payloads remain durable.
-7. Leave the process running only while action is `CONTINUE`; it must stop
-   automatically on SUPPORT, REJECT, or session 60.
-8. Snapshot terminal or explicitly requested checkpoint evidence into tracked
-   artifacts only after a coherent session boundary.
+1. Re-run the existing pre-soak readiness checks and launch only if every gate
+   remains green.
+2. Use the frozen Repricing strategy fingerprint and current continuous paper
+   runtime without changing detector logic, thresholds, or strategy behavior.
+3. Run paper-only for 24 hours against public v5 session input with automatic
+   latest-session rotation, stale-event protection, health monitoring, and
+   the existing restart budget.
+4. Preserve runtime state, heartbeat, logs, daily summaries, paper positions,
+   and paper trades durably throughout the soak.
+5. Reconcile raw accepted events, runtime health, summaries, positions, trades,
+   failures, restarts, continuity, and duplicate or lost transitions.
+6. Record whether a complete autonomous paper signal-to-result cycle occurred
+   and which Objective Alpha blockers gained exit evidence.
+7. Run Repricing tests and the full repository suite after the bounded soak.
 
 ### Forbidden
 
-- no second accumulator process;
-- no development duration or launch-only session cap;
-- no change to hypotheses, gates, polling, wallets, endpoints, evidence
-  budget, Wallet Score, or Watchlist;
-- no wallet/private-key use, authentication, order placement, copy automation,
-  or live trading;
-- no profitability, alpha, expected-return, or investment claim;
-- no sealed holdout access or evaluation;
-- no unrelated repricing changes.
+- no live trading, authenticated trading endpoint, wallet, or private key;
+- no order placement or real-money capital;
+- no detector, threshold, strategy, fingerprint, or risk-policy change;
+- no sealed holdout inspection or evaluation;
+- no Wallet Intelligence evidence-method change;
+- no manual paper trade insertion or discretionary signal intervention.
 
 ### Acceptance criteria
 
-- one canonical detached process starts;
-- session 2 is allocated automatically and persisted;
-- runtime status reports canonical configuration and durable poll progress;
-- duplicate/restart protections remain intact;
-- exactly one action is current and terminal conditions remain automatic;
-- Wallet Intelligence and full repository tests pass;
-- exactly one active successor task remains.
+- the preflight remains `READY_FOR_24H_SOAK` before launch;
+- one bounded 24-hour paper soak completes or stops closed for a documented
+  integrity reason;
+- runtime state and health remain durable and restart-safe;
+- every accepted source event and paper state transition reconciles with no
+  unexplained duplicate or loss;
+- any completed paper trade is traceable from source event through result;
+- tests pass;
+- project state, launch blockers, Alpha readiness, decisions when needed, and
+  this file are updated with exactly one successor task.

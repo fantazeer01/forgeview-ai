@@ -616,22 +616,11 @@ test over the H1 candidate wallets.
 
 ## Active milestone
 
-Polymarket Wallet Intelligence Research.
-
-Wallet Intelligence Research v1 now has bounded public-data ingestion,
-behavior metrics, a deep-history feasibility review, a public trade-history
-ingestion design, a fixture-only trade-history ingester, a bounded public
-trade-history smoke for the six seed profiles, a deterministic lifecycle
-reconstruction fixture prototype, a completed lifecycle review, bounded
-structural lifecycle metrics, a Wallet Metrics Readiness Review, Wallet Score
-Design v1, Wallet Score Fixture Implementation v1, Wallet Score Fixture
-Review v1, Wallet Score Broader Evidence Collection Design v1, Wallet
-Watchlist v1, Wallet Watchlist Review v1, and Wallet Copyability Feasibility
-Sprint v1.
-The active successor task is Wallet Expiry And Outcome Join Feasibility Sprint
-v1: measure public expiry/outcome join coverage for the bounded 30-wallet
-copyability evidence before any deeper copy-trading research claims are
-attempted.
+Phase 1 - First Automated Dollar. Wallet Intelligence's canonical H2/H3
+collection budget is exhausted and the branch is frozen pending materially new
+evidence or an explicitly authorized integrity correction. The sole active
+task now advances the preflight-approved Repricing paper runtime toward one
+unattended Objective Alpha cycle.
 
 Current measured baseline:
 
@@ -696,12 +685,12 @@ Current measured baseline:
   lacks a larger repricing-focused sample, balanced asset/side coverage,
   executable bid/ask exit modelling, fee/slippage stress grids, and
   prospective frozen shadow evidence.
-- Wallet Intelligence Research v1 now has normalized public profile records,
-  position records, behavior metrics, similarity clusters, and copyability
-  risk tiers for the six seed profiles. It still lacks complete trade/fill
-  history, linked entry/exit timestamps, average holding time, drawdown
-  evidence, reliable late-entry timing, Binance-lag alignment, and executable
-  observation-delay/liquidity evidence.
+- Wallet Intelligence H1 remains inconclusive. The canonical H2/H3 accumulator
+  exhausted 60 sessions on one UTC date, and 299 of 382 gate rows were
+  historical trades first surfaced by later API pages rather than trades
+  executed during their first observer session. The 83-row diagnostic subset
+  with defensible prospective provenance remains below the frozen 100-row and
+  five-date gates. Wallet Intelligence is therefore frozen, not graduated.
 - OSS audit findings are descriptive only. Execution-heavy repositories expose
   private-key, live-order, copy-trading, market-making, or cancel/replace
   paths and must not be run or imported into ForgeView's research pipeline.
@@ -713,7 +702,7 @@ optimization, and trading remain unauthorized.
 
 ## Next actions
 
-The single active task is Implement Restart-Safe Repricing Paper Trading Core v1.
+The single active task is Run First 24-Hour Repricing Paper Soak v1.
 Its scope and acceptance criteria are defined in `NEXT_TASK.md`.
 
 ## Latest metrics
@@ -2649,6 +2638,58 @@ Wallet Autonomous Evidence Accumulator Canonical Background Run v1.
 
 No detector, threshold, strategy, holdout, wallet/private-key, Telegram, or
 live-trading boundary changed.
+
+## Wallet Autonomous Evidence Accumulator Terminal Review v1
+
+The canonical background run completed automatically at session 60 and is no
+longer running. Terminal runtime state is `FREEZE` with stop reason
+`SESSION_BUDGET_EXHAUSTED`, zero remaining sessions, and no active process.
+
+Operational evidence:
+
+- 59 observer runs plus the preserved seed session, 14,019 polls, and
+  1,377,100 observation links;
+- 14,247 successful and 12 failed public requests, a 99.9158% success rate;
+- 614 globally deduplicated observed trades and 382 rows admitted by the
+  frozen H2/H3 target-market filter;
+- four wallets and three assets: 308 BTC, 49 ETH, and 25 SOL rows;
+- timestamp, Gamma expiry, and identity completeness all reached 100%;
+- 11 of 12 minimum-evidence gates passed; only date diversity failed at one
+  of five required UTC dates.
+
+The frozen aggregate reported H2 at 51/382 (13.35%, Wilson 95%
+10.30%-17.13%) and H3 at 58/382 (15.18%, Wilson 95% 11.93%-19.13%). Both
+formal conclusions remained `INCONCLUSIVE` because minimum evidence did not
+pass.
+
+An evidence-integrity review found that 299 of the 382 rows were timestamped
+before the observer session that first inserted them. Per-session baselines
+prevented initial-page rows from being called new, but historical rows exposed
+later by public API page churn were still admitted. Those 299 rows produced no
+H2 or H3 successes and must not be interpreted as prospective latency or
+decision-window evidence.
+
+The defensible diagnostic subset contains 83 unique rows: 82 observer trades
+executed at or after their first session began plus one non-overlapping seed
+trade. On that subset:
+
+- H2 is 51/83, 61.45%, Wilson 95% 50.69%-71.19%;
+- H3 is 58/83, 69.88%, Wilson 95% 59.31%-78.69%;
+- observer-only prospective delay has a 2.825-second minimum, 25.046-second
+  median, 31.009-second mean, and 136.920-second maximum;
+- observer-only time from first seen to expiry has a -33.367-second minimum,
+  102.426-second median, 108.259-second mean, and 288.939-second maximum.
+
+These diagnostic rates do not replace the frozen framework. They leave H2
+below its 80% support threshold and H3 near but short of its support gates,
+with only one observation date and fewer than 100 defensible rows. H1 also
+remains inconclusive. The combined Wallet hypothesis is materially weaker,
+but neither H2 nor H3 receives a formal rejection from this run.
+
+Wallet Intelligence is frozen under its precommitted session budget. The next
+global task is the already preflighted 24-hour Repricing paper soak, which has
+greater immediate information value for Objective Alpha. No Wallet code,
+threshold, hypothesis, score, or methodology changed in this review.
 
 ## State update protocol
 
