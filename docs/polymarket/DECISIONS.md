@@ -1828,3 +1828,24 @@ the managed loop from emitting heartbeat or enforcing its 24-hour bound. The
 fixed runtime processed 10,000 preserved events in ten bounded batches at
 20,864.72 events/second and passed stall, overload, rollback, terminal-health,
 and restart/catch-up tests without changing the frozen strategy.
+
+## D-104: Interrupted Repricing sessions remain descriptive only
+
+Status: Accepted
+Decision: Second 24-Hour Repricing Paper Soak v1 is classified
+`RECOVERED_DESCRIPTIVE_ONLY` and marked **Interrupted by external power loss
+before scheduled completion.** Its immutable valid prefix, deterministic
+replay, deterministic frozen export, and reconciled paper ledger are retained
+for diagnostics and descriptive research.
+
+The run must not contribute signals, observed hours, or an independent session
+to frozen Repricing evidence. Interrupted sessions are evidence-ineligible
+when `session_completed` is absent, continuity fails, or the managed runtime
+records a fatal health marker, even if exported expectancy is positive and
+live/offline signals reconcile. Frozen valid evidence remains 172 signals,
+24.000000389 hours, and two sessions.
+
+Reason: This run has 94.069444% checkpoint coverage, an 891.868253-second gap,
+no terminal completion record, and a `TELEMETRY_STALLED` fail-closed marker.
+Its 84-signal descriptive export is reproducible and analytically useful, but
+positive P&L cannot override precommitted operational evidence gates.

@@ -1017,6 +1017,37 @@ The frozen strategy fingerprint, detector logic, thresholds, target, stop,
 timeout, slippage, admission reasons, evidence gates, holdout boundary, and
 paper-only restriction remain unchanged.
 
+## Second 24-Hour Paper Soak Recovery
+
+The second authorized soak is classified `RECOVERED_DESCRIPTIVE_ONLY` after an
+external power interruption before scheduled completion. The raw session was
+preserved without alteration and ends on a complete capture checkpoint. It has
+691,284 valid JSONL records, zero invalid records, 40,638 / 43,200 checkpoints
+(94.069444%), an 81,273.99968-second checkpoint span, and an 891.868253-second
+largest gap. No `session_completed` event exists.
+
+Repeated replay and repeated frozen export match byte-for-byte. Replay found
+807 completed windows and eight opportunities with 99.85% reference coverage.
+The descriptive repricing export contains 84 signals: BTC / ETH / SOL 14 / 30
+/ 40; YES / NO 35 / 49; 58 wins; 69.047619% win rate; +0.0383214286
+after-slippage expectancy; +3.219 after-slippage P&L; +4.899 before-slippage
+P&L; and 0.45 maximum drawdown. Exits are 58 repricing targets, 23 stop losses,
+and three timeouts. The live SQLite ledger is healthy and reconciles exactly at
+84 signals, positions, and closed trades with no open position.
+
+These are analytical results only. The source lacks terminal campaign
+completion, fails continuity, and the managed runtime independently recorded a
+fatal `TELEMETRY_STALLED` fail-closed marker. The interrupted run therefore
+does not enter evidence aggregation. Frozen valid evidence remains 172 signals,
+24.000000389 observed hours, and two independent sessions, so weak evidence
+remains below the 40-hour and three-session gates.
+
+Recovery artifacts are under
+`polymarket/models/repricing_research_v1/paper_soak_v2_recovery_summary/`.
+The next task is **Diagnose Repricing Runtime Telemetry Stall After Interrupted
+Soak v1**. It must explain the recorded liveness failure without changing the
+frozen strategy or launching another soak.
+
 ## Missing Data
 
 The current evidence is missing:

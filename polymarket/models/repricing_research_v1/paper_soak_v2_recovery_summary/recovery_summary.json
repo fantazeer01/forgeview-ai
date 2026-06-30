@@ -1,0 +1,78 @@
+{
+  "aggregate_evidence": {
+    "evidence_gate_result": "BELOW_WEAK_EVIDENCE_GATE",
+    "independent_sessions": 2,
+    "observed_hours": 24.00000038916666,
+    "recovered_run_admitted": false,
+    "recovered_run_exclusion_reason": "missing session_completed, checkpoint continuity failure, and fatal runtime liveness marker",
+    "signals": 172,
+    "weak_gate_minimum_hours": 40,
+    "weak_gate_minimum_sessions": 3
+  },
+  "descriptive_repricing_export": {
+    "asset_counts": {
+      "BTC": 14,
+      "ETH": 30,
+      "SOL": 40
+    },
+    "average_adverse_move": -0.25245238095238093,
+    "average_favorable_repricing": 0.2433095238095238,
+    "expectancy_after_slippage": 0.03832142857142857,
+    "exit_reasons": {
+      "repricing_target": 58,
+      "stop_loss": 23,
+      "timeout": 3
+    },
+    "max_drawdown": 0.45,
+    "pnl_after_slippage": 3.219,
+    "pnl_before_slippage": 4.899,
+    "side_counts": {
+      "NO": 49,
+      "YES": 35
+    },
+    "signals": 84,
+    "signals_per_hour_between_first_and_last_entry": 4.040187745635378,
+    "win_rate": 0.6904761904761905,
+    "wins": 58
+  },
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "interruption": {
+    "classification": "Interrupted by external power loss before scheduled completion.",
+    "recovery_stop_utc": "2026-06-30T18:15:41.4120183+00:00",
+    "session_completed_present": false
+  },
+  "last_valid_checkpoint": {
+    "checkpoint_count": 40638,
+    "checkpoint_coverage_percentage": 94.069444,
+    "end_byte_offset": 324528106,
+    "expected_checkpoint_count": 43200,
+    "line_number": 691284,
+    "payload": {
+      "discovery_failure_count": 235,
+      "expected_market_points": 120552,
+      "expected_reference_points": 121914,
+      "mode": "public",
+      "successful_market_points": 119512,
+      "successful_reference_points": 121734
+    },
+    "timestamp": "2026-06-30T18:15:38.155862+00:00"
+  },
+  "runtime_ledger": {
+    "closed_positions": 84,
+    "open_positions": 0,
+    "positions": 84,
+    "signals": 84,
+    "sqlite_integrity_check": "ok",
+    "trades": 84
+  },
+  "session": {
+    "bytes": 324528106,
+    "invalid_jsonl_lines": 0,
+    "largest_checkpoint_gap_seconds": 891.868253,
+    "observed_checkpoint_span_seconds": 81273.99968,
+    "path": "polymarket/runs/repricing_paper_soak_v2/20260629_194103/v5_sessions/20260629_194104/session.jsonl",
+    "sha256": "491a5363051e5ed033513d85a22bb6bc5c9a205faf1d5cdad2fe753b9dbb526f",
+    "valid_jsonl_lines": 691284
+  },
+  "status": "RECOVERED_DESCRIPTIVE_ONLY"
+}

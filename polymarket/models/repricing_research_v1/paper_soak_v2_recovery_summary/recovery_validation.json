@@ -1,0 +1,43 @@
+{
+  "evidence_eligibility": "EXCLUDED",
+  "gates": {
+    "campaign_complete": false,
+    "capture_continuity": false,
+    "deterministic_export": true,
+    "deterministic_replay": true,
+    "frozen_strategy_parameters_unchanged": true,
+    "ledger_integrity": true,
+    "live_and_offline_signal_reconciliation": true,
+    "no_open_positions": true,
+    "raw_session_preserved": true,
+    "runtime_fatal_marker_absent": false,
+    "sealed_holdout_untouched": true,
+    "valid_jsonl_through_last_checkpoint": true
+  },
+  "interruption_classification": "Interrupted by external power loss before scheduled completion.",
+  "operational_integrity_verdict": "INTERRUPTED_AND_INELIGIBLE",
+  "replay": {
+    "completed_windows": 807,
+    "data_gaps_percentage": 0.86,
+    "opportunities": 8,
+    "reference_coverage_percentage": 99.85,
+    "status": "PASS_DETERMINISTIC",
+    "v5_verdict": "INSUFFICIENT_DATA"
+  },
+  "runtime_diagnostic": {
+    "fatal_error_code": "TELEMETRY_STALLED",
+    "last_error": "RuntimeLivenessError: runtime processing made no progress within the liveness threshold",
+    "status": "FAILED_CLOSED",
+    "watchdog_triggered": true
+  },
+  "tests": {
+    "full_repository": {
+      "failed": 0,
+      "passed": 197
+    },
+    "repricing": {
+      "failed": 0,
+      "passed": 51
+    }
+  }
+}

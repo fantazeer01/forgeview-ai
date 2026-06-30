@@ -2830,6 +2830,43 @@ live-versus-offline reconciliation.
 No detector, threshold, strategy, fingerprint, evidence gate, holdout,
 wallet/private-key, order, or live-money behavior changed.
 
+## Second 24-Hour Repricing Paper Soak v1 Recovery
+
+The second soak was recovered after an external power interruption before its
+scheduled completion. Recovery status is `RECOVERED_DESCRIPTIVE_ONLY`. The raw
+session remains outside GitHub and was not edited. It contains 691,284 valid
+JSONL records, no malformed or partial line, and ends exactly at capture
+checkpoint 40,638 (`2026-06-30T18:15:38.155862+00:00`, line 691,284, byte
+324,528,106). The immutable session SHA-256 is
+`491a5363051e5ed033513d85a22bb6bc5c9a205faf1d5cdad2fe753b9dbb526f`.
+
+The recovered source covers 40,638 / 43,200 planned checkpoints (94.069444%)
+over 81,273.99968 seconds. `session_completed` is absent and the largest
+checkpoint gap is 891.868253 seconds. Replay completed twice with matching
+artifacts: 807 completed windows, eight opportunities, 99.85% reference
+coverage, 0.86% data gaps, and v5 verdict `INSUFFICIENT_DATA`.
+
+Frozen repricing export completed twice and matched byte-for-byte. Descriptive
+results are 84 signals; BTC / ETH / SOL 14 / 30 / 40; YES / NO 35 / 49; 58
+wins; 69.047619% win rate; +0.0383214286 after-slippage expectancy; +3.219
+after-slippage P&L; +4.899 before-slippage P&L; and 0.45 maximum drawdown.
+Exits are 58 repricing targets, 23 stop losses, and three timeouts. The durable
+ledger passes SQLite integrity and its 84 signals, positions, and closed trades
+reconcile exactly with offline export; no position remains open.
+
+Operational interruption and research output remain separate. The managed
+runtime recorded `FAILED_CLOSED` / `TELEMETRY_STALLED` before final capture
+interruption. The run is analytically useful, but campaign completion,
+continuity, and fatal-marker gates fail. It contributes zero rows, hours, or
+sessions to frozen evidence. Valid aggregate evidence remains 172 signals,
+24.000000389 hours, and two independent sessions, below the weak gates of 40
+hours and three sessions. The sealed holdout remained untouched.
+
+GitHub-safe artifacts are under
+`polymarket/models/repricing_research_v1/paper_soak_v2_recovery_summary/`.
+The next active task is **Diagnose Repricing Runtime Telemetry Stall After
+Interrupted Soak v1**. No new soak is authorized during that task.
+
 ## State update protocol
 
 At the end of every completed active task:
