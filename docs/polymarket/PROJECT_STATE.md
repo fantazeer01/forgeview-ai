@@ -2867,6 +2867,35 @@ GitHub-safe artifacts are under
 The next active task is **Diagnose Repricing Runtime Telemetry Stall After
 Interrupted Soak v1**. No new soak is authorized during that task.
 
+## Repricing Soak v2 Telemetry Stall Diagnosis
+
+Root cause is confirmed as host S3 sleep, not ingestion backpressure. Windows
+Power-Troubleshooter records sleep from `2026-06-30T17:52:16.060434Z` through
+`2026-06-30T18:07:06.226392Z`, with power-button wake. Kernel-Power Event 42
+records `Application API` as the sleep reason. The OS did not reboot.
+
+The runtime committed event 685145 at `2026-06-30T17:52:16.146150Z`, then its
+health log paused for 900.159992 seconds while the source developed an
+891.868253-second checkpoint gap. On resume, the independent watchdog correctly
+failed closed and preserved an atomic, fully reconciled ledger. The prior
+bounded-ingestion fix therefore worked, but two gaps remained: the canonical
+MVP did not activate the existing Windows sleep inhibitor, and host suspension
+was reported under the ambiguous `TELEMETRY_STALLED` code.
+
+The managed MVP now holds `WindowsSleepInhibitor` for its complete locked
+lifetime. The watchdog also measures its own scheduling gap: a gap at least
+five times the processing-stall threshold fails closed as
+`HOST_SUSPEND_DETECTED`, while a genuine active-batch stall remains
+`TELEMETRY_STALLED`. Host suspension is not recoverable and cannot silently
+continue.
+
+The diagnostic artifact is under
+`polymarket/models/repricing_research_v1/soak_v2_telemetry_stall_diagnosis/`.
+Another soak is allowed only after a fresh preflight. The next active task is
+**Run Third 24-Hour Repricing Paper Soak v1**. The interrupted second soak
+remains excluded from evidence, and the frozen strategy and sealed holdout are
+unchanged. Validation passes with 53 Repricing tests and 199 repository tests.
+
 ## State update protocol
 
 At the end of every completed active task:

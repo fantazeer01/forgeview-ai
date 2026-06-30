@@ -157,6 +157,7 @@ class ManagedRepricingPaperRuntime:
         self._processing_active = False
         self._last_progress_monotonic = 0.0
         self._last_heartbeat_monotonic = 0.0
+        self._last_watchdog_tick_monotonic = 0.0
         self._fatal_code: str | None = None
         self._fatal_message: str | None = None
         self._watchdog_thread: threading.Thread | None = None
@@ -217,6 +218,7 @@ class ManagedRepricingPaperRuntime:
         started_monotonic = self._monotonic()
         self._last_progress_monotonic = started_monotonic
         self._last_heartbeat_monotonic = started_monotonic
+        self._last_watchdog_tick_monotonic = started_monotonic
         try:
             self._write_health()
             handlers = self._install_signal_handlers() if install_signal_handlers else {}
@@ -393,6 +395,17 @@ class ManagedRepricingPaperRuntime:
         interval = min(0.25, self.config.max_processing_stall_seconds / 4.0)
         while not self._watchdog_done.wait(max(0.01, interval)):
             current = self._monotonic()
+            with self._state_lock:
+                watchdog_gap = current - self._last_watchdog_tick_monotonic
+                self._last_watchdog_tick_monotonic = current
+            host_suspend_threshold = self.config.max_processing_stall_seconds * 5.0
+            if watchdog_gap >= host_suspend_threshold:
+                self._trigger_fatal(
+                    "HOST_SUSPEND_DETECTED",
+                    "runtime watchdog was not scheduled within the liveness "
+                    "threshold; host suspend or process starvation detected",
+                )
+                return
             if (
                 self.config.max_runtime_seconds is not None
                 and current - started_monotonic >= self.config.max_runtime_seconds

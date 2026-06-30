@@ -23,6 +23,30 @@ FIXED_NOW = datetime(2026, 6, 28, 18, 0, 0, tzinfo=UTC)
 
 
 class ContinuousRepricingPaperMVPTests(unittest.TestCase):
+    def test_runtime_holds_sleep_inhibitor_for_full_managed_run(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            self._write(session, self._events())
+            transitions = []
+
+            class RecordingInhibitor:
+                def __enter__(self):
+                    transitions.append("entered")
+                    return self
+
+                def __exit__(self, *_args):
+                    transitions.append("exited")
+
+            ContinuousRepricingPaperMVP(
+                self._config(root, session),
+                now=lambda: FIXED_NOW,
+                session_id_factory=lambda: "sleep-inhibitor-session",
+                sleep_inhibitor_factory=RecordingInhibitor,
+            ).run(install_signal_handlers=False)
+
+            self.assertEqual(transitions, ["entered", "exited"])
+
     def test_single_json_configuration_loads_relative_paths(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -55,6 +79,8 @@ class ContinuousRepricingPaperMVPTests(unittest.TestCase):
 
             self.assertEqual(result["status"], "PASS")
             self.assertEqual(result["detector_state"], "FROZEN_CONFIG_VERIFIED")
+            self.assertTrue(result["sleep_inhibitor_required"])
+            self.assertEqual(result["sleep_inhibitor"], "WindowsSleepInhibitor")
             self.assertTrue(config.database_path.exists())
 
     def test_runtime_lock_prevents_second_instance(self) -> None:

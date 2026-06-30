@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import math
 import tempfile
+import threading
 import time
 import unittest
 from datetime import datetime, timezone
@@ -200,6 +201,52 @@ class ManagedRepricingPaperRuntimeTests(unittest.TestCase):
             self.assertTrue(health["watchdog_triggered"])
             self.assertEqual(health["fatal_error_code"], "TELEMETRY_STALLED")
             self.assertEqual(marker["status"], "FAILED_CLOSED")
+
+    def test_host_suspend_watchdog_gap_has_distinct_fatal_code(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            self._write(session, self._events())
+
+            class SuspendedAdapter:
+                def __init__(self, path, _core):
+                    self.session_path = Path(path).resolve()
+                    self.last_sync_lag_measurements = 0
+                    self.last_event_timestamp = None
+
+                def sync(self, *, max_events, progress_callback):
+                    time.sleep(0.05)
+                    progress_callback()
+
+            def suspended_clock() -> float:
+                if threading.current_thread().name == "repricing-runtime-watchdog":
+                    return 100.0
+                return 0.0
+
+            runtime = ManagedRepricingPaperRuntime(
+                PaperRuntimeConfig(
+                    session_path=session,
+                    database_path=root / "paper.sqlite3",
+                    health_path=root / "health.json",
+                    max_polls=1,
+                    dry_run=True,
+                    max_processing_stall_seconds=0.03,
+                    heartbeat_interval_seconds=0.01,
+                ),
+                monotonic=suspended_clock,
+                adapter_factory=SuspendedAdapter,
+            )
+
+            with self.assertRaises(RuntimeLivenessError):
+                runtime.run()
+
+            marker = json.loads(
+                (root / "repricing_runtime_safe_shutdown.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertEqual(marker["fatal_error_code"], "HOST_SUSPEND_DETECTED")
+            self.assertIn("host suspend", marker["error"])
 
     def test_backpressure_overload_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

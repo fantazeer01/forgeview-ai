@@ -29,11 +29,11 @@ auditable.
 - **Blocking severity:** Critical
 - **Exit condition:** A bounded unattended run completes the full runtime loop
   without human action, duplicate state, or an unhandled integrity failure.
-- **Latest evidence:** First 24-Hour Repricing Paper Soak v1 failed: the
-  heartbeat stopped after 12,310.53587 seconds, the process exceeded its bound,
-  and live processing missed 13 offline-reconstructable signals. Bounded batch
-  ingestion and liveness controls now pass component and 10,000-event
-  preserved-stream validation; a second soak remains required for exit.
+- **Latest evidence:** The second soak preserved exact live/offline
+  reconciliation but was interrupted by a Windows S3 sleep initiated through
+  an Application API. The MVP now holds an active sleep inhibitor and reports
+  host scheduling gaps separately; a fresh uninterrupted soak remains required
+  for exit.
 - **Dependencies:** None.
 
 ## ALPHA-B002: Automated paper execution
@@ -74,11 +74,11 @@ auditable.
 - **Exit condition:** Supervised operation starts once, rejects a competing
   instance, recovers only approved transient failures, and stops closed on
   integrity failures.
-- **Latest evidence:** Single-instance launch held, but the consumer remained
-  CPU-active after heartbeat loss and beyond its configured runtime instead of
-  stopping closed. The independent watchdog, deadline rollback, and durable
-  shutdown marker now pass fault-injection tests; unattended evidence remains
-  required.
+- **Latest evidence:** Single-instance ownership and fail-closed shutdown held
+  during the second soak. The watchdog stopped on resume from an approximately
+  890-second host sleep, but the cause was previously mislabeled. Active sleep
+  inhibition and distinct host-suspend classification now require unattended
+  validation.
 - **Dependencies:** ALPHA-B001, ALPHA-B003.
 
 ## ALPHA-B005: Telegram live alerts
@@ -120,10 +120,10 @@ auditable.
 - **Exit condition:** Health evidence remains current during unattended
   operation and every critical stale, integrity, API, restart, or duplicate
   condition is visible and fail-closed.
-- **Latest evidence:** The heartbeat stopped after 12,310.53587 seconds without
-  a fail-closed transition while the process remained active. Progress
-  heartbeat, backlog diagnostics, and liveness fail-closed behavior now pass
-  stress tests; a second soak must verify sustained freshness.
+- **Latest evidence:** The second-soak heartbeat paused with the entire host
+  during S3 sleep and failed closed on resume. The runtime now distinguishes
+  watchdog scheduling gaps from ingestion stalls and holds an active Windows
+  sleep inhibitor; a fresh soak must verify sustained health.
 - **Dependencies:** ALPHA-B004.
 
 ## ALPHA-B008: End-to-end Objective Alpha evidence

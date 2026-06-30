@@ -1,0 +1,42 @@
+{
+  "diagnosis": {
+    "capture_checkpoint_gap_seconds": 891.868253,
+    "last_committed_event_index": 685145,
+    "last_committed_event_timestamp": "2026-06-30T17:52:16.146150+00:00",
+    "runtime_health_log_gap_seconds": 900.159992,
+    "sleep_reason": "Application API",
+    "sleep_started_utc": "2026-06-30T17:52:16.060434+00:00",
+    "sleep_wake_source": "Power Button",
+    "system_rebooted": false,
+    "wake_completed_utc": "2026-06-30T18:07:06.226392+00:00",
+    "windows_event_ids": [42, 107, 1]
+  },
+  "fixes": {
+    "active_windows_sleep_inhibitor": true,
+    "bounded_ingestion_unchanged": true,
+    "host_suspend_fatal_code": "HOST_SUSPEND_DETECTED",
+    "host_suspend_remains_fail_closed": true,
+    "processing_stall_fatal_code": "TELEMETRY_STALLED",
+    "strategy_parameters_unchanged": true,
+    "watchdog_scheduling_gap_detection": true
+  },
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "launch_verdict": "READY_FOR_FRESH_24H_SOAK_PREFLIGHT",
+  "root_cause": "HOST_S3_SLEEP_TRIGGERED_BY_APPLICATION_API",
+  "tests": {
+    "exact_host_suspend_regression": "PASS",
+    "sleep_inhibitor_lifetime": "PASS",
+    "targeted_runtime_tests": {
+      "failed": 0,
+      "passed": 26
+    },
+    "repricing_tests": {
+      "failed": 0,
+      "passed": 53
+    },
+    "full_repository_tests": {
+      "failed": 0,
+      "passed": 199
+    }
+  }
+}

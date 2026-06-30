@@ -1048,6 +1048,34 @@ The next task is **Diagnose Repricing Runtime Telemetry Stall After Interrupted
 Soak v1**. It must explain the recorded liveness failure without changing the
 frozen strategy or launching another soak.
 
+## Second Soak Host-Suspend Diagnosis
+
+Windows power records prove that the second soak's 15-minute interruption was
+host S3 sleep initiated by an Application API. Sleep began at
+`2026-06-30T17:52:16.060434Z`; resume completed at
+`2026-06-30T18:07:06.226392Z`. This aligns with the 900.159992-second runtime
+health-log gap and the 891.868253-second source checkpoint gap. No reboot
+occurred.
+
+The previous runtime correction was partially successful: bounded atomic
+ingestion, ledger durability, duplicate protection, and fail-closed behavior
+all held. The ledger reconciles exactly and did not continue after the
+watchdog fatal marker. Static AC timer preflight was insufficient because the
+managed MVP had not activated the available Windows sleep inhibitor, and the
+watchdog labeled host suspension as generic telemetry stall.
+
+The MVP now holds `WindowsSleepInhibitor` throughout managed operation.
+Watchdog scheduling gaps at least five times the processing-stall threshold are
+classified `HOST_SUSPEND_DETECTED`; ordinary consumer stalls remain
+`TELEMETRY_STALLED`. Both conditions remain fail closed. No detector or frozen
+strategy parameter changed.
+
+Artifact:
+`polymarket/models/repricing_research_v1/soak_v2_telemetry_stall_diagnosis/`.
+The next task is **Run Third 24-Hour Repricing Paper Soak v1**, subject to a
+fresh passing preflight. The second soak remains descriptive and excluded from
+evidence. All 53 Repricing tests and all 199 repository tests pass.
+
 ## Missing Data
 
 The current evidence is missing:

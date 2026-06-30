@@ -11,7 +11,10 @@ from datetime import UTC, datetime, time as datetime_time, timedelta
 from pathlib import Path
 from typing import Any, Callable
 
-from polymarket.edge_engine_v5.power_preflight import inspect_windows_power
+from polymarket.edge_engine_v5.power_preflight import (
+    WindowsSleepInhibitor,
+    inspect_windows_power,
+)
 
 from .paper_core import FrozenPaperConfig, RestartSafePaperCore
 from .paper_runtime import (
@@ -356,15 +359,19 @@ class ContinuousRepricingPaperMVP:
         sleeper: Callable[[float], None] | None = None,
         session_id_factory: Callable[[], str] | None = None,
         runtime_factory: Callable[..., ManagedRepricingPaperRuntime] | None = None,
+        sleep_inhibitor_factory: Callable[[], Any] | None = None,
     ) -> None:
         self.config = config
         self.now = now or (lambda: datetime.now(UTC))
         self.sleeper = sleeper or time.sleep
         self.session_id_factory = session_id_factory or self._new_session_id
         self.runtime_factory = runtime_factory or ManagedRepricingPaperRuntime
+        self.sleep_inhibitor_factory = (
+            sleep_inhibitor_factory or WindowsSleepInhibitor
+        )
 
     def run(self, *, install_signal_handlers: bool = True) -> dict[str, Any]:
-        with RuntimeInstanceLock(self.config.lock_path):
+        with RuntimeInstanceLock(self.config.lock_path), self.sleep_inhibitor_factory():
             preflight = validate_runtime_preflight(self.config)
             session_resolver = (
                 (lambda: resolve_latest_v5_session(self.config.session_root))
@@ -576,6 +583,8 @@ def validate_runtime_preflight(
         "session_path": str(session_path.resolve()),
         "session_rotation_enabled": config.session_root is not None,
         "power": power.to_dict(),
+        "sleep_inhibitor": "WindowsSleepInhibitor",
+        "sleep_inhibitor_required": True,
         "free_disk_bytes": disk.free,
         "minimum_free_disk_bytes": config.minimum_free_disk_bytes,
         "preflight_write_latency_ms": round(maximum_write_latency * 1000.0, 3),

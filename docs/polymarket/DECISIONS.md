@@ -1849,3 +1849,23 @@ Reason: This run has 94.069444% checkpoint coverage, an 891.868253-second gap,
 no terminal completion record, and a `TELEMETRY_STALLED` fail-closed marker.
 Its 84-signal descriptive export is reproducible and analytically useful, but
 positive P&L cannot override precommitted operational evidence gates.
+
+## D-105: Managed Repricing runtime must inhibit and classify host sleep
+
+Status: Accepted
+Decision: The canonical Repricing paper MVP must hold
+`WindowsSleepInhibitor` for its full single-instance managed lifetime. Static
+AC sleep/hibernate timer inspection remains required but is not sufficient.
+
+The independent watchdog must distinguish a prolonged gap in its own
+scheduling from an active-batch processing stall. A scheduling gap at least
+five times the frozen operational processing-stall threshold is fatal code
+`HOST_SUSPEND_DETECTED`; ordinary lack of progress while processing remains
+`TELEMETRY_STALLED`. Both conditions fail closed and neither may restart or
+resume automatically.
+
+Reason: Windows records prove the second soak entered S3 sleep through an
+Application API for approximately 890 seconds despite zero AC sleep and
+hibernate timers. Bounded ingestion and ledger atomicity worked, but the MVP
+did not activate the existing sleep inhibitor and the watchdog's prior fatal
+code obscured the host-level cause.

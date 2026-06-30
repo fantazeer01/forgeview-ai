@@ -8,45 +8,47 @@ This file contains exactly one active task. A future Codex session must read
 `LAUNCH_BLOCKERS.md`, `ALPHA_READINESS.md`, `DECISIONS.md`, and
 `REPRICING_RESEARCH_V1.md` before starting it.
 
-## Active task: Diagnose Repricing Runtime Telemetry Stall After Interrupted Soak v1
+## Active task: Run Third 24-Hour Repricing Paper Soak v1
 
 ### Objective
 
-Determine why the second soak's managed runtime emitted
-`TELEMETRY_STALLED` after prolonged healthy operation, while preserving the
-frozen detector and the recovered run. Establish whether the watchdog detected
-a genuine processing deadlock, lock contention, I/O latency, callback starvation,
-or a false-positive liveness condition.
+Run one fresh, public-only 24-hour Repricing paper soak to validate bounded
+ingestion, active Windows sleep inhibition, host-suspend detection, continuous
+health telemetry, deterministic replay, and exact live/offline reconciliation.
 
 ### Required scope
 
-1. Use only the preserved second-soak runtime logs, heartbeat, safe-shutdown
-   marker, SQLite ledger, and deterministic recovery outputs.
-2. Reconstruct the final healthy processing interval and the exact watchdog
-   transition without modifying raw session evidence.
-3. Measure backlog, cursor movement, batch progress, database latency, source
-   write behavior, and watchdog scheduling around the failure.
-4. Add a deterministic regression fixture that reproduces the identified
-   condition, or document precisely why the preserved artifacts cannot do so.
-5. Implement the smallest runtime-only correction if and only if a defect is
-   demonstrated; do not change strategy behavior.
-6. Run all Repricing tests and the full repository suite.
-7. Produce a compact GitHub-safe diagnosis and update project memory.
+1. Synchronize repository context and require a clean `main` matching
+   `origin/main`.
+2. Run fresh power, disk, process, lock, path, source, and frozen-fingerprint
+   preflight.
+3. Confirm the managed runtime reports `sleep_inhibitor_required=true` and
+   holds `WindowsSleepInhibitor` throughout execution.
+4. Launch exactly one public v5 producer and one managed paper runtime for
+   86,400 seconds with the committed frozen configuration.
+5. Monitor heartbeat freshness, watchdog cadence, backlog, source continuity,
+   fatal markers, ledger state, and process lifetime without intervention.
+6. After completion, run deterministic replay and frozen export twice, then
+   require exact live/offline signal, position, and trade reconciliation.
+7. Admit the run to evidence only if every operational and source gate passes.
+8. Commit only a compact GitHub-safe summary and updated project memory.
 
 ### Forbidden
 
-- no new soak, campaign, capture, replay evidence run, or replacement session;
+- no additional or replacement run after failure;
 - no detector, threshold, target, stop, timeout, slippage, fingerprint, or
   evidence-gate change;
 - no live trading, wallet, private key, authentication, or order placement;
 - no sealed holdout inspection or evaluation;
 - no production model training;
-- no modification of the preserved raw second-soak session.
+- no raw session JSONL, database, parquet, run directory, or large log commit.
 
 ### Acceptance criteria
 
-- the liveness transition has a timestamped, artifact-backed causal account;
-- any runtime defect has a failing regression test before its correction;
-- fail-closed behavior remains intact and cannot silently continue;
+- one complete and continuous 24-hour source session;
+- no host suspend, watchdog scheduling gap, stale heartbeat, backlog overload,
+  or fatal marker;
+- bounded clean runtime shutdown;
+- deterministic replay/export and exact live/offline reconciliation;
 - Repricing and full repository tests pass;
 - exactly one active successor task remains.
