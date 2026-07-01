@@ -1,0 +1,47 @@
+{
+  "gates": {
+    "campaign_complete": true,
+    "capture_continuity": true,
+    "deterministic_export": true,
+    "deterministic_replay": true,
+    "frozen_strategy_fingerprint": true,
+    "ledger_integrity": true,
+    "live_and_offline_paper_reconciliation": true,
+    "no_fatal_marker": true,
+    "no_host_suspend": true,
+    "no_open_positions": true,
+    "runtime_bounded_shutdown": true,
+    "runtime_heartbeat_below_watchdog_threshold": true,
+    "runtime_terminal_cursor_complete": false,
+    "runtime_verified_session_completed": false,
+    "sealed_holdout_untouched": true,
+    "sleep_inhibitor_active": true
+  },
+  "heartbeat": {
+    "gaps_over_watchdog_threshold": 0,
+    "max_log_gap_seconds": 10.983717,
+    "rows": 78721
+  },
+  "ledger": {
+    "cursor_event_index": 741528,
+    "offline_signals": 175,
+    "open_positions": 0,
+    "positions": 175,
+    "signals": 175,
+    "sqlite_integrity_check": "ok",
+    "trades": 175
+  },
+  "operational_integrity_verdict": "FAIL_TERMINAL_DRAIN",
+  "replay_status": "PASS_DETERMINISTIC",
+  "soak_verdict": "FAILED_TERMINAL_DRAIN_RECONCILIATION",
+  "tests": {
+    "full_repository": {
+      "failed": 0,
+      "passed": 199
+    },
+    "repricing": {
+      "failed": 0,
+      "passed": 53
+    }
+  }
+}

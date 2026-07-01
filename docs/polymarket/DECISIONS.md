@@ -1869,3 +1869,25 @@ Application API for approximately 890 seconds despite zero AC sleep and
 hibernate timers. Bounded ingestion and ledger atomicity worked, but the MVP
 did not activate the existing sleep inhibitor and the watchdog's prior fatal
 code obscured the host-level cause.
+
+## D-106: Complete source-health drain is required for soak admission
+
+Status: Accepted
+Decision: A Repricing soak is evidence-ineligible unless the managed runtime
+drains the source through its final event, consumes `session_completed`, and
+enforces the terminal campaign-completeness and observation-continuity payload.
+Exact paper signal, position, trade, and P&L reconciliation is necessary but
+not sufficient when the source cursor remains behind terminal metadata.
+
+Third 24-Hour Repricing Paper Soak v1 is therefore classified
+`FAILED_TERMINAL_DRAIN_RECONCILIATION` and excluded from frozen evidence. Its
+175-signal deterministic export remains descriptive. No fourth soak may launch
+until terminal historical-event ordering and a bounded post-source-completion
+drain are validated without changing the frozen strategy.
+
+Reason: The third source was complete and continuous, and its 175 paper trades
+reconciled exactly, but the runtime cursor stopped four events early. Three
+historical `shadow_trade` rows were appended after the final checkpoint with
+backward timestamps, followed by an unconsumed `session_completed` event. A
+runtime that never verifies terminal source health cannot prove operational
+integrity.

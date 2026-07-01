@@ -2896,6 +2896,45 @@ Another soak is allowed only after a fresh preflight. The next active task is
 remains excluded from evidence, and the frozen strategy and sealed holdout are
 unchanged. Validation passes with 53 Repricing tests and 199 repository tests.
 
+## Third 24-Hour Repricing Paper Soak v1
+
+The third public-only soak completed its full source duration with a healthy
+sleep-inhibited host, but final verdict is
+`FAILED_TERMINAL_DRAIN_RECONCILIATION`. Source capture was complete and
+continuous: 43,200 / 43,200 checkpoints, 100% coverage, 2.105269-second maximum
+gap, zero fatal capture errors, no wall-clock discontinuity, and no Windows
+sleep/resume transition.
+
+The managed runtime stopped cleanly after 86,398.257341 wall-clock seconds with
+no restart, fatal marker, watchdog trip, backlog, rejected stream event,
+duplicate, or open position. The ledger passes SQLite integrity and contains
+175 signals, 175 positions, and 175 closed trades. Live and deterministic
+offline paper results reconcile exactly by count, asset, side, and P&L.
+
+Terminal source reconciliation failed by four records. The runtime cursor
+stopped at event 741,528 while the source ends at 741,532. The producer appended
+three historical `shadow_trade` rows after the final checkpoint, followed by
+`session_completed`. Their timestamps precede the final checkpoint, violating
+the adapter's monotonic-order contract, and the runtime never consumed terminal
+source health.
+
+Descriptive frozen export is 175 signals; BTC / ETH / SOL 33 / 39 / 103; YES /
+NO 82 / 93; 68.571429% win rate; +0.0371228571 expectancy after slippage;
++6.4965 P&L after slippage; and 0.77 maximum drawdown. Replay and export each
+match their repeat byte-for-byte.
+
+The run is excluded from evidence because operational integrity failed.
+Scientifically valid evidence remains 172 signals, 24.000000389 hours, and two
+sessions; weak evidence remains below its 40-hour and three-session gates.
+Artifacts are under
+`polymarket/models/repricing_research_v1/paper_soak_v3_summary/`.
+
+The next active task is **Fix Repricing Terminal Drain And Session Completion
+Reconciliation v1**. No fourth soak is authorized until terminal event ordering,
+post-deadline drain, and explicit runtime consumption of `session_completed`
+are fixture-validated. The frozen strategy and sealed holdout remain unchanged.
+All 53 Repricing tests and all 199 repository tests pass.
+
 ## State update protocol
 
 At the end of every completed active task:

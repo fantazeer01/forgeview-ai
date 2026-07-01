@@ -1,6 +1,6 @@
 # Polymarket Next Task
 
-Last updated: June 30, 2026
+Last updated: July 1, 2026
 Task status: ACTIVE
 
 This file contains exactly one active task. A future Codex session must read
@@ -8,47 +8,48 @@ This file contains exactly one active task. A future Codex session must read
 `LAUNCH_BLOCKERS.md`, `ALPHA_READINESS.md`, `DECISIONS.md`, and
 `REPRICING_RESEARCH_V1.md` before starting it.
 
-## Active task: Run Third 24-Hour Repricing Paper Soak v1
+## Active task: Fix Repricing Terminal Drain And Session Completion Reconciliation v1
 
 ### Objective
 
-Run one fresh, public-only 24-hour Repricing paper soak to validate bounded
-ingestion, active Windows sleep inhibition, host-suspend detection, continuous
-health telemetry, deterministic replay, and exact live/offline reconciliation.
+Ensure the managed Repricing runtime drains every terminal source event,
+consumes and validates `session_completed`, and stops only after exact source
+cursor reconciliation, without changing frozen strategy behavior.
 
 ### Required scope
 
-1. Synchronize repository context and require a clean `main` matching
-   `origin/main`.
-2. Run fresh power, disk, process, lock, path, source, and frozen-fingerprint
-   preflight.
-3. Confirm the managed runtime reports `sleep_inhibitor_required=true` and
-   holds `WindowsSleepInhibitor` throughout execution.
-4. Launch exactly one public v5 producer and one managed paper runtime for
-   86,400 seconds with the committed frozen configuration.
-5. Monitor heartbeat freshness, watchdog cadence, backlog, source continuity,
-   fatal markers, ledger state, and process lifetime without intervention.
-6. After completion, run deterministic replay and frozen export twice, then
-   require exact live/offline signal, position, and trade reconciliation.
-7. Admit the run to evidence only if every operational and source gate passes.
-8. Commit only a compact GitHub-safe summary and updated project memory.
+1. Use the preserved third-soak tail and ledger to reproduce the four-event
+   terminal shortfall in a deterministic fixture.
+2. Correct v5 terminal export ordering so appended summary events cannot move
+   backward in stream timestamp.
+3. Add a bounded terminal-drain phase after the source producer completes and
+   before the managed runtime declares `STOPPED`.
+4. Require runtime cursor equality with the final complete source event and
+   explicit runtime consumption of `session_completed`.
+5. Preserve fail-closed behavior when terminal campaign or continuity health
+   is incomplete.
+6. Add tests for historical terminal rows, deadline/source completion races,
+   terminal cursor reconciliation, and incomplete terminal health.
+7. Run all Repricing tests and the full repository suite, then update project
+   memory with a compact GitHub-safe report.
 
 ### Forbidden
 
-- no additional or replacement run after failure;
+- no fourth soak, capture campaign, or replacement run;
 - no detector, threshold, target, stop, timeout, slippage, fingerprint, or
   evidence-gate change;
 - no live trading, wallet, private key, authentication, or order placement;
 - no sealed holdout inspection or evaluation;
 - no production model training;
-- no raw session JSONL, database, parquet, run directory, or large log commit.
+- no modification of preserved raw soak sessions.
 
 ### Acceptance criteria
 
-- one complete and continuous 24-hour source session;
-- no host suspend, watchdog scheduling gap, stale heartbeat, backlog overload,
-  or fatal marker;
-- bounded clean runtime shutdown;
-- deterministic replay/export and exact live/offline reconciliation;
+- the preserved terminal shortfall is reproduced before the fix;
+- terminal summary events remain stream-monotonic or carry a separate event
+  time while their envelope timestamp stays append-monotonic;
+- bounded runtime shutdown drains through `session_completed` and validates
+  source health;
+- cursor equals the final source event with no duplicate paper state;
 - Repricing and full repository tests pass;
 - exactly one active successor task remains.

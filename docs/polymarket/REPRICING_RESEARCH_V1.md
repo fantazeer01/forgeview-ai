@@ -1076,6 +1076,39 @@ The next task is **Run Third 24-Hour Repricing Paper Soak v1**, subject to a
 fresh passing preflight. The second soak remains descriptive and excluded from
 evidence. All 53 Repricing tests and all 199 repository tests pass.
 
+## Third 24-Hour Paper Soak
+
+The third soak completed a full, public-only 86,400-second source capture under
+the active Windows sleep inhibitor. Campaign completeness and observation
+continuity passed with 43,200 checkpoints, 100% coverage, 2.105269-second
+maximum gap, zero fatal capture errors, and no host power transition.
+
+The paper runtime was bounded and healthy throughout. It stopped with no fatal
+marker, watchdog trip, backlog, rejected event, duplicate, restart, or open
+position. Its 175 signals, positions, and trades reconcile exactly to frozen
+offline export by count, asset, side, and after-slippage P&L.
+
+Verdict is nevertheless `FAILED_TERMINAL_DRAIN_RECONCILIATION`. The source has
+741,533 records, but the durable cursor ends at index 741,528. After the final
+checkpoint the producer appended three historical `shadow_trade` events whose
+timestamps moved backward, then appended `session_completed`. The runtime
+stopped before consuming those four records and therefore never enforced
+terminal source health.
+
+Descriptive performance is 175 signals; BTC / ETH / SOL 33 / 39 / 103; YES /
+NO 82 / 93; 120 wins; 68.571429% win rate; +0.0371228571 after-slippage
+expectancy; +6.4965 after-slippage P&L; and 0.77 maximum drawdown. Exits are 120
+targets, 22 stops, and 33 timeouts. Replay and export are deterministic.
+
+The third soak remains analytical only and contributes nothing to evidence.
+Valid evidence remains 172 signals, 24.000000389 hours, and two sessions, below
+weak evidence. Summary artifacts are under
+`polymarket/models/repricing_research_v1/paper_soak_v3_summary/`.
+
+The next task is **Fix Repricing Terminal Drain And Session Completion
+Reconciliation v1**. It may not launch another soak or change the frozen
+strategy. All 53 Repricing tests and all 199 repository tests pass.
+
 ## Missing Data
 
 The current evidence is missing:

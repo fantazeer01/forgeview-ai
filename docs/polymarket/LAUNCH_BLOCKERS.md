@@ -29,11 +29,10 @@ auditable.
 - **Blocking severity:** Critical
 - **Exit condition:** A bounded unattended run completes the full runtime loop
   without human action, duplicate state, or an unhandled integrity failure.
-- **Latest evidence:** The second soak preserved exact live/offline
-  reconciliation but was interrupted by a Windows S3 sleep initiated through
-  an Application API. The MVP now holds an active sleep inhibitor and reports
-  host scheduling gaps separately; a fresh uninterrupted soak remains required
-  for exit.
+- **Latest evidence:** The third soak ran for 24 hours with complete source
+  continuity and exact paper reconciliation, but the runtime stopped four
+  terminal records before `session_completed`. Terminal drain and source-health
+  reconciliation remain required for exit.
 - **Dependencies:** None.
 
 ## ALPHA-B002: Automated paper execution
@@ -74,11 +73,10 @@ auditable.
 - **Exit condition:** Supervised operation starts once, rejects a competing
   instance, recovers only approved transient failures, and stops closed on
   integrity failures.
-- **Latest evidence:** Single-instance ownership and fail-closed shutdown held
-  during the second soak. The watchdog stopped on resume from an approximately
-  890-second host sleep, but the cause was previously mislabeled. Active sleep
-  inhibition and distinct host-suspend classification now require unattended
-  validation.
+- **Latest evidence:** Third-soak single-instance ownership, active sleep
+  inhibition, watchdog health, and bounded shutdown passed. The supervisor
+  still needs a bounded terminal-drain phase before its clean-stop evidence is
+  complete.
 - **Dependencies:** ALPHA-B001, ALPHA-B003.
 
 ## ALPHA-B005: Telegram live alerts
@@ -104,9 +102,9 @@ auditable.
 - **Blocking severity:** Major
 - **Exit condition:** A completed operating day produces one deterministic,
   reconciled report covering paper trades, results, runtime, and failures.
-- **Latest evidence:** Daily output was generated, but stopped with the stale
-  heartbeat and did not reconcile the complete source or the 13-signal live
-  shortfall.
+- **Latest evidence:** Third-soak daily output remained current and paper
+  results reconciled, but the runtime did not consume terminal source health.
+  Final report reconciliation remains incomplete.
 - **Dependencies:** ALPHA-B002, ALPHA-B007.
 
 ## ALPHA-B007: Production health monitoring
@@ -120,10 +118,9 @@ auditable.
 - **Exit condition:** Health evidence remains current during unattended
   operation and every critical stale, integrity, API, restart, or duplicate
   condition is visible and fail-closed.
-- **Latest evidence:** The second-soak heartbeat paused with the entire host
-  during S3 sleep and failed closed on resume. The runtime now distinguishes
-  watchdog scheduling gaps from ingestion stalls and holds an active Windows
-  sleep inhibitor; a fresh soak must verify sustained health.
+- **Latest evidence:** Third-soak heartbeat and host-suspend protection remained
+  healthy for 24 hours. Production health still lacks proof that the runtime
+  consumes and reports final `session_completed` health before stopping.
 - **Dependencies:** ALPHA-B004.
 
 ## ALPHA-B008: End-to-end Objective Alpha evidence

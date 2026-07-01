@@ -1,0 +1,76 @@
+{
+  "aggregate_evidence": {
+    "evidence_gate_result": "BELOW_WEAK_EVIDENCE_GATE",
+    "independent_sessions": 2,
+    "observed_hours": 24.00000038916666,
+    "signals": 172,
+    "soak_admitted": false,
+    "soak_exclusion_reason": "runtime cursor did not drain terminal source records or consume session_completed",
+    "weak_gate_minimum_hours": 40,
+    "weak_gate_minimum_sessions": 3
+  },
+  "descriptive_offline_export": {
+    "asset_counts": {
+      "BTC": 33,
+      "ETH": 39,
+      "SOL": 103
+    },
+    "expectancy_after_slippage": 0.037122857142857145,
+    "exit_reasons": {
+      "repricing_target": 120,
+      "stop_loss": 22,
+      "timeout": 33
+    },
+    "max_drawdown": 0.77,
+    "pnl_after_slippage": 6.4965,
+    "pnl_before_slippage": 9.9965,
+    "side_counts": {
+      "NO": 93,
+      "YES": 82
+    },
+    "signals": 175,
+    "signals_per_hour_between_first_and_last_entry": 7.6328414927432915,
+    "win_rate": 0.6857142857142857,
+    "wins": 120
+  },
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "live_runtime": {
+    "backlog_bytes": 0,
+    "cursor_event_index": 741528,
+    "events_received": 741529,
+    "fatal_error_code": null,
+    "open_positions": 0,
+    "positions": 175,
+    "restarts": 0,
+    "runtime_duration_seconds": 86398.257341,
+    "signals": 175,
+    "status": "STOPPED",
+    "trades": 175,
+    "watchdog_triggered": false
+  },
+  "session_path": "polymarket/runs/repricing_paper_soak_v3/20260630_185243/v5_sessions/20260630_185243/session.jsonl",
+  "soak_verdict": "FAILED_TERMINAL_DRAIN_RECONCILIATION",
+  "source_capture": {
+    "campaign_status": "complete",
+    "checkpoint_count": 43200,
+    "checkpoint_coverage_percentage": 100.0,
+    "fatal_capture_error_count": 0,
+    "max_checkpoint_gap_seconds": 2.105269,
+    "monotonic_elapsed_runtime_seconds": 86400.0,
+    "observation_continuity_status": "continuous",
+    "records": 741533,
+    "session_completed_present": true,
+    "windows_power_transition_count": 0
+  },
+  "terminal_reconciliation": {
+    "runtime_consumed_session_completed": false,
+    "source_final_event_index": 741532,
+    "terminal_events_missing_from_runtime": 4,
+    "unconsumed_event_types": [
+      "shadow_trade",
+      "shadow_trade",
+      "shadow_trade",
+      "session_completed"
+    ]
+  }
+}
