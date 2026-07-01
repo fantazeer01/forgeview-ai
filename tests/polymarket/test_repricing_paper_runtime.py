@@ -16,6 +16,7 @@ from polymarket.repricing_research import (
     RuntimeBackpressureError,
     RuntimeLivenessError,
     RuntimeSessionHealthError,
+    RuntimeTerminalDrainError,
     V5StreamValidationError,
 )
 from polymarket.repricing_research.paper_runtime import build_parser
@@ -366,6 +367,113 @@ class ManagedRepricingPaperRuntimeTests(unittest.TestCase):
             self.assertEqual(health["status"], "FAILED")
             self.assertEqual(health["fatal_error_code"], "SESSION_HEALTH_INCOMPLETE")
 
+    def test_terminal_drain_flushes_all_events_and_completion_marker(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            initial = self._events()
+            self._write(session, initial)
+            terminal = self._terminal_events(257)
+
+            writer = threading.Thread(
+                target=lambda: (time.sleep(0.07), self._append(session, terminal)),
+                daemon=True,
+            )
+            writer.start()
+            runtime = ManagedRepricingPaperRuntime(
+                PaperRuntimeConfig(
+                    session_path=session,
+                    database_path=root / "paper.sqlite3",
+                    health_path=root / "health.json",
+                    poll_interval_seconds=0.005,
+                    max_runtime_seconds=0.03,
+                    terminal_drain_seconds=0.5,
+                    require_session_completed=True,
+                    max_events_per_batch=32,
+                    dry_run=True,
+                )
+            )
+
+            health = runtime.run()
+            writer.join(timeout=1.0)
+
+            expected = len(initial) + len(terminal)
+            self.assertEqual(health.status, "STOPPED")
+            self.assertTrue(health.session_completed_seen)
+            self.assertEqual(health.session_health_status, "complete")
+            self.assertTrue(health.terminal_drain_completed)
+            self.assertFalse(health.terminal_drain_active)
+            self.assertEqual(health.events_received, expected)
+            self.assertFalse((root / "repricing_runtime_safe_shutdown.json").exists())
+            with RestartSafePaperCore(root / "paper.sqlite3") as core:
+                snapshot = core.validation_snapshot()
+                self.assertEqual(snapshot["counts"]["raw_events"], expected)
+                source_id = next(iter(core.connection.execute(
+                    "SELECT source_id FROM source_cursors"
+                )))[0]
+                self.assertEqual(core.source_cursor(source_id), expected - 1)
+
+    def test_terminal_drain_without_completion_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            self._write(session, self._events())
+            runtime = ManagedRepricingPaperRuntime(
+                PaperRuntimeConfig(
+                    session_path=session,
+                    database_path=root / "paper.sqlite3",
+                    health_path=root / "health.json",
+                    poll_interval_seconds=0.005,
+                    max_runtime_seconds=0.02,
+                    terminal_drain_seconds=0.05,
+                    require_session_completed=True,
+                    dry_run=True,
+                )
+            )
+
+            with self.assertRaises(RuntimeTerminalDrainError):
+                runtime.run()
+
+            marker = json.loads(
+                (root / "repricing_runtime_safe_shutdown.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertEqual(marker["fatal_error_code"], "TERMINAL_DRAIN_INCOMPLETE")
+            self.assertFalse(runtime.health.session_completed_seen)
+            self.assertFalse(runtime.health.terminal_drain_completed)
+            self.assertFalse(runtime.health.watchdog_triggered)
+
+    def test_completion_marker_missing_health_fields_never_passes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            self._write(session, [
+                {
+                    "event": "session_started",
+                    "timestamp": "2026-06-28T15:00:00+00:00",
+                    "payload": {"mode": "public"},
+                },
+                {
+                    "event": "session_completed",
+                    "timestamp": "2026-06-28T15:01:00+00:00",
+                    "payload": {},
+                },
+            ])
+            runtime = self._runtime(root, session)
+
+            with self.assertRaises(RuntimeSessionHealthError):
+                runtime.run()
+
+            marker = json.loads(
+                (root / "repricing_runtime_safe_shutdown.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertEqual(marker["fatal_error_code"], "SESSION_HEALTH_INCOMPLETE")
+            self.assertIn("campaign_completeness:missing", marker["error"])
+            self.assertIn("observation_continuity:missing", marker["error"])
+
     @staticmethod
     def _runtime(root: Path, session: Path) -> ManagedRepricingPaperRuntime:
         return ManagedRepricingPaperRuntime(
@@ -433,6 +541,30 @@ class ManagedRepricingPaperRuntimeTests(unittest.TestCase):
                 },
             },
         ]
+
+    @staticmethod
+    def _terminal_events(summary_count: int) -> list[dict[str, object]]:
+        timestamp = "2026-06-28T17:01:00+00:00"
+        events = [
+            {
+                "event": "shadow_trade",
+                "timestamp": timestamp,
+                "payload": {
+                    "trade_id": f"terminal-{index}",
+                    "closed_at": "2026-06-28T17:00:30+00:00",
+                },
+            }
+            for index in range(summary_count)
+        ]
+        events.append({
+            "event": "session_completed",
+            "timestamp": timestamp,
+            "payload": {
+                "campaign_completeness": {"status": "complete"},
+                "observation_continuity": {"status": "continuous"},
+            },
+        })
+        return events
 
     @staticmethod
     def _snapshot(timestamp: str, yes_price: float, expiry: float) -> dict[str, object]:

@@ -2935,6 +2935,37 @@ post-deadline drain, and explicit runtime consumption of `session_completed`
 are fixture-validated. The frozen strategy and sealed holdout remain unchanged.
 All 53 Repricing tests and all 199 repository tests pass.
 
+## Repricing Terminal Drain And Session Completion Fix v1
+
+The third-soak terminal failure is fixed at component and regression level.
+Root cause had two parts: final `shadow_trade` summaries were appended with
+historical envelope timestamps after the final checkpoint, and the managed
+runtime treated its nominal duration as an immediate stop without draining
+producer finalization.
+
+Producer terminal summaries now retain historical business time inside their
+payload while using final append time for the JSONL envelope. Production paper
+runtimes require `session_completed` and enter a bounded 60-second `DRAINING`
+phase at nominal expiry. Success requires complete campaign/continuity health,
+zero remaining source bytes, and a durable cursor through the final event.
+
+Missing completion fails closed as `TERMINAL_DRAIN_INCOMPLETE`; missing or
+disagreeing terminal health fails as `SESSION_HEALTH_INCOMPLETE`. The MVP also
+rejects a false `STOPPED` result unless completion, health, and terminal drain
+are all verified. Heartbeat state now exposes session-completion and drain
+status.
+
+Regression fixtures cover delayed post-deadline completion, 258 terminal
+events drained across 32-event batches, final atomic flush, exact cursor EOF,
+missing completion, missing health fields, false clean stop, and producer
+append monotonicity. No new soak was launched.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/terminal_drain_fix_v1/`. The next task
+is **Run Fourth 24-Hour Repricing Paper Soak v1**, authorized only after fresh
+preflight. Frozen evidence remains 172 signals, 24.000000389 hours, and two
+sessions; strategy and holdout boundaries are unchanged.
+
 ## State update protocol
 
 At the end of every completed active task:

@@ -221,10 +221,14 @@ class V5JsonlPaperAdapter:
         campaign_status = campaign.get("status") if isinstance(campaign, dict) else None
         continuity_status = continuity.get("status") if isinstance(continuity, dict) else None
         errors: list[str] = []
-        if campaign_status not in {None, "complete"}:
-            errors.append(f"campaign_completeness:{campaign_status}")
-        if continuity_status not in {None, "continuous"}:
-            errors.append(f"observation_continuity:{continuity_status}")
+        if campaign_status != "complete":
+            errors.append(
+                f"campaign_completeness:{campaign_status or 'missing'}"
+            )
+        if continuity_status != "continuous":
+            errors.append(
+                f"observation_continuity:{continuity_status or 'missing'}"
+            )
         status = "complete" if not errors else "incomplete"
         return status, errors
 

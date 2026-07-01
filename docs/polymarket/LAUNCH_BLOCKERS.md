@@ -32,7 +32,8 @@ auditable.
 - **Latest evidence:** The third soak ran for 24 hours with complete source
   continuity and exact paper reconciliation, but the runtime stopped four
   terminal records before `session_completed`. Terminal drain and source-health
-  reconciliation remain required for exit.
+  reconciliation now pass delayed, multi-batch fixtures; one fresh soak remains
+  required for exit.
 - **Dependencies:** None.
 
 ## ALPHA-B002: Automated paper execution
@@ -75,8 +76,8 @@ auditable.
   integrity failures.
 - **Latest evidence:** Third-soak single-instance ownership, active sleep
   inhibition, watchdog health, and bounded shutdown passed. The supervisor
-  still needs a bounded terminal-drain phase before its clean-stop evidence is
-  complete.
+  now rejects false clean stops and requires bounded terminal drain; unattended
+  validation remains required.
 - **Dependencies:** ALPHA-B001, ALPHA-B003.
 
 ## ALPHA-B005: Telegram live alerts
@@ -104,7 +105,8 @@ auditable.
   reconciled report covering paper trades, results, runtime, and failures.
 - **Latest evidence:** Third-soak daily output remained current and paper
   results reconciled, but the runtime did not consume terminal source health.
-  Final report reconciliation remains incomplete.
+  Completion and cursor state are now explicit; a fresh soak must prove final
+  report reconciliation.
 - **Dependencies:** ALPHA-B002, ALPHA-B007.
 
 ## ALPHA-B007: Production health monitoring
@@ -120,7 +122,8 @@ auditable.
   condition is visible and fail-closed.
 - **Latest evidence:** Third-soak heartbeat and host-suspend protection remained
   healthy for 24 hours. Production health still lacks proof that the runtime
-  consumes and reports final `session_completed` health before stopping.
+  consumes and reports final `session_completed` health before stopping. The
+  new completion/drain fields pass fixtures but need live validation.
 - **Dependencies:** ALPHA-B004.
 
 ## ALPHA-B008: End-to-end Objective Alpha evidence

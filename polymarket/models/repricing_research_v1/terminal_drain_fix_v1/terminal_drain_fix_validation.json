@@ -1,0 +1,39 @@
+{
+  "fixes": {
+    "append_monotonic_terminal_envelopes": true,
+    "bounded_terminal_drain_seconds": 60.0,
+    "completion_health_required": true,
+    "cursor_eof_required": true,
+    "final_batch_atomic_flush": true,
+    "mvp_false_stop_rejected": true,
+    "session_completed_required_in_production": true
+  },
+  "frozen_strategy_parameters_unchanged": true,
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "regressions": {
+    "completion_marker_health_disagreement": "PASS",
+    "delayed_post_deadline_completion": "PASS",
+    "final_batch_flush_across_multiple_batches": "PASS",
+    "missing_terminal_completion_fails_closed": "PASS",
+    "producer_terminal_envelope_monotonicity": "PASS",
+    "runtime_cursor_equals_final_event": "PASS",
+    "supervisor_false_clean_stop_rejected": "PASS",
+    "zero_lost_terminal_events": "PASS"
+  },
+  "root_cause": [
+    "historical terminal summary timestamps violated append monotonicity",
+    "runtime deadline stopped without a bounded session-completion drain"
+  ],
+  "soak_launched": false,
+  "test_results": {
+    "full_repository": {
+      "passed": 204,
+      "status": "PASS"
+    },
+    "repricing": {
+      "passed": 58,
+      "status": "PASS"
+    }
+  },
+  "verdict": "READY_FOR_FOURTH_24H_SOAK_PREFLIGHT"
+}

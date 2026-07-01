@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import tempfile
 import unittest
+from dataclasses import replace
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -11,6 +12,7 @@ from polymarket.repricing_research import (
     RepricingRuntimeMVPConfig,
     RuntimeAlreadyRunningError,
     RuntimeInstanceLock,
+    RuntimeTerminalDrainError,
     V5StreamUnavailableError,
     validate_runtime_preflight,
 )
@@ -23,6 +25,75 @@ FIXED_NOW = datetime(2026, 6, 28, 18, 0, 0, tzinfo=UTC)
 
 
 class ContinuousRepricingPaperMVPTests(unittest.TestCase):
+    def test_production_runtime_requires_bounded_terminal_completion(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            self._write(session, self._events())
+            config = replace(
+                self._config(root, session),
+                dry_run=False,
+                max_polls=None,
+                max_runtime_seconds=1.0,
+                terminal_drain_seconds=7.0,
+            )
+            captured = []
+
+            class FakeRuntime:
+                def __init__(self, runtime_config):
+                    captured.append(runtime_config)
+
+                def run(self, **_kwargs):
+                    health = self_outer._health("terminal-config")
+                    health.session_completed_seen = True
+                    health.session_health_status = "complete"
+                    health.terminal_drain_completed = True
+                    return health
+
+            self_outer = self
+            ContinuousRepricingPaperMVP(
+                config,
+                now=lambda: FIXED_NOW,
+                session_id_factory=lambda: "terminal-config",
+                runtime_factory=lambda runtime_config, **_kwargs: FakeRuntime(
+                    runtime_config
+                ),
+            ).run(install_signal_handlers=False)
+
+            self.assertTrue(captured[0].require_session_completed)
+            self.assertEqual(captured[0].terminal_drain_seconds, 7.0)
+
+    def test_mvp_rejects_false_stop_without_terminal_reconciliation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            session = root / "session.jsonl"
+            self._write(session, self._events())
+            config = replace(
+                self._config(root, session),
+                dry_run=False,
+                max_polls=None,
+                max_runtime_seconds=1.0,
+            )
+
+            class FalseStopRuntime:
+                def run(self, **_kwargs):
+                    return self_outer._health("false-stop")
+
+            self_outer = self
+            mvp = ContinuousRepricingPaperMVP(
+                config,
+                now=lambda: FIXED_NOW,
+                session_id_factory=lambda: "false-stop",
+                runtime_factory=lambda *_args, **_kwargs: FalseStopRuntime(),
+            )
+
+            with self.assertRaises(RuntimeTerminalDrainError):
+                mvp.run(install_signal_handlers=False)
+
+            status = self._read(config.status_path)
+            self.assertEqual(status["status"], "FAILED_CLOSED")
+            self.assertIn("terminal session reconciliation", status["last_error"])
+
     def test_runtime_holds_sleep_inhibitor_for_full_managed_run(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -342,6 +413,10 @@ class ContinuousRepricingPaperMVPTests(unittest.TestCase):
             watchdog_triggered=False,
             fatal_error_code=None,
             safe_shutdown_marker_path="repricing_runtime_safe_shutdown.json",
+            session_completed_seen=False,
+            session_health_status=None,
+            terminal_drain_active=False,
+            terminal_drain_completed=False,
             dry_run=True,
         )
 

@@ -34,6 +34,7 @@ from polymarket.edge_engine_v5.market_lifecycle import (
 )
 from polymarket.edge_engine_v5.metrics import EvidenceMetrics, aggregate_metrics
 from polymarket.edge_engine_v5.replay import replay_capture
+from polymarket.edge_engine_v5.report import EventStore
 from polymarket.edge_engine_v5.scheduler import CaptureScheduler
 from polymarket.edge_engine_v4.market_discovery import DiscoveryFailure
 from polymarket.edge_engine_v5.continuity import observation_continuity
@@ -170,6 +171,18 @@ class EdgeEngineV5Tests(unittest.TestCase):
             min_shadow_trades=1,
         )
         session_dir, capture_report = LongShadowCapture(config).run()
+        session_events = EventStore.read(session_dir / "session.jsonl")
+        envelope_times = [
+            datetime.fromisoformat(event["timestamp"]) for event in session_events
+        ]
+        self.assertEqual(envelope_times, sorted(envelope_times))
+        self.assertEqual(session_events[-1]["event"], "session_completed")
+        for event in session_events:
+            if event["event"] == "shadow_trade":
+                self.assertLessEqual(
+                    datetime.fromisoformat(event["payload"]["closed_at"]),
+                    datetime.fromisoformat(event["timestamp"]),
+                )
         replay_dir = self.ROOT / "replay"
         _, replay_report = replay_capture(session_dir / "session.jsonl", replay_dir)
         self.assertEqual(capture_report["metrics"], replay_report["metrics"])

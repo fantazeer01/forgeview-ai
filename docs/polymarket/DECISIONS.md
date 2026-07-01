@@ -1891,3 +1891,23 @@ historical `shadow_trade` rows were appended after the final checkpoint with
 backward timestamps, followed by an unconsumed `session_completed` event. A
 runtime that never verifies terminal source health cannot prove operational
 integrity.
+
+## D-107: Runtime success requires bounded terminal source reconciliation
+
+Status: Accepted
+Decision: v5 event envelope timestamps must remain append-monotonic. Historical
+business timestamps belong in event payloads and may not be reused as later
+JSONL envelope timestamps. `session_completed` must be the final source event.
+
+A production Repricing runtime must enter a bounded terminal-drain phase at its
+nominal duration and may report `STOPPED` only after it consumes healthy
+`session_completed`, drains source bytes to zero, and durably advances its
+cursor through the final event. Missing completion is
+`TERMINAL_DRAIN_INCOMPLETE`; missing or disagreeing terminal health is
+`SESSION_HEALTH_INCOMPLETE`. The supervisor independently rejects any false
+clean stop.
+
+Reason: A fixed-duration consumer and producer do not terminate atomically.
+Without an explicit drain contract, scheduler skew can omit final records even
+when paper trades reconcile. Strict append order and bounded completion drain
+remove that race without changing strategy behavior.

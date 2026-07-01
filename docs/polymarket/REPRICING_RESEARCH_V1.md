@@ -1109,6 +1109,31 @@ The next task is **Fix Repricing Terminal Drain And Session Completion
 Reconciliation v1**. It may not launch another soak or change the frozen
 strategy. All 53 Repricing tests and all 199 repository tests pass.
 
+## Terminal Drain And Completion Fix
+
+The third soak's four-record terminal shortfall is reproduced and fixed. The
+producer had appended terminal `shadow_trade` summaries using historical close
+times after a later final checkpoint. The runtime separately stopped at its
+nominal duration without waiting for producer finalization.
+
+Terminal summary envelopes now use append time and preserve close time in the
+payload. Production Repricing runtimes require a healthy `session_completed`,
+drain for at most 60 seconds after nominal expiry, and succeed only after
+source EOF and exact durable cursor reconciliation. Missing completion,
+incomplete health, and false supervisor clean stops all fail closed under
+distinct terminal error paths.
+
+Fixtures validate 258 delayed terminal records across multiple bounded batches,
+zero lost records, final batch commit, completion-marker agreement, source EOF,
+and monotonic producer output. No capture or soak was launched. The frozen
+detector and strategy remain unchanged.
+
+Artifacts:
+`polymarket/models/repricing_research_v1/terminal_drain_fix_v1/`.
+The next task is **Run Fourth 24-Hour Repricing Paper Soak v1**, after fresh
+preflight. Existing evidence remains unchanged until a complete live soak
+passes every operational gate.
+
 ## Missing Data
 
 The current evidence is missing:

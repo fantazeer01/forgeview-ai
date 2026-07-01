@@ -21,6 +21,7 @@ from .paper_runtime import (
     ManagedRepricingPaperRuntime,
     PaperRuntimeConfig,
     PaperRuntimeHealth,
+    RuntimeTerminalDrainError,
 )
 from .v5_stream_adapter import (
     V5JsonlPaperAdapter,
@@ -52,6 +53,7 @@ class RepricingRuntimeMVPConfig:
     max_backlog_bytes: int = 64 * 1024 * 1024
     max_processing_stall_seconds: float = 30.0
     heartbeat_interval_seconds: float = 5.0
+    terminal_drain_seconds: float = 60.0
 
     def __post_init__(self) -> None:
         if self.max_restarts < 0:
@@ -77,6 +79,8 @@ class RepricingRuntimeMVPConfig:
             max_processing_stall_seconds=self.max_processing_stall_seconds,
             heartbeat_interval_seconds=self.heartbeat_interval_seconds,
             safe_shutdown_path=self.safe_shutdown_path,
+            terminal_drain_seconds=self.terminal_drain_seconds,
+            require_session_completed=not self.dry_run,
         )
 
     @property
@@ -161,6 +165,9 @@ class RepricingRuntimeMVPConfig:
             ),
             heartbeat_interval_seconds=float(
                 payload.get("heartbeat_interval_seconds", 5.0)
+            ),
+            terminal_drain_seconds=float(
+                payload.get("terminal_drain_seconds", 60.0)
             ),
         )
 
@@ -409,6 +416,8 @@ class ContinuousRepricingPaperMVP:
                     max_processing_stall_seconds=self.config.max_processing_stall_seconds,
                     heartbeat_interval_seconds=self.config.heartbeat_interval_seconds,
                     safe_shutdown_path=self.config.safe_shutdown_path,
+                    terminal_drain_seconds=self.config.terminal_drain_seconds,
+                    require_session_completed=not self.config.dry_run,
                 )
                 outputs.begin_attempt()
                 runtime_kwargs = {
@@ -422,6 +431,18 @@ class ContinuousRepricingPaperMVP:
                     health = runtime.run(
                         install_signal_handlers=install_signal_handlers
                     )
+                    if (
+                        not self.config.dry_run
+                        and (
+                            not health.session_completed_seen
+                            or health.session_health_status != "complete"
+                            or not health.terminal_drain_completed
+                        )
+                    ):
+                        raise RuntimeTerminalDrainError(
+                            "managed runtime stopped without verified terminal "
+                            "session reconciliation"
+                        )
                 except V5StreamUnavailableError as exc:
                     error = f"{type(exc).__name__}: {exc}"
                     outputs.record_failure(error)
@@ -594,6 +615,8 @@ def validate_runtime_preflight(
         "max_backlog_bytes": config.max_backlog_bytes,
         "max_processing_stall_seconds": config.max_processing_stall_seconds,
         "heartbeat_interval_seconds": config.heartbeat_interval_seconds,
+        "terminal_drain_seconds": config.terminal_drain_seconds,
+        "session_completed_required": not config.dry_run,
         "safe_shutdown_path": str(config.safe_shutdown_path.resolve()),
         "detector_state": "FROZEN_CONFIG_VERIFIED",
         "paper_core_state": "RECOVERABLE",

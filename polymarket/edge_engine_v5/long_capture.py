@@ -596,7 +596,9 @@ class LongShadowCapture:
         adapter.finalize()
         micro_coverage = microstructure_coverage(microstructure_events)
         for trade in adapter.shadow.trades:
-            store.append("shadow_trade", trade.closed_at, trade)
+            # Terminal summaries are appended now; their business time remains
+            # in the payload while the stream envelope stays append-monotonic.
+            store.append("shadow_trade", final_timestamp, trade)
         store.append("session_completed", final_timestamp, {
             "expected_reference_points": expected_refs,
             "successful_reference_points": successful_refs,

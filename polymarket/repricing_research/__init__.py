@@ -21,6 +21,7 @@ from .paper_runtime import (
     RuntimeBackpressureError,
     RuntimeLivenessError,
     RuntimeSessionHealthError,
+    RuntimeTerminalDrainError,
 )
 from .runtime_mvp import (
     ContinuousRepricingPaperMVP,
@@ -50,6 +51,7 @@ __all__ = [
     "RuntimeBackpressureError",
     "RuntimeLivenessError",
     "RuntimeSessionHealthError",
+    "RuntimeTerminalDrainError",
     "ContinuousRepricingPaperMVP",
     "RepricingRuntimeMVPConfig",
     "RuntimeAlreadyRunningError",

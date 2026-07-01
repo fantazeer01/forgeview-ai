@@ -34,8 +34,8 @@ class RuntimeSessionHealthError(RuntimeSafetyError):
     """Raised when a completed source session fails its own health gates."""
 
 
-class RuntimeBoundReached(Exception):
-    """Internal clean-stop signal raised inside an in-flight transaction."""
+class RuntimeTerminalDrainError(RuntimeSafetyError):
+    """Raised when the source does not terminate cleanly within the drain bound."""
 
 
 @dataclass(frozen=True)
@@ -55,6 +55,8 @@ class PaperRuntimeConfig:
     max_processing_stall_seconds: float = 30.0
     heartbeat_interval_seconds: float = 5.0
     safe_shutdown_path: Path | None = None
+    terminal_drain_seconds: float = 60.0
+    require_session_completed: bool = False
 
     def __post_init__(self) -> None:
         if self.poll_interval_seconds < 0:
@@ -83,6 +85,8 @@ class PaperRuntimeConfig:
             raise ValueError("processing stall threshold must be positive")
         if self.heartbeat_interval_seconds <= 0:
             raise ValueError("heartbeat interval must be positive")
+        if self.terminal_drain_seconds <= 0:
+            raise ValueError("terminal drain duration must be positive")
 
 
 @dataclass
@@ -122,6 +126,10 @@ class PaperRuntimeHealth:
     watchdog_triggered: bool
     fatal_error_code: str | None
     safe_shutdown_marker_path: str
+    session_completed_seen: bool
+    session_health_status: str | None
+    terminal_drain_active: bool
+    terminal_drain_completed: bool
     dry_run: bool
 
 
@@ -211,6 +219,10 @@ class ManagedRepricingPaperRuntime:
             watchdog_triggered=False,
             fatal_error_code=None,
             safe_shutdown_marker_path=str(safe_shutdown_path),
+            session_completed_seen=False,
+            session_health_status=None,
+            terminal_drain_active=False,
+            terminal_drain_completed=False,
             dry_run=self.config.dry_run,
         )
         handlers = {}
@@ -242,7 +254,26 @@ class ManagedRepricingPaperRuntime:
             while not self._stop_requested.is_set():
                 self._raise_if_fatal()
                 if self._limit_reached(started_monotonic):
-                    break
+                    if not self.config.require_session_completed:
+                        break
+                    if self.config.max_runtime_seconds is None:
+                        raise RuntimeTerminalDrainError(
+                            "runtime poll bound was reached before session_completed"
+                        )
+                    self._deadline_reached.set()
+                    if not self._health.terminal_drain_active:
+                        self._health.terminal_drain_active = True
+                        self._health.status = "DRAINING"
+                        self._write_health()
+                    if (
+                        self._monotonic() - started_monotonic
+                        >= self.config.max_runtime_seconds
+                        + self.config.terminal_drain_seconds
+                    ):
+                        raise RuntimeTerminalDrainError(
+                            "session_completed was not drained within the "
+                            "terminal drain bound"
+                        )
                 if self._session_resolver is not None:
                     resolved = self._session_resolver().resolve()
                     if resolved != adapter.session_path:
@@ -258,9 +289,6 @@ class ManagedRepricingPaperRuntime:
                         max_events=self.config.max_events_per_batch,
                         progress_callback=self._processing_progress,
                     )
-                except RuntimeBoundReached:
-                    self.request_stop()
-                    break
                 except V5StreamValidationError as exc:
                     after = core.validation_snapshot()
                     accepted = self._apply_ledger_delta(before, after)
@@ -309,14 +337,32 @@ class ManagedRepricingPaperRuntime:
                     raise RuntimeSessionHealthError(
                         f"completed v5 session failed health gates: {details}"
                     )
-                if result.reached_eof and result.remaining_bytes == 0:
+                if result.session_completed_seen:
+                    self._health.session_completed_seen = True
+                    self._health.session_health_status = result.session_health_status
+                if (
+                    result.reached_eof
+                    and result.remaining_bytes == 0
+                    and not self._health.terminal_drain_active
+                ):
                     self._enforce_event_freshness(result.last_event_timestamp)
                 self._health.last_successful_processing_timestamp = self._timestamp()
                 self._health.last_progress_timestamp = self._timestamp()
                 self._health.polls_completed += 1
                 self._write_health()
                 self._raise_if_fatal()
-                if self._limit_reached(started_monotonic):
+                if (
+                    self.config.require_session_completed
+                    and result.session_completed_seen
+                    and result.remaining_bytes == 0
+                ):
+                    self._health.terminal_drain_completed = True
+                    self._health.terminal_drain_active = False
+                    break
+                if (
+                    self._limit_reached(started_monotonic)
+                    and not self.config.require_session_completed
+                ):
                     break
                 if result.remaining_bytes == 0:
                     self._stop_requested.wait(self.config.poll_interval_seconds)
@@ -373,8 +419,6 @@ class ManagedRepricingPaperRuntime:
         )
 
     def _processing_progress(self) -> None:
-        if self._deadline_reached.is_set():
-            raise RuntimeBoundReached()
         self._raise_if_fatal()
         current = self._monotonic()
         with self._state_lock:
@@ -411,8 +455,20 @@ class ManagedRepricingPaperRuntime:
                 and current - started_monotonic >= self.config.max_runtime_seconds
             ):
                 self._deadline_reached.set()
-                self._stop_requested.set()
-                return
+                if not self.config.require_session_completed:
+                    self._stop_requested.set()
+                    return
+                if (
+                    current - started_monotonic
+                    >= self.config.max_runtime_seconds
+                    + self.config.terminal_drain_seconds
+                ):
+                    self._trigger_fatal(
+                        "TERMINAL_DRAIN_INCOMPLETE",
+                        "session_completed was not drained within the terminal "
+                        "drain bound",
+                    )
+                    return
             with self._state_lock:
                 processing_active = self._processing_active
                 last_progress = self._last_progress_monotonic
@@ -438,6 +494,10 @@ class ManagedRepricingPaperRuntime:
 
     def _raise_if_fatal(self) -> None:
         if self._fatal_event.is_set():
+            if self._fatal_code == "TERMINAL_DRAIN_INCOMPLETE":
+                raise RuntimeTerminalDrainError(
+                    self._fatal_message or "terminal drain failed"
+                )
             raise RuntimeLivenessError(self._fatal_message or "runtime liveness failed")
 
     def _record_fatal_exception(self, exc: Exception) -> None:
@@ -449,6 +509,8 @@ class ManagedRepricingPaperRuntime:
             code = "BACKPRESSURE_OVERLOAD"
         elif isinstance(exc, RuntimeSessionHealthError):
             code = "SESSION_HEALTH_INCOMPLETE"
+        elif isinstance(exc, RuntimeTerminalDrainError):
+            code = "TERMINAL_DRAIN_INCOMPLETE"
         elif isinstance(exc, V5StreamValidationError):
             code = "SOURCE_VALIDATION_FAILED"
         else:
@@ -563,6 +625,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-processing-stall-seconds", type=float, default=30.0)
     parser.add_argument("--heartbeat-interval-seconds", type=float, default=5.0)
     parser.add_argument("--safe-shutdown", type=Path)
+    parser.add_argument("--terminal-drain-seconds", type=float, default=60.0)
+    parser.add_argument("--require-session-completed", action="store_true")
     return parser
 
 
@@ -582,6 +646,8 @@ def main(argv: list[str] | None = None) -> int:
         max_processing_stall_seconds=args.max_processing_stall_seconds,
         heartbeat_interval_seconds=args.heartbeat_interval_seconds,
         safe_shutdown_path=args.safe_shutdown,
+        terminal_drain_seconds=args.terminal_drain_seconds,
+        require_session_completed=args.require_session_completed,
     )
     health = ManagedRepricingPaperRuntime(config).run(install_signal_handlers=True)
     print(json.dumps(asdict(health), indent=2, sort_keys=True))
