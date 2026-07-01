@@ -1911,3 +1911,30 @@ Reason: A fixed-duration consumer and producer do not terminate atomically.
 Without an explicit drain contract, scheduler skew can omit final records even
 when paper trades reconcile. Strict append order and bounded completion drain
 remove that race without changing strategy behavior.
+
+## D-108: Repricing runtime validation is tiered and long soaks must be gate-directed
+
+Status: Accepted
+Decision: Repricing runtime validation uses the smallest duration that can
+resolve the named uncertainty. Deterministic regression and preflight are
+mandatory first. A bounded 2-hour canary is permitted only for live integration
+uncertainty not reproduced by fixtures and is not evidence by default. A
+12-hour integrity run is appropriate for accumulation or market-rotation risk
+when no daily-boundary or evidence-hour gate is being tested. A canonical
+24-hour run is reserved for UTC-day/endurance behavior, final operational
+admission, or a run capable of materially advancing a frozen evidence gate.
+
+Run Fourth 24-Hour Repricing Paper Soak v1 remains authorized after fresh
+preflight. It is scientifically material because admissible evidence is 24
+hours and two sessions: six or twelve additional hours cannot pass the frozen
+40-hour weak-evidence floor, while a valid 24-hour session can reach 48 hours
+and three sessions. No evidence gate, detector setting, or frozen strategy
+parameter changes.
+
+Reason: The previous descriptive soaks already test most steady-state runtime
+behavior, and the exact terminal race is covered by deterministic fixtures.
+Repeated 24-hour runs should therefore not be the default engineering test.
+The next 24-hour run remains efficient because it simultaneously validates the
+terminal fix under live shutdown and can close the two currently missing weak
+evidence gates. Shorter runs would consume an independent session while still
+requiring another run for the 40-hour floor.

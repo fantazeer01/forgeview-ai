@@ -15,6 +15,9 @@ This file contains exactly one active task. A future Codex session must read
 Run one fresh public-only 24-hour Repricing paper soak to validate complete
 source capture, bounded terminal drain, healthy `session_completed`
 consumption, exact final cursor reconciliation, and deterministic paper replay.
+This duration is retained by protocol review because a valid run can move
+admissible evidence from 24 hours/two sessions to 48 hours/three sessions;
+6-hour and 12-hour alternatives cannot close the frozen 40-hour weak gate.
 
 ### Required scope
 

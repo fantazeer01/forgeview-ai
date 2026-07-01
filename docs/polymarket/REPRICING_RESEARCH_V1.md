@@ -1134,6 +1134,52 @@ The next task is **Run Fourth 24-Hour Repricing Paper Soak v1**, after fresh
 preflight. Existing evidence remains unchanged until a complete live soak
 passes every operational gate.
 
+## Evidence Duration Protocol Review
+
+The fourth 24-hour soak remains the correct next experiment, but canonical
+24-hour repetitions are not the default for every runtime change. Current
+admissible evidence is 172 signals, 24.000000389 hours, and two independent
+sessions. The weak floor is 100 signals, 40 hours, and three sessions, plus the
+unchanged balance, expectancy, drawdown, and stability gates.
+
+Expected additions under the frozen balanced stratum are:
+
+| Duration | Planned-density signals | Admissible-density signals | Aggregate hours | Weak duration gate |
+|---|---:|---:|---:|---|
+| 6 hours | about 24 | about 43 | about 30 | fail |
+| 12 hours | about 47 | about 86 | about 36 | fail |
+| 24 hours | about 94 | about 172 | about 48 | potentially pass |
+
+Planned density is 3.9184 signals/hour; admissible Batch 001-002 density is
+7.1667 signals/hour. These are planning ranges, not promises. If signals were
+independent, the resulting sample sizes would reduce nominal standard error by
+roughly 6-10%, 11-18%, and 20-29%, respectively, relative to 172 signals.
+Within-market serial correlation and only three prospective sessions mean the
+effective gain is smaller and regime confidence remains weak even if the weak
+gate passes.
+
+No known failure mode is logically restricted to appearing after hour 12.
+Backpressure appeared early, terminal drain occurs at the configured endpoint,
+and host suspension is exogenous. Longer operation nevertheless increases the
+chance of observing host scheduling, resource-growth, rotation, UTC daily
+reporting, and shutdown interactions. Those are operational endurance reasons,
+not evidence that the detector edge itself needs a 24-hour unit.
+
+Future duration selection follows D-108:
+
+1. deterministic regression and preflight for every runtime change;
+2. optional evidence-ineligible 2-hour canary only for uncovered live
+   integration uncertainty;
+3. 12-hour integrity validation for accumulation/rotation risk when it can
+   answer the named question;
+4. 24-hour canonical evidence only for daily-boundary/endurance admission or
+   when it can materially advance a frozen evidence gate.
+
+The fourth soak proceeds directly to 24 hours because the terminal failure is
+reproduced by regression fixtures and a shorter valid run cannot close the
+40-hour gate. Frozen evidence gates, strategy parameters, and holdout policy
+remain unchanged.
+
 ## Missing Data
 
 The current evidence is missing:

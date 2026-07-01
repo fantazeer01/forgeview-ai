@@ -2966,6 +2966,41 @@ is **Run Fourth 24-Hour Repricing Paper Soak v1**, authorized only after fresh
 preflight. Frozen evidence remains 172 signals, 24.000000389 hours, and two
 sessions; strategy and holdout boundaries are unchanged.
 
+## Repricing Evidence Protocol Review v1
+
+The protocol review retains **Run Fourth 24-Hour Repricing Paper Soak v1**.
+This is not justified as another generic endurance repeat. Frozen admissible
+evidence is 172 signals over 24.000000389 hours and two independent sessions;
+a valid 24-hour session would produce 48 observed hours and three sessions,
+crossing the currently missing weak-evidence duration and independence floors.
+A valid 6-hour or 12-hour session would reach only about 30 or 36 aggregate
+hours and would leave the 40-hour gate failed.
+
+At the frozen planning density of 3.9184 signals/hour, 6 / 12 / 24 hours are
+expected to add about 24 / 47 / 94 signals. At the observed admissible density
+of 7.1667 signals/hour, they would add about 43 / 86 / 172. The corresponding
+nominal independent-signal standard-error reduction versus the current
+172-signal sample is approximately 6-10% / 11-18% / 20-29%; serial correlation
+and session clustering make those figures optimistic.
+
+No known correctness defect requires more than 12 hours to manifest. The first
+soak failed after about 3.4 healthy runtime hours, terminal reconciliation can
+be exercised at any bounded duration, and deterministic fixtures now cover its
+exact race. The second soak's host suspension happened late because of an
+external host event, not a duration-dependent algorithm. A 24-hour run still
+adds operational information by increasing exposure to host scheduling,
+resource growth, market rotation, UTC daily reporting, and terminal shutdown.
+
+Going forward, operational validation is tiered: deterministic regression and
+preflight first; an evidence-ineligible bounded 2-hour canary only when a live
+integration uncertainty is not covered by fixtures; a 12-hour integrity run
+for changes whose risk is accumulation or rotation but not daily-boundary
+behavior; and a 24-hour canonical run only when required for a frozen evidence
+gate, UTC-day/endurance validation, or final operational admission. Existing
+weak, moderate, and strong evidence gates are unchanged. The fourth soak skips
+an extra canary because the exact terminal defect is fixture-reproduced and a
+12-hour run cannot close the next scientific gate.
+
 ## State update protocol
 
 At the end of every completed active task:
