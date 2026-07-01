@@ -1938,3 +1938,22 @@ The next 24-hour run remains efficient because it simultaneously validates the
 terminal fix under live shutdown and can close the two currently missing weak
 evidence gates. Shorter runs would consume an independent session while still
 requiring another run for the 40-hour floor.
+
+## D-109: Runtime configuration must validate before source launch
+
+Status: Accepted
+Decision: A canonical Repricing launcher must parse and statically validate
+its runtime configuration before starting the public source producer. Windows
+UTF-8 BOM configuration is accepted through `utf-8-sig`. Session-dependent
+preflight may run after the producer creates its first complete event, but a
+configuration parse failure may never occur after source launch.
+
+The 2.007355-second fourth-soak prefix is classified
+`PRELAUNCH_ABORTED_CONFIG_ENCODING`, retained for audit, and excluded from all
+evidence. It does not consume the canonical fourth soak because no managed
+runtime started, but no clean relaunch is permitted within the same task.
+
+Reason: PowerShell 5 writes `-Encoding utf8` with a BOM. Strict UTF-8 parsing
+rejected an otherwise valid frozen runtime configuration after the producer
+had started. BOM support and parse-before-producer ordering remove this Windows
+launch hazard without changing strategy logic or evidence gates.

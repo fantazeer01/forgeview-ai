@@ -114,7 +114,9 @@ class RepricingRuntimeMVPConfig:
     @classmethod
     def from_json(cls, path: str | Path) -> RepricingRuntimeMVPConfig:
         source = Path(path).resolve()
-        payload = json.loads(source.read_text(encoding="utf-8"))
+        # Windows PowerShell 5 writes `-Encoding utf8` with a BOM. Accept it so
+        # launch configuration can be validated before a producer is started.
+        payload = json.loads(source.read_text(encoding="utf-8-sig"))
         if not isinstance(payload, dict):
             raise ValueError("runtime configuration must be a JSON object")
         required = ("state_directory", "output_directory")

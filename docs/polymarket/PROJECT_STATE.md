@@ -3001,6 +3001,31 @@ weak, moderate, and strong evidence gates are unchanged. The fourth soak skips
 an extra canary because the exact terminal defect is fixture-reproduced and a
 12-hour run cannot close the next scientific gate.
 
+## Fourth Soak Prelaunch Abort
+
+The first fourth-soak launch attempt was aborted after 2.007355 seconds of
+source capture and before the managed paper runtime started. PowerShell wrote
+`runtime_config.json` with a UTF-8 BOM; the strict UTF-8 loader rejected it.
+The orchestration sequence had started the producer before parsing runtime
+configuration, so the producer was stopped immediately and no replacement was
+launched in the same task.
+
+The preserved prefix contains six valid public events, zero signals, no paper
+positions, and no `session_completed`. It is operationally incomplete and
+evidence-ineligible. Frozen valid evidence remains 172 signals,
+24.000000389 hours, and two sessions; Weak Evidence remains failed.
+
+The loader now accepts `utf-8-sig`. The exact preserved config parses and
+passes preflight, and a Windows BOM regression is included. Future launch
+ordering must parse and statically validate runtime configuration before any
+producer starts. All 59 Repricing tests and all 205 repository tests pass.
+The frozen strategy and sealed holdout remain unchanged.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/paper_soak_v4_prelaunch_abort_summary/`.
+The successor is **Run Fourth 24-Hour Repricing Paper Soak v1 - Clean
+Relaunch**, subject to fresh preflight and exactly one producer.
+
 ## State update protocol
 
 At the end of every completed active task:

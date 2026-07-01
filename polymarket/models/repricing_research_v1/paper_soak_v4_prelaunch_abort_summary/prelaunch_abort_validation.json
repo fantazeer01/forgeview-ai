@@ -1,0 +1,30 @@
+{
+  "capture_prefix": {
+    "duration_seconds": 2.007355,
+    "events": 6,
+    "session_completed_present": false,
+    "session_path": "polymarket/runs/repricing_paper_soak_v4/20260701_211813/v5_sessions/20260701_211813/session.jsonl"
+  },
+  "evidence": {
+    "admitted": false,
+    "signals": 0,
+    "valid_aggregate_hours": 24.00000038916666,
+    "valid_aggregate_sessions": 2,
+    "valid_aggregate_signals": 172,
+    "weak_evidence_gate": "FAIL"
+  },
+  "fix": {
+    "canonical_config_accepts_utf8_bom": true,
+    "exact_preserved_config_preflight": "PASS",
+    "launch_order_required": "parse and statically validate runtime config before producer start"
+  },
+  "frozen_strategy_parameters_unchanged": true,
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "managed_runtime_started": false,
+  "replacement_run_launched": false,
+  "test_results": {
+    "full_repository": 205,
+    "repricing": 59
+  },
+  "verdict": "PRELAUNCH_ABORTED_CONFIG_ENCODING"
+}

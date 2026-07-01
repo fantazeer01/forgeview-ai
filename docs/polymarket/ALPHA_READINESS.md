@@ -25,7 +25,7 @@ Readiness is categorical. Percentages are prohibited.
 | Component | Owner | Readiness | Blocker reference | Notes |
 |---|---|---|---|---|
 | Signal generation path | Repricing | READY | None | Frozen detector capability exists; this does not authorize strategy changes. |
-| Continuous autonomous engine | Shared | IN_PROGRESS | ALPHA-B001 | Bounded terminal drain and exact completion reconciliation pass fixtures; one fresh soak remains. |
+| Continuous autonomous engine | Shared | IN_PROGRESS | ALPHA-B001 | Terminal reconciliation and Windows BOM config parsing pass regressions; one clean fourth soak remains. |
 | Automated paper execution | Repricing | READY | ALPHA-B002 | The first soak persisted 60 unique public-input positions and 60 closed trades under the frozen fingerprint. |
 | Restart-safe recovery | Repricing | IN_PROGRESS | ALPHA-B003 | Component tests pass; integrated recovery evidence remains required. |
 | Supervisor process | Infrastructure | IN_PROGRESS | ALPHA-B004 | Supervisor rejects false clean stop and enforces terminal drain; unattended validation remains. |

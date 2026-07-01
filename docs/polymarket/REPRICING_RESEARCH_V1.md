@@ -1180,6 +1180,24 @@ reproduced by regression fixtures and a shorter valid run cannot close the
 40-hour gate. Frozen evidence gates, strategy parameters, and holdout policy
 remain unchanged.
 
+## Fourth Soak Prelaunch Abort
+
+The initial fourth-soak attempt is `PRELAUNCH_ABORTED_CONFIG_ENCODING`. The
+producer wrote six valid events over 2.007355 seconds, but the managed runtime
+never started because its PowerShell-generated JSON configuration had a UTF-8
+BOM that strict UTF-8 parsing rejected. The producer was stopped immediately
+and no replacement run was launched.
+
+This prefix has zero signals, no paper state, no completion marker, and no
+scientific eligibility. Valid evidence remains 172 signals over
+24.000000389 hours and two sessions. The Weak Evidence Gate remains failed.
+
+The loader now accepts `utf-8-sig`; a dedicated Windows BOM regression passes,
+and the exact preserved configuration passes preflight. D-109 requires config
+parse/static validation before producer startup. The frozen strategy, evidence
+gates, and holdout boundary are unchanged. The next task is **Run Fourth
+24-Hour Repricing Paper Soak v1 - Clean Relaunch**.
+
 ## Missing Data
 
 The current evidence is missing:

@@ -32,7 +32,9 @@ auditable.
 - **Latest evidence:** The third soak ran for 24 hours with complete source
   continuity and exact paper reconciliation, but the runtime stopped four
   terminal records before `session_completed`. Terminal drain and source-health
-  reconciliation now pass delayed, multi-batch fixtures; one fresh soak remains
+  reconciliation now pass delayed, multi-batch fixtures. A fourth-soak attempt
+  aborted before managed-runtime startup because PowerShell BOM config parsing
+  failed; that Windows launch defect is fixed and one clean soak remains
   required for exit.
 - **Dependencies:** None.
 

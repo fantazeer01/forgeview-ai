@@ -139,6 +139,28 @@ class ContinuousRepricingPaperMVPTests(unittest.TestCase):
             self.assertEqual(config.status_path.name, "repricing_runtime_status.json")
             self.assertTrue(config.dry_run)
 
+    def test_windows_utf8_bom_configuration_loads_before_launch(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            config_path = root / "runtime.json"
+            config_path.write_text(json.dumps({
+                "dry_run": False,
+                "max_runtime_seconds": 86400,
+                "terminal_drain_seconds": 60,
+                "session_root": "v5_sessions",
+                "state_directory": "state",
+                "output_directory": "output",
+            }), encoding="utf-8-sig")
+
+            config = RepricingRuntimeMVPConfig.from_json(config_path)
+
+            self.assertFalse(config.dry_run)
+            self.assertEqual(config.max_runtime_seconds, 86400)
+            self.assertEqual(config.terminal_drain_seconds, 60)
+            self.assertEqual(
+                config.session_root, (root / "v5_sessions").resolve()
+            )
+
     def test_preflight_validates_session_directories_and_frozen_state(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
