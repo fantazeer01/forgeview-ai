@@ -1,0 +1,9 @@
+{
+  "architecture_options.csv": "49212c789d4caa7aac2f9edf73ab1e21fda118a0676fa523f952a69a57b985b6",
+  "latency_budget.csv": "b637b04ccf8d28c591a7677260227b18a7c4b3161442b425d647d6d271f149a6",
+  "latency_feasibility_report.json": "83c8cccf5d9bb45b64dccd10d58254bdc1dbd8b354b40ba2e3768ac8c4b53c30",
+  "latency_feasibility_report.md": "305ff45107cc17f365a1238045bd153f667fcdd23e1e8e75cc105beea6759be9",
+  "live_benchmark.json": "0c84c879efdb883b6f53edddf0c369c97cf1c18db45251f4c71892ca673c0039",
+  "session_latency_telemetry.json": "390c784a900b0d2543432045e959e5d38194bad760b9a9f71e3d6728846cbe29",
+  "validation_summary.json": "6afb6bbd1e2ec7fac813fafa313a3e12fc8beddeee44383fe73ba4d043bc46e1"
+}

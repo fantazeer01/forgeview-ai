@@ -1,0 +1,53 @@
+{
+  "conclusion": "INSUFFICIENT_MEASUREMENT",
+  "current_architecture": {
+    "best_case_lower_bound_ms": 1914,
+    "median_lower_bound_ms": 3333,
+    "p95_lower_bound_ms": 8435,
+    "worst_observed_lower_bound_ms": 56925,
+    "sub_1_second": false,
+    "sub_2_second_reliable": false
+  },
+  "dominant_components": [
+    "2-second source polling and next-cycle asynchronous feed handoff",
+    "observed quote staleness",
+    "1-second runtime stream polling",
+    "Home PC network jitter",
+    "unmeasured authenticated order and exchange processing"
+  ],
+  "fundamental_or_external": [
+    "public-data publication delay",
+    "network propagation",
+    "CLOB matching and queue position",
+    "exchange processing without a published SLA",
+    "market movement during transit"
+  ],
+  "measured": {
+    "admitted_signal_quote_age_ms": {"min": 1771.278, "median": 2653.478, "p95": 7137.279, "max": 49065.094},
+    "clob_cold_https_ms": {"min": 141.6058, "median": 177.9074, "p95": 345.9843, "max": 6857.3326},
+    "binance_cold_https_ms": {"min": 1110.0801, "median": 1168.6502, "p95": 1217.0615, "max": 1239.1153},
+    "decision_median_ms": 0.0043,
+    "json_round_trip_median_ms": 0.0054,
+    "sqlite_commit_median_ms": 0.8595
+  },
+  "missing_measurements": [
+    "external exchange event publication timestamp",
+    "authenticated EIP-712 signing latency",
+    "authenticated POST /order latency",
+    "CLOB acknowledgement and match latency",
+    "queue position and fill probability",
+    "persistent-WebSocket end-to-end event age"
+  ],
+  "production_outlook": "Engineering redesign can make sub-2-second transport plausible, but engineering alone cannot establish production readiness because the edge already fails at two seconds and authenticated fill/match latency is unmeasured.",
+  "recommendation": "Do not productionize the current polling architecture. Run a bounded public WebSocket latency instrumentation sprint; continue Repricing only if measured event-to-decision p95 leaves a defensible order/match budget. In parallel prioritize less latency-sensitive hypotheses.",
+  "sources": [
+    "https://docs.polymarket.com/market-data/websocket/overview",
+    "https://docs.polymarket.com/market-data/websocket/market-channel",
+    "https://docs.polymarket.com/trading/overview",
+    "https://docs.polymarket.com/trading/orderbook",
+    "https://docs.polymarket.com/api-reference/rate-limits"
+  ],
+  "strategy_unchanged": true,
+  "evidence_gates_unchanged": true,
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run"
+}

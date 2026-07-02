@@ -3094,6 +3094,42 @@ and sealed holdout remain unchanged.
 Artifacts are under
 `polymarket/models/repricing_research_v1/weak_evidence_cost_stress_v1/`.
 
+## Repricing Execution Latency Feasibility Audit v1
+
+The audit conclusion is `INSUFFICIENT_MEASUREMENT`. The current polling
+architecture is not capable of reliable sub-two-second execution and cannot
+achieve sub-one-second execution.
+
+Across 338 admitted signals, quote age was 1.771s minimum, 2.653s median,
+7.137s p95, and 49.065s maximum before runtime consumption or order submission.
+The source checkpoint cadence is 1.998s median and the runtime adds a configured
+0-1s stream-poll phase delay. Home-PC CLOB cold HTTPS was 178ms median and
+346ms p95, with a 6.857s outlier; Binance REST was 1.169s median.
+
+Local processing is negligible: detector decision 0.0043ms median, JSON
+encode/decode about 0.0054ms combined, and full-sync SQLite commit 0.859ms
+median. The current inferred end-to-end lower bounds are approximately 1.914s
+best, 3.333s median, 8.435s p95, and 56.925s worst observed, excluding
+authenticated signing, order submission, exchange acknowledgement, matching,
+and queue delay.
+
+Sub-two-second execution is plausible only after a major event-driven redesign:
+persistent external and CLOB WebSockets, one in-memory decision loop,
+asynchronous durability, persistent order transport, and deployment near the
+CLOB region. Sub-one-second median may be technically plausible in-region but
+is not proven and cannot be claimed from current public data.
+
+Engineering improvements alone do not make Repricing production-ready. The
+two-second executable replay is already negative, and authenticated execution
+latency/fills are unmeasured. The branch should proceed only to a bounded public
+WebSocket timing instrument while less latency-sensitive hypotheses receive
+priority. Frozen strategy, evidence gates, and sealed holdout remain unchanged.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/execution_latency_feasibility_audit_v1/`.
+The next task is **Implement Repricing Public WebSocket Latency Instrumentation
+v1**.
+
 ## State update protocol
 
 At the end of every completed active task:

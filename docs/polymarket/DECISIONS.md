@@ -2002,3 +2002,24 @@ survive alone, identifying latency/staleness rather than generic transaction
 cost as the dominant blocker. Public two-second cadence still cannot establish
 sub-second queue position or fills, so the hypothesis is weakened, not fully
 rejected.
+
+## D-112: Current Repricing polling architecture is latency-infeasible
+
+Status: Accepted
+Decision: The current REST-polling and file-polled Repricing architecture may
+not advance toward production execution. It cannot reliably meet a two-second
+budget and cannot meet a one-second budget. The audit conclusion is
+`INSUFFICIENT_MEASUREMENT` because authenticated signing, order submission,
+exchange processing, queue position, and fill latency remain unmeasured.
+
+Only a bounded public WebSocket instrumentation step is authorized next. A
+future execution proposal would require persistent event streams, an in-memory
+decision path, asynchronous durability, and hosting near the CLOB region. No
+wallet, key, authenticated order, or live trade is authorized. Less
+latency-sensitive strategies should receive parallel priority.
+
+Reason: Admitted quote age is already 2.653s median and 7.137s p95, while the
+edge is negative in actual two-second executable replay. Local detector, JSON,
+and SQLite costs are below 1ms median combined; reducing Python computation
+cannot recover the missing latency budget. WebSockets can remove polling delay,
+but public measurements cannot prove order acknowledgement or fill speed.

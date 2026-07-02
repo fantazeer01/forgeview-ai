@@ -1,0 +1,6 @@
+architecture,expected_median_ms,expected_p95_ms,improvement_vs_current_median_ms,sub_2s,sub_1s,assessment
+current_rest_polling,3333+,8435+,0,no,no,Current production path is infeasible for latency-sensitive repricing
+faster_rest_polling_single_process,800-1500,1800-4000,1800-2500,possible_not_reliable,no,Reduces configured waits but retains HTTP jitter and stale polling
+websocket_event_driven_home_pc,300-800,1000-2500,2500-3000,likely_not_guaranteed,median_possible_p95_unproven,Persistent CLOB and external WebSockets plus in-memory decision and asynchronous journal
+websocket_event_driven_eu_west,100-350,300-1000,3000+,yes,plausible_not_proven,Requires deployment near eu-west-2 and measured authenticated submission
+less_latency_sensitive_strategy,not_comparable,not_comparable,not_comparable,not_required,not_required,Prefer signals whose expectancy survives at least 5-30 seconds

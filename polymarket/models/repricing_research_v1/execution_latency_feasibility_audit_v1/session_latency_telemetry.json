@@ -1,0 +1,56 @@
+{
+  "admitted_signal_quote_age": {
+    "max_ms": 49065.094000000005,
+    "mean_ms": 3473.7308431952665,
+    "median_ms": 2653.478,
+    "min_ms": 1771.278,
+    "n": 338,
+    "p95_ms": 7137.279,
+    "p99_ms": 18607.798
+  },
+  "checkpoint_interval": {
+    "max_ms": 2090.353,
+    "mean_ms": 1999.99988337693,
+    "median_ms": 1997.685,
+    "min_ms": 1912.7369999999999,
+    "n": 43199,
+    "p95_ms": 2009.2620000000002,
+    "p99_ms": 2011.1680000000001
+  },
+  "event_counts": {
+    "capture_checkpoint": 43200,
+    "discovery_failure": 171,
+    "lag_measurement": 128334,
+    "lifecycle_tracking": 6923,
+    "market_lifecycle": 3465,
+    "microstructure_snapshot": 128551,
+    "opportunity": 18,
+    "polymarket_snapshot": 128551,
+    "reference_price": 129477,
+    "session_completed": 1,
+    "session_started": 1,
+    "shadow_decision": 69,
+    "shadow_trade": 3,
+    "skipped": 172674
+  },
+  "microstructure": {
+    "quote_age_seconds": {
+      "max_ms": 184406.087,
+      "mean_ms": 5450.171874843448,
+      "median_ms": 2425.252,
+      "min_ms": 247.139,
+      "n": 128551,
+      "p95_ms": 24010.386000000002,
+      "p99_ms": 70205.53099999999
+    },
+    "refresh_latency_seconds": {
+      "max_ms": 19202.99999997951,
+      "mean_ms": 281.7029816862677,
+      "median_ms": 172.0000000204891,
+      "min_ms": 125.0,
+      "n": 128551,
+      "p95_ms": 422.0000000204891,
+      "p99_ms": 2797.000000020489
+    }
+  }
+}

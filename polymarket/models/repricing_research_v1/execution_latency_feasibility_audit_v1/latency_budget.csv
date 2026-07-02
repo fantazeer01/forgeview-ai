@@ -1,0 +1,14 @@
+component,classification,best_ms,median_ms,p95_ms,worst_ms,notes
+admitted_quote_age,measured,1771.278,2653.478,7137.279,49065.094,Quote timestamp to detector observation on 338 admitted signals
+source_checkpoint_interval,measured,1912.737,1997.685,2009.262,2090.353,Canonical source scheduler cadence
+clob_rest_round_trip,measured_public_proxy,141.606,177.907,345.984,6857.333,Cold HTTPS GET from Home PC; order POST was forbidden
+binance_rest_round_trip,measured,1110.080,1168.650,1217.061,1239.115,Cold HTTPS ticker GET from Home PC
+runtime_stream_poll,configured_bound,0,500,950,1000,Uniform phase estimate for one-second consumer polling
+decision_logic,measured,0.004,0.004,0.009,0.110,Ten thousand frozen LagDetector calls
+json_decode,measured,0.002,0.003,0.005,0.061,Ten thousand representative events
+json_encode,measured,0.003,0.003,0.005,0.036,Ten thousand representative events
+sqlite_full_sync_commit,measured,0.756,0.859,1.147,2.482,250 restart-safe single-event commits
+authenticated_order_signing,unmeasured,,,,,Forbidden because no wallet or private key was used
+authenticated_order_submission,unmeasured_proxy,141.606,177.907,345.984,6857.333,Public CLOB GET transport proxy only; server/auth work unknown
+exchange_match_processing,unmeasured,,,,,Polymarket publishes no matching-latency SLA
+current_end_to_end_lower_bound,inferred,1914,3333,8435,56925,Observed quote age plus consumer poll and CLOB transport proxy; excludes signing and exchange processing

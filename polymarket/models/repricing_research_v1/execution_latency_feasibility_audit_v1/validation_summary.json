@@ -1,0 +1,15 @@
+{
+  "authenticated_requests": false,
+  "conclusion": "INSUFFICIENT_MEASUREMENT",
+  "current_sub_1s_achievable": false,
+  "current_sub_2s_reliable": false,
+  "evidence_gates_unchanged": true,
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "orders_submitted": 0,
+  "public_requests_only": true,
+  "strategy_unchanged": true,
+  "tests": {
+    "full_repository_passed": 208,
+    "repricing_passed": 62
+  }
+}

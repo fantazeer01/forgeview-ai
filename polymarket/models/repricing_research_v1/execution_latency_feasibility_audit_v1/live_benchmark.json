@@ -1,0 +1,168 @@
+{
+  "authenticated_order_submission": "NOT_MEASURED_FORBIDDEN_NO_WALLET_OR_KEYS",
+  "book_url_token_present": true,
+  "local": {
+    "decision_measure": {
+      "error_count": 0,
+      "errors": [],
+      "latency": {
+        "max_ms": 0.10959990322589874,
+        "mean_ms": 0.005377740552648902,
+        "median_ms": 0.004300149157643318,
+        "min_ms": 0.00400003045797348,
+        "n": 10000,
+        "p95_ms": 0.008600065484642982
+      }
+    },
+    "json_decode": {
+      "error_count": 0,
+      "errors": [],
+      "latency": {
+        "max_ms": 0.06129988469183445,
+        "mean_ms": 0.0031998505583032966,
+        "median_ms": 0.002600019797682762,
+        "min_ms": 0.0023997854441404343,
+        "n": 10000,
+        "p95_ms": 0.005499925464391708
+      }
+    },
+    "json_encode": {
+      "error_count": 0,
+      "errors": [],
+      "latency": {
+        "max_ms": 0.03560003824532032,
+        "mean_ms": 0.00326127998996526,
+        "median_ms": 0.0027997884899377823,
+        "min_ms": 0.0025997869670391083,
+        "n": 10000,
+        "p95_ms": 0.005200039595365524
+      }
+    },
+    "sqlite_full_sync_single_event": {
+      "error_count": 0,
+      "errors": [],
+      "latency": {
+        "max_ms": 2.4817001540213823,
+        "mean_ms": 0.9048103913664818,
+        "median_ms": 0.8594999089837074,
+        "min_ms": 0.7558001670986414,
+        "n": 250,
+        "p95_ms": 1.1468001175671816
+      }
+    }
+  },
+  "market_discovery_ms": 3006.3243999611586,
+  "market_used": "0xd80883d053a043a173dfa7c80c8c66cf3b32975d79281d1a56de2a0eaa01c4f2",
+  "markets_found": 6,
+  "measured_at_utc": "2026-07-02T21:55:37.359168+00:00",
+  "network": {
+    "binance_ticker_cold_https": {
+      "error_count": 0,
+      "errors": [],
+      "latency": {
+        "max_ms": 1239.1153001226485,
+        "mean_ms": 1170.2524679899216,
+        "median_ms": 1168.65020012483,
+        "min_ms": 1110.0801001302898,
+        "n": 25,
+        "p95_ms": 1217.061499832198
+      }
+    },
+    "clob_book_cold_https": {
+      "error_count": 0,
+      "errors": [],
+      "latency": {
+        "max_ms": 6857.332600047812,
+        "mean_ms": 451.52184401638806,
+        "median_ms": 177.907400066033,
+        "min_ms": 141.6058000177145,
+        "n": 25,
+        "p95_ms": 345.9843001328409
+      }
+    },
+    "dns_clob.polymarket.com": {
+      "error_count": 0,
+      "errors": [],
+      "latency": {
+        "max_ms": 0.2682998310774565,
+        "mean_ms": 0.13750004582107067,
+        "median_ms": 0.12950017116963863,
+        "min_ms": 0.10580010712146759,
+        "n": 20,
+        "p95_ms": 0.1689000055193901
+      }
+    },
+    "dns_data-api.binance.vision": {
+      "error_count": 0,
+      "errors": [],
+      "latency": {
+        "max_ms": 0.3106999211013317,
+        "mean_ms": 0.13134500477463007,
+        "median_ms": 0.11824991088360548,
+        "min_ms": 0.1083998940885067,
+        "n": 20,
+        "p95_ms": 0.15450012870132923
+      }
+    },
+    "dns_gamma-api.polymarket.com": {
+      "error_count": 0,
+      "errors": [],
+      "latency": {
+        "max_ms": 0.3076000139117241,
+        "mean_ms": 0.1292449771426618,
+        "median_ms": 0.1148999435827136,
+        "min_ms": 0.10279985144734383,
+        "n": 20,
+        "p95_ms": 0.16149994917213917
+      }
+    },
+    "gamma_events_cold_https": {
+      "error_count": 0,
+      "errors": [],
+      "latency": {
+        "max_ms": 352.495500119403,
+        "mean_ms": 184.0619600028731,
+        "median_ms": 172.37064999062568,
+        "min_ms": 130.63950021751225,
+        "n": 20,
+        "p95_ms": 259.6460999920964
+      }
+    },
+    "tcp_tls_clob.polymarket.com": {
+      "error_count": 0,
+      "errors": [],
+      "latency": {
+        "max_ms": 115.98989996127784,
+        "mean_ms": 100.54116996470839,
+        "median_ms": 105.15239997766912,
+        "min_ms": 79.4680998660624,
+        "n": 10,
+        "p95_ms": 115.98989996127784
+      }
+    },
+    "tcp_tls_data-api.binance.vision": {
+      "error_count": 0,
+      "errors": [],
+      "latency": {
+        "max_ms": 990.9819001331925,
+        "mean_ms": 892.6433000480756,
+        "median_ms": 884.1397000942379,
+        "min_ms": 858.2272999919951,
+        "n": 10,
+        "p95_ms": 990.9819001331925
+      }
+    },
+    "tcp_tls_gamma-api.polymarket.com": {
+      "error_count": 0,
+      "errors": [],
+      "latency": {
+        "max_ms": 124.80610003694892,
+        "mean_ms": 94.79322999250144,
+        "median_ms": 91.92229993641376,
+        "min_ms": 77.60900002904236,
+        "n": 10,
+        "p95_ms": 124.80610003694892
+      }
+    }
+  }
+}

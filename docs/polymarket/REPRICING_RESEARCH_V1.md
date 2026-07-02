@@ -1263,6 +1263,35 @@ Repricing remains active as an unproven research branch but does not advance
 to production candidate. The next task is **Run Repricing Execution Latency
 Feasibility Audit v1**, without detector or threshold changes.
 
+## Execution Latency Feasibility Audit
+
+Conclusion: `INSUFFICIENT_MEASUREMENT`.
+
+Current architecture cannot reliably execute below two seconds and cannot
+execute below one second. Admitted-signal quote age is 1.771s minimum, 2.653s
+median, 7.137s p95, and 49.065s maximum. The two-second source scheduler and
+one-second runtime poll dominate; current lower-bound end-to-end estimates are
+1.914s best, 3.333s median, 8.435s p95, and 56.925s worst observed before
+unmeasured exchange processing.
+
+Home-PC public measurements found CLOB cold HTTPS at 178ms median / 346ms p95
+and Binance REST at 1.169s median / 1.217s p95. Detector decision, JSON, and
+durable local state are each sub-millisecond median and are not material
+latency blockers.
+
+An event-driven WebSocket design on a stable host could plausibly make
+sub-two-second transport achievable. In-region deployment may make sub-one-
+second median plausible. Neither is proven because authenticated signing,
+POST `/order`, acknowledgement, matching, queue position, and fill probability
+were not measured and remain outside the authorized paper-only boundary.
+
+The strategy cannot become production-ready through incremental optimization
+of the current architecture. It requires a major event-driven redesign and a
+new latency measurement contract; even then, the economic edge may remain too
+short-lived. Less latency-sensitive strategies should be prioritized in
+parallel. The next task is **Implement Repricing Public WebSocket Latency
+Instrumentation v1** with no orders or authentication.
+
 ## Missing Data
 
 The current evidence is missing:
