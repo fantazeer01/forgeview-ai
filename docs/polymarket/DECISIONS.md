@@ -2108,3 +2108,22 @@ with 9.8616 ms p95 signal-to-local acknowledgement, 36.4036 ms p95 to the next
 same-token public event, zero reconnects, zero stale events, zero backpressure
 drops and replay-valid lifecycle state. Exchange acceptance, matching, queue
 position and fill latency remain entirely unmeasured.
+
+## D-117: Credentialed no-order calibration requires proxy-enforced isolation
+
+Status: Accepted
+Decision: Credentialed no-order calibration is not authorized by documentation
+or application intent alone. Before any real credential can be considered, an
+isolated process and restrictive egress proxy must mechanically permit only
+the exact observational endpoint tuples and make every order, cancellation,
+heartbeat and credential-derivation route unreachable.
+
+Heartbeat is forbidden in no-order calibration. General-purpose authenticated
+CLOB SDKs and all private-key/seed handling are forbidden. The calibration
+process must stop if any open order is observed and may not cancel it.
+
+Reason: L2 credentials authenticate read operations but may also participate
+in state-changing trading operations. Exact application allowlisting reduces
+risk but does not constrain a compromised process. Layered process, proxy,
+firewall, redaction, kill-switch and independent-authorization gates are needed
+before credential provisioning can be evaluated.

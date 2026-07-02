@@ -3274,3 +3274,30 @@ authenticated endpoint.
 
 Artifacts are under
 `polymarket/models/repricing_research_v1/public_stream_dry_run_v1/`.
+
+## Repricing Credentialed No-Order Calibration Security Review v1
+
+The review verdict is `NOT_AUTHORIZED_SANDBOX_ENFORCEMENT_REQUIRED`. No
+credential, private key, authenticated endpoint, heartbeat, order or
+cancellation was used.
+
+A mechanically testable deny-by-default policy now conditionally allowlists
+only `GET /data/orders`, `GET /trades`, public `GET /time`, and receive-only
+connection to the authenticated user WebSocket. All state-changing methods,
+order/cancel paths, heartbeat, credential creation/derivation, redirects,
+unknown routes, wallet material and general-purpose authenticated CLOB SDKs are
+forbidden.
+
+The review defines external secret injection, exact environment names,
+structural redaction, process isolation, proxy-only egress, kill-switch and
+parent-watchdog behavior, empty-open-order precondition, audit hashes,
+fail-closed conditions and rollback. Because L2 credentials may carry trading
+capability, application policy alone is insufficient; a sandbox and egress
+proxy must prove order-route unreachability before authorization is considered.
+
+The next task is **Implement Repricing No-Order Calibration Sandbox Enforcement
+v1** using fixture credentials and local endpoints only. Real credentials and
+authenticated calls remain forbidden.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/credentialed_no_order_security_review_v1/`.

@@ -1,0 +1,13 @@
+{
+  "authenticated_calls_made": 0,
+  "credentials_used": false,
+  "deny_by_default_policy_implemented": true,
+  "environment_name_validation": "PASS",
+  "exact_allowlist_tests": "PASS",
+  "forbidden_order_cancel_heartbeat_auth_tests": "PASS",
+  "holdout_accessed": false,
+  "orders_submitted": 0,
+  "redaction_tests": "PASS",
+  "result": "VALID_SECURITY_DESIGN_NOT_AUTHORIZED",
+  "strategy_changed": false
+}

@@ -1509,3 +1509,21 @@ production status is `NOT_PRODUCTION_READY_PUBLIC_DRY_RUN_VALIDATED`.
 
 The next task is **Prepare Repricing Credentialed No-Order Calibration Security
 Review v1**, with no credential provisioning or authenticated calls.
+
+## Credentialed No-Order Calibration Security Review v1
+
+The security verdict is `NOT_AUTHORIZED_SANDBOX_ENFORCEMENT_REQUIRED`. A future
+calibration may conditionally observe only authenticated open orders, trades
+and user WebSocket lifecycle plus public server time. All order, batch-order,
+cancellation, heartbeat, credential creation/derivation, wallet, signing and
+unknown routes are denied.
+
+The exact allowlist is implemented as a deny-by-default policy with tests for
+method, scheme, host and path. Required controls include proxy-only egress,
+direct-egress denial, isolated process, external L2 secret provider, forbidden
+private-key environment names, structural redaction, clock gates, kill switch,
+parent watchdog, empty-open-order precondition and independent rollback.
+
+No credential or authenticated call was used. The next task is **Implement
+Repricing No-Order Calibration Sandbox Enforcement v1** with fixtures and local
+endpoints only. Authenticated exchange admission remains `NOT_EVALUATED`.

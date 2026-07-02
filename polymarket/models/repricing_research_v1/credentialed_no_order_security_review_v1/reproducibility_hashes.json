@@ -1,0 +1,11 @@
+﻿{
+    "algorithm":  "sha256",
+    "files":  {
+                  "polymarket/models/repricing_research_v1/credentialed_no_order_security_review_v1/allowed_forbidden_action_matrix.csv":  "178f298d265210bf3727195be5cb1488d120e81e3baf1742b5b63eee3d876667",
+                  "polymarket/models/repricing_research_v1/credentialed_no_order_security_review_v1/credential_handling_protocol.md":  "5004c169c6622de84794b10b4cfd5134c7d7858671c7d5d6f7b7a94b175bca20",
+                  "polymarket/models/repricing_research_v1/credentialed_no_order_security_review_v1/no_order_calibration_gate_definition.json":  "204ff05a3a2e132b7880db375c9c4bdad44dce1bc09533baca4c580dad51a7d5",
+                  "polymarket/models/repricing_research_v1/credentialed_no_order_security_review_v1/policy_validation.json":  "2c3c4305c0d04db7e1961ce6e1518c0fb3033af70aece346e2a0be92094a198c",
+                  "polymarket/models/repricing_research_v1/credentialed_no_order_security_review_v1/preflight_and_rollback.md":  "a791cef21633f10d8c32f2a188e3d7477a430e695d357fcbe5fed067db544904",
+                  "polymarket/models/repricing_research_v1/credentialed_no_order_security_review_v1/security_review_report.md":  "6354eca68a7775511d459364b3efc28d052a208764a9fc0169fa20215d1bc14a"
+              }
+}

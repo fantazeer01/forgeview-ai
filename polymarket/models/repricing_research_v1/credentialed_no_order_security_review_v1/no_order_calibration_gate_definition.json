@@ -1,0 +1,38 @@
+{
+  "authorization_status": "NOT_AUTHORIZED",
+  "future_allowlist": [
+    "GET https://clob.polymarket.com/data/orders",
+    "GET https://clob.polymarket.com/trades",
+    "GET https://clob.polymarket.com/time",
+    "CONNECT wss://ws-subscriptions-clob.polymarket.com/ws/user"
+  ],
+  "mandatory_gates": {
+    "authorization_id_present_and_unexpired": true,
+    "clock_offset_p95_ms_max": 20,
+    "clock_pause_threshold_ms": 50,
+    "direct_egress_blocked": true,
+    "environment_allowlist_only": true,
+    "forbidden_route_tests_pass": true,
+    "git_secret_scan_clean": true,
+    "independent_security_approval": true,
+    "kill_switch_armed": true,
+    "no_order_sdk_or_signer_import": true,
+    "open_orders_at_start": 0,
+    "proxy_allowlist_hash_verified": true,
+    "redaction_tests_pass": true,
+    "rollback_operator_assigned": true,
+    "sandbox_failure_drills_pass": true
+  },
+  "runtime_fail_closed_conditions": [
+    "policy_denial",
+    "redirect",
+    "unknown_schema",
+    "clock_drift",
+    "open_order_detected",
+    "proxy_or_watchdog_loss",
+    "log_or_redaction_failure",
+    "unexpected_reconnect_or_auth_failure"
+  ],
+  "state_changing_methods_allowed": false,
+  "verdict": "SANDBOX_ENFORCEMENT_REQUIRED_BEFORE_AUTHORIZATION"
+}

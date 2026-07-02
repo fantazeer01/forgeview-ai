@@ -1,0 +1,17 @@
+category,method,endpoint_or_action,decision,reason
+authenticated_read,GET,https://clob.polymarket.com/data/orders,CONDITIONALLY_ALLOWED,read-only open-order observation after separate authorization
+authenticated_read,GET,https://clob.polymarket.com/trades,CONDITIONALLY_ALLOWED,read-only trade observation after separate authorization
+clock,GET,https://clob.polymarket.com/time,CONDITIONALLY_ALLOWED,public clock calibration
+authenticated_stream,CONNECT,wss://ws-subscriptions-clob.polymarket.com/ws/user,CONDITIONALLY_ALLOWED,receive-only user lifecycle observation
+order,POST,https://clob.polymarket.com/order,FORBIDDEN,creates order
+batch_order,POST,https://clob.polymarket.com/orders,FORBIDDEN,creates orders
+cancel,DELETE,https://clob.polymarket.com/order/*,FORBIDDEN,state changing
+cancel_all,DELETE,https://clob.polymarket.com/cancel-all,FORBIDDEN,state changing
+cancel_market,DELETE,https://clob.polymarket.com/cancel-market-orders,FORBIDDEN,state changing
+heartbeat,POST,https://clob.polymarket.com/heartbeats,FORBIDDEN,stateful and unnecessary with zero orders
+credential_create,POST,https://clob.polymarket.com/auth/api-key,FORBIDDEN,requires L1 capability
+credential_derive,GET,https://clob.polymarket.com/auth/derive-api-key,FORBIDDEN,requires L1 capability
+wallet,ANY,private key or seed access,FORBIDDEN,Capital Stage 0
+sdk,IMPORT,general-purpose authenticated CLOB client,FORBIDDEN,exposes order-capable methods
+redirect,ANY,HTTP redirect,FORBIDDEN,can bypass host/path allowlist
+unknown,ANY,any tuple not exactly allowlisted,FORBIDDEN,deny by default
