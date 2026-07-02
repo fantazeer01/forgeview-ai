@@ -3026,6 +3026,40 @@ Artifacts are under
 The successor is **Run Fourth 24-Hour Repricing Paper Soak v1 - Clean
 Relaunch**, subject to fresh preflight and exactly one producer.
 
+## Fourth 24-Hour Repricing Paper Soak v1 - Clean Relaunch
+
+The canonical clean relaunch passed operational integrity. The public source
+ran for 86,400 seconds with 43,200 / 43,200 checkpoints, 100% temporal
+coverage, a 2.090353-second maximum gap, zero fatal capture errors, and a final
+append-monotonic `session_completed` event.
+
+The managed runtime ran for 86,400.51311 seconds and consumed all 741,438
+records through source index 741,437. Terminal health and drain passed. There
+was zero final backlog, no fatal marker, watchdog trip, host suspension,
+restart, duplicate, rejected event, stale source, or open position. Its 166
+signals, positions, and trades reconcile exactly to deterministic replay and
+export; repeat hashes match.
+
+Batch results are 31 BTC / 39 ETH / 96 SOL and 61 YES / 105 NO signals,
+78.915663% win rate, +0.042771 expectancy after slippage, +7.1000 P&L after
+slippage, and 0.2600 maximum drawdown.
+
+Admissible Batch 001, Batch 002, and soak evidence now totals 338 signals over
+48.000000389 hours and three independent sessions. Aggregate BTC / ETH / SOL
+is 76 / 80 / 182; YES / NO is 128 / 210; win rate is 71.301775%; expectancy is
++0.032405; after-slippage P&L is +10.9530; and max drawdown is 0.8750. Every
+frozen Weak Evidence gate passes, including positive expectancy in all assets
+and both sides. Nominal 95% intervals are 66.2612%-75.8636% for win rate and
++0.021666 to +0.043145 for expectancy, with serial-correlation and
+three-session limitations.
+
+Repricing advances to weak development evidence, not proven edge. The next
+task is **Run Repricing Weak-Evidence Stability And Executable-Cost Stress
+Sprint v1**. No holdout was opened and no live trading was enabled.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/paper_soak_v4_summary/`.
+
 ## State update protocol
 
 At the end of every completed active task:

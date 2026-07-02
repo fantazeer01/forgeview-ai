@@ -25,17 +25,14 @@ auditable.
 - **Description:** One unattended runtime must continuously connect market
   input, signal generation, paper position lifecycle, and result persistence.
 - **Owner:** Shared
-- **Current status:** IN_PROGRESS
+- **Current status:** RESOLVED
 - **Blocking severity:** Critical
 - **Exit condition:** A bounded unattended run completes the full runtime loop
   without human action, duplicate state, or an unhandled integrity failure.
-- **Latest evidence:** The third soak ran for 24 hours with complete source
-  continuity and exact paper reconciliation, but the runtime stopped four
-  terminal records before `session_completed`. Terminal drain and source-health
-  reconciliation now pass delayed, multi-batch fixtures. A fourth-soak attempt
-  aborted before managed-runtime startup because PowerShell BOM config parsing
-  failed; that Windows launch defect is fixed and one clean soak remains
-  required for exit.
+- **Exit evidence:** The clean fourth soak completed 86,400 seconds unattended,
+  consumed all 741,438 source events through healthy terminal completion, and
+  reconciled 166 paper trades exactly with no duplicate, backlog, restart,
+  open position, or integrity failure.
 - **Dependencies:** None.
 
 ## ALPHA-B002: Automated paper execution
@@ -79,7 +76,8 @@ auditable.
 - **Latest evidence:** Third-soak single-instance ownership, active sleep
   inhibition, watchdog health, and bounded shutdown passed. The supervisor
   now rejects false clean stops and requires bounded terminal drain; unattended
-  validation remains required.
+  validation is now complete: the clean fourth soak consumed all 741,438
+  events through healthy terminal EOF with zero restart or fatal state.
 - **Dependencies:** ALPHA-B001, ALPHA-B003.
 
 ## ALPHA-B005: Telegram live alerts
@@ -101,7 +99,7 @@ auditable.
 - **Description:** Paper activity and operating health must be summarized
   automatically at a stable UTC boundary without manual report assembly.
 - **Owner:** Shared
-- **Current status:** IN_PROGRESS
+- **Current status:** RESOLVED
 - **Blocking severity:** Major
 - **Exit condition:** A completed operating day produces one deterministic,
   reconciled report covering paper trades, results, runtime, and failures.
@@ -117,7 +115,7 @@ auditable.
 - **Description:** The runtime must expose current heartbeat, source freshness,
   API health, integrity status, restart state, and duplicate-protection state.
 - **Owner:** Infrastructure
-- **Current status:** IN_PROGRESS
+- **Current status:** RESOLVED
 - **Blocking severity:** Critical
 - **Exit condition:** Health evidence remains current during unattended
   operation and every critical stale, integrity, API, restart, or duplicate
@@ -144,6 +142,15 @@ auditable.
   ALPHA-B005, ALPHA-B006, ALPHA-B007.
 
 ## Planning rule
+
+## Fourth-soak resolution evidence
+
+The clean fourth soak resolves ALPHA-B001, ALPHA-B006, and ALPHA-B007. It ran
+86,400 seconds, consumed all 741,438 events through healthy terminal EOF,
+reconciled 166 paper trades, generated reconciled UTC daily buckets, and ended
+with zero backlog, stale event, watchdog trip, fatal marker, or open position.
+ALPHA-B003 and ALPHA-B004 remain in progress because an integrated live restart
+with an open position has not yet been demonstrated. ALPHA-B005 remains open.
 
 `LAUNCH_BLOCKERS.md` is the primary operational planning tool for Phase 1. A
 sprint that does not reduce a blocker or increase evidence-based confidence

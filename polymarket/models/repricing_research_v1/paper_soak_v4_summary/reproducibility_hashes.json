@@ -1,0 +1,7 @@
+{
+  "capture_replay_repeat_match": true,
+  "repricing_labels_sha256": "194fa2dc1ad57475147ebfc27d06e073509d323fda72a32164d7c6baec246827",
+  "repricing_repeat_match": true,
+  "session_jsonl_sha256": "726470c60ca531e35a65d2240300c5c55c98102d0c9b7db5877eec94ed03285e",
+  "simulation_summary_sha256": "281fc4e68b67c4d4e6d9fa525c418846e048ca2ad9540137419ebaaf7f33f8b3"
+}

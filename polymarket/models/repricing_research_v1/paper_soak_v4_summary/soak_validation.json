@@ -1,0 +1,37 @@
+{
+  "gates": {
+    "append_monotonic_terminal_envelopes": true,
+    "campaign_complete": true,
+    "capture_continuity": true,
+    "cursor_matches_source_eof": true,
+    "deterministic_export": true,
+    "deterministic_replay": true,
+    "frozen_strategy_fingerprint": true,
+    "ledger_integrity": true,
+    "live_offline_reconciliation": true,
+    "no_fatal_marker": true,
+    "no_host_suspend": true,
+    "no_open_positions": true,
+    "runtime_terminal_drain_complete": true,
+    "runtime_verified_session_completed": true,
+    "sealed_holdout_untouched": true
+  },
+  "ledger": {
+    "cursor_event_index": 741437,
+    "open_positions": 0,
+    "positions": 166,
+    "raw_events": 741438,
+    "signals": 166,
+    "sqlite_integrity_check": "ok",
+    "trades": 166
+  },
+  "source": {
+    "checkpoint_count": 43200,
+    "checkpoint_coverage_percentage": 100.0,
+    "final_event": "session_completed",
+    "max_checkpoint_gap_seconds": 2.090353,
+    "records": 741438
+  },
+  "tests": {"full_repository": 205, "repricing": 59},
+  "verdict": "PASS_OPERATIONAL_INTEGRITY"
+}

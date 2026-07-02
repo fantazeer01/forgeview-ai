@@ -1957,3 +1957,25 @@ Reason: PowerShell 5 writes `-Encoding utf8` with a BOM. Strict UTF-8 parsing
 rejected an otherwise valid frozen runtime configuration after the producer
 had started. BOM support and parse-before-producer ordering remove this Windows
 launch hazard without changing strategy logic or evidence gates.
+
+## D-110: Repricing passes frozen Weak Evidence after canonical fourth soak
+
+Status: Accepted
+Decision: Fourth 24-Hour Repricing Paper Soak v1 passes operational integrity
+and is admitted to development evidence. Combined with Balanced Batches 001
+and 002, the frozen aggregate is 338 signals over 48.000000389 hours and three
+independent sessions. All Weak Evidence gates pass.
+
+The branch advances to a predefined stability and executable-cost stress
+sprint. This status is weak development evidence only. It does not establish
+production edge, permit threshold optimization, authorize holdout access, or
+authorize live trading. A new evidence campaign is not the immediate next
+task.
+
+Reason: The canonical soak completed every source, runtime, terminal-drain,
+cursor, replay, export, and ledger gate. Aggregate expectancy is +0.032405
+after conservative slippage, all three assets and both sides are positive,
+and max drawdown is 0.8750 against +10.9530 P&L. Only three independent
+sessions exist, public midpoint-like observations do not establish executable
+fills, and nominal confidence intervals do not account fully for serial
+correlation. Those limitations require stress testing before stronger claims.

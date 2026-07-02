@@ -25,13 +25,13 @@ Readiness is categorical. Percentages are prohibited.
 | Component | Owner | Readiness | Blocker reference | Notes |
 |---|---|---|---|---|
 | Signal generation path | Repricing | READY | None | Frozen detector capability exists; this does not authorize strategy changes. |
-| Continuous autonomous engine | Shared | IN_PROGRESS | ALPHA-B001 | Terminal reconciliation and Windows BOM config parsing pass regressions; one clean fourth soak remains. |
+| Continuous autonomous engine | Shared | READY | ALPHA-B001 | Clean fourth soak completed 24 hours and reconciled source, terminal drain, and 166 paper trades exactly. |
 | Automated paper execution | Repricing | READY | ALPHA-B002 | The first soak persisted 60 unique public-input positions and 60 closed trades under the frozen fingerprint. |
 | Restart-safe recovery | Repricing | IN_PROGRESS | ALPHA-B003 | Component tests pass; integrated recovery evidence remains required. |
 | Supervisor process | Infrastructure | IN_PROGRESS | ALPHA-B004 | Supervisor rejects false clean stop and enforces terminal drain; unattended validation remains. |
 | Telegram live alerts | Infrastructure | NOT_STARTED | ALPHA-B005 | No approved live alert path is integrated with the paper runtime. |
-| Daily automatic reporting | Shared | IN_PROGRESS | ALPHA-B006 | Completion/cursor state is now available for final reconciliation; fresh-soak evidence remains. |
-| Production health monitoring | Infrastructure | IN_PROGRESS | ALPHA-B007 | Heartbeat now exposes completion and terminal-drain state; live terminal validation remains. |
+| Daily automatic reporting | Shared | READY | ALPHA-B006 | UTC daily buckets reconcile exactly to fourth-soak runtime and ledger totals. |
+| Production health monitoring | Infrastructure | READY | ALPHA-B007 | Fourth-soak heartbeat verified completion, drain, EOF, and zero fatal state. |
 | End-to-end Objective Alpha cycle | Shared | BLOCKED | ALPHA-B008 | Blocked by unresolved component blockers. |
 
 ## Update rule

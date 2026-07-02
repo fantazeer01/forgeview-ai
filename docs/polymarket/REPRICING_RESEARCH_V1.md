@@ -1198,6 +1198,42 @@ parse/static validation before producer startup. The frozen strategy, evidence
 gates, and holdout boundary are unchanged. The next task is **Run Fourth
 24-Hour Repricing Paper Soak v1 - Clean Relaunch**.
 
+## Fourth 24-Hour Canonical Soak Result
+
+The clean fourth soak is `PASS_OPERATIONAL_INTEGRITY`. It completed 86,400
+seconds, 43,200 checkpoints, 100% temporal coverage, and exact terminal source
+reconciliation. The runtime consumed all 741,438 events through final cursor
+741,437, verified healthy `session_completed`, drained to EOF, and closed 166
+of 166 paper positions without restart, duplicate, backlog, fatal marker, or
+open position.
+
+Frozen batch results:
+
+- signals: 166;
+- BTC / ETH / SOL: 31 / 39 / 96;
+- YES / NO: 61 / 105;
+- win rate: 78.915663%;
+- expectancy after slippage: +0.042771;
+- P&L after slippage: +7.1000;
+- max drawdown: 0.2600.
+
+Valid aggregate evidence across three sessions is 338 signals and
+48.000000389 hours. BTC / ETH / SOL is 76 / 80 / 182; YES / NO is 128 / 210;
+win rate is 71.301775%; expectancy is +0.032405; P&L is +10.9530; and max
+drawdown is 0.8750. All frozen Weak Evidence gates pass. Every asset and both
+sides have positive expectancy.
+
+The nominal 95% Wilson interval for win rate is 66.2612%-75.8636%; the nominal
+normal interval for expectancy is +0.021666 to +0.043145. These intervals are
+optimistic because observations are serially correlated and only three
+independent sessions are represented.
+
+Repricing therefore advances to weak development evidence only. The next
+stage is **Run Repricing Weak-Evidence Stability And Executable-Cost Stress
+Sprint v1** using only admitted public evidence and frozen strategy behavior.
+No production-edge claim, holdout access, parameter tuning, or live execution
+is authorized.
+
 ## Missing Data
 
 The current evidence is missing:
