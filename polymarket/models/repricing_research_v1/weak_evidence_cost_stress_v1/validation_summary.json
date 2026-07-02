@@ -1,0 +1,14 @@
+{
+  "conclusion": "WEAKENED",
+  "deterministic_repeat": true,
+  "execution_field_coverage_percentage": 100.0,
+  "frozen_evidence_protocol_unchanged": true,
+  "frozen_strategy_unchanged": true,
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "production_candidate": false,
+  "tests": {
+    "full_repository_passed": 208,
+    "repricing_passed": 62
+  },
+  "weak_evidence_stable_under_executable_cost": false
+}

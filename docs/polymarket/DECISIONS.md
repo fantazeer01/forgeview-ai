@@ -1979,3 +1979,26 @@ and max drawdown is 0.8750 against +10.9530 P&L. Only three independent
 sessions exist, public midpoint-like observations do not establish executable
 fills, and nominal confidence intervals do not account fully for serial
 correlation. Those limitations require stress testing before stronger claims.
+
+## D-111: Repricing Weak Evidence is weakened by executable latency
+
+Status: Accepted
+Decision: Repricing Weak Evidence does not advance to production-candidate
+status. The cost-stress sprint conclusion is `WEAKENED`. Recorded and immediate
+executable results remain positive, but the predefined combined moderate
+scenario and actual two-second bid/ask replay are negative across all three
+sessions.
+
+The next task must audit whether a measurable, sustainable end-to-end latency
+budget below the observed break point is operationally feasible. It may not
+change the detector, tune thresholds, open holdout, or use paper P&L to select
+strategy settings.
+
+Reason: Actual immediate executable replay has +0.035944 expectancy, while a
+two-second executable entry plus 0.005 cost has -0.009810 expectancy and a
+nominal 95% interval entirely below zero. Baseline P&L is also concentrated:
+64.82% in one session and 46.37% in SOL. Spread, small fees, and fill impairment
+survive alone, identifying latency/staleness rather than generic transaction
+cost as the dominant blocker. Public two-second cadence still cannot establish
+sub-second queue position or fills, so the hypothesis is weakened, not fully
+rejected.

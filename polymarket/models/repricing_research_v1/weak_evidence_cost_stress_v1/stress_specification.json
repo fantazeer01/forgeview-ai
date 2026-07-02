@@ -1,0 +1,35 @@
+{
+  "frozen_before_analysis": true,
+  "input_datasets": [
+    "polymarket/data/repricing_research_balanced_batch_001/repricing_labels.csv",
+    "polymarket/data/repricing_research_balanced_batch_002/repricing_labels.csv",
+    "polymarket/runs/repricing_paper_soak_v4/20260701_212557/postprocess/repricing_dataset/repricing_labels.csv"
+  ],
+  "method": {
+    "delay_cost": "max(0, side_sign * (repricing_velocity * delay + 0.5 * repricing_acceleration * delay^2))",
+    "liquidity": "YES uses visible yes_ask_size; NO uses visible yes_bid_size; fill is capped by visible size / order_size_shares",
+    "missed_fill": "deterministic SHA-256 uniform score below scenario miss_rate",
+    "pnl": "fill_ratio * (recorded_after_slippage_pnl - spread_cost - delay_cost - quote_age_cost - transaction_cost)",
+    "unit": "probability points per attempted signal"
+  },
+  "scenarios": [
+    {"name": "recorded_conservative", "delay_seconds": 0, "spread_multiplier": 0.0, "quote_age_multiplier": 0.0, "transaction_cost": 0.0, "miss_rate": 0.0, "order_size_shares": 0, "max_fill_fraction": 1.0},
+    {"name": "delay_0_5s_only", "delay_seconds": 0.5, "spread_multiplier": 0.0, "quote_age_multiplier": 0.0, "transaction_cost": 0.0, "miss_rate": 0.0, "order_size_shares": 0, "max_fill_fraction": 1.0},
+    {"name": "delay_1s_only", "delay_seconds": 1, "spread_multiplier": 0.0, "quote_age_multiplier": 0.0, "transaction_cost": 0.0, "miss_rate": 0.0, "order_size_shares": 0, "max_fill_fraction": 1.0},
+    {"name": "delay_2s_only", "delay_seconds": 2, "spread_multiplier": 0.0, "quote_age_multiplier": 0.0, "transaction_cost": 0.0, "miss_rate": 0.0, "order_size_shares": 0, "max_fill_fraction": 1.0},
+    {"name": "quote_age_only", "delay_seconds": 0, "spread_multiplier": 0.0, "quote_age_multiplier": 0.5, "transaction_cost": 0.0, "miss_rate": 0.0, "order_size_shares": 0, "max_fill_fraction": 1.0},
+    {"name": "latency_only", "delay_seconds": 2, "spread_multiplier": 0.0, "quote_age_multiplier": 0.5, "transaction_cost": 0.0, "miss_rate": 0.0, "order_size_shares": 0, "max_fill_fraction": 1.0},
+    {"name": "spread_only", "delay_seconds": 0, "spread_multiplier": 0.5, "quote_age_multiplier": 0.0, "transaction_cost": 0.0, "miss_rate": 0.0, "order_size_shares": 0, "max_fill_fraction": 1.0},
+    {"name": "transaction_cost_only", "delay_seconds": 0, "spread_multiplier": 0.0, "quote_age_multiplier": 0.0, "transaction_cost": 0.005, "miss_rate": 0.0, "order_size_shares": 0, "max_fill_fraction": 1.0},
+    {"name": "fill_impairment_only", "delay_seconds": 0, "spread_multiplier": 0.0, "quote_age_multiplier": 0.0, "transaction_cost": 0.0, "miss_rate": 0.10, "order_size_shares": 100, "max_fill_fraction": 0.75},
+    {"name": "moderate_execution", "delay_seconds": 2, "spread_multiplier": 0.5, "quote_age_multiplier": 0.5, "transaction_cost": 0.005, "miss_rate": 0.10, "order_size_shares": 100, "max_fill_fraction": 0.75},
+    {"name": "severe_execution", "delay_seconds": 5, "spread_multiplier": 1.0, "quote_age_multiplier": 1.0, "transaction_cost": 0.01, "miss_rate": 0.25, "order_size_shares": 250, "max_fill_fraction": 0.50},
+    {"name": "extreme_execution", "delay_seconds": 15, "spread_multiplier": 1.5, "quote_age_multiplier": 1.5, "transaction_cost": 0.02, "miss_rate": 0.50, "order_size_shares": 500, "max_fill_fraction": 0.25}
+  ],
+  "actual_quote_replay_scenarios": [
+    {"name": "executable_quote_0s", "delay_seconds": 0, "order_size_shares": 1, "transaction_cost": 0.0},
+    {"name": "executable_quote_2s", "delay_seconds": 2, "order_size_shares": 1, "transaction_cost": 0.005},
+    {"name": "executable_quote_5s_100_shares", "delay_seconds": 5, "order_size_shares": 100, "transaction_cost": 0.005},
+    {"name": "executable_quote_5s_250_shares", "delay_seconds": 5, "order_size_shares": 250, "transaction_cost": 0.01}
+  ]
+}

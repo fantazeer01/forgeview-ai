@@ -1,0 +1,3801 @@
+{
+  "actual_quote_replay_scenarios": [
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 1.0,
+      "by_asset": {
+        "BTC": {
+          "expectancy": 0.04672368421052631,
+          "max_drawdown": 0.2310000000000001,
+          "pnl": 3.5509999999999997,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": 0.041037500000000005,
+          "max_drawdown": 0.39,
+          "pnl": 3.2830000000000004,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": 0.029203296703296702,
+          "max_drawdown": 0.5069999999999999,
+          "pnl": 5.315,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": 0.015376923076923076,
+          "max_drawdown": 0.7089999999999999,
+          "pnl": 1.9989999999999999,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": 0.054761904761904776,
+          "max_drawdown": 0.2400000000000002,
+          "pnl": 2.3000000000000003,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": 0.047289156626506026,
+          "max_drawdown": 0.35999999999999976,
+          "pnl": 7.85,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": 0.0335,
+          "max_drawdown": 0.9579999999999999,
+          "pnl": 7.035000000000001,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": 0.039953125,
+          "max_drawdown": 0.42000000000000004,
+          "pnl": 5.114,
+          "signals": 128
+        }
+      },
+      "executed_signals": 338,
+      "expectancy_nominal_95_interval": [
+        0.02540951627027594,
+        0.04647805769422111
+      ],
+      "expectancy_per_attempt": 0.035943786982248524,
+      "largest_asset_pnl_share": 0.43748456663099844,
+      "largest_session_pnl_share": 0.6461437155321424,
+      "max_drawdown": 0.7089999999999999,
+      "missed_signals": 0,
+      "pnl_after_stress": 12.149000000000001,
+      "positive_sessions": 3,
+      "scenario": "executable_quote_0s",
+      "top_10_signal_pnl_share": 0.2708041814141081,
+      "win_rate_executed": 0.6301775147928994
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 0.9963905325443787,
+      "by_asset": {
+        "BTC": {
+          "expectancy": 0.0031710526315789542,
+          "max_drawdown": 0.4609999999999998,
+          "pnl": 0.24100000000000052,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": -0.009462499999999999,
+          "max_drawdown": 1.1039999999999999,
+          "pnl": -0.7569999999999999,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": -0.01538296703296704,
+          "max_drawdown": 3.1906999999999996,
+          "pnl": -2.7997000000000014,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": -0.014007692307692308,
+          "max_drawdown": 1.8419999999999979,
+          "pnl": -1.821,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": -0.009114285714285719,
+          "max_drawdown": 0.6078000000000003,
+          "pnl": -0.3828000000000002,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": -0.006698192771084341,
+          "max_drawdown": 1.8849999999999991,
+          "pnl": -1.1119000000000006,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": -0.00961761904761905,
+          "max_drawdown": 2.5296999999999965,
+          "pnl": -2.0197000000000007,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": -0.010125,
+          "max_drawdown": 1.6809999999999985,
+          "pnl": -1.296,
+          "signals": 128
+        }
+      },
+      "executed_signals": 338,
+      "expectancy_nominal_95_interval": [
+        -0.018431727656244082,
+        -0.0011877989709748547
+      ],
+      "expectancy_per_attempt": -0.009809763313609469,
+      "largest_asset_pnl_share": null,
+      "largest_session_pnl_share": null,
+      "max_drawdown": 3.9547999999999943,
+      "missed_signals": 0,
+      "pnl_after_stress": -3.3157000000000005,
+      "positive_sessions": 0,
+      "scenario": "executable_quote_2s",
+      "top_10_signal_pnl_share": null,
+      "win_rate_executed": 0.4408284023668639
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 0.29110059171597635,
+      "by_asset": {
+        "BTC": {
+          "expectancy": 0.0005887894736842078,
+          "max_drawdown": 0.30609559999999997,
+          "pnl": 0.044747999999999795,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": 0.00024704624999999684,
+          "max_drawdown": 0.2553505,
+          "pnl": 0.019763699999999745,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": -0.0025016142857142865,
+          "max_drawdown": 0.4991403,
+          "pnl": -0.45529380000000014,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": -0.0009841007692307714,
+          "max_drawdown": 0.3735169000000001,
+          "pnl": -0.12793310000000027,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": -0.0019807976190476225,
+          "max_drawdown": 0.13656850000000006,
+          "pnl": -0.08319350000000014,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": -0.0010822620481927723,
+          "max_drawdown": 0.32064000000000015,
+          "pnl": -0.1796555000000002,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": -0.0029675904761904785,
+          "max_drawdown": 0.8036320000000003,
+          "pnl": -0.6231940000000005,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": 0.0018157179687499994,
+          "max_drawdown": 0.2625080000000002,
+          "pnl": 0.23241189999999992,
+          "signals": 128
+        }
+      },
+      "executed_signals": 338,
+      "expectancy_nominal_95_interval": [
+        -0.004168038354194186,
+        0.001855718235850987
+      ],
+      "expectancy_per_attempt": -0.0011561600591715995,
+      "largest_asset_pnl_share": null,
+      "largest_session_pnl_share": null,
+      "max_drawdown": 0.5821799000000003,
+      "missed_signals": 0,
+      "pnl_after_stress": -0.39078210000000063,
+      "positive_sessions": 0,
+      "scenario": "executable_quote_5s_100_shares",
+      "top_10_signal_pnl_share": null,
+      "win_rate_executed": 0.4289940828402367
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 0.15287881656804733,
+      "by_asset": {
+        "BTC": {
+          "expectancy": -0.0021030789473684237,
+          "max_drawdown": 0.3335897600000002,
+          "pnl": -0.1598340000000002,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": -0.0008149670000000017,
+          "max_drawdown": 0.1475578400000001,
+          "pnl": -0.06519736000000013,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": -0.0013570556043956048,
+          "max_drawdown": 0.25365292000000017,
+          "pnl": -0.24698412000000006,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": -0.0008764944615384628,
+          "max_drawdown": 0.24877363999999996,
+          "pnl": -0.11394428000000016,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": -0.001768514285714289,
+          "max_drawdown": 0.088946,
+          "pnl": -0.07427760000000014,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": -0.0017096000000000006,
+          "max_drawdown": 0.34210440000000014,
+          "pnl": -0.2837936000000001,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": -0.002348597142857145,
+          "max_drawdown": 0.5600390000000004,
+          "pnl": -0.4932054000000004,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": 0.0001655462500000001,
+          "max_drawdown": 0.18384303999999999,
+          "pnl": 0.02118992000000001,
+          "signals": 128
+        }
+      },
+      "executed_signals": 338,
+      "expectancy_nominal_95_interval": [
+        -0.0031810762024595783,
+        0.0003880851965424165
+      ],
+      "expectancy_per_attempt": -0.001396495502958581,
+      "largest_asset_pnl_share": null,
+      "largest_session_pnl_share": null,
+      "max_drawdown": 0.5419004400000001,
+      "missed_signals": 0,
+      "pnl_after_stress": -0.47201548000000043,
+      "positive_sessions": 0,
+      "scenario": "executable_quote_5s_250_shares",
+      "top_10_signal_pnl_share": null,
+      "win_rate_executed": 0.4289940828402367
+    }
+  ],
+  "actual_quote_replay_segments": [
+    {
+      "dimension": "session_number",
+      "expectancy": 0.015376923076923076,
+      "max_drawdown": 0.7089999999999999,
+      "pnl": 1.9989999999999999,
+      "scenario": "executable_quote_0s",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.054761904761904776,
+      "max_drawdown": 0.2400000000000002,
+      "pnl": 2.3000000000000003,
+      "scenario": "executable_quote_0s",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.047289156626506026,
+      "max_drawdown": 0.35999999999999976,
+      "pnl": 7.85,
+      "scenario": "executable_quote_0s",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.04672368421052631,
+      "max_drawdown": 0.2310000000000001,
+      "pnl": 3.5509999999999997,
+      "scenario": "executable_quote_0s",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.041037500000000005,
+      "max_drawdown": 0.39,
+      "pnl": 3.2830000000000004,
+      "scenario": "executable_quote_0s",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.029203296703296702,
+      "max_drawdown": 0.5069999999999999,
+      "pnl": 5.315,
+      "scenario": "executable_quote_0s",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.0335,
+      "max_drawdown": 0.9579999999999999,
+      "pnl": 7.035000000000001,
+      "scenario": "executable_quote_0s",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.039953125,
+      "max_drawdown": 0.42000000000000004,
+      "pnl": 5.114,
+      "scenario": "executable_quote_0s",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.10016666666666667,
+      "max_drawdown": 0.08999999999999986,
+      "pnl": 1.202,
+      "scenario": "executable_quote_0s",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.03155805243445693,
+      "max_drawdown": 0.7690000000000005,
+      "pnl": 8.426,
+      "scenario": "executable_quote_0s",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.04272881355932203,
+      "max_drawdown": 0.45999999999999996,
+      "pnl": 2.521,
+      "scenario": "executable_quote_0s",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.002580645161290315,
+      "max_drawdown": 0.45,
+      "pnl": 0.07999999999999977,
+      "scenario": "executable_quote_0s",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.021666666666666685,
+      "max_drawdown": 0.2849999999999999,
+      "pnl": 0.5850000000000005,
+      "scenario": "executable_quote_0s",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.04101428571428571,
+      "max_drawdown": 0.6699999999999998,
+      "pnl": 11.484,
+      "scenario": "executable_quote_0s",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.07788461538461539,
+      "max_drawdown": 0.38,
+      "pnl": 2.025,
+      "scenario": "executable_quote_0s",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.044545454545454555,
+      "max_drawdown": 0.3800000000000001,
+      "pnl": 1.4700000000000002,
+      "scenario": "executable_quote_0s",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.031017921146953405,
+      "max_drawdown": 0.7689999999999999,
+      "pnl": 8.654,
+      "scenario": "executable_quote_0s",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.014007692307692308,
+      "max_drawdown": 1.8419999999999979,
+      "pnl": -1.821,
+      "scenario": "executable_quote_2s",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.009114285714285719,
+      "max_drawdown": 0.6078000000000003,
+      "pnl": -0.3828000000000002,
+      "scenario": "executable_quote_2s",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.006698192771084341,
+      "max_drawdown": 1.8849999999999991,
+      "pnl": -1.1119000000000006,
+      "scenario": "executable_quote_2s",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.0031710526315789542,
+      "max_drawdown": 0.4609999999999998,
+      "pnl": 0.24100000000000052,
+      "scenario": "executable_quote_2s",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.009462499999999999,
+      "max_drawdown": 1.1039999999999999,
+      "pnl": -0.7569999999999999,
+      "scenario": "executable_quote_2s",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.01538296703296704,
+      "max_drawdown": 3.1906999999999996,
+      "pnl": -2.7997000000000014,
+      "scenario": "executable_quote_2s",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": -0.00961761904761905,
+      "max_drawdown": 2.5296999999999965,
+      "pnl": -2.0197000000000007,
+      "scenario": "executable_quote_2s",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": -0.010125,
+      "max_drawdown": 1.6809999999999985,
+      "pnl": -1.296,
+      "scenario": "executable_quote_2s",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.001833333333333335,
+      "max_drawdown": 0.22299999999999998,
+      "pnl": 0.02200000000000002,
+      "scenario": "executable_quote_2s",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.010650561797752811,
+      "max_drawdown": 3.236699999999996,
+      "pnl": -2.8437000000000006,
+      "scenario": "executable_quote_2s",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.008372881355932208,
+      "max_drawdown": 1.114,
+      "pnl": -0.4940000000000003,
+      "scenario": "executable_quote_2s",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.029838709677419355,
+      "max_drawdown": 1.115,
+      "pnl": -0.925,
+      "scenario": "executable_quote_2s",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.02703703703703703,
+      "max_drawdown": 0.73,
+      "pnl": -0.7299999999999999,
+      "scenario": "executable_quote_2s",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.005931071428571431,
+      "max_drawdown": 2.544799999999995,
+      "pnl": -1.6607000000000007,
+      "scenario": "executable_quote_2s",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.06173076923076922,
+      "max_drawdown": 0.385,
+      "pnl": 1.6049999999999998,
+      "scenario": "executable_quote_2s",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.012878787878787872,
+      "max_drawdown": 0.545,
+      "pnl": -0.42499999999999977,
+      "scenario": "executable_quote_2s",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.01611362007168459,
+      "max_drawdown": 4.870699999999994,
+      "pnl": -4.4957,
+      "scenario": "executable_quote_2s",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.0009841007692307714,
+      "max_drawdown": 0.3735169000000001,
+      "pnl": -0.12793310000000027,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.0019807976190476225,
+      "max_drawdown": 0.13656850000000006,
+      "pnl": -0.08319350000000014,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.0010822620481927723,
+      "max_drawdown": 0.32064000000000015,
+      "pnl": -0.1796555000000002,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.0005887894736842078,
+      "max_drawdown": 0.30609559999999997,
+      "pnl": 0.044747999999999795,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.00024704624999999684,
+      "max_drawdown": 0.2553505,
+      "pnl": 0.019763699999999745,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.0025016142857142865,
+      "max_drawdown": 0.4991403,
+      "pnl": -0.45529380000000014,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": -0.0029675904761904785,
+      "max_drawdown": 0.8036320000000003,
+      "pnl": -0.6231940000000005,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.0018157179687499994,
+      "max_drawdown": 0.2625080000000002,
+      "pnl": 0.23241189999999992,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.0009619000000000038,
+      "max_drawdown": 0.05811680000000003,
+      "pnl": -0.011542800000000046,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.0008404299625468188,
+      "max_drawdown": 0.5615679000000007,
+      "pnl": -0.22439480000000062,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.002624483050847457,
+      "max_drawdown": 0.2626819999999999,
+      "pnl": -0.15484449999999994,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.005783419354838713,
+      "max_drawdown": 0.18827950000000013,
+      "pnl": -0.1792860000000001,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.005180159259259258,
+      "max_drawdown": 0.14432479999999995,
+      "pnl": -0.13986429999999997,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.00025582785714285905,
+      "max_drawdown": 0.4116295000000005,
+      "pnl": -0.07163180000000054,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 8.163076923077103e-05,
+      "max_drawdown": 0.2513445999999999,
+      "pnl": 0.002122400000000047,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.004841045454545455,
+      "max_drawdown": 0.13217300000000007,
+      "pnl": 0.1597545,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.001980856630824375,
+      "max_drawdown": 0.8707529000000005,
+      "pnl": -0.5526590000000007,
+      "scenario": "executable_quote_5s_100_shares",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.0008764944615384628,
+      "max_drawdown": 0.24877363999999996,
+      "pnl": -0.11394428000000016,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.001768514285714289,
+      "max_drawdown": 0.088946,
+      "pnl": -0.07427760000000014,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.0017096000000000006,
+      "max_drawdown": 0.34210440000000014,
+      "pnl": -0.2837936000000001,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.0021030789473684237,
+      "max_drawdown": 0.3335897600000002,
+      "pnl": -0.1598340000000002,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.0008149670000000017,
+      "max_drawdown": 0.1475578400000001,
+      "pnl": -0.06519736000000013,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.0013570556043956048,
+      "max_drawdown": 0.25365292000000017,
+      "pnl": -0.24698412000000006,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": -0.002348597142857145,
+      "max_drawdown": 0.5600390000000004,
+      "pnl": -0.4932054000000004,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.0001655462500000001,
+      "max_drawdown": 0.18384303999999999,
+      "pnl": 0.02118992000000001,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.0008524600000000017,
+      "max_drawdown": 0.027444720000000013,
+      "pnl": -0.010229520000000021,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.0014004927340823983,
+      "max_drawdown": 0.49194840000000023,
+      "pnl": -0.37393156000000033,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.0014890576271186452,
+      "max_drawdown": 0.1440956,
+      "pnl": -0.08785440000000007,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.0032154322580645175,
+      "max_drawdown": 0.10267840000000002,
+      "pnl": -0.09967840000000004,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.0032108651851851847,
+      "max_drawdown": 0.08810216,
+      "pnl": -0.08669336,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.0010201561428571442,
+      "max_drawdown": 0.4069204000000004,
+      "pnl": -0.2856437200000004,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.0005328246153846147,
+      "max_drawdown": 0.10930263999999996,
+      "pnl": -0.013853439999999983,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.00044670303030303136,
+      "max_drawdown": 0.12996960000000007,
+      "pnl": -0.014741200000000034,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.0015893220071684603,
+      "max_drawdown": 0.5527192000000003,
+      "pnl": -0.44342084000000037,
+      "scenario": "executable_quote_5s_250_shares",
+      "segment": "medium",
+      "signals": 279
+    }
+  ],
+  "execution_field_enrichment": {
+    "coverage_percentage": 100.0,
+    "populated_rows": 338,
+    "required_fields": [
+      "bid_ask_spread",
+      "yes_ask_size",
+      "yes_bid_size"
+    ],
+    "total_rows": 338
+  },
+  "frozen_specification": {
+    "actual_quote_replay_scenarios": [
+      {
+        "delay_seconds": 0,
+        "name": "executable_quote_0s",
+        "order_size_shares": 1,
+        "transaction_cost": 0.0
+      },
+      {
+        "delay_seconds": 2,
+        "name": "executable_quote_2s",
+        "order_size_shares": 1,
+        "transaction_cost": 0.005
+      },
+      {
+        "delay_seconds": 5,
+        "name": "executable_quote_5s_100_shares",
+        "order_size_shares": 100,
+        "transaction_cost": 0.005
+      },
+      {
+        "delay_seconds": 5,
+        "name": "executable_quote_5s_250_shares",
+        "order_size_shares": 250,
+        "transaction_cost": 0.01
+      }
+    ],
+    "frozen_before_analysis": true,
+    "input_datasets": [
+      "polymarket/data/repricing_research_balanced_batch_001/repricing_labels.csv",
+      "polymarket/data/repricing_research_balanced_batch_002/repricing_labels.csv",
+      "polymarket/runs/repricing_paper_soak_v4/20260701_212557/postprocess/repricing_dataset/repricing_labels.csv"
+    ],
+    "method": {
+      "delay_cost": "max(0, side_sign * (repricing_velocity * delay + 0.5 * repricing_acceleration * delay^2))",
+      "liquidity": "YES uses visible yes_ask_size; NO uses visible yes_bid_size; fill is capped by visible size / order_size_shares",
+      "missed_fill": "deterministic SHA-256 uniform score below scenario miss_rate",
+      "pnl": "fill_ratio * (recorded_after_slippage_pnl - spread_cost - delay_cost - quote_age_cost - transaction_cost)",
+      "unit": "probability points per attempted signal"
+    },
+    "scenarios": [
+      {
+        "delay_seconds": 0,
+        "max_fill_fraction": 1.0,
+        "miss_rate": 0.0,
+        "name": "recorded_conservative",
+        "order_size_shares": 0,
+        "quote_age_multiplier": 0.0,
+        "spread_multiplier": 0.0,
+        "transaction_cost": 0.0
+      },
+      {
+        "delay_seconds": 0.5,
+        "max_fill_fraction": 1.0,
+        "miss_rate": 0.0,
+        "name": "delay_0_5s_only",
+        "order_size_shares": 0,
+        "quote_age_multiplier": 0.0,
+        "spread_multiplier": 0.0,
+        "transaction_cost": 0.0
+      },
+      {
+        "delay_seconds": 1,
+        "max_fill_fraction": 1.0,
+        "miss_rate": 0.0,
+        "name": "delay_1s_only",
+        "order_size_shares": 0,
+        "quote_age_multiplier": 0.0,
+        "spread_multiplier": 0.0,
+        "transaction_cost": 0.0
+      },
+      {
+        "delay_seconds": 2,
+        "max_fill_fraction": 1.0,
+        "miss_rate": 0.0,
+        "name": "delay_2s_only",
+        "order_size_shares": 0,
+        "quote_age_multiplier": 0.0,
+        "spread_multiplier": 0.0,
+        "transaction_cost": 0.0
+      },
+      {
+        "delay_seconds": 0,
+        "max_fill_fraction": 1.0,
+        "miss_rate": 0.0,
+        "name": "quote_age_only",
+        "order_size_shares": 0,
+        "quote_age_multiplier": 0.5,
+        "spread_multiplier": 0.0,
+        "transaction_cost": 0.0
+      },
+      {
+        "delay_seconds": 2,
+        "max_fill_fraction": 1.0,
+        "miss_rate": 0.0,
+        "name": "latency_only",
+        "order_size_shares": 0,
+        "quote_age_multiplier": 0.5,
+        "spread_multiplier": 0.0,
+        "transaction_cost": 0.0
+      },
+      {
+        "delay_seconds": 0,
+        "max_fill_fraction": 1.0,
+        "miss_rate": 0.0,
+        "name": "spread_only",
+        "order_size_shares": 0,
+        "quote_age_multiplier": 0.0,
+        "spread_multiplier": 0.5,
+        "transaction_cost": 0.0
+      },
+      {
+        "delay_seconds": 0,
+        "max_fill_fraction": 1.0,
+        "miss_rate": 0.0,
+        "name": "transaction_cost_only",
+        "order_size_shares": 0,
+        "quote_age_multiplier": 0.0,
+        "spread_multiplier": 0.0,
+        "transaction_cost": 0.005
+      },
+      {
+        "delay_seconds": 0,
+        "max_fill_fraction": 0.75,
+        "miss_rate": 0.1,
+        "name": "fill_impairment_only",
+        "order_size_shares": 100,
+        "quote_age_multiplier": 0.0,
+        "spread_multiplier": 0.0,
+        "transaction_cost": 0.0
+      },
+      {
+        "delay_seconds": 2,
+        "max_fill_fraction": 0.75,
+        "miss_rate": 0.1,
+        "name": "moderate_execution",
+        "order_size_shares": 100,
+        "quote_age_multiplier": 0.5,
+        "spread_multiplier": 0.5,
+        "transaction_cost": 0.005
+      },
+      {
+        "delay_seconds": 5,
+        "max_fill_fraction": 0.5,
+        "miss_rate": 0.25,
+        "name": "severe_execution",
+        "order_size_shares": 250,
+        "quote_age_multiplier": 1.0,
+        "spread_multiplier": 1.0,
+        "transaction_cost": 0.01
+      },
+      {
+        "delay_seconds": 15,
+        "max_fill_fraction": 0.25,
+        "miss_rate": 0.5,
+        "name": "extreme_execution",
+        "order_size_shares": 500,
+        "quote_age_multiplier": 1.5,
+        "spread_multiplier": 1.5,
+        "transaction_cost": 0.02
+      }
+    ]
+  },
+  "holdout_status": "sealed_holdout_not_inspected_no_holdout_evaluation_run",
+  "rows": 338,
+  "scenarios": [
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 1.0,
+      "by_asset": {
+        "BTC": {
+          "expectancy": 0.041638157894736835,
+          "max_drawdown": 0.35300000000000015,
+          "pnl": 3.1644999999999994,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": 0.033874999999999995,
+          "max_drawdown": 0.4050000000000002,
+          "pnl": 2.7099999999999995,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": 0.02790384615384615,
+          "max_drawdown": 0.49149999999999994,
+          "pnl": 5.078499999999999,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": 0.012330769230769227,
+          "max_drawdown": 0.875,
+          "pnl": 1.6029999999999995,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": 0.05357142857142856,
+          "max_drawdown": 0.28,
+          "pnl": 2.2499999999999996,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": 0.04277108433734939,
+          "max_drawdown": 0.26,
+          "pnl": 7.1,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": 0.029859523809523805,
+          "max_drawdown": 1.0095,
+          "pnl": 6.270499999999999,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": 0.03658203125,
+          "max_drawdown": 0.41000000000000003,
+          "pnl": 4.6825,
+          "signals": 128
+        }
+      },
+      "executed_signals": 338,
+      "expectancy_nominal_95_interval": [
+        0.021665751323682994,
+        0.04314489956389096
+      ],
+      "expectancy_per_attempt": 0.03240532544378698,
+      "largest_asset_pnl_share": 0.46366292339998166,
+      "largest_session_pnl_share": 0.6482242308043459,
+      "max_drawdown": 0.875,
+      "missed_signals": 0,
+      "pnl_after_stress": 10.953,
+      "positive_sessions": 3,
+      "scenario": "recorded_conservative",
+      "top_10_signal_pnl_share": 0.30083082260567884,
+      "win_rate_executed": 0.7130177514792899
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 1.0,
+      "by_asset": {
+        "BTC": {
+          "expectancy": 0.03709182547385614,
+          "max_drawdown": 0.36271074760630684,
+          "pnl": 2.8189787360130665,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": 0.029832503699189706,
+          "max_drawdown": 0.422446162963561,
+          "pnl": 2.3866002959351764,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": 0.023510641145097884,
+          "max_drawdown": 0.5923232357470724,
+          "pnl": 4.278936688407815,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": 0.009701717286661875,
+          "max_drawdown": 1.0442046397922178,
+          "pnl": 1.2612232472660438,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": 0.04778568715187354,
+          "max_drawdown": 0.32205968060117107,
+          "pnl": 2.0069988603786886,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": 0.037447551883803165,
+          "max_drawdown": 0.31515842579730446,
+          "pnl": 6.2162936127113255,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": 0.0250759021540052,
+          "max_drawdown": 1.1048366777124845,
+          "pnl": 5.265939452341092,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": 0.032957627093866924,
+          "max_drawdown": 0.432721169958829,
+          "pnl": 4.218576268014966,
+          "signals": 128
+        }
+      },
+      "executed_signals": 338,
+      "expectancy_nominal_95_interval": [
+        0.017295767655663104,
+        0.038825627139343157
+      ],
+      "expectancy_per_attempt": 0.02806069739750313,
+      "largest_asset_pnl_share": 0.45114972810094933,
+      "largest_session_pnl_share": 0.655414972782391,
+      "max_drawdown": 1.0442046397922178,
+      "missed_signals": 0,
+      "pnl_after_stress": 9.484515720356057,
+      "positive_sessions": 3,
+      "scenario": "delay_0_5s_only",
+      "top_10_signal_pnl_share": 0.342054736800169,
+      "win_rate_executed": 0.6745562130177515
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 1.0,
+      "by_asset": {
+        "BTC": {
+          "expectancy": 0.03142258607380132,
+          "max_drawdown": 0.43923779460600526,
+          "pnl": 2.3881165416089,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": 0.02476397023662851,
+          "max_drawdown": 0.4398894188627914,
+          "pnl": 1.981117618930281,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": 0.017793980755364935,
+          "max_drawdown": 0.7345458810537162,
+          "pnl": 3.238504497476418,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": 0.006353981632941818,
+          "max_drawdown": 1.2879046320975887,
+          "pnl": 0.8260176122824363,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": 0.0398126500042332,
+          "max_drawdown": 0.4057186258506573,
+          "pnl": 1.6721313001777944,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": 0.030780661117803428,
+          "max_drawdown": 0.402884199617364,
+          "pnl": 5.109589745555369,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": 0.018956667986333577,
+          "max_drawdown": 1.223349764452352,
+          "pnl": 3.980900277130051,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": 0.02833467485066835,
+          "max_drawdown": 0.4760268500158054,
+          "pnl": 3.6268383808855487,
+          "signals": 128
+        }
+      },
+      "executed_signals": 338,
+      "expectancy_nominal_95_interval": [
+        0.011605594787475611,
+        0.033410610289539774
+      ],
+      "expectancy_per_attempt": 0.022508102538507692,
+      "largest_asset_pnl_share": 0.42568556085510284,
+      "largest_session_pnl_share": 0.6716305561011678,
+      "max_drawdown": 1.2879046320975887,
+      "missed_signals": 0,
+      "pnl_after_stress": 7.6077386580156,
+      "positive_sessions": 3,
+      "scenario": "delay_1s_only",
+      "top_10_signal_pnl_share": 0.4219543469274482,
+      "win_rate_executed": 0.6331360946745562
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 1.0,
+      "by_asset": {
+        "BTC": {
+          "expectancy": 0.016563820423908134,
+          "max_drawdown": 0.7374973301903773,
+          "pnl": 1.2588503522170182,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": 0.011361048645783753,
+          "max_drawdown": 0.8570827689197287,
+          "pnl": 0.9088838916627002,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": 0.0014812800186589845,
+          "max_drawdown": 1.2418163566770166,
+          "pnl": 0.2695929633959352,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": -0.0036581980585159734,
+          "max_drawdown": 2.10817495515721,
+          "pnl": -0.47556574760707654,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": 0.016860182217299877,
+          "max_drawdown": 0.7815525383737887,
+          "pnl": 0.7081276531265948,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": 0.013281718685277924,
+          "max_drawdown": 0.7539695044780307,
+          "pnl": 2.2047653017561353,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": 0.0021352339517430037,
+          "max_drawdown": 1.5399218646582753,
+          "pnl": 0.4483991298660308,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": 0.015538500604762678,
+          "max_drawdown": 1.0649397316679292,
+          "pnl": 1.9889280774096227,
+          "signals": 128
+        }
+      },
+      "executed_signals": 338,
+      "expectancy_nominal_95_interval": [
+        -0.004671306570764098,
+        0.019093361051685125
+      ],
+      "expectancy_per_attempt": 0.0072110272404605135,
+      "largest_asset_pnl_share": 0.5164880400379687,
+      "largest_session_pnl_share": 0.9045832234484976,
+      "max_drawdown": 2.10817495515721,
+      "missed_signals": 0,
+      "pnl_after_stress": 2.4373272072756538,
+      "positive_sessions": 2,
+      "scenario": "delay_2s_only",
+      "top_10_signal_pnl_share": 1.2802146055290164,
+      "win_rate_executed": 0.5769230769230769
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 1.0,
+      "by_asset": {
+        "BTC": {
+          "expectancy": 0.016706148200195545,
+          "max_drawdown": 1.030727032199874,
+          "pnl": 1.2696672632148613,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": 0.010480275589772834,
+          "max_drawdown": 0.7603910567367897,
+          "pnl": 0.8384220471818268,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": -0.008676128124706702,
+          "max_drawdown": 2.513905091705231,
+          "pnl": -1.5790553186966196,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": -0.019982200424369496,
+          "max_drawdown": 3.625255703354224,
+          "pnl": -2.5976860551680345,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": 0.009183096363060632,
+          "max_drawdown": 0.83284784978691,
+          "pnl": 0.3856900472485465,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": 0.016512228913370824,
+          "max_drawdown": 0.5529695525928806,
+          "pnl": 2.7410299996195566,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": -0.002195737485393521,
+          "max_drawdown": 2.409544073919229,
+          "pnl": -0.46110487193263944,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": 0.007735459872130532,
+          "max_drawdown": 1.440282768517273,
+          "pnl": 0.9901388636327081,
+          "signals": 128
+        }
+      },
+      "executed_signals": 338,
+      "expectancy_nominal_95_interval": [
+        -0.010481398606319647,
+        0.01361177725543248
+      ],
+      "expectancy_per_attempt": 0.001565189324556416,
+      "largest_asset_pnl_share": 2.3999729377213415,
+      "largest_session_pnl_share": 5.1811982644275165,
+      "max_drawdown": 3.625255703354224,
+      "missed_signals": 0,
+      "pnl_after_stress": 0.5290339917000686,
+      "positive_sessions": 2,
+      "scenario": "quote_age_only",
+      "top_10_signal_pnl_share": 5.853593955975362,
+      "win_rate_executed": 0.5384615384615384
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 1.0,
+      "by_asset": {
+        "BTC": {
+          "expectancy": -0.008368189270633158,
+          "max_drawdown": 1.6720650502381997,
+          "pnl": -0.6359823845681201,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": -0.012033675764443407,
+          "max_drawdown": 1.5312012761031173,
+          "pnl": -0.9626940611554725,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": -0.03509869425989387,
+          "max_drawdown": 6.461525054907139,
+          "pnl": -6.387962355300684,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": -0.035971167713654696,
+          "max_drawdown": 5.571914837561781,
+          "pnl": -4.676251802775111,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": -0.02752814999106806,
+          "max_drawdown": 1.6644699216160528,
+          "pnl": -1.1561822996248585,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": -0.012977136738700646,
+          "max_drawdown": 2.751916699536029,
+          "pnl": -2.1542046986243073,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": -0.02992002734317432,
+          "max_drawdown": 6.39375578340862,
+          "pnl": -6.283205742066608,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": -0.013308070773106789,
+          "max_drawdown": 2.6102574838209076,
+          "pnl": -1.703433058957669,
+          "signals": 128
+        }
+      },
+      "executed_signals": 338,
+      "expectancy_nominal_95_interval": [
+        -0.03696621012903492,
+        -0.010292007628505176
+      ],
+      "expectancy_per_attempt": -0.02362910887877005,
+      "largest_asset_pnl_share": null,
+      "largest_session_pnl_share": null,
+      "max_drawdown": 8.224937846158126,
+      "missed_signals": 0,
+      "pnl_after_stress": -7.986638801024276,
+      "positive_sessions": 0,
+      "scenario": "latency_only",
+      "top_10_signal_pnl_share": null,
+      "win_rate_executed": 0.44970414201183434
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 1.0,
+      "by_asset": {
+        "BTC": {
+          "expectancy": 0.03403947368421052,
+          "max_drawdown": 0.47050000000000014,
+          "pnl": 2.5869999999999997,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": 0.028324999999999993,
+          "max_drawdown": 0.4500000000000001,
+          "pnl": 2.2659999999999996,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": 0.017299450549450545,
+          "max_drawdown": 0.7565,
+          "pnl": 3.148499999999999,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": 0.0022807692307692264,
+          "max_drawdown": 1.3720000000000003,
+          "pnl": 0.29649999999999943,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": 0.04333333333333333,
+          "max_drawdown": 0.31999999999999984,
+          "pnl": 1.8199999999999996,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": 0.03545180722891566,
+          "max_drawdown": 0.32500000000000007,
+          "pnl": 5.884999999999999,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": 0.02201904761904761,
+          "max_drawdown": 1.282,
+          "pnl": 4.623999999999999,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": 0.026386718749999996,
+          "max_drawdown": 0.4625,
+          "pnl": 3.3774999999999995,
+          "signals": 128
+        }
+      },
+      "executed_signals": 338,
+      "expectancy_nominal_95_interval": [
+        0.013074165519956837,
+        0.034271988326197
+      ],
+      "expectancy_per_attempt": 0.023673076923076918,
+      "largest_asset_pnl_share": 0.39348872086483777,
+      "largest_session_pnl_share": 0.7354870961694683,
+      "max_drawdown": 1.3720000000000003,
+      "missed_signals": 0,
+      "pnl_after_stress": 8.001499999999998,
+      "positive_sessions": 3,
+      "scenario": "spread_only",
+      "top_10_signal_pnl_share": 0.39555083421858406,
+      "win_rate_executed": 0.7011834319526628
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 1.0,
+      "by_asset": {
+        "BTC": {
+          "expectancy": 0.03663815789473684,
+          "max_drawdown": 0.42800000000000016,
+          "pnl": 2.7844999999999995,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": 0.028874999999999994,
+          "max_drawdown": 0.4450000000000001,
+          "pnl": 2.3099999999999996,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": 0.02290384615384615,
+          "max_drawdown": 0.6465000000000001,
+          "pnl": 4.168499999999999,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": 0.007330769230769226,
+          "max_drawdown": 1.1795000000000009,
+          "pnl": 0.9529999999999993,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": 0.048571428571428564,
+          "max_drawdown": 0.30499999999999994,
+          "pnl": 2.0399999999999996,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": 0.037771084337349395,
+          "max_drawdown": 0.31000000000000005,
+          "pnl": 6.27,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": 0.024859523809523804,
+          "max_drawdown": 1.1645,
+          "pnl": 5.220499999999999,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": 0.031582031249999996,
+          "max_drawdown": 0.4575,
+          "pnl": 4.0424999999999995,
+          "signals": 128
+        }
+      },
+      "executed_signals": 338,
+      "expectancy_nominal_95_interval": [
+        0.016665751323682993,
+        0.03814489956389096
+      ],
+      "expectancy_per_attempt": 0.027405325443786977,
+      "largest_asset_pnl_share": 0.450016193457843,
+      "largest_session_pnl_share": 0.6768865378387132,
+      "max_drawdown": 1.1795000000000009,
+      "missed_signals": 0,
+      "pnl_after_stress": 9.262999999999998,
+      "positive_sessions": 3,
+      "scenario": "transaction_cost_only",
+      "top_10_signal_pnl_share": 0.35031847133757965,
+      "win_rate_executed": 0.7130177514792899
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 0.34980562130177517,
+      "by_asset": {
+        "BTC": {
+          "expectancy": 0.015358868421052631,
+          "max_drawdown": 0.46189700000000006,
+          "pnl": 1.167274,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": 0.007268224999999999,
+          "max_drawdown": 0.15903600000000007,
+          "pnl": 0.5814579999999999,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": 0.0027442747252747254,
+          "max_drawdown": 0.18519200000000002,
+          "pnl": 0.499458,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": 0.0012146499999999998,
+          "max_drawdown": 0.6077950000000001,
+          "pnl": 0.1579045,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": 0.005195392857142854,
+          "max_drawdown": 0.07880400000000001,
+          "pnl": 0.2182064999999999,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": 0.011277584337349399,
+          "max_drawdown": 0.21140999999999993,
+          "pnl": 1.872079,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": 0.008525135714285714,
+          "max_drawdown": 0.40290600000000015,
+          "pnl": 1.7902784999999999,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": 0.0035774335937500006,
+          "max_drawdown": 0.23447849999999998,
+          "pnl": 0.4579115000000001,
+          "signals": 128
+        }
+      },
+      "executed_signals": 311,
+      "expectancy_nominal_95_interval": [
+        0.002119890498084937,
+        0.011183008910199086
+      ],
+      "expectancy_per_attempt": 0.0066514497041420114,
+      "largest_asset_pnl_share": 0.5192061169207228,
+      "largest_session_pnl_share": 0.8327049760029179,
+      "max_drawdown": 0.6077950000000001,
+      "missed_signals": 27,
+      "pnl_after_stress": 2.24819,
+      "positive_sessions": 3,
+      "scenario": "fill_impairment_only",
+      "top_10_signal_pnl_share": 0.7590850862249187,
+      "win_rate_executed": 0.7106109324758842
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 0.34980562130177517,
+      "by_asset": {
+        "BTC": {
+          "expectancy": -0.01446218166220246,
+          "max_drawdown": 1.6422731751603707,
+          "pnl": -1.099125806327387,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": -0.011271993690085323,
+          "max_drawdown": 1.0728874339438783,
+          "pnl": -0.9017594952068259,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": -0.018004475989105033,
+          "max_drawdown": 3.276814630017115,
+          "pnl": -3.276814630017116,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": -0.019554293093562596,
+          "max_drawdown": 2.910020162613296,
+          "pnl": -2.5420581021631374,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": -0.013061675391776236,
+          "max_drawdown": 0.592014754505948,
+          "pnl": -0.5485903664546019,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": -0.01317500881285295,
+          "max_drawdown": 2.2126261307196176,
+          "pnl": -2.1870514629335895,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": -0.0143109080483126,
+          "max_drawdown": 3.027390690145645,
+          "pnl": -3.005290690145646,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": -0.0177531971984819,
+          "max_drawdown": 2.5932380771726105,
+          "pnl": -2.272409241405683,
+          "signals": 128
+        }
+      },
+      "executed_signals": 311,
+      "expectancy_nominal_95_interval": [
+        -0.021793356018969128,
+        -0.009435637658849385
+      ],
+      "expectancy_per_attempt": -0.015614496838909257,
+      "largest_asset_pnl_share": null,
+      "largest_session_pnl_share": null,
+      "max_drawdown": 5.277699931551332,
+      "missed_signals": 27,
+      "pnl_after_stress": -5.277699931551329,
+      "positive_sessions": 0,
+      "scenario": "moderate_execution",
+      "top_10_signal_pnl_share": null,
+      "win_rate_executed": 0.3858520900321543
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 0.14798485207100592,
+      "by_asset": {
+        "BTC": {
+          "expectancy": -0.030777302559506555,
+          "max_drawdown": 2.421821372539562,
+          "pnl": -2.3390749945224982,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": -0.016019319479664774,
+          "max_drawdown": 1.2903656006595106,
+          "pnl": -1.2815455583731818,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": -0.02104014641849677,
+          "max_drawdown": 3.829306648166411,
+          "pnl": -3.8293066481664124,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": -0.02244548960012242,
+          "max_drawdown": 2.9926026876221004,
+          "pnl": -2.9179136480159147,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": -0.024242666709913846,
+          "max_drawdown": 1.0181920018163815,
+          "pnl": -1.0181920018163815,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": -0.02116759970620359,
+          "max_drawdown": 3.5174572260887387,
+          "pnl": -3.513821551229796,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": -0.02091151372285896,
+          "max_drawdown": 4.391417881800382,
+          "pnl": -4.391417881800381,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": -0.02389460405673212,
+          "max_drawdown": 3.1084007650501038,
+          "pnl": -3.058509319261711,
+          "signals": 128
+        }
+      },
+      "executed_signals": 259,
+      "expectancy_nominal_95_interval": [
+        -0.028040570446056186,
+        -0.016041839027684003
+      ],
+      "expectancy_per_attempt": -0.022041204736870094,
+      "largest_asset_pnl_share": null,
+      "largest_session_pnl_share": null,
+      "max_drawdown": 7.4499272010620965,
+      "missed_signals": 79,
+      "pnl_after_stress": -7.449927201062092,
+      "positive_sessions": 0,
+      "scenario": "severe_execution",
+      "top_10_signal_pnl_share": null,
+      "win_rate_executed": 0.21621621621621623
+    },
+    {
+      "attempted_signals": 338,
+      "average_fill_ratio": 0.04896887573964497,
+      "by_asset": {
+        "BTC": {
+          "expectancy": -0.04839395281049061,
+          "max_drawdown": 3.7054564682879443,
+          "pnl": -3.677940413597286,
+          "signals": 76
+        },
+        "ETH": {
+          "expectancy": -0.031772590991127336,
+          "max_drawdown": 2.597168136632027,
+          "pnl": -2.541807279290187,
+          "signals": 80
+        },
+        "SOL": {
+          "expectancy": -0.030202261926320854,
+          "max_drawdown": 5.498261670590393,
+          "pnl": -5.496811670590395,
+          "signals": 182
+        }
+      },
+      "by_session": {
+        "1": {
+          "expectancy": -0.03181578588542785,
+          "max_drawdown": 4.157217382165438,
+          "pnl": -4.13605216510562,
+          "signals": 130
+        },
+        "2": {
+          "expectancy": -0.007739009568618412,
+          "max_drawdown": 0.3282079018819732,
+          "pnl": -0.3250384018819733,
+          "signals": 42
+        },
+        "3": {
+          "expectancy": -0.04370764335235105,
+          "max_drawdown": 7.257023352634481,
+          "pnl": -7.255468796490274,
+          "signals": 166
+        }
+      },
+      "by_side": {
+        "NO": {
+          "expectancy": -0.027734154594951706,
+          "max_drawdown": 5.825622464939857,
+          "pnl": -5.824172464939858,
+          "signals": 210
+        },
+        "YES": {
+          "expectancy": -0.046034272644828206,
+          "max_drawdown": 5.908738632879306,
+          "pnl": -5.89238689853801,
+          "signals": 128
+        }
+      },
+      "executed_signals": 167,
+      "expectancy_nominal_95_interval": [
+        -0.047044254254569,
+        -0.02228449937547756
+      ],
+      "expectancy_per_attempt": -0.03466437681502328,
+      "largest_asset_pnl_share": null,
+      "largest_session_pnl_share": null,
+      "max_drawdown": 11.71800936347787,
+      "missed_signals": 171,
+      "pnl_after_stress": -11.716559363477868,
+      "positive_sessions": 0,
+      "scenario": "extreme_execution",
+      "top_10_signal_pnl_share": null,
+      "win_rate_executed": 0.1377245508982036
+    }
+  ],
+  "segments": [
+    {
+      "dimension": "session_number",
+      "expectancy": 0.009701717286661875,
+      "max_drawdown": 1.0442046397922178,
+      "pnl": 1.2612232472660438,
+      "scenario": "delay_0_5s_only",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.04778568715187354,
+      "max_drawdown": 0.32205968060117107,
+      "pnl": 2.0069988603786886,
+      "scenario": "delay_0_5s_only",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.037447551883803165,
+      "max_drawdown": 0.31515842579730446,
+      "pnl": 6.2162936127113255,
+      "scenario": "delay_0_5s_only",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.03709182547385614,
+      "max_drawdown": 0.36271074760630684,
+      "pnl": 2.8189787360130665,
+      "scenario": "delay_0_5s_only",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.029832503699189706,
+      "max_drawdown": 0.422446162963561,
+      "pnl": 2.3866002959351764,
+      "scenario": "delay_0_5s_only",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.023510641145097884,
+      "max_drawdown": 0.5923232357470724,
+      "pnl": 4.278936688407815,
+      "scenario": "delay_0_5s_only",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.0250759021540052,
+      "max_drawdown": 1.1048366777124845,
+      "pnl": 5.265939452341092,
+      "scenario": "delay_0_5s_only",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.032957627093866924,
+      "max_drawdown": 0.432721169958829,
+      "pnl": 4.218576268014966,
+      "scenario": "delay_0_5s_only",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.09048802602553632,
+      "max_drawdown": 0.1303732255506681,
+      "pnl": 1.0858563123064358,
+      "scenario": "delay_0_5s_only",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.02082236973588606,
+      "max_drawdown": 1.1082447532125022,
+      "pnl": 5.5595727194815785,
+      "scenario": "delay_0_5s_only",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.04812011336556007,
+      "max_drawdown": 0.5000000000000001,
+      "pnl": 2.839086688568044,
+      "scenario": "delay_0_5s_only",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.03453258875076544,
+      "max_drawdown": 0.29574095813509343,
+      "pnl": 1.0705102512737286,
+      "scenario": "delay_0_5s_only",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.00839712732749623,
+      "max_drawdown": 0.45122349642764537,
+      "pnl": 0.22672243784239823,
+      "scenario": "delay_0_5s_only",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.029240296540142614,
+      "max_drawdown": 1.1061847713116877,
+      "pnl": 8.187283031239932,
+      "scenario": "delay_0_5s_only",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.07659118337806131,
+      "max_drawdown": 0.44000000000000006,
+      "pnl": 1.991370767829594,
+      "scenario": "delay_0_5s_only",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.029994796382677887,
+      "max_drawdown": 0.35568169223305174,
+      "pnl": 0.9898282806283702,
+      "scenario": "delay_0_5s_only",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.023309378752322918,
+      "max_drawdown": 1.1421652811624805,
+      "pnl": 6.503316671898094,
+      "scenario": "delay_0_5s_only",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.006353981632941818,
+      "max_drawdown": 1.2879046320975887,
+      "pnl": 0.8260176122824363,
+      "scenario": "delay_1s_only",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.0398126500042332,
+      "max_drawdown": 0.4057186258506573,
+      "pnl": 1.6721313001777944,
+      "scenario": "delay_1s_only",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.030780661117803428,
+      "max_drawdown": 0.402884199617364,
+      "pnl": 5.109589745555369,
+      "scenario": "delay_1s_only",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.03142258607380132,
+      "max_drawdown": 0.43923779460600526,
+      "pnl": 2.3881165416089,
+      "scenario": "delay_1s_only",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.02476397023662851,
+      "max_drawdown": 0.4398894188627914,
+      "pnl": 1.981117618930281,
+      "scenario": "delay_1s_only",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.017793980755364935,
+      "max_drawdown": 0.7345458810537162,
+      "pnl": 3.238504497476418,
+      "scenario": "delay_1s_only",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.018956667986333577,
+      "max_drawdown": 1.223349764452352,
+      "pnl": 3.980900277130051,
+      "scenario": "delay_1s_only",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.02833467485066835,
+      "max_drawdown": 0.4760268500158054,
+      "pnl": 3.6268383808855487,
+      "scenario": "delay_1s_only",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.08465033900989309,
+      "max_drawdown": 0.1563938350857348,
+      "pnl": 1.015804068118717,
+      "scenario": "delay_1s_only",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.015600234233304448,
+      "max_drawdown": 1.3209317912659433,
+      "pnl": 4.165262540292288,
+      "scenario": "delay_1s_only",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.041130034739060926,
+      "max_drawdown": 0.5018432620471037,
+      "pnl": 2.4266720496045946,
+      "scenario": "delay_1s_only",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.025575231964260117,
+      "max_drawdown": 0.3702983136656226,
+      "pnl": 0.7928321908920636,
+      "scenario": "delay_1s_only",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.003456610337928665,
+      "max_drawdown": 0.5075722645585943,
+      "pnl": 0.09332847912407394,
+      "scenario": "delay_1s_only",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.024005635671426648,
+      "max_drawdown": 1.2596846996748314,
+      "pnl": 6.721577987999462,
+      "scenario": "delay_1s_only",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.07566883915172168,
+      "max_drawdown": 0.44000000000000006,
+      "pnl": 1.9673898179447638,
+      "scenario": "delay_1s_only",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.024828366313236067,
+      "max_drawdown": 0.3676343034058545,
+      "pnl": 0.8193360883367903,
+      "scenario": "delay_1s_only",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.017279615597613065,
+      "max_drawdown": 1.4663021047294673,
+      "pnl": 4.821012751734045,
+      "scenario": "delay_1s_only",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.0036581980585159734,
+      "max_drawdown": 2.10817495515721,
+      "pnl": -0.47556574760707654,
+      "scenario": "delay_2s_only",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.016860182217299877,
+      "max_drawdown": 0.7815525383737887,
+      "pnl": 0.7081276531265948,
+      "scenario": "delay_2s_only",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.013281718685277924,
+      "max_drawdown": 0.7539695044780307,
+      "pnl": 2.2047653017561353,
+      "scenario": "delay_2s_only",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.016563820423908134,
+      "max_drawdown": 0.7374973301903773,
+      "pnl": 1.2588503522170182,
+      "scenario": "delay_2s_only",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.011361048645783753,
+      "max_drawdown": 0.8570827689197287,
+      "pnl": 0.9088838916627002,
+      "scenario": "delay_2s_only",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.0014812800186589845,
+      "max_drawdown": 1.2418163566770166,
+      "pnl": 0.2695929633959352,
+      "scenario": "delay_2s_only",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.0021352339517430037,
+      "max_drawdown": 1.5399218646582753,
+      "pnl": 0.4483991298660308,
+      "scenario": "delay_2s_only",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.015538500604762678,
+      "max_drawdown": 1.0649397316679292,
+      "pnl": 1.9889280774096227,
+      "scenario": "delay_2s_only",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.07024782585506806,
+      "max_drawdown": 0.2253772061090641,
+      "pnl": 0.8429739102608167,
+      "scenario": "delay_2s_only",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.0017154808507073426,
+      "max_drawdown": 1.9652458651410403,
+      "pnl": 0.4580333871388605,
+      "scenario": "delay_2s_only",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.01925965948942333,
+      "max_drawdown": 0.6866831965681295,
+      "pnl": 1.1363199098759764,
+      "scenario": "delay_2s_only",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.001987304713499046,
+      "max_drawdown": 0.590862216912988,
+      "pnl": 0.06160644611847042,
+      "scenario": "delay_2s_only",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.009828591185788995,
+      "max_drawdown": 0.6935887089805391,
+      "pnl": -0.26537196201630286,
+      "scenario": "delay_2s_only",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.009432474011333878,
+      "max_drawdown": 1.6994061182888238,
+      "pnl": 2.641092723173486,
+      "scenario": "delay_2s_only",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.07332202942430115,
+      "max_drawdown": 0.44000000000000006,
+      "pnl": 1.9063727650318298,
+      "scenario": "delay_2s_only",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.011439360867853205,
+      "max_drawdown": 0.41864375598554404,
+      "pnl": 0.37749890863915575,
+      "scenario": "delay_2s_only",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.0005500198337084875,
+      "max_drawdown": 2.5750318992393892,
+      "pnl": 0.15345553360466802,
+      "scenario": "delay_2s_only",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.03181578588542785,
+      "max_drawdown": 4.157217382165438,
+      "pnl": -4.13605216510562,
+      "scenario": "extreme_execution",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.007739009568618412,
+      "max_drawdown": 0.3282079018819732,
+      "pnl": -0.3250384018819733,
+      "scenario": "extreme_execution",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.04370764335235105,
+      "max_drawdown": 7.257023352634481,
+      "pnl": -7.255468796490274,
+      "scenario": "extreme_execution",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.04839395281049061,
+      "max_drawdown": 3.7054564682879443,
+      "pnl": -3.677940413597286,
+      "scenario": "extreme_execution",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.031772590991127336,
+      "max_drawdown": 2.597168136632027,
+      "pnl": -2.541807279290187,
+      "scenario": "extreme_execution",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.030202261926320854,
+      "max_drawdown": 5.498261670590393,
+      "pnl": -5.496811670590395,
+      "scenario": "extreme_execution",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": -0.027734154594951706,
+      "max_drawdown": 5.825622464939857,
+      "pnl": -5.824172464939858,
+      "scenario": "extreme_execution",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": -0.046034272644828206,
+      "max_drawdown": 5.908738632879306,
+      "pnl": -5.89238689853801,
+      "scenario": "extreme_execution",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.020971718961491602,
+      "max_drawdown": 0.2516606275378992,
+      "pnl": -0.2516606275378992,
+      "scenario": "extreme_execution",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.034186795429395386,
+      "max_drawdown": 9.167537205275668,
+      "pnl": -9.127874379648569,
+      "scenario": "extreme_execution",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.03961058231002375,
+      "max_drawdown": 2.3370243562914004,
+      "pnl": -2.337024356291401,
+      "scenario": "extreme_execution",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.05462012779969539,
+      "max_drawdown": 1.6932239617905571,
+      "pnl": -1.6932239617905571,
+      "scenario": "extreme_execution",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.06601546773191606,
+      "max_drawdown": 1.782417628761734,
+      "pnl": -1.7824176287617337,
+      "scenario": "extreme_execution",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.02943184918901992,
+      "max_drawdown": 8.242367772925578,
+      "pnl": -8.240917772925577,
+      "scenario": "extreme_execution",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.0003266115384615394,
+      "max_drawdown": 0.037068500000000004,
+      "pnl": -0.008491900000000024,
+      "scenario": "extreme_execution",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.02250792256264619,
+      "max_drawdown": 0.7443160007115307,
+      "pnl": -0.7427614445673243,
+      "scenario": "extreme_execution",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.03930217211079048,
+      "max_drawdown": 10.965306018910546,
+      "pnl": -10.965306018910544,
+      "scenario": "extreme_execution",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.0012146499999999998,
+      "max_drawdown": 0.6077950000000001,
+      "pnl": 0.1579045,
+      "scenario": "fill_impairment_only",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.005195392857142854,
+      "max_drawdown": 0.07880400000000001,
+      "pnl": 0.2182064999999999,
+      "scenario": "fill_impairment_only",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.011277584337349399,
+      "max_drawdown": 0.21140999999999993,
+      "pnl": 1.872079,
+      "scenario": "fill_impairment_only",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.015358868421052631,
+      "max_drawdown": 0.46189700000000006,
+      "pnl": 1.167274,
+      "scenario": "fill_impairment_only",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.007268224999999999,
+      "max_drawdown": 0.15903600000000007,
+      "pnl": 0.5814579999999999,
+      "scenario": "fill_impairment_only",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.0027442747252747254,
+      "max_drawdown": 0.18519200000000002,
+      "pnl": 0.499458,
+      "scenario": "fill_impairment_only",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.008525135714285714,
+      "max_drawdown": 0.40290600000000015,
+      "pnl": 1.7902784999999999,
+      "scenario": "fill_impairment_only",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.0035774335937500006,
+      "max_drawdown": 0.23447849999999998,
+      "pnl": 0.4579115000000001,
+      "scenario": "fill_impairment_only",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.028573750000000005,
+      "max_drawdown": 0.052362000000000006,
+      "pnl": 0.34288500000000005,
+      "scenario": "fill_impairment_only",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.004139432584269662,
+      "max_drawdown": 0.5937030000000001,
+      "pnl": 1.1052285,
+      "scenario": "fill_impairment_only",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.013560618644067796,
+      "max_drawdown": 0.16310000000000002,
+      "pnl": 0.8000764999999999,
+      "scenario": "fill_impairment_only",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.00037580645161290095,
+      "max_drawdown": 0.163381,
+      "pnl": -0.01164999999999993,
+      "scenario": "fill_impairment_only",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.0034211111111111083,
+      "max_drawdown": 0.11208250000000002,
+      "pnl": 0.09236999999999992,
+      "scenario": "fill_impairment_only",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.007740964285714285,
+      "max_drawdown": 0.6145950000000001,
+      "pnl": 2.16747,
+      "scenario": "fill_impairment_only",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.019013442307692308,
+      "max_drawdown": 0.1068,
+      "pnl": 0.49434950000000005,
+      "scenario": "fill_impairment_only",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.0033415606060606035,
+      "max_drawdown": 0.24673999999999996,
+      "pnl": -0.11027149999999991,
+      "scenario": "fill_impairment_only",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.006681405017921146,
+      "max_drawdown": 0.6118120000000001,
+      "pnl": 1.8641119999999998,
+      "scenario": "fill_impairment_only",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.035971167713654696,
+      "max_drawdown": 5.571914837561781,
+      "pnl": -4.676251802775111,
+      "scenario": "latency_only",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.02752814999106806,
+      "max_drawdown": 1.6644699216160528,
+      "pnl": -1.1561822996248585,
+      "scenario": "latency_only",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.012977136738700646,
+      "max_drawdown": 2.751916699536029,
+      "pnl": -2.1542046986243073,
+      "scenario": "latency_only",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.008368189270633158,
+      "max_drawdown": 1.6720650502381997,
+      "pnl": -0.6359823845681201,
+      "scenario": "latency_only",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.012033675764443407,
+      "max_drawdown": 1.5312012761031173,
+      "pnl": -0.9626940611554725,
+      "scenario": "latency_only",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.03509869425989387,
+      "max_drawdown": 6.461525054907139,
+      "pnl": -6.387962355300684,
+      "scenario": "latency_only",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": -0.02992002734317432,
+      "max_drawdown": 6.39375578340862,
+      "pnl": -6.283205742066608,
+      "scenario": "latency_only",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": -0.013308070773106789,
+      "max_drawdown": 2.6102574838209076,
+      "pnl": -1.703433058957669,
+      "scenario": "latency_only",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.042943307075965054,
+      "max_drawdown": 0.28497028007322883,
+      "pnl": 0.5153196849115806,
+      "scenario": "latency_only",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.02603444614848118,
+      "max_drawdown": 7.450573813428718,
+      "pnl": -6.9511971216444755,
+      "scenario": "latency_only",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.026284090920192904,
+      "max_drawdown": 2.070079410158241,
+      "pnl": -1.5507613642913813,
+      "scenario": "latency_only",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.07897549861452487,
+      "max_drawdown": 2.6401014386418247,
+      "pnl": -2.4482404570502707,
+      "scenario": "latency_only",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.03469733301218579,
+      "max_drawdown": 1.1896443133630974,
+      "pnl": -0.9368279913290164,
+      "scenario": "latency_only",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.016434179830874963,
+      "max_drawdown": 5.238753627940716,
+      "pnl": -4.601570352644989,
+      "scenario": "latency_only",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.06928942080745183,
+      "max_drawdown": 0.44000000000000006,
+      "pnl": 1.8015249409937477,
+      "scenario": "latency_only",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.006533641731902372,
+      "max_drawdown": 0.5879052732084964,
+      "pnl": -0.21561017715277828,
+      "scenario": "latency_only",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.03431022783105823,
+      "max_drawdown": 9.58935155880213,
+      "pnl": -9.572553564865245,
+      "scenario": "latency_only",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.019554293093562596,
+      "max_drawdown": 2.910020162613296,
+      "pnl": -2.5420581021631374,
+      "scenario": "moderate_execution",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.013061675391776236,
+      "max_drawdown": 0.592014754505948,
+      "pnl": -0.5485903664546019,
+      "scenario": "moderate_execution",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.01317500881285295,
+      "max_drawdown": 2.2126261307196176,
+      "pnl": -2.1870514629335895,
+      "scenario": "moderate_execution",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.01446218166220246,
+      "max_drawdown": 1.6422731751603707,
+      "pnl": -1.099125806327387,
+      "scenario": "moderate_execution",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.011271993690085323,
+      "max_drawdown": 1.0728874339438783,
+      "pnl": -0.9017594952068259,
+      "scenario": "moderate_execution",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.018004475989105033,
+      "max_drawdown": 3.276814630017115,
+      "pnl": -3.276814630017116,
+      "scenario": "moderate_execution",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": -0.0143109080483126,
+      "max_drawdown": 3.027390690145645,
+      "pnl": -3.005290690145646,
+      "scenario": "moderate_execution",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": -0.0177531971984819,
+      "max_drawdown": 2.5932380771726105,
+      "pnl": -2.272409241405683,
+      "scenario": "moderate_execution",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.011242547844151449,
+      "max_drawdown": 0.11678217332257582,
+      "pnl": 0.13491057412981738,
+      "scenario": "moderate_execution",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.01788774686447945,
+      "max_drawdown": 4.918252593220274,
+      "pnl": -4.776028412816013,
+      "scenario": "moderate_execution",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.010789526997714132,
+      "max_drawdown": 0.851572926331786,
+      "pnl": -0.6365820928651339,
+      "scenario": "moderate_execution",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.040059038188306355,
+      "max_drawdown": 1.3028552245922065,
+      "pnl": -1.241830183837497,
+      "scenario": "moderate_execution",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.015818130204602567,
+      "max_drawdown": 0.42708951552426944,
+      "pnl": -0.4270895155242693,
+      "scenario": "moderate_execution",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.012888500829248438,
+      "max_drawdown": 3.7018807228445954,
+      "pnl": -3.6087802321895626,
+      "scenario": "moderate_execution",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.014858894117295669,
+      "max_drawdown": 0.1252,
+      "pnl": 0.38633124704968735,
+      "scenario": "moderate_execution",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.020574687126437993,
+      "max_drawdown": 0.6884553644655036,
+      "pnl": -0.6789646751724537,
+      "scenario": "moderate_execution",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.01786762187608804,
+      "max_drawdown": 4.985066503428562,
+      "pnl": -4.985066503428563,
+      "scenario": "moderate_execution",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.019982200424369496,
+      "max_drawdown": 3.625255703354224,
+      "pnl": -2.5976860551680345,
+      "scenario": "quote_age_only",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.009183096363060632,
+      "max_drawdown": 0.83284784978691,
+      "pnl": 0.3856900472485465,
+      "scenario": "quote_age_only",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.016512228913370824,
+      "max_drawdown": 0.5529695525928806,
+      "pnl": 2.7410299996195566,
+      "scenario": "quote_age_only",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.016706148200195545,
+      "max_drawdown": 1.030727032199874,
+      "pnl": 1.2696672632148613,
+      "scenario": "quote_age_only",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.010480275589772834,
+      "max_drawdown": 0.7603910567367897,
+      "pnl": 0.8384220471818268,
+      "scenario": "quote_age_only",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.008676128124706702,
+      "max_drawdown": 2.513905091705231,
+      "pnl": -1.5790553186966196,
+      "scenario": "quote_age_only",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": -0.002195737485393521,
+      "max_drawdown": 2.409544073919229,
+      "pnl": -0.46110487193263944,
+      "scenario": "quote_age_only",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.007735459872130532,
+      "max_drawdown": 1.440282768517273,
+      "pnl": 0.9901388636327081,
+      "scenario": "quote_age_only",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.06811214788756367,
+      "max_drawdown": 0.1695930739641648,
+      "pnl": 0.8173457746507641,
+      "scenario": "quote_age_only",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.0027574176358926487,
+      "max_drawdown": 2.8181367889713504,
+      "pnl": -0.7362305087833372,
+      "scenario": "quote_age_only",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.00759184281072274,
+      "max_drawdown": 1.1746776034419601,
+      "pnl": 0.44791872583264164,
+      "scenario": "quote_age_only",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.039349900102217464,
+      "max_drawdown": 1.4141754544930822,
+      "pnl": -1.2198469031687413,
+      "scenario": "quote_age_only",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.01266503812269311,
+      "max_drawdown": 0.9015556043825588,
+      "pnl": -0.34195602931271396,
+      "scenario": "quote_age_only",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.007467274729219728,
+      "max_drawdown": 2.925374662329485,
+      "pnl": 2.0908369241815237,
+      "scenario": "quote_age_only",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.07331354522930453,
+      "max_drawdown": 0.44000000000000006,
+      "pnl": 1.9061521759619178,
+      "scenario": "quote_age_only",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.016269421642668664,
+      "max_drawdown": 0.4254771261386638,
+      "pnl": 0.5368909142080659,
+      "scenario": "quote_age_only",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.006860247664766721,
+      "max_drawdown": 4.329181356029629,
+      "pnl": -1.9140090984699152,
+      "scenario": "quote_age_only",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.012330769230769227,
+      "max_drawdown": 0.875,
+      "pnl": 1.6029999999999995,
+      "scenario": "recorded_conservative",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.05357142857142856,
+      "max_drawdown": 0.28,
+      "pnl": 2.2499999999999996,
+      "scenario": "recorded_conservative",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.04277108433734939,
+      "max_drawdown": 0.26,
+      "pnl": 7.1,
+      "scenario": "recorded_conservative",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.041638157894736835,
+      "max_drawdown": 0.35300000000000015,
+      "pnl": 3.1644999999999994,
+      "scenario": "recorded_conservative",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.033874999999999995,
+      "max_drawdown": 0.4050000000000002,
+      "pnl": 2.7099999999999995,
+      "scenario": "recorded_conservative",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.02790384615384615,
+      "max_drawdown": 0.49149999999999994,
+      "pnl": 5.078499999999999,
+      "scenario": "recorded_conservative",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.029859523809523805,
+      "max_drawdown": 1.0095,
+      "pnl": 6.270499999999999,
+      "scenario": "recorded_conservative",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.03658203125,
+      "max_drawdown": 0.41000000000000003,
+      "pnl": 4.6825,
+      "scenario": "recorded_conservative",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.09541666666666668,
+      "max_drawdown": 0.1100000000000001,
+      "pnl": 1.1450000000000002,
+      "scenario": "recorded_conservative",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.024992509363295876,
+      "max_drawdown": 0.945,
+      "pnl": 6.672999999999999,
+      "scenario": "recorded_conservative",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.05313559322033897,
+      "max_drawdown": 0.5,
+      "pnl": 3.1349999999999993,
+      "scenario": "recorded_conservative",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.04161290322580645,
+      "max_drawdown": 0.245,
+      "pnl": 1.2899999999999998,
+      "scenario": "recorded_conservative",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.012203703703703687,
+      "max_drawdown": 0.4425000000000002,
+      "pnl": 0.32949999999999957,
+      "scenario": "recorded_conservative",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.03333392857142857,
+      "max_drawdown": 0.9815000000000005,
+      "pnl": 9.333499999999999,
+      "scenario": "recorded_conservative",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.07734615384615384,
+      "max_drawdown": 0.44000000000000006,
+      "pnl": 2.011,
+      "scenario": "recorded_conservative",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.03424242424242424,
+      "max_drawdown": 0.345,
+      "pnl": 1.13,
+      "scenario": "recorded_conservative",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.027999999999999994,
+      "max_drawdown": 0.9349999999999998,
+      "pnl": 7.8119999999999985,
+      "scenario": "recorded_conservative",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.02244548960012242,
+      "max_drawdown": 2.9926026876221004,
+      "pnl": -2.9179136480159147,
+      "scenario": "severe_execution",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.024242666709913846,
+      "max_drawdown": 1.0181920018163815,
+      "pnl": -1.0181920018163815,
+      "scenario": "severe_execution",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": -0.02116759970620359,
+      "max_drawdown": 3.5174572260887387,
+      "pnl": -3.513821551229796,
+      "scenario": "severe_execution",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.030777302559506555,
+      "max_drawdown": 2.421821372539562,
+      "pnl": -2.3390749945224982,
+      "scenario": "severe_execution",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.016019319479664774,
+      "max_drawdown": 1.2903656006595106,
+      "pnl": -1.2815455583731818,
+      "scenario": "severe_execution",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": -0.02104014641849677,
+      "max_drawdown": 3.829306648166411,
+      "pnl": -3.8293066481664124,
+      "scenario": "severe_execution",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": -0.02091151372285896,
+      "max_drawdown": 4.391417881800382,
+      "pnl": -4.391417881800381,
+      "scenario": "severe_execution",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": -0.02389460405673212,
+      "max_drawdown": 3.1084007650501038,
+      "pnl": -3.058509319261711,
+      "scenario": "severe_execution",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.006445814326092304,
+      "max_drawdown": 0.13737862471945653,
+      "pnl": -0.07734977191310766,
+      "scenario": "severe_execution",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.02200217607123999,
+      "max_drawdown": 5.899381006860472,
+      "pnl": -5.874581011021078,
+      "scenario": "severe_execution",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": -0.025389769798778078,
+      "max_drawdown": 1.5367094973860402,
+      "pnl": -1.4979964181279066,
+      "scenario": "severe_execution",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.03995290835334286,
+      "max_drawdown": 1.255160191557396,
+      "pnl": -1.2385401589536287,
+      "scenario": "severe_execution",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.026940327774214203,
+      "max_drawdown": 0.7273888499037836,
+      "pnl": -0.7273888499037835,
+      "scenario": "severe_execution",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": -0.01958570782930243,
+      "max_drawdown": 5.4839981922046865,
+      "pnl": -5.48399819220468,
+      "scenario": "severe_execution",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.004150499999999999,
+      "max_drawdown": 0.0625928,
+      "pnl": 0.10791299999999997,
+      "scenario": "severe_execution",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.021718742655370903,
+      "max_drawdown": 0.7167185076272398,
+      "pnl": -0.7167185076272398,
+      "scenario": "severe_execution",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": -0.024520149438834595,
+      "max_drawdown": 6.84112169343486,
+      "pnl": -6.841121693434853,
+      "scenario": "severe_execution",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.0022807692307692264,
+      "max_drawdown": 1.3720000000000003,
+      "pnl": 0.29649999999999943,
+      "scenario": "spread_only",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.04333333333333333,
+      "max_drawdown": 0.31999999999999984,
+      "pnl": 1.8199999999999996,
+      "scenario": "spread_only",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.03545180722891566,
+      "max_drawdown": 0.32500000000000007,
+      "pnl": 5.884999999999999,
+      "scenario": "spread_only",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.03403947368421052,
+      "max_drawdown": 0.47050000000000014,
+      "pnl": 2.5869999999999997,
+      "scenario": "spread_only",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.028324999999999993,
+      "max_drawdown": 0.4500000000000001,
+      "pnl": 2.2659999999999996,
+      "scenario": "spread_only",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.017299450549450545,
+      "max_drawdown": 0.7565,
+      "pnl": 3.148499999999999,
+      "scenario": "spread_only",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.02201904761904761,
+      "max_drawdown": 1.282,
+      "pnl": 4.623999999999999,
+      "scenario": "spread_only",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.026386718749999996,
+      "max_drawdown": 0.4625,
+      "pnl": 3.3774999999999995,
+      "scenario": "spread_only",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.08716666666666668,
+      "max_drawdown": 0.12,
+      "pnl": 1.046,
+      "scenario": "spread_only",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.017923220973782766,
+      "max_drawdown": 1.3270000000000004,
+      "pnl": 4.785499999999999,
+      "scenario": "spread_only",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.03677966101694914,
+      "max_drawdown": 0.535,
+      "pnl": 2.1699999999999995,
+      "scenario": "spread_only",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.0022580645161290277,
+      "max_drawdown": 0.40499999999999997,
+      "pnl": 0.06999999999999985,
+      "scenario": "spread_only",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.007333333333333341,
+      "max_drawdown": 0.49199999999999994,
+      "pnl": 0.19800000000000023,
+      "scenario": "spread_only",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.02761964285714285,
+      "max_drawdown": 1.3315000000000003,
+      "pnl": 7.7334999999999985,
+      "scenario": "spread_only",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.07176923076923077,
+      "max_drawdown": 0.4650000000000001,
+      "pnl": 1.8659999999999999,
+      "scenario": "spread_only",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.028484848484848484,
+      "max_drawdown": 0.37000000000000005,
+      "pnl": 0.9400000000000001,
+      "scenario": "spread_only",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.01862186379928315,
+      "max_drawdown": 1.474499999999999,
+      "pnl": 5.195499999999998,
+      "scenario": "spread_only",
+      "segment": "medium",
+      "signals": 279
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.007330769230769226,
+      "max_drawdown": 1.1795000000000009,
+      "pnl": 0.9529999999999993,
+      "scenario": "transaction_cost_only",
+      "segment": "1",
+      "signals": 130
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.048571428571428564,
+      "max_drawdown": 0.30499999999999994,
+      "pnl": 2.0399999999999996,
+      "scenario": "transaction_cost_only",
+      "segment": "2",
+      "signals": 42
+    },
+    {
+      "dimension": "session_number",
+      "expectancy": 0.037771084337349395,
+      "max_drawdown": 0.31000000000000005,
+      "pnl": 6.27,
+      "scenario": "transaction_cost_only",
+      "segment": "3",
+      "signals": 166
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.03663815789473684,
+      "max_drawdown": 0.42800000000000016,
+      "pnl": 2.7844999999999995,
+      "scenario": "transaction_cost_only",
+      "segment": "BTC",
+      "signals": 76
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.028874999999999994,
+      "max_drawdown": 0.4450000000000001,
+      "pnl": 2.3099999999999996,
+      "scenario": "transaction_cost_only",
+      "segment": "ETH",
+      "signals": 80
+    },
+    {
+      "dimension": "asset",
+      "expectancy": 0.02290384615384615,
+      "max_drawdown": 0.6465000000000001,
+      "pnl": 4.168499999999999,
+      "scenario": "transaction_cost_only",
+      "segment": "SOL",
+      "signals": 182
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.024859523809523804,
+      "max_drawdown": 1.1645,
+      "pnl": 5.220499999999999,
+      "scenario": "transaction_cost_only",
+      "segment": "NO",
+      "signals": 210
+    },
+    {
+      "dimension": "side",
+      "expectancy": 0.031582031249999996,
+      "max_drawdown": 0.4575,
+      "pnl": 4.0424999999999995,
+      "scenario": "transaction_cost_only",
+      "segment": "YES",
+      "signals": 128
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.09041666666666667,
+      "max_drawdown": 0.11999999999999988,
+      "pnl": 1.0850000000000002,
+      "scenario": "transaction_cost_only",
+      "segment": "high",
+      "signals": 12
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.019992509363295875,
+      "max_drawdown": 1.165,
+      "pnl": 5.337999999999998,
+      "scenario": "transaction_cost_only",
+      "segment": "low",
+      "signals": 267
+    },
+    {
+      "dimension": "external_move_regime",
+      "expectancy": 0.048135593220338974,
+      "max_drawdown": 0.53,
+      "pnl": 2.8399999999999994,
+      "scenario": "transaction_cost_only",
+      "segment": "medium",
+      "signals": 59
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.036612903225806445,
+      "max_drawdown": 0.27,
+      "pnl": 1.1349999999999998,
+      "scenario": "transaction_cost_only",
+      "segment": "high",
+      "signals": 31
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.007203703703703687,
+      "max_drawdown": 0.49550000000000044,
+      "pnl": 0.19449999999999956,
+      "scenario": "transaction_cost_only",
+      "segment": "low",
+      "signals": 27
+    },
+    {
+      "dimension": "spread_regime",
+      "expectancy": 0.028333928571428565,
+      "max_drawdown": 1.2815000000000003,
+      "pnl": 7.933499999999999,
+      "scenario": "transaction_cost_only",
+      "segment": "medium",
+      "signals": 280
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.07234615384615385,
+      "max_drawdown": 0.4650000000000001,
+      "pnl": 1.881,
+      "scenario": "transaction_cost_only",
+      "segment": "high",
+      "signals": 26
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.02924242424242424,
+      "max_drawdown": 0.37000000000000005,
+      "pnl": 0.965,
+      "scenario": "transaction_cost_only",
+      "segment": "low",
+      "signals": 33
+    },
+    {
+      "dimension": "quote_age_regime",
+      "expectancy": 0.022999999999999993,
+      "max_drawdown": 1.27,
+      "pnl": 6.416999999999998,
+      "scenario": "transaction_cost_only",
+      "segment": "medium",
+      "signals": 279
+    }
+  ]
+}

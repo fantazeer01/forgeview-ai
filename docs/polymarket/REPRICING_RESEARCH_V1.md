@@ -1234,6 +1234,35 @@ Sprint v1** using only admitted public evidence and frozen strategy behavior.
 No production-edge claim, holdout access, parameter tuning, or live execution
 is authorized.
 
+## Weak-Evidence Stability And Executable-Cost Stress
+
+The frozen 338-signal, three-session evidence set was subjected to as-of
+spread, delay, quote-age, visible-liquidity, partial-fill, missed-fill, and
+transaction-cost stress. Source microstructure enrichment is complete for all
+338 rows. Conclusion: `WEAKENED`.
+
+Recorded conservative expectancy is +0.032405. One-factor spread, 0.005 cost,
+fill impairment, and modeled delay through one second remain positive. Modeled
+two-second delay weakens to +0.007211 with only two positive sessions;
+quote-age stress falls to +0.001565. Combined moderate execution is negative
+at -0.015614 with all sessions, assets, and sides negative.
+
+Actual executable bid/ask replay remains positive only at immediate entry
+(+0.035944). At two seconds plus 0.005 cost it is -0.009810 across all three
+sessions. Five-second/100-share and 250-share visible-size scenarios are also
+negative. The two-second nominal 95% expectancy interval is
+[-0.018432, -0.001188].
+
+The result does not erase the frozen Weak Evidence count/history finding, but
+it shows that evidence is not stable under executable conditions. Latency and
+stale quote exposure are the dominant break. Only three sessions exist, one
+session supplies 64.82% of baseline P&L, SOL supplies 46.37%, and two-second
+public snapshots cannot resolve sub-second queue position or fill probability.
+
+Repricing remains active as an unproven research branch but does not advance
+to production candidate. The next task is **Run Repricing Execution Latency
+Feasibility Audit v1**, without detector or threshold changes.
+
 ## Missing Data
 
 The current evidence is missing:

@@ -3060,6 +3060,40 @@ Sprint v1**. No holdout was opened and no live trading was enabled.
 Artifacts are under
 `polymarket/models/repricing_research_v1/paper_soak_v4_summary/`.
 
+## Repricing Weak-Evidence Cost Stress v1
+
+The three admitted sessions and 338 signals were evaluated under a frozen
+execution-stress grid. As-of entry spread and visible side size were recovered
+from raw public sessions with 100% coverage. The sprint conclusion is
+`WEAKENED`.
+
+Recorded conservative evidence remains +0.032405 expectancy, +10.9530 P&L,
+and 0.8750 drawdown with all sessions, assets, and sides positive. Stability is
+limited: the fourth-soak session contributes 64.82% of P&L and SOL contributes
+46.37%, both above the 40% concentration target.
+
+Half-spread (+0.023673), an additional 0.005 transaction cost (+0.027405),
+fill impairment (+0.006651), and modeled delay through one second (+0.022508)
+remain positive. Quote-age stress falls below the weak expectancy floor.
+Combined moderate execution is negative: -0.015614 expectancy, -5.2777 P&L,
+and 5.2777 drawdown with zero positive sessions.
+
+Actual public bid/ask replay is positive at immediate execution (+0.035944),
+but a two-second entry plus 0.005 cost is negative across all sessions:
+-0.009810 expectancy, -3.3157 P&L, 3.9548 drawdown, and nominal 95% expectancy
+interval [-0.018432, -0.001188]. Five-second visible-size scenarios are also
+negative.
+
+Weak Evidence therefore does not remain stable under executable-cost stress.
+The detector may contain short-lived timing information, but current data do
+not prove it can be captured at realistic end-to-end latency. Repricing does
+not advance to production-candidate status. The next task is **Run Repricing
+Execution Latency Feasibility Audit v1**. Frozen strategy, evidence protocol,
+and sealed holdout remain unchanged.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/weak_evidence_cost_stress_v1/`.
+
 ## State update protocol
 
 At the end of every completed active task:
