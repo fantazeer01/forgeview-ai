@@ -3154,3 +3154,34 @@ python -m polymarket.dataset_quality build-public
 python -m polymarket.evidence_batch resume --session polymarket/runs/v5/20260619_223637/session.jsonl --resolution-mode replay
 python -m unittest discover -s tests -v
 ```
+
+## Repricing Public WebSocket Latency Instrumentation v1
+
+A bounded 180-second simultaneous benchmark completed with 137,107 public CLOB
+WebSocket events, 179 REST polling observations, and 974 Binance WebSocket
+trade events. No authentication, wallet, order, strategy, threshold, evidence,
+model, or holdout path was used.
+
+The public WebSocket path removed the polling cadence bottleneck. CLOB
+inter-message gap p95 improved from 5,150.8863 ms under simultaneous polling
+to 6.7460 ms over WebSocket. WebSocket p95 queue, parse, decision,
+serialization, and journal latencies were 0.0003, 0.0298, 0.0016, 0.0207, and
+0.2632 ms. Local processing is not the dominant blocker.
+
+Absolute server-to-local quote age remains clock contaminated: both CLOB paths
+showed an approximately one-second offset without NTP correction. Same-host
+mean quote-age improvement was 11.8656 ms; compared descriptively with the
+prior admitted-signal polling mean, the observed WebSocket value was 2,477.5
+ms lower. CLOB packet loss is not measurable because the public feed has no
+usable sequence number.
+
+Sub-two-second public ingestion and decision is supported. End-to-end
+execution below two seconds is plausible but unvalidated; sub-one-second
+end-to-end execution remains unproven. Authenticated signing, order transport,
+acknowledgement, matching, queue position, and fills now dominate uncertainty.
+Weak Evidence is conditionally executable in principle, not production-ready.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/websocket_latency_instrumentation_v1/`.
+The next task is **Design Repricing Authenticated Execution Latency Measurement
+Protocol v1**. This is design-only and does not authorize credentials or orders.

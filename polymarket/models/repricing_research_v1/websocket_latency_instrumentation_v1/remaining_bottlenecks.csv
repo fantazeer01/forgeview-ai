@@ -1,0 +1,9 @@
+component,status,measured_or_inferred,production_effect
+public CLOB event cadence,MEASURED_FAST,measured,p95 inter-message gap 6.746 ms
+local queue and event loop,MEASURED_FAST,measured,p95 0.0003 ms in bounded observer
+parse and decision,MEASURED_FAST,measured,p95 0.0298 and 0.0016 ms
+one-way network latency,CLOCK_CONTAMINATED,measured with limitation,requires synchronized clock correction
+authenticated signing,UNMEASURED,unknown,may consume execution budget
+order submission and acknowledgement,UNMEASURED,unknown,dominant feasibility uncertainty
+matching and queue position,UNMEASURED,unknown,dominant fill uncertainty
+real executable expectancy,INFERRED_ONLY,inferred,positive cannot be claimed without order-path data

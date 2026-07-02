@@ -1,0 +1,14 @@
+{
+  "authentication_used": false,
+  "bounded_duration_seconds": 180,
+  "clob_polling_records": 179,
+  "clob_websocket_records": 137107,
+  "conclusion": "PUBLIC_EVENT_PATH_FEASIBLE_ORDER_PATH_UNMEASURED",
+  "detector_or_threshold_changes": false,
+  "holdout_accessed": false,
+  "orders_submitted": 0,
+  "sub_1s_end_to_end_execution": "UNPROVEN",
+  "sub_2s_end_to_end_execution": "PLAUSIBLE_NOT_VALIDATED",
+  "sub_2s_public_event_to_decision": "SUPPORTED",
+  "weak_evidence_executable_in_principle": "CONDITIONALLY_YES"
+}

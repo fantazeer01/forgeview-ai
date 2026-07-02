@@ -1403,3 +1403,29 @@ Repricing Research v1 must not:
 - merge repricing rows into canonical outcome-prediction training data;
 - implement real trading;
 - connect wallets, private keys, or authenticated order placement.
+
+## Public WebSocket Latency Instrumentation v1
+
+A 180-second bounded public-only benchmark measured polling and WebSockets
+simultaneously. CLOB WebSocket inter-message gap was 1.2867 ms mean, 0.5095 ms
+median, 6.7460 ms p95, and 14.2408 ms p99 across 137,107 messages. Simultaneous
+polling was 1,025.7355 ms mean and 5,150.8863 ms p95 across 179 observations.
+
+WebSocket local processing remained negligible: p95 queue 0.0003 ms, parse
+0.0298 ms, decision 0.0016 ms, serialization 0.0207 ms, and journal 0.2632 ms.
+This supports sub-two-second public event-to-decision processing and removes
+the polling cadence as the dominant architectural blocker.
+
+Absolute quote age cannot be treated as corrected one-way network latency.
+Both CLOB paths showed an approximately one-second server/local clock offset,
+with no NTP correction. CLOB packet loss is also not measurable from the
+public messages because no usable sequence number is exposed. Reconnects,
+stale-event guards, inter-message gaps, and external aggregate-ID gaps are
+recorded explicitly.
+
+Weak Evidence is now conditionally executable in principle, but end-to-end
+execution remains unvalidated. Authenticated signing, submission,
+acknowledgement, matching, queue position, and fill probability remain the
+dominant unknowns. No production-edge claim is made. The next task is the
+design-only **Design Repricing Authenticated Execution Latency Measurement
+Protocol v1**; it does not authorize credentials, wallets, or orders.

@@ -2023,3 +2023,25 @@ edge is negative in actual two-second executable replay. Local detector, JSON,
 and SQLite costs are below 1ms median combined; reducing Python computation
 cannot recover the missing latency budget. WebSockets can remove polling delay,
 but public measurements cannot prove order acknowledgement or fill speed.
+
+## D-113: Public WebSockets remove the Repricing polling cadence bottleneck
+
+Status: Accepted
+Decision: Any future latency-sensitive Repricing paper architecture should use
+persistent public CLOB and external-price WebSockets, with polling retained for
+reconciliation and degraded-mode diagnostics. The public event path supports
+sub-two-second ingestion and decision in principle, but it does not establish
+sub-two-second orders or fills.
+
+The next authorized task is a design-only authenticated execution latency
+measurement protocol. It may specify a measurement contract but may not use
+credentials, connect wallets, submit orders, change strategy or evidence
+gates, or open the sealed holdout without separate authorization.
+
+Reason: In a simultaneous 180-second benchmark, CLOB inter-message gap p95 was
+6.7460 ms over WebSocket versus 5,150.8863 ms under polling. WebSocket queue,
+parse, decision, serialization, and journal p95 were all below 0.264 ms.
+Absolute one-way network latency remains clock contaminated, and signing,
+submission, acknowledgement, matching, queue position, and fill probability
+remain unmeasured. The result removes one engineering blocker without proving
+an executable production edge.

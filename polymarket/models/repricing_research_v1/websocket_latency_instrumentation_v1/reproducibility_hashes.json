@@ -1,0 +1,11 @@
+﻿{
+    "algorithm":  "sha256",
+    "files":  {
+                  "polymarket/models/repricing_research_v1/websocket_latency_instrumentation_v1/architecture_recommendation.md":  "186f7389d290d56185271c5dd7c02817172df2740c8f1570d2bb39684805b1e5",
+                  "polymarket/models/repricing_research_v1/websocket_latency_instrumentation_v1/latency_comparison_report.md":  "800558bc3a3584701f8f27cd73540669b974f5815845efec37eb6439dfe5d0cf",
+                  "polymarket/models/repricing_research_v1/websocket_latency_instrumentation_v1/live_validation/latency_summary.json":  "e2441411734269bc8a4717998527d91f9fecbaccdf8c350abd1f80bef3133bb1",
+                  "polymarket/models/repricing_research_v1/websocket_latency_instrumentation_v1/polling_vs_websocket_benchmark.csv":  "1d11d18cc3aea029c5d32540161d78457afd5e05650ad51622b2599bda22af79",
+                  "polymarket/models/repricing_research_v1/websocket_latency_instrumentation_v1/remaining_bottlenecks.csv":  "c78272eaff827272bf25becc42d47b688588d0fbbb36ebd5453585f0d4c0eae0",
+                  "polymarket/models/repricing_research_v1/websocket_latency_instrumentation_v1/validation_summary.json":  "a72dc0b6b1b33d7a57aa0ca815b9c6602af25d77db9f71d9803a585004339e94"
+              }
+}

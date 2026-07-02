@@ -6,40 +6,38 @@ Task status: ACTIVE
 This file contains exactly one active task. Read canonical project memory
 before starting it.
 
-## Active task: Implement Repricing Public WebSocket Latency Instrumentation v1
+## Active task: Design Repricing Authenticated Execution Latency Measurement Protocol v1
 
 ### Objective
 
-Measure public market-event publication-to-receipt and event-to-decision
-latency with persistent WebSockets, without orders, authentication, strategy
-changes, or evidence claims.
+Design the smallest safe protocol capable of measuring signing, submission,
+acknowledgement, matching, and fill latency needed to resolve whether the
+validated Repricing Weak Evidence can survive the real order path.
 
 ### Required scope
 
-1. Implement a bounded public CLOB market WebSocket observer and compatible
-   external BTC/ETH/SOL streaming timestamp observer.
-2. Record server event timestamp, local receive timestamp, parse completion,
-   frozen detector completion, and durable-journal completion separately.
-3. Measure minimum, median, p95, p99, and maximum latency, disconnects,
-   sequence gaps, clock assumptions, and event age.
-4. Run only a short bounded engineering validation, not an evidence campaign.
-5. Compare measured event-to-decision p95 with the remaining order/match budget
-   under the two-second economic break point.
-6. Conclude whether authenticated execution feasibility deserves a separately
-   authorized design or the branch should be deprioritized.
+1. Define timestamp provenance and synchronized-clock requirements.
+2. Define signing, submission, acknowledgement, match, cancellation, and fill
+   measurement boundaries without implementing or running them.
+3. Define a no-order public dry-run and a separately authorized credentialed
+   test boundary.
+4. Define fail-closed safety, exposure limits, audit artifacts, and acceptance
+   gates for sub-two-second and sub-one-second feasibility.
+5. Quantify which measurements can be obtained without orders and which require
+   explicit future authorization.
 
 ### Forbidden
 
-- no trading strategy, threshold, or evidence-gate change;
-- no long evidence run;
-- no wallet, private key, authentication, order submission, or live trading;
+- no wallet, private key, credential, authentication, or order connection;
+- no live or paper order submission;
+- no strategy, threshold, evidence-gate, or execution-logic change;
 - no sealed holdout inspection or evaluation;
-- no production model training.
+- no production model training or evidence campaign.
 
 ### Acceptance criteria
 
-- bounded deterministic output schema and timestamp provenance;
-- explicit measured versus inferred latency fields;
-- no credentials or execution methods in the module;
+- complete design and safety protocol with measured/inferred boundaries;
+- explicit separate-authorization gates for every credentialed action;
+- no execution implementation or external side effects;
 - relevant and full repository tests pass;
 - exactly one successor task remains.

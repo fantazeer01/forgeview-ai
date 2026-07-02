@@ -1,0 +1,313 @@
+{
+  "authentication_used": false,
+  "binance_sequence_gap": "aggregate-trade ID gaps are diagnostic, not proof of packet loss",
+  "clob_packet_loss": "not_measurable_no_sequence_number",
+  "clock_assumption": "server and local UTC clocks are comparable; no NTP offset correction was available",
+  "counters": {
+    "binance_reconnects": 2,
+    "clob_messages_without_sequence": 137107,
+    "clob_reconnects": 1,
+    "poll_errors": 16
+  },
+  "duration_seconds": 180.0,
+  "markets": {
+    "BTC": "0x037c637154db5c259daa51a23ba2499773b143fc2e8c2da2aff85cfee46f880d",
+    "ETH": "0xb120c2354615b579d7b18928e501c8a8f9a55fb7194fc462b55dfef5b27e6714",
+    "SOL": "0x99f3ec51594c640cbee4f0b48c4bebac5c876c0137c22729ed1020aa5b5858cd"
+  },
+  "orders_submitted": 0,
+  "sources": {
+    "binance_websocket": {
+      "metrics": {
+        "decision_latency_ms": {
+          "count": 974,
+          "max": 0.0128,
+          "mean": 0.0010253593429158112,
+          "median": 0.0009,
+          "min": 0.0006,
+          "p90": 0.0015,
+          "p95": 0.0018,
+          "p99": 0.0023
+        },
+        "event_loop_latency_ms": {
+          "count": 974,
+          "max": 0.0108,
+          "mean": 0.00025030800821355237,
+          "median": 0.0002,
+          "min": 0.0001,
+          "p90": 0.0004,
+          "p95": 0.0004,
+          "p99": 0.0006
+        },
+        "inter_message_gap_ms": {
+          "count": 973,
+          "max": 25370.0986,
+          "mean": 183.20313576567315,
+          "median": 36.7731,
+          "min": 0.0,
+          "p90": 478.0391,
+          "p95": 684.997,
+          "p99": 1134.448
+        },
+        "journal_latency_ms": {
+          "count": 974,
+          "max": 0.5916,
+          "mean": 0.17635225872689939,
+          "median": 0.1529,
+          "min": 0.1214,
+          "p90": 0.2646,
+          "p95": 0.2904,
+          "p99": 0.365
+        },
+        "network_latency_ms": {
+          "count": 974,
+          "max": 1420.7197265625,
+          "mean": 1112.8361718649737,
+          "median": 1093.871337890625,
+          "min": 1088.773681640625,
+          "p90": 1123.718017578125,
+          "p95": 1219.7177734375,
+          "p99": 1419.17724609375
+        },
+        "parse_latency_ms": {
+          "count": 974,
+          "max": 0.056,
+          "mean": 0.016464579055441478,
+          "median": 0.0143,
+          "min": 0.0086,
+          "p90": 0.0272,
+          "p95": 0.0302,
+          "p99": 0.0369
+        },
+        "queue_latency_ms": {
+          "count": 974,
+          "max": 0.0108,
+          "mean": 0.00025030800821355237,
+          "median": 0.0002,
+          "min": 0.0001,
+          "p90": 0.0004,
+          "p95": 0.0004,
+          "p99": 0.0006
+        },
+        "quote_age_ms": {
+          "count": 974,
+          "max": 1420.7197265625,
+          "mean": 1112.8361718649737,
+          "median": 1093.871337890625,
+          "min": 1088.773681640625,
+          "p90": 1123.718017578125,
+          "p95": 1219.7177734375,
+          "p99": 1419.17724609375
+        },
+        "serialization_latency_ms": {
+          "count": 974,
+          "max": 0.0552,
+          "mean": 0.013515503080082135,
+          "median": 0.0114,
+          "min": 0.0078,
+          "p90": 0.0215,
+          "p95": 0.0239,
+          "p99": 0.0326
+        }
+      },
+      "records": 974,
+      "sequence_gaps": 174,
+      "stale_quotes": 0
+    },
+    "clob_polling": {
+      "metrics": {
+        "decision_latency_ms": {
+          "count": 179,
+          "max": 0.0037,
+          "mean": 0.001305027932960894,
+          "median": 0.0011,
+          "min": 0.0008,
+          "p90": 0.0019,
+          "p95": 0.0022,
+          "p99": 0.0032
+        },
+        "event_loop_latency_ms": {
+          "count": 179,
+          "max": 15.9169,
+          "mean": 1.1072743016759776,
+          "median": 0.2483,
+          "min": 0.1135,
+          "p90": 2.8535,
+          "p95": 4.6776,
+          "p99": 12.1845
+        },
+        "inter_message_gap_ms": {
+          "count": 178,
+          "max": 11707.5037,
+          "mean": 1025.7355308988763,
+          "median": 180.7862,
+          "min": 133.8935,
+          "p90": 1703.9155,
+          "p95": 5150.8863,
+          "p99": 11210.9315
+        },
+        "journal_latency_ms": {
+          "count": 179,
+          "max": 10.8368,
+          "mean": 0.2523463687150838,
+          "median": 0.1828,
+          "min": 0.1284,
+          "p90": 0.2681,
+          "p95": 0.2933,
+          "p99": 0.4022
+        },
+        "network_latency_ms": {
+          "count": 179,
+          "max": 1154.07470703125,
+          "mean": 1008.0786201008206,
+          "median": 1000.471923828125,
+          "min": 986.161865234375,
+          "p90": 1035.89111328125,
+          "p95": 1054.114990234375,
+          "p99": 1106.291748046875
+        },
+        "parse_latency_ms": {
+          "count": 179,
+          "max": 0.1654,
+          "mean": 0.07497653631284916,
+          "median": 0.0725,
+          "min": 0.0515,
+          "p90": 0.0939,
+          "p95": 0.0998,
+          "p99": 0.149
+        },
+        "queue_latency_ms": {
+          "count": 179,
+          "max": 15.9169,
+          "mean": 1.1072743016759776,
+          "median": 0.2483,
+          "min": 0.1135,
+          "p90": 2.8535,
+          "p95": 4.6776,
+          "p99": 12.1845
+        },
+        "quote_age_ms": {
+          "count": 179,
+          "max": 1154.07470703125,
+          "mean": 1008.0786201008206,
+          "median": 1000.471923828125,
+          "min": 986.161865234375,
+          "p90": 1035.89111328125,
+          "p95": 1054.114990234375,
+          "p99": 1106.291748046875
+        },
+        "serialization_latency_ms": {
+          "count": 179,
+          "max": 0.0348,
+          "mean": 0.015107262569832403,
+          "median": 0.0143,
+          "min": 0.0089,
+          "p90": 0.0219,
+          "p95": 0.0236,
+          "p99": 0.0344
+        }
+      },
+      "records": 179,
+      "sequence_gaps": 0,
+      "stale_quotes": 0
+    },
+    "clob_websocket": {
+      "metrics": {
+        "decision_latency_ms": {
+          "count": 137107,
+          "max": 0.1163,
+          "mean": 0.0009908545880224935,
+          "median": 0.0009,
+          "min": 0.0005,
+          "p90": 0.0014,
+          "p95": 0.0016,
+          "p99": 0.0027
+        },
+        "event_loop_latency_ms": {
+          "count": 137107,
+          "max": 0.0925,
+          "mean": 0.00016068472069259777,
+          "median": 0.0001,
+          "min": 0.0,
+          "p90": 0.0002,
+          "p95": 0.0003,
+          "p99": 0.0004
+        },
+        "inter_message_gap_ms": {
+          "count": 137106,
+          "max": 138.4727,
+          "mean": 1.2867338621212785,
+          "median": 0.5095,
+          "min": 0.0,
+          "p90": 3.5899,
+          "p95": 6.746,
+          "p99": 14.2408
+        },
+        "journal_latency_ms": {
+          "count": 137107,
+          "max": 86.219,
+          "mean": 0.18076337677872026,
+          "median": 0.1514,
+          "min": 0.1191,
+          "p90": 0.2348,
+          "p95": 0.2632,
+          "p99": 0.3298
+        },
+        "network_latency_ms": {
+          "count": 137107,
+          "max": 1248.462890625,
+          "mean": 996.2130661177123,
+          "median": 987.852294921875,
+          "min": 980.434326171875,
+          "p90": 1012.484130859375,
+          "p95": 1046.206298828125,
+          "p99": 1130.1572265625
+        },
+        "parse_latency_ms": {
+          "count": 137107,
+          "max": 6.6627,
+          "mean": 0.016224040348049334,
+          "median": 0.0135,
+          "min": 0.0084,
+          "p90": 0.0259,
+          "p95": 0.0298,
+          "p99": 0.0463
+        },
+        "queue_latency_ms": {
+          "count": 137107,
+          "max": 0.0925,
+          "mean": 0.00016068472069259777,
+          "median": 0.0001,
+          "min": 0.0,
+          "p90": 0.0002,
+          "p95": 0.0003,
+          "p99": 0.0004
+        },
+        "quote_age_ms": {
+          "count": 137107,
+          "max": 1248.462890625,
+          "mean": 996.2130661177123,
+          "median": 987.852294921875,
+          "min": 980.434326171875,
+          "p90": 1012.484130859375,
+          "p95": 1046.206298828125,
+          "p99": 1130.1572265625
+        },
+        "serialization_latency_ms": {
+          "count": 137107,
+          "max": 3.4655,
+          "mean": 0.011883245932009307,
+          "median": 0.0104,
+          "min": 0.0071,
+          "p90": 0.0184,
+          "p95": 0.0207,
+          "p99": 0.0276
+        }
+      },
+      "records": 137107,
+      "sequence_gaps": 0,
+      "stale_quotes": 0
+    }
+  },
+  "total_records": 138260
+}
