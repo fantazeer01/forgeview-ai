@@ -1,0 +1,13 @@
+﻿{
+    "algorithm":  "sha256",
+    "files":  {
+                  "polymarket/models/repricing_research_v1/authenticated_execution_dry_run_harness_v1/admission_gate_evaluation.json":  "58ee1704f486353c96319d7cf433042e34dbc61891b5fb89a832aba68936065b",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_dry_run_harness_v1/authenticated_execution_benchmark.md":  "9c3bb6330e7f25e7374ae9a03a0b2d3ee41433a238d1e354602dc201eeb8f07e",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_dry_run_harness_v1/benchmark/attempt_latencies.csv":  "a864a7364d6f5c79bd606e9f0363a869c8d2dff91115dcc4ae1463a65b8cf5f8",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_dry_run_harness_v1/benchmark/benchmark_summary.json":  "c706ea90b254e9bb2aa27ff0d3210339eb1b13a9fe5bfd3ae9f7c3169ceffe0d",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_dry_run_harness_v1/latency_attribution.csv":  "21a6044a3b6c8d18dbe5f9d57314a268f22a854273b0c19bfeb2b8f2d43bddb6",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_dry_run_harness_v1/production_readiness_recommendation.md":  "8656f05eee72731d4dffedcb9d2357fd3df034909b194c911c3fe56315d6058f",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_dry_run_harness_v1/remaining_engineering_bottlenecks.csv":  "b2734c6c73af09edf1f0202eae76719765c5c01ffb9942f2b62577824f6b9202",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_dry_run_harness_v1/validation_summary.json":  "e02119fa952195955fe0d8511dcd92f0916b1d6b98d26879978592bdd5b0d2f4"
+              }
+}

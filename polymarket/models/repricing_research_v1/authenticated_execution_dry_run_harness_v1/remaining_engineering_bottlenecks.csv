@@ -1,0 +1,9 @@
+priority,bottleneck,status,next_boundary
+1,credentialed read-only CLOB transport latency,UNMEASURED,separate security and risk authorization
+2,server acceptance and user-channel publication,UNMEASURED,credentialed no-order calibration where possible
+3,marketable first-match latency,UNMEASURED,separately authorized minimum-risk order matrix
+4,partial and complete fill probability,UNMEASURED,separately authorized minimum-risk order matrix
+5,queue position uncertainty,UNMEASURABLE_EXACTLY,report bounded depth proxy only
+6,cancellation acknowledgement and observation,UNMEASURED,separately authorized measurement
+7,internet and exchange tail latency,UNMEASURED,multi-session synchronized-clock measurement
+8,Windows scheduler timer granularity,OBSERVED_LOCAL,replace fixture sleeps with event-driven scheduling where useful

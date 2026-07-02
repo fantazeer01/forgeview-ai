@@ -1,0 +1,22 @@
+{
+  "authenticated_exchange_admission": "NOT_EVALUATED",
+  "clock_gate": "PASS_FIXTURE_CLOCK_ONLY",
+  "correlation_gate": "PASS",
+  "deterministic_identity_repeat": "PASS",
+  "duplicate_submission_gate": "PASS",
+  "gate_values_ms": {
+    "signal_to_ack_p95": 16.89787,
+    "signal_to_first_transition_p95": 31.111995,
+    "signal_to_terminal_p95": 47.782925
+  },
+  "local_dry_run_gate": "PASS",
+  "orders_submitted": 0,
+  "protocol_thresholds_ms": {
+    "signal_to_ack_p95_max": 750,
+    "signal_to_first_match_p95_max": 1000,
+    "signal_to_terminal_p95_max": 1500
+  },
+  "redaction_gate": "PASS",
+  "replay_gate": "PASS",
+  "result": "LOCAL_HARNESS_PASS_AUTHENTICATED_EXCHANGE_NOT_MEASURED"
+}

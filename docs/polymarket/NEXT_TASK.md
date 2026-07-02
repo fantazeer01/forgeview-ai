@@ -6,27 +6,23 @@ Task status: ACTIVE
 This file contains exactly one active task. Read canonical project memory
 before starting it.
 
-## Active task: Implement Repricing Authenticated Execution Latency Dry-Run Harness v1
+## Active task: Integrate Repricing Latency Dry-Run Harness With Public Event Stream v1
 
 ### Objective
 
-Implement the deterministic no-secret measurement harness defined by the
-authenticated execution latency protocol, proving timestamp, correlation,
-replay, redaction and fail-closed behavior without contacting authenticated
-endpoints or creating orders.
+Feed real public CLOB and external-price WebSocket events into the validated
+local-only execution latency harness to measure live signal-to-local-sink flow,
+correlation, clock behavior and backpressure without credentials or orders.
 
 ### Required scope
 
-1. Implement the canonical event envelope and deterministic event IDs.
-2. Implement signer, credential-provider and order-transport interfaces with
-   fixture/stub implementations only.
-3. Implement a local HTTP execution sink and fixture user-channel lifecycle.
-4. Measure signal, decision, sign, serialization, queue, request, response,
-   acceptance, fill, cancellation and reconciliation stages.
-5. Implement clock-offset monitoring, bounded retries, ambiguous-response
-   reconciliation, secret redaction, append-only journaling and replay.
-6. Add failure-injection tests for duplicate, timeout, partial fill, disconnect,
-   clock drift, secret leakage and terminal disagreement.
+1. Adapt public WebSocket events into the dry-run harness input contract.
+2. Preserve frozen detector logic and all deterministic correlation fields.
+3. Use only fixture signer/authentication and the `127.0.0.1` execution sink.
+4. Measure event receipt through local acknowledgement and terminal fixture
+   state, including reconnect, stale-event and backlog behavior.
+5. Run one bounded public engineering validation, not an evidence campaign.
+6. Compare live client-path results with the local benchmark and protocol gates.
 
 ### Forbidden
 
@@ -38,9 +34,9 @@ endpoints or creating orders.
 
 ### Acceptance criteria
 
-- deterministic fixture replay and identical summary hashes;
-- zero secret-bearing fields in journals and exports;
-- duplicate and ambiguous submissions fail closed;
-- no network destination except the local fixture sink;
+- public events reach the loopback sink with deterministic correlation;
+- bounded queues, stale guards and disconnects fail closed;
+- replay and redaction gates pass with zero duplicate correlations;
+- authenticated exchange admission remains explicitly not evaluated;
 - relevant and full repository tests pass;
 - exactly one successor task remains.

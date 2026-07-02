@@ -1461,3 +1461,28 @@ conditionally plausible under the expected budget; Repricing remains
 
 The successor is **Implement Repricing Authenticated Execution Latency Dry-Run
 Harness v1**, restricted to deterministic stubs and a local sink.
+
+## Authenticated Execution Latency Dry-Run Harness v1
+
+The protocol's Phase 0 harness is implemented. It records deterministic event
+identities and complete local lifecycle timestamps through decision, fixture
+signing/authentication, serialization, loopback submission, acknowledgement,
+fixture user updates, partial/complete fill, cancellation, timeout, retry and
+terminal reconciliation. Ambiguous timeouts fail closed without retry; only a
+proven pre-send failure can retry once.
+
+The 120-attempt benchmark produced 60 fixture fills, 60 fixture cancellations
+and 1,680 replay-valid events. Repeated runs produced the same identity hash.
+Local p95 signal-to-ack was 16.8979 ms, first fixture transition 31.1120 ms and
+terminal 47.7829 ms. Fixture signing p95 was 0.3091 ms and local transport queue
+p95 was 1.0215 ms.
+
+These values do not measure authenticated exchange execution. No credential,
+private key, wallet, authenticated endpoint or real order was used, and the
+network boundary was `127.0.0.1`. The modeled 490 ms p95 acknowledgement and
+800 ms p95 first-match budgets remain unconfirmed. Weak Evidence remains
+conditionally plausible, while production status remains
+`NOT_PRODUCTION_READY_LOCAL_HARNESS_VALIDATED`.
+
+The next task is **Integrate Repricing Latency Dry-Run Harness With Public Event
+Stream v1** under the same no-credential and no-order boundary.

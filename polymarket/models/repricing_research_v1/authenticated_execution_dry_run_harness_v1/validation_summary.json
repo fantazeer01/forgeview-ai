@@ -1,0 +1,18 @@
+{
+  "attempts": 120,
+  "authenticated_endpoints_contacted": 0,
+  "credentials_used": false,
+  "deterministic_identity_hash": "91f195181252da87d05d6c18a620a0e38e975e546cef93ac74a12d40f5392633",
+  "deterministic_summary_hash": "4fe716799ef877c0e8d8601652a521b70eb4aac7874ef9dd58fbd2b276473097",
+  "deterministic_repeat_pass": true,
+  "fixture_cancellations": 60,
+  "fixture_fills": 60,
+  "holdout_accessed": false,
+  "journal_events": 1680,
+  "network_scope": "127.0.0.1_only",
+  "orders_submitted": 0,
+  "production_trading_implemented": false,
+  "replay_pass": true,
+  "result": "LOCAL_HARNESS_PASS_AUTHENTICATED_EXCHANGE_NOT_MEASURED",
+  "strategy_changed": false
+}

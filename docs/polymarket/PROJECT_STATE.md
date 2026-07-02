@@ -3213,5 +3213,35 @@ Weak Evidence remains conditionally executable in principle, but Repricing is
 That task permits only deterministic signer/transport stubs and a local sink;
 it does not authorize credentials, authenticated endpoints, wallets, or orders.
 
+## Repricing Authenticated Execution Latency Dry-Run Harness v1
+
+The deterministic no-secret harness is implemented with canonical event IDs,
+hash-chained predecessor correlation, monotonic and UTC timestamps, fixture
+signer and L2-header boundaries, a loopback-only HTTP sink, fixture lifecycle
+updates, partial/complete fills, cancellation, clock gates, bounded pre-send
+retry, ambiguous-timeout fail-closed behavior, redaction and replay.
+
+A 120-attempt benchmark completed with 60 fixture fills and 60 fixture
+cancellations. Replay validated 1,680 events and 120 terminal correlations. Two
+independent runs produced identity hash
+`91f195181252da87d05d6c18a620a0e38e975e546cef93ac74a12d40f5392633`.
+No credentials, authenticated endpoint, wallet, private key or order was used;
+all network traffic was restricted to `127.0.0.1`.
+
+Measured local p95 was 0.3091 ms fixture signing, 0.0255 ms serialization/auth
+stub, 1.0215 ms transport queue, 16.8979 ms signal-to-local-ack, 31.1120 ms
+signal-to-first-fixture-transition and 47.7829 ms signal-to-terminal. Local
+numerical gates pass, but authenticated exchange admission is `NOT_EVALUATED`.
+The prior 490 ms acknowledgement and 800 ms first-match models are neither
+confirmed nor rejected.
+
+Weak Evidence remains conditionally plausible and Repricing remains
+`NOT_PRODUCTION_READY_LOCAL_HARNESS_VALIDATED`. The next task is **Integrate
+Repricing Latency Dry-Run Harness With Public Event Stream v1**, still with no
+credentials or real orders.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/authenticated_execution_dry_run_harness_v1/`.
+
 Artifacts are under
 `polymarket/models/repricing_research_v1/authenticated_execution_measurement_protocol_v1/`.

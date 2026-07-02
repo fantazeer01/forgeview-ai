@@ -2070,3 +2070,22 @@ partial fills and cancellation remain unmeasured. Public RTT proxies support a
 modeled p95 below one second, but internet tails exceed the economic boundary
 and exchange/fill behavior cannot be inferred. Staging resolves the unknowns
 without smuggling production execution into research infrastructure.
+
+## D-115: Local dry-run latency cannot pass authenticated exchange gates
+
+Status: Accepted
+Decision: The no-secret loopback harness is validated as measurement
+infrastructure, but its latency results are engineering-only. Fixture signing,
+loopback acknowledgement, simulated lifecycle events, fills and cancellations
+must never be admitted as authenticated exchange latency evidence.
+
+The next stage may connect real public market events to the local sink to test
+end-to-end correlation and backpressure. It may not use credentials,
+authenticated endpoints, wallets, private keys, or orders. The authenticated
+execution admission gate remains `NOT_EVALUATED`.
+
+Reason: The 120-attempt benchmark passed deterministic identity, replay,
+redaction, duplicate, timeout and local numerical gates, but all exchange-facing
+states were fixtures on `127.0.0.1`. The result proves the client measurement
+contract and fail-closed behavior, not network, exchange, matching, queue or
+fill latency.

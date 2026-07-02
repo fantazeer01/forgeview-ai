@@ -1,0 +1,12 @@
+component,p95_ms,measurement_class,dominance,interpretation
+decision,0.002605,measured_local,negligible,frozen strategy unchanged
+fixture_signing,0.309065,measured_stub,low,not EIP-712 wallet signing
+serialization_and_auth_stub,0.025510,measured_stub,negligible,no L2 credential used
+local_transport_queue,1.021490,measured_loopback,low,bounded local socket path
+local_sink_acknowledgement,13.847020,measured_loopback,dominant_local,Windows scheduling plus fixture delay
+fixture_exchange_transition,15.670460,measured_fixture,dominant_local,not exchange processing
+fixture_cancellation,16.851125,measured_fixture,dominant_local,not CLOB cancellation
+internet_network,0,unmeasured,unknown,requires authorized remote calibration
+authenticated_exchange_acceptance,0,unmeasured,unknown,requires credentials and endpoint authorization
+matching_and_queue_position,0,unmeasured,unknown,requires risk-approved order path
+fill_uncertainty,0,unmeasured,unknown,requires risk-approved order path
