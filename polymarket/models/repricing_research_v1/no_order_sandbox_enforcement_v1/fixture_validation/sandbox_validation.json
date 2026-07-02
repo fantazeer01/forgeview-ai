@@ -1,0 +1,30 @@
+{
+  "allowed_fixture_requests": 3,
+  "audit_replay": {
+    "records": 8,
+    "terminal_hash": "6e6353ac8ad6522df320540f9f1ee6552585ed204e8fcbe301cc7445db170ba6",
+    "valid": true
+  },
+  "authenticated_calls": 0,
+  "cancellations_submitted": 0,
+  "credentials_used": false,
+  "forbidden_requests_denied": 4,
+  "network_scope": "no_network_fixture_proxy",
+  "orders_submitted": 0,
+  "preflight": {
+    "credentials": "fixture_handles_only",
+    "environment_names": "PASS",
+    "kill_switch": "PASS",
+    "open_orders": 0,
+    "proxy_only": "PASS",
+    "watchdog": "PASS"
+  },
+  "rollback": {
+    "operator_notified": true,
+    "proxy_alive": false,
+    "reason": "fixture_validation_complete",
+    "restart_allowed": false,
+    "status": "ROLLED_BACK"
+  },
+  "verdict": "SANDBOX_FIXTURE_READY_REAL_CALIBRATION_NOT_AUTHORIZED"
+}

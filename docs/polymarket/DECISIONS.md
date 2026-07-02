@@ -2127,3 +2127,21 @@ in state-changing trading operations. Exact application allowlisting reduces
 risk but does not constrain a compromised process. Layered process, proxy,
 firewall, redaction, kill-switch and independent-authorization gates are needed
 before credential provisioning can be evaluated.
+
+## D-118: Fixture no-order sandbox passes; real calibration remains blocked
+
+Status: Accepted
+Decision: The fixture sandbox is accepted as the canonical application-layer
+enforcement boundary for future no-order calibration. It proves exact route
+allowlisting, direct-egress denial at the abstraction boundary, kill-switch and
+watchdog failure, zero-open-order abort, redaction and audit replay.
+
+This result does not authorize credentials. A separate independent gate review
+must verify host firewall/direct-egress controls, process isolation, external
+secret-provider procedure, revocation ownership and an expiring authorization
+record before any credentialed call may be proposed.
+
+Reason: All fixture safety tests pass with zero network and authenticated calls,
+but a local abstraction cannot prove that a compromised credential-bearing
+process is contained by the host operating system. Layered host enforcement
+remains a distinct prerequisite.

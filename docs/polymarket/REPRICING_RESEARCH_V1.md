@@ -1527,3 +1527,20 @@ parent watchdog, empty-open-order precondition and independent rollback.
 No credential or authenticated call was used. The next task is **Implement
 Repricing No-Order Calibration Sandbox Enforcement v1** with fixtures and local
 endpoints only. Authenticated exchange admission remains `NOT_EVALUATED`.
+
+## No-Order Calibration Sandbox Enforcement v1
+
+The fixture-only sandbox is implemented and validated. Allowed observational
+routes pass only through a local no-socket proxy; direct egress, order, batch
+order, cancellation, heartbeat and unknown routes fail closed. Kill-switch,
+parent death, watchdog expiry, proxy loss and open-order fixtures all abort
+without an order or cancellation.
+
+Clean child-environment rules use opaque fixture handles, and redacted audit
+records reveal none of their values. Eight deterministic audit envelopes replay
+successfully. The sprint used zero credentials, network calls, authenticated
+calls, orders and cancellations.
+
+Status is `FIXTURE_SANDBOX_READY_AUTHORIZATION_BLOCKED`. The next task is **Run
+Repricing No-Order Calibration Independent Authorization Gate Review v1** to
+assess host-level and procedural prerequisites without credentials.

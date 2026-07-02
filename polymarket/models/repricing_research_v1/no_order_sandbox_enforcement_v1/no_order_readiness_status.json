@@ -1,0 +1,16 @@
+{
+  "application_deny_by_default": "PASS",
+  "audit_replay": "PASS",
+  "authenticated_calls": 0,
+  "calibration_authorized": false,
+  "direct_egress_fixture_denial": "PASS",
+  "fixture_proxy": "PASS",
+  "host_firewall_direct_egress_proof": "REQUIRED",
+  "independent_authorization": "REQUIRED",
+  "kill_switch_and_watchdog": "PASS",
+  "orders_or_cancellations": 0,
+  "process_isolation_host_proof": "REQUIRED",
+  "secret_redaction": "PASS",
+  "status": "FIXTURE_SANDBOX_READY_AUTHORIZATION_BLOCKED",
+  "zero_open_order_gate": "PASS"
+}

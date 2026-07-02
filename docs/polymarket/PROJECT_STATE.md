@@ -3301,3 +3301,30 @@ authenticated calls remain forbidden.
 
 Artifacts are under
 `polymarket/models/repricing_research_v1/credentialed_no_order_security_review_v1/`.
+
+## Repricing No-Order Calibration Sandbox Enforcement v1
+
+The fixture sandbox verdict is
+`SANDBOX_FIXTURE_READY_REAL_CALIBRATION_NOT_AUTHORIZED`. It implements exact
+deny-by-default routing, a no-socket fixture proxy, direct-egress denial,
+fixture-only secret handles, clean environment rules, kill switch, parent and
+proxy watchdogs, zero-open-order abort, structural redaction, deterministic
+hash-chained audit replay and operator rollback.
+
+Fixture validation allowed the observational routes and denied order, batch
+order, cancellation, heartbeat, unknown route and direct-egress attempts.
+Parent death, watchdog expiry, proxy loss and nonzero open orders fail closed.
+Eight compact audit records replayed with terminal hash
+`6e6353ac8ad6522df320540f9f1ee6552585ed204e8fcbe301cc7445db170ba6`.
+
+No credentials, authenticated calls, network calls, orders, cancellations,
+wallet material, holdout access or strategy changes occurred. Application and
+fixture controls pass, but host firewall/process isolation and independent
+authorization remain unverified. Real calibration is still blocked.
+
+The next task is **Run Repricing No-Order Calibration Independent Authorization
+Gate Review v1**. It may verify host-level controls and authorization evidence
+but may not provision credentials or make authenticated calls.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/no_order_sandbox_enforcement_v1/`.
