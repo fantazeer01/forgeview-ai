@@ -1,0 +1,28 @@
+{
+  "authorization": {
+    "authenticated_calls": false,
+    "credentials_used": false,
+    "orders_submitted": false,
+    "private_keys_used": false
+  },
+  "economic_break_ms": 2000,
+  "expected_modeled_latency_ms": {
+    "signal_to_ack": {"best": 145, "median": 205, "p95": 490, "worst": ">7000"},
+    "signal_to_first_match": {"best": 175, "median": 275, "p95": 800, "worst": "timeout_or_no_fill"}
+  },
+  "feasibility": {
+    "sub_1s": "PLAUSIBLE_NOT_MEASURED",
+    "sub_2s": "PLAUSIBLE_NOT_MEASURED",
+    "weak_evidence_executable": "CONDITIONALLY_PLAUSIBLE",
+    "production_ready": false
+  },
+  "latency_gates_ms": {
+    "signal_to_ack_p95_max": 750,
+    "signal_to_first_match_p95_max": 1000,
+    "signal_to_terminal_fill_or_cancel_p95_max": 1500
+  },
+  "minimum_attempts": 100,
+  "minimum_independent_sessions": 3,
+  "protocol_version": "authenticated_execution_latency_v1",
+  "result": "NOT_PRODUCTION_READY_EXECUTION_FEASIBLE_TO_MEASURE"
+}

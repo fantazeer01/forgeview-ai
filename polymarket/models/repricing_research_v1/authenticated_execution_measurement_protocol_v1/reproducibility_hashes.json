@@ -1,0 +1,13 @@
+﻿{
+    "algorithm":  "sha256",
+    "files":  {
+                  "polymarket/models/repricing_research_v1/authenticated_execution_measurement_protocol_v1/authenticated_execution_measurement_protocol.md":  "3742599556aed1606751ee301288afb1b5d2c7d2f0481bd720409cb1fe6081ce",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_measurement_protocol_v1/design_validation.json":  "a4eae5356ad70e63c71c19ff5450bc7f4e1770dbc399ad7edf8bc51db6d10164",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_measurement_protocol_v1/execution_state_diagram.md":  "71bdff6c481cb4a19717ef47352dfebfe74b3af735ccbfbd53967dfe78756df0",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_measurement_protocol_v1/implementation_roadmap.md":  "c1bc567bd07e97fccd9c31de372c95762058c94d2d5a136d1a47deeec2c295d8",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_measurement_protocol_v1/instrumentation_architecture.md":  "9b7e86c64573adbe4dcb40edf6569cbab6f773baee97b2e9d9d3efe2c72ba419",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_measurement_protocol_v1/latency_budget.csv":  "eb423af1521069cfe595d789b548cfa727839fd9bd969169ffd45d095e98562d",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_measurement_protocol_v1/production_readiness_assessment.md":  "021cfeb1361be56bc44df44ba8273de0c1f93bed77021bccdd575d4aab3c8a09",
+                  "polymarket/models/repricing_research_v1/authenticated_execution_measurement_protocol_v1/protocol_summary.json":  "83aece6d59edcea67dd5a4c295ca697b952a22bfc787ef45004e5ddb9c1455b6"
+              }
+}

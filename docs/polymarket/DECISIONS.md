@@ -2045,3 +2045,28 @@ Absolute one-way network latency remains clock contaminated, and signing,
 submission, acknowledgement, matching, queue position, and fill probability
 remain unmeasured. The result removes one engineering blocker without proving
 an executable production edge.
+
+## D-114: Authenticated Repricing latency requires staged measurement
+
+Status: Accepted
+Decision: Authenticated execution latency must be evaluated through a staged,
+deterministic protocol. The first implementation stage is a no-secret dry-run
+harness with signer and transport stubs, a local sink, fixture user-channel
+events, canonical event correlation, clock monitoring, replay and redaction.
+Credentialed read-only calibration and minimum-risk order-path measurement each
+require separate future authorization and independent security/risk review.
+
+The latency feasibility gates are signal-to-ack p95 <=750 ms,
+signal-to-first-match p95 <=1,000 ms and signal-to-terminal-fill-or-cancel p95
+<=1,500 ms. Two seconds remains the frozen economic failure boundary. A later
+feasibility result requires at least 100 fixed-protocol attempts over three
+independent sessions, zero duplicate orders, zero unresolved ambiguous
+submissions, valid clock/correlation/replay gates, and positive frozen
+expectancy under the measured latency distribution.
+
+Reason: Public WebSocket and local processing latency are already fast, while
+signing, authenticated submission, acceptance, matching, queue position,
+partial fills and cancellation remain unmeasured. Public RTT proxies support a
+modeled p95 below one second, but internet tails exceed the economic boundary
+and exchange/fill behavior cannot be inferred. Staging resolves the unknowns
+without smuggling production execution into research infrastructure.

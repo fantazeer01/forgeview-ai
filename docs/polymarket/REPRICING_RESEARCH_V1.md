@@ -1429,3 +1429,35 @@ acknowledgement, matching, queue position, and fill probability remain the
 dominant unknowns. No production-edge claim is made. The next task is the
 design-only **Design Repricing Authenticated Execution Latency Measurement
 Protocol v1**; it does not authorize credentials, wallets, or orders.
+
+## Authenticated Execution Latency Measurement Protocol v1
+
+The design covers the full event chain from public signal generation through
+decision, signing, L2 authentication, serialization, transport,
+acknowledgement, acceptance, first book appearance, partial/complete match,
+settlement, cancellation, timeout, retry and terminal reconciliation. Local
+durations use monotonic nanoseconds; cross-clock attribution requires NTP
+discipline and explicit offset uncertainty. Ambiguous submissions are queried
+by deterministic order hash and are never blindly retried.
+
+The protocol defines separate authorization phases: deterministic no-secret
+fixtures, public transport calibration, future credentialed no-order
+calibration, and only then a separately authorized minimum-risk order-path
+measurement. This sprint completed design only and used no credentials or
+orders.
+
+The frozen two-second negative replay remains the economic break. Admission
+targets are signal-to-ack p95 <=750 ms, first-match p95 <=1,000 ms, and
+terminal-fill-or-cancel p95 <=1,500 ms. A future conclusion requires at least
+100 attempts over three sessions, zero duplicate/unreconciled orders, complete
+clock and replay integrity, and positive expectancy under the measured latency
+distribution.
+
+The modeled warm path is 205 ms median / 490 ms p95 to acknowledgement and
+275 ms median / 800 ms p95 to first match. These use public RTT proxies plus
+explicit assumptions and are not authenticated evidence. Weak Evidence is
+conditionally plausible under the expected budget; Repricing remains
+`NOT_PRODUCTION_READY_EXECUTION_FEASIBLE_TO_MEASURE`.
+
+The successor is **Implement Repricing Authenticated Execution Latency Dry-Run
+Harness v1**, restricted to deterministic stubs and a local sink.

@@ -1,0 +1,16 @@
+stage,class,best_ms,median_ms,p95_ms,worst_case,source_or_rule,reducibility
+public_event_to_decision,measured_local,0.001,0.001,0.032,unbounded_on_disconnect,WebSocket benchmark parse plus decision,low
+source_clock_uncertainty,required_gate,1,5,20,50_ms_pause_threshold,protocol requirement,reducible_by_clock_discipline
+order_intent_build,modeled,0.1,0.5,2,10_ms,local deterministic structure,reducible
+eip712_order_sign,unmeasured_model,1,3,10,50_ms,requires signer instrumentation,reducible_with_warm_local_signer
+l2_hmac_and_serialize,unmeasured_model,0.1,0.5,2,10_ms,requires auth instrumentation,reducible
+transport_queue,required_gate,0,1,10,fail_closed_at_50_ms,bounded warm async transport,reducible
+warm_rest_ack_round_trip,public_proxy,142,178,346,6857_ms_observed,Home PC public CLOB HTTPS proxy,partly_reducible_by_region_and_connection
+exchange_accept_processing,unmeasured,0,20,100,unknown,requires POST response and user channel,exchange_limited
+accepted_to_first_match,unmeasured,0,50,250,timeout_or_no_fill,depends on marketability and liquidity,exchange_and_market_limited
+first_match_to_confirmed,unmeasured_settlement,unknown,unknown,unknown,failed_or_retrying,user channel MATCHED-MINED-CONFIRMED,chain_limited_not_entry_budget
+cancel_request_to_ack,unmeasured_proxy,142,178,346,unknown,public RTT proxy only,partly_reducible
+cancel_ack_to_observed,unmeasured,0,20,100,unknown,user channel cancellation event,exchange_limited
+expected_signal_to_ack,modeled_total,145,205,490,over_7000_ms,sum of public measurements proxies and explicit assumptions,feasible_below_750ms_p95_not_proven
+expected_signal_to_first_match,modeled_total,175,275,800,timeout_or_no_fill,signal-to-ack plus match model,feasible_below_1000ms_p95_not_proven
+economic_break_boundary,frozen_evidence,2000,2000,2000,2000_ms,two-second executable replay negative,fundamental_strategy_constraint

@@ -3185,3 +3185,33 @@ Artifacts are under
 `polymarket/models/repricing_research_v1/websocket_latency_instrumentation_v1/`.
 The next task is **Design Repricing Authenticated Execution Latency Measurement
 Protocol v1**. This is design-only and does not authorize credentials or orders.
+
+## Repricing Authenticated Execution Latency Measurement Protocol v1
+
+The complete authenticated execution measurement protocol is designed without
+credentials, private keys, authenticated calls, or orders. It separates signal,
+decision, EIP-712 signing, L2 authentication, serialization, transport,
+acknowledgement, acceptance, book appearance, partial/complete match,
+settlement, cancellation, timeout, retry and reconciliation timestamps.
+
+The frozen economic break remains two seconds. Protocol feasibility gates are
+stricter: signal-to-ack p95 <=750 ms, signal-to-first-match p95 <=1,000 ms,
+and signal-to-terminal-fill-or-cancel p95 <=1,500 ms, with zero duplicates or
+unreconciled ambiguous submissions. At least 100 fixed-protocol attempts over
+three independent sessions would be required for a later authenticated
+feasibility conclusion.
+
+Using measured public transport proxies and explicitly modeled unknown stages,
+the expected warm Home-PC signal-to-ack path is 145 ms best, 205 ms median,
+490 ms p95, and over 7 seconds in the observed transport tail. Expected
+signal-to-first-match is 175 ms best, 275 ms median and 800 ms p95, with timeout
+or no fill as the true worst case. These estimates are not order measurements.
+
+Weak Evidence remains conditionally executable in principle, but Repricing is
+`NOT_PRODUCTION_READY_EXECUTION_FEASIBLE_TO_MEASURE`. The next task is
+**Implement Repricing Authenticated Execution Latency Dry-Run Harness v1**.
+That task permits only deterministic signer/transport stubs and a local sink;
+it does not authorize credentials, authenticated endpoints, wallets, or orders.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/authenticated_execution_measurement_protocol_v1/`.
