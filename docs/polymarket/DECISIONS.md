@@ -2089,3 +2089,22 @@ redaction, duplicate, timeout and local numerical gates, but all exchange-facing
 states were fixtures on `127.0.0.1`. The result proves the client measurement
 contract and fail-closed behavior, not network, exchange, matching, queue or
 fill latency.
+
+## D-116: Public-to-local Repricing latency path is validated
+
+Status: Accepted
+Decision: The live public CLOB stream may feed the deterministic local latency
+harness for engineering measurement. The public-to-local path is no longer the
+dominant known latency blocker. Results from public-triggered loopback probes
+remain ineligible as authenticated execution or strategy evidence.
+
+Before any credentialed no-order calibration is considered, a separate
+security and risk review must prove secret isolation, read-only endpoint
+allowlisting, order-route unreachability, redaction, clock discipline and
+fail-closed incident handling. That review does not authorize credentials.
+
+Reason: A bounded run correlated 60 / 60 probes with subsequent public events,
+with 9.8616 ms p95 signal-to-local acknowledgement, 36.4036 ms p95 to the next
+same-token public event, zero reconnects, zero stale events, zero backpressure
+drops and replay-valid lifecycle state. Exchange acceptance, matching, queue
+position and fill latency remain entirely unmeasured.

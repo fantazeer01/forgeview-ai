@@ -1,0 +1,14 @@
+﻿{
+    "algorithm":  "sha256",
+    "files":  {
+                  "polymarket/models/repricing_research_v1/public_stream_dry_run_v1/admission_gate_evaluation.json":  "92c82c2e1ba431ddf6fcfeed62595a36ca06d3966c9a2f0f5464efc161da9740",
+                  "polymarket/models/repricing_research_v1/public_stream_dry_run_v1/event_correlation_report.md":  "5835b1d7da3d4d477d8f9f25b3d73317c0ef8ff4d652c5b02fee927963271dc8",
+                  "polymarket/models/repricing_research_v1/public_stream_dry_run_v1/latency_attribution.csv":  "97b1ca30e35c8cdbcdec58c7317eb1720651ad060fe43c13c367838ff5e0b7f2",
+                  "polymarket/models/repricing_research_v1/public_stream_dry_run_v1/live_validation/event_correlations.csv":  "93f258c2af326f9ffe336f032bcf7a376ad59e0db7d3a0009ba9ff3e8c56506b",
+                  "polymarket/models/repricing_research_v1/public_stream_dry_run_v1/live_validation/public_stream_summary.json":  "b8ceb99129837d2506d63ca8392f47a8abb0f6d5a357ad7fe5f66dd2df3efc11",
+                  "polymarket/models/repricing_research_v1/public_stream_dry_run_v1/production_readiness_recommendation.md":  "10540cfb82a09af870b07af20203cd716d90e6153190d39704fc1d086e23bea5",
+                  "polymarket/models/repricing_research_v1/public_stream_dry_run_v1/public_stream_dry_run_benchmark.md":  "91dfecb0c13a516ba7fbfff4ba8f9a5807206520ff140a00f508f090d70c2754",
+                  "polymarket/models/repricing_research_v1/public_stream_dry_run_v1/remaining_bottlenecks.csv":  "e740b5cb01c83936595afa777b10af0c79ffbf0f3bfaad566c7403927a4854fa",
+                  "polymarket/models/repricing_research_v1/public_stream_dry_run_v1/validation_summary.json":  "15d020311b4fa12375f3fe19b16ae3b792e7f469c8136d431f5350e0bb5adf9e"
+              }
+}

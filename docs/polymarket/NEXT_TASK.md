@@ -6,37 +6,39 @@ Task status: ACTIVE
 This file contains exactly one active task. Read canonical project memory
 before starting it.
 
-## Active task: Integrate Repricing Latency Dry-Run Harness With Public Event Stream v1
+## Active task: Prepare Repricing Credentialed No-Order Calibration Security Review v1
 
 ### Objective
 
-Feed real public CLOB and external-price WebSocket events into the validated
-local-only execution latency harness to measure live signal-to-local-sink flow,
-correlation, clock behavior and backpressure without credentials or orders.
+Define and validate the security boundary required for a future separately
+authorized credentialed read-only latency calibration, proving that no order or
+cancellation route can be reached.
 
 ### Required scope
 
-1. Adapt public WebSocket events into the dry-run harness input contract.
-2. Preserve frozen detector logic and all deterministic correlation fields.
-3. Use only fixture signer/authentication and the `127.0.0.1` execution sink.
-4. Measure event receipt through local acknowledgement and terminal fixture
-   state, including reconnect, stale-event and backlog behavior.
-5. Run one bounded public engineering validation, not an evidence campaign.
-6. Compare live client-path results with the local benchmark and protocol gates.
+1. Specify process isolation and an external secret-provider contract.
+2. Define an allowlist limited to authenticated user WebSocket, heartbeat and
+   read-only order/trade query methods where current API semantics permit.
+3. Prove order POST, batch order and cancellation methods are unreachable.
+4. Define header/payload redaction, memory lifetime, audit hashes and incident
+   response without using real credentials.
+5. Define clock synchronization, connection warm-up and measurement gates.
+6. Build static/fixture security validation only if needed; do not authenticate.
 
 ### Forbidden
 
 - no real credential, wallet, private key, API secret or passphrase;
-- no authenticated Polymarket endpoint or real order/cancellation;
+- no authenticated endpoint connection;
+- no real order, cancellation, heartbeat or credential provisioning;
 - no strategy, threshold, evidence-gate or production execution change;
 - no sealed holdout inspection or evaluation;
 - no production model training or evidence campaign.
 
 ### Acceptance criteria
 
-- public events reach the loopback sink with deterministic correlation;
-- bounded queues, stale guards and disconnects fail closed;
-- replay and redaction gates pass with zero duplicate correlations;
-- authenticated exchange admission remains explicitly not evaluated;
+- explicit threat model and endpoint capability matrix;
+- mechanically testable deny-by-default policy;
+- proof that order-capable routes are absent or unreachable;
+- separate future authorization gate documented;
 - relevant and full repository tests pass;
 - exactly one successor task remains.

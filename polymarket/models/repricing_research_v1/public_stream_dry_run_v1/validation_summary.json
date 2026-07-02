@@ -1,0 +1,17 @@
+{
+  "attempts": 60,
+  "authenticated_endpoints_contacted": 0,
+  "backpressure_drops": 0,
+  "credentials_used": false,
+  "holdout_accessed": false,
+  "orders_submitted": 0,
+  "public_events": 38194,
+  "reconnects": 0,
+  "replay_correlations": 60,
+  "replay_events": 900,
+  "replay_pass": true,
+  "result": "PUBLIC_TO_LOCAL_PATH_MEASURED_AUTHENTICATED_EXCHANGE_NOT_MEASURED",
+  "stale_events": 0,
+  "strategy_changed": false,
+  "transition_observed": 60
+}

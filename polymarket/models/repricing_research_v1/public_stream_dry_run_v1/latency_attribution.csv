@@ -1,0 +1,8 @@
+component,best_ms,median_ms,p95_ms,p99_ms,max_ms,measurement_class
+public_receipt_to_probe_signal,0.5801,0.80605,2.25385,3.27132,4.1457,measured_public_to_local
+signal_to_local_ack,2.7719,5.04645,9.8616,12.079419,12.6788,measured_public_trigger_plus_loopback
+signal_to_next_public_event,1.5844,7.37595,36.403585,88.600141,108.4537,measured_public_cadence_not_order_state
+signal_to_fixture_terminal,3.7893,9.0107,15.459295,20.12232,23.9113,measured_fixture
+reported_event_age,999.898438,1004.352539,1065.017371,1116.512561,1118.01709,clock_contaminated
+authenticated_network_and_exchange,0,0,0,0,0,unmeasured
+matching_queue_and_fill,0,0,0,0,0,unmeasured

@@ -9,7 +9,7 @@ import math
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Protocol
+from typing import Any, Awaitable, Callable, Protocol
 
 
 PROTOCOL_VERSION = "authenticated_execution_latency_v1"
@@ -74,6 +74,9 @@ class AttemptResult:
     transport_ack_ms: float
     exchange_fixture_ms: float
     cancellation_ms: float | None
+    signal_monotonic_ns: int
+    submitted_monotonic_ns: int
+    acknowledgement_monotonic_ns: int
 
 
 class FixtureSigner:
@@ -289,9 +292,28 @@ class DryRunHarness:
         _write_results(self.output / "attempt_latencies.csv", results)
         return summary
 
-    async def _attempt(self, index: int, transport: Transport) -> AttemptResult:
+    async def run_attempt(
+        self,
+        index: int,
+        transport: Transport,
+        *,
+        source_metadata: dict[str, Any] | None = None,
+        on_submitted: Callable[[int], Awaitable[None]] | None = None,
+    ) -> AttemptResult:
+        return await self._attempt(index, transport, source_metadata=source_metadata, on_submitted=on_submitted)
+
+    async def _attempt(
+        self,
+        index: int,
+        transport: Transport,
+        *,
+        source_metadata: dict[str, Any] | None = None,
+        on_submitted: Callable[[int], Awaitable[None]] | None = None,
+    ) -> AttemptResult:
         correlation = hashlib.sha256(f"dry-run-v1:{index}".encode()).hexdigest()
         intent_id = hashlib.sha256(f"intent:{correlation}".encode()).hexdigest()
+        if source_metadata is not None:
+            self.journal.emit(correlation, intent_id, "source_event_received", metadata=source_metadata)
         self.journal.emit(correlation, intent_id, "signal_generated")
         signal_ns = time.perf_counter_ns()
         decision_start = time.perf_counter_ns()
@@ -319,6 +341,8 @@ class DryRunHarness:
         self.journal.emit(correlation, intent_id, "serialize_complete", metadata={"body_hash": hashlib.sha256(body).hexdigest()})
         queued_ns = time.perf_counter_ns()
         self.journal.emit(correlation, intent_id, "request_queued")
+        if on_submitted is not None:
+            await on_submitted(queued_ns)
         retry_count = 0
         try:
             response, sent_ns, first_byte_ns = await transport.post(body, headers)
@@ -371,6 +395,9 @@ class DryRunHarness:
             transport_ack_ms=(first_byte_ns - sent_ns) / 1_000_000,
             exchange_fixture_ms=(transition_ns - complete_ns) / 1_000_000,
             cancellation_ms=cancellation_ms,
+            signal_monotonic_ns=signal_ns,
+            submitted_monotonic_ns=sent_ns,
+            acknowledgement_monotonic_ns=ack_ns,
         )
 
 

@@ -1,0 +1,104 @@
+{
+  "admission_gates": {
+    "authenticated_exchange_admission": "NOT_EVALUATED",
+    "local_signal_to_ack_p95_le_750ms": true,
+    "local_terminal_p95_le_1500ms": true,
+    "public_transition_p95_le_1000ms": true
+  },
+  "assets": {
+    "BTC": 21,
+    "ETH": 20,
+    "SOL": 19
+  },
+  "attempts": 60,
+  "credentials_used": false,
+  "markets": {
+    "BTC": "0x7b962cc83adf9809aae2d3024a6331cb9d5ff4fe00d47c6bb3fd42966c9e8e0f",
+    "ETH": "0x59fcf9c0caf7fffdbfc29ecea8f171f46181cd0c6b1eddc8763d4c0f285ee82b",
+    "SOL": "0xfc17ada7fe1e553767d7ec977a1b325f0e560e66c1845783673b82f8a98e3fdf"
+  },
+  "metrics": {
+    "event_age_ms": {
+      "count": 60,
+      "max": 1118.01708984375,
+      "mean": 1013.1754475911458,
+      "median": 1004.3525390625,
+      "min": 999.8984375,
+      "p90": 1025.767578125,
+      "p95": 1065.0173706054686,
+      "p99": 1116.5125610351563
+    },
+    "signal_to_local_ack_ms": {
+      "count": 60,
+      "max": 12.6788,
+      "mean": 5.494415,
+      "median": 5.04645,
+      "min": 2.7719,
+      "p90": 8.34374,
+      "p95": 9.861600000000001,
+      "p99": 12.079418999999998
+    },
+    "signal_to_public_transition_ms": {
+      "count": 60,
+      "max": 108.4537,
+      "mean": 13.0,
+      "median": 7.37595,
+      "min": 1.5844,
+      "p90": 24.490370000000002,
+      "p95": 36.40358499999995,
+      "p99": 88.60014099999988
+    },
+    "signal_to_terminal_ms": {
+      "count": 60,
+      "max": 23.9113,
+      "mean": 9.660941666666668,
+      "median": 9.0107,
+      "min": 3.7893,
+      "p90": 13.915480000000002,
+      "p95": 15.459294999999996,
+      "p99": 20.122319999999977
+    },
+    "source_to_signal_ms": {
+      "count": 60,
+      "max": 4.1457,
+      "mean": 0.98434,
+      "median": 0.8060499999999999,
+      "min": 0.5801,
+      "p90": 1.155,
+      "p95": 2.253849999999999,
+      "p99": 3.271319999999995
+    }
+  },
+  "network_destinations": [
+    "public_clob_websocket",
+    "127.0.0.1_local_sink"
+  ],
+  "orders_submitted": 0,
+  "public_stream": {
+    "dropped_or_backpressured": 0,
+    "duplicates": 303,
+    "event_gap_ms": {
+      "count": 38191,
+      "max": 264.8276,
+      "mean": 7.03647357492603,
+      "median": 0.9327,
+      "min": 0.0132,
+      "p90": 18.4178,
+      "p95": 29.615650000000002,
+      "p99": 91.53152999999966
+    },
+    "received": 38194,
+    "reconnects": 0,
+    "stale": 0,
+    "transition_missing": 0,
+    "transition_observed": 60
+  },
+  "replay": {
+    "correlations": 60,
+    "events": 900,
+    "identity_hash": "71eaf0aeb07684eff2f5eff2b4b6938712ab4457f9379c248a7dcf136d5d8541",
+    "terminal": 60,
+    "valid": true
+  },
+  "result": "PUBLIC_TO_LOCAL_PATH_MEASURED_AUTHENTICATED_EXCHANGE_NOT_MEASURED"
+}

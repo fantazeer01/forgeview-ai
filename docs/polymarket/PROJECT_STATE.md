@@ -3245,3 +3245,32 @@ Artifacts are under
 
 Artifacts are under
 `polymarket/models/repricing_research_v1/authenticated_execution_measurement_protocol_v1/`.
+
+## Repricing Public-Stream Latency Dry Run v1
+
+The no-secret latency harness is integrated with the live public CLOB WebSocket
+and a loopback-only execution sink. A bounded 90-second run completed 60
+correlated engineering probes across BTC / ETH / SOL counts of 21 / 20 / 19.
+It observed 38,194 public events, zero reconnects, zero stale events, zero
+backpressure drops and 60 / 60 subsequent same-token public transitions.
+
+Measured p95 was 2.2538 ms from public receipt to probe signal, 9.8616 ms from
+signal to local acknowledgement, 36.4036 ms from signal to the next public
+event and 15.4593 ms from signal to fixture terminal. Public event-gap p95 was
+29.6157 ms and maximum was 264.8276 ms. Reported absolute event age remained
+clock contaminated by an approximately one-second server/local offset.
+
+Replay validated 900 lifecycle events and 60 terminal correlations. The probe
+is not a frozen-strategy trade signal and is ineligible as research evidence.
+No credential, authenticated endpoint, wallet, private key or real order was
+used. Local/public engineering gates pass; authenticated exchange admission
+remains `NOT_EVALUATED`.
+
+Weak Evidence remains conditionally executable. Production status is
+`NOT_PRODUCTION_READY_PUBLIC_DRY_RUN_VALIDATED`. The next task is **Prepare
+Repricing Credentialed No-Order Calibration Security Review v1**, which may
+design and verify controls but may not provision credentials or contact an
+authenticated endpoint.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/public_stream_dry_run_v1/`.

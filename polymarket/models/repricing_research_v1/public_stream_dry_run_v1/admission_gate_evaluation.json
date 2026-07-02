@@ -1,0 +1,15 @@
+{
+  "authenticated_exchange_admission": "NOT_EVALUATED",
+  "clock_corrected_one_way_latency": "NOT_AVAILABLE",
+  "local_terminal_p95_ms": 15.459295,
+  "local_terminal_threshold_ms": 1500,
+  "orders_submitted": 0,
+  "public_stream_reliability": "PASS_BOUNDED_RUN",
+  "public_transition_p95_ms": 36.403585,
+  "public_transition_threshold_ms": 1000,
+  "replay": "PASS",
+  "signal_to_local_ack_p95_ms": 9.8616,
+  "signal_to_local_ack_threshold_ms": 750,
+  "strategy_evidence_admission": "INELIGIBLE_ENGINEERING_PROBE",
+  "verdict": "LOCAL_AND_PUBLIC_PATH_PASS_AUTHENTICATED_PATH_UNKNOWN"
+}

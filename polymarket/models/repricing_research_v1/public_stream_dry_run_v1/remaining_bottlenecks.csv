@@ -1,0 +1,8 @@
+priority,bottleneck,status
+1,credentialed read-only transport and user channel,UNMEASURED_REQUIRES_SEPARATE_AUTHORIZATION
+2,authenticated order acknowledgement,UNMEASURED
+3,exchange matching latency,UNMEASURED
+4,queue position and fill probability,UNMEASURED
+5,partial fill and cancellation lifecycle,UNMEASURED_EXCHANGE_PATH
+6,clock-corrected one-way event latency,UNMEASURED
+7,multi-session public reliability tails,ONLY_90_SECONDS_OBSERVED

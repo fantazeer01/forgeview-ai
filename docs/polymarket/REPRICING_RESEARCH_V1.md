@@ -1486,3 +1486,26 @@ conditionally plausible, while production status remains
 
 The next task is **Integrate Repricing Latency Dry-Run Harness With Public Event
 Stream v1** under the same no-credential and no-order boundary.
+
+## Public-Stream Latency Dry Run v1
+
+The live public CLOB WebSocket now feeds the local-only latency harness. The
+90-second engineering validation completed 60 probes with BTC / ETH / SOL
+counts 21 / 20 / 19. It observed 38,194 recognized public events, zero
+reconnects, zero stale events, zero backpressure drops, 303 duplicate identities
+suppressed and all 60 subsequent same-token public transitions observed.
+
+Latency p95 was 2.2538 ms public receipt to probe signal, 9.8616 ms signal to
+loopback acknowledgement, 36.4036 ms signal to next public event and 15.4593
+ms signal to fixture terminal. Event-gap p95 was 29.6157 ms. Absolute event age
+still contains an approximately one-second clock offset and is not one-way
+network latency.
+
+Replay passed for 900 events and 60 correlations. These probes are not accepted
+frozen-strategy signals and cannot enter evidence. No credentials, authenticated
+endpoint or real orders were used. Weak Evidence remains conditionally
+executable, but authenticated exchange admission remains `NOT_EVALUATED` and
+production status is `NOT_PRODUCTION_READY_PUBLIC_DRY_RUN_VALIDATED`.
+
+The next task is **Prepare Repricing Credentialed No-Order Calibration Security
+Review v1**, with no credential provisioning or authenticated calls.
