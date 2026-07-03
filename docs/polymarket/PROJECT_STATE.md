@@ -3328,3 +3328,26 @@ but may not provision credentials or make authenticated calls.
 
 Artifacts are under
 `polymarket/models/repricing_research_v1/no_order_sandbox_enforcement_v1/`.
+
+## Repricing No-Order Calibration Independent Authorization Gate Review v1
+
+Authorization verdict: `NOT_AUTHORIZED`. The fixture sandbox, exact route
+policy, redaction, zero-open-order gate, kill switch, watchdog, audit replay and
+rollback hooks pass at application/fixture level. No credentials,
+authenticated calls, orders, cancellations, wallet material, holdout access or
+strategy changes occurred.
+
+Host containment fails the independent gate. Domain, Private and Public
+Windows Firewall profiles all reported disabled with outbound policy not
+configured, and no matching ForgeView/Polymarket/Repricing/Calibration outbound
+rule exists. No restricted process boundary, operational external secret
+provider, assigned revocation/rollback/incident owner, unique expiring
+authorization record or host-level failure drill evidence exists.
+
+Credentialed no-order calibration may not proceed. The next task is **Implement
+Repricing No-Order Calibration Host Containment Preflight v1**, restricted to
+read-only inspection, fixture process isolation and non-applied firewall/proxy
+plans. It may not enable firewall rules, provision credentials or authenticate.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/no_order_authorization_gate_review_v1/`.

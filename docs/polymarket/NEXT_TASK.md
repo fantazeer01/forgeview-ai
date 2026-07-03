@@ -6,37 +6,42 @@ Task status: ACTIVE
 This file contains exactly one active task. Read canonical project memory
 before starting it.
 
-## Active task: Run Repricing No-Order Calibration Independent Authorization Gate Review v1
+## Active task: Implement Repricing No-Order Calibration Host Containment Preflight v1
 
 ### Objective
 
-Independently determine whether host-level and procedural controls are
-sufficient to authorize a future bounded credentialed no-order calibration.
-This task does not provision or use credentials.
+Implement a read-only Windows host-containment inspector and fixture isolation
+launcher that can prove whether firewall, proxy, process, environment and
+operator prerequisites are present without applying host changes or using
+credentials.
 
 ### Required scope
 
-1. Verify the fixture sandbox evidence and exact policy hashes.
-2. Review Windows process isolation and direct-egress firewall/proxy design.
-3. Verify external secret-provider, clean-environment and revocation procedures.
-4. Verify kill-switch, watchdog, rollback operator and incident ownership.
-5. Verify unique expiring authorization-record requirements and run bounds.
-6. Issue exactly one verdict: `AUTHORIZED_FOR_SEPARATE_BOUNDED_CALIBRATION`
-   or `NOT_AUTHORIZED`, listing every unmet gate.
+1. Inspect Windows Firewall profile and process-specific outbound-rule state.
+2. Validate direct-egress denial and local-proxy-only design using fixtures.
+3. Implement a restricted fixture child-process launcher with an exact clean
+   environment, bounded lifetime and no shell/child-process capability.
+4. Generate but do not execute proposed firewall/proxy configuration and
+   rollback commands for independent review.
+5. Validate kill-switch, parent death, proxy loss, log failure and rollback
+   drills at the fixture boundary.
+6. Define operator/revocation/authorization record templates without names or
+   secrets.
 
 ### Forbidden
 
+- no firewall, registry, service, account or host-policy modification;
 - no real credential, wallet, private key, API secret or passphrase;
 - no authenticated endpoint connection or credential provisioning;
 - no real order, cancellation or heartbeat;
 - no strategy, threshold, evidence-gate or production execution change;
-- no sealed holdout inspection or evaluation;
-- no production model training or evidence campaign.
+- no sealed holdout inspection or evaluation.
 
 ### Acceptance criteria
 
-- independent gate-by-gate review with evidence references;
-- host and procedural gaps explicitly classified;
-- verdict does not itself execute calibration;
+- deterministic host preflight with explicit pass/fail evidence;
+- fixture child process cannot inherit forbidden environment names;
+- proposed controls and rollback are reviewable but never executed;
+- all missing governance assignments remain blockers;
 - relevant and full repository tests pass;
 - exactly one successor task remains.

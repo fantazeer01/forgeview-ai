@@ -2145,3 +2145,22 @@ Reason: All fixture safety tests pass with zero network and authenticated calls,
 but a local abstraction cannot prove that a compromised credential-bearing
 process is contained by the host operating system. Layered host enforcement
 remains a distinct prerequisite.
+
+## D-119: No-order credentialed calibration is not authorized
+
+Status: Accepted
+Decision: Credentialed no-order calibration remains prohibited. Fixture and
+application controls pass, but host-level containment and governance do not.
+No credential may be provisioned and no authenticated call may be made until a
+new independent review passes every blocker.
+
+The immediate successor may implement a read-only host preflight and fixture
+isolation launcher, and may generate proposed firewall/proxy configuration. It
+may not apply firewall changes, use credentials or contact authenticated
+endpoints without separate authorization.
+
+Reason: All Windows Firewall profiles are disabled, no process-specific outbound
+rules exist, and no implemented restricted process boundary was found. External
+secret-provider operations, revocation ownership, rollback/incident ownership,
+an expiring authorization record and host-level failure drills are also absent.
+The local sandbox cannot contain a compromised host process by itself.

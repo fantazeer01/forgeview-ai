@@ -1,0 +1,19 @@
+{
+  "authenticated_calls_made": 0,
+  "authorization_decision": "NOT_AUTHORIZED",
+  "calibration_may_proceed": false,
+  "credentials_used": false,
+  "critical_blockers": [
+    "windows_firewall_profiles_disabled",
+    "no_process_specific_direct_egress_denial",
+    "no_host_process_isolation",
+    "no_approved_external_secret_provider_operation",
+    "no_assigned_revocation_or_rollback_ownership",
+    "no_unique_expiring_authorization_record",
+    "no_host_level_failure_drills"
+  ],
+  "holdout_accessed": false,
+  "orders_or_cancellations": 0,
+  "strategy_changed": false,
+  "verdict": "NOT_AUTHORIZED"
+}

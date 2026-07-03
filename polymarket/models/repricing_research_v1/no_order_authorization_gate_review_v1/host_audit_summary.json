@@ -1,0 +1,13 @@
+{
+  "calibration_environment_names_present": [],
+  "firewall_profiles": {
+    "Domain": {"enabled": false, "default_outbound_action": "NotConfigured"},
+    "Private": {"enabled": false, "default_outbound_action": "NotConfigured"},
+    "Public": {"enabled": false, "default_outbound_action": "NotConfigured"}
+  },
+  "matching_outbound_rules": [],
+  "process_isolation_implementation_found": false,
+  "proxy_only_host_enforcement_found": false,
+  "review_mode": "READ_ONLY_NO_CREDENTIALS",
+  "sandbox_manifest_files_verified": 5
+}

@@ -1,0 +1,17 @@
+gate,status,severity,evidence,required_resolution
+application deny-by-default,PASS,none,exact policy and tests,retain hash lock
+forbidden route denial,PASS,none,order cancel heartbeat auth unknown denied,retain regression suite
+secret redaction,PASS_FIXTURE,medium,fixture handles absent from audit,host crash and exception drill
+zero-open-order gate,PASS_FIXTURE,medium,nonzero fixture aborts without cancel,repeat after host isolation
+kill switch,PASS_FIXTURE,medium,armed file and trip tests,host process termination drill
+watchdog fail-closed,PASS_FIXTURE,medium,parent deadline proxy tests,host parent and proxy death drill
+audit logging,PASS_FIXTURE,medium,hash-chain replay valid,host log failure and permissions drill
+proxy-only egress,PASS_ABSTRACTION_ONLY,critical,via_proxy guard,OS-level direct egress denial
+Windows Firewall,FAIL,critical,all profiles disabled and no matching rules,enable reviewed profile and scoped rules
+process isolation,FAIL,critical,no implemented restricted boundary,implement restricted identity or stronger sandbox
+external secret provider,FAIL,critical,protocol only,approve provider and operational procedure
+credential revocation owner,FAIL,critical,no assignment,assign owner and rehearsal
+rollback operator,FAIL,high,callback only,no named independent operator
+incident owner,FAIL,high,no assignment,assign and document escalation
+expiring authorization record,FAIL,critical,none present,create only after all technical gates pass
+authenticated calibration,NOT_EVALUATED,critical,forbidden in this sprint,separate task only after authorization

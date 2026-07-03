@@ -1,0 +1,15 @@
+{
+  "application_policy": "READY",
+  "audit_replay": "READY_FIXTURE",
+  "calibration_authorized": false,
+  "direct_egress_host_enforcement": "BLOCKED",
+  "external_secret_provider": "BLOCKED",
+  "fixture_sandbox": "READY",
+  "host_failure_drills": "BLOCKED",
+  "independent_authorization_record": "BLOCKED",
+  "kill_switch_watchdog": "READY_FIXTURE_ONLY",
+  "process_isolation": "BLOCKED",
+  "revocation_and_rollback_ownership": "BLOCKED",
+  "security_readiness": "NOT_READY_FOR_CREDENTIALS",
+  "windows_firewall": "BLOCKED_ALL_PROFILES_DISABLED"
+}

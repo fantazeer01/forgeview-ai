@@ -1,0 +1,10 @@
+﻿{
+    "algorithm":  "sha256",
+    "files":  {
+                  "polymarket/models/repricing_research_v1/no_order_authorization_gate_review_v1/authorization_gate_review_report.md":  "356d7fc9cd988b4105084848e7f461822532842ba5b12a2141cc2a4bf1d9d9c2",
+                  "polymarket/models/repricing_research_v1/no_order_authorization_gate_review_v1/blocker_matrix.csv":  "eb854aad51d12fc7fd3dc49f3412f881afca677401792de4155b23a21364ae24",
+                  "polymarket/models/repricing_research_v1/no_order_authorization_gate_review_v1/calibration_readiness_status.json":  "53d5568133cff906707f72f6ef58f629d1063bba2a4b451af46159a8418f586c",
+                  "polymarket/models/repricing_research_v1/no_order_authorization_gate_review_v1/go_no_go_decision.json":  "e299fc373ca9e16ee9ba95913bcdf25c3c7bebb464460defdda1b3f32a8c62ac",
+                  "polymarket/models/repricing_research_v1/no_order_authorization_gate_review_v1/host_audit_summary.json":  "45c35bb6b3170800507c7bef15d73905724a5cea905d91be86c1e2c626a8fceb"
+              }
+}

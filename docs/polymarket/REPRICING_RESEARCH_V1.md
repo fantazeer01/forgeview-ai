@@ -1544,3 +1544,16 @@ calls, orders and cancellations.
 Status is `FIXTURE_SANDBOX_READY_AUTHORIZATION_BLOCKED`. The next task is **Run
 Repricing No-Order Calibration Independent Authorization Gate Review v1** to
 assess host-level and procedural prerequisites without credentials.
+
+## No-Order Calibration Independent Authorization Gate Review v1
+
+The independent decision is `NOT_AUTHORIZED`. Application policy and fixture
+sandbox controls pass, but host containment and operational governance fail.
+All Windows Firewall profiles are disabled, no matching outbound containment
+rules or restricted process boundary exist, and secret-provider, revocation,
+rollback, incident and expiring-authorization ownership are not operationally
+assigned.
+
+No credentialed calibration may proceed. The next task is **Implement Repricing
+No-Order Calibration Host Containment Preflight v1**, which remains read-only
+and fixture-only and may not apply firewall changes or use credentials.
