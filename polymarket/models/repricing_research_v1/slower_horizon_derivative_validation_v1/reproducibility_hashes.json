@@ -1,0 +1,11 @@
+{
+  "algorithm": "sha256",
+  "deterministic_repeat_match": true,
+  "files": {
+    "horizon_comparison.csv": "aac644ba792da81fe9fbc64bc0b976f968af6e572bbd4f1e3ee5522fdfd87983",
+    "slower_horizon_results.csv": "f1f9d15cf3e270276f31076db783e925ea3a93b0cf3ae645ceb848df95181272",
+    "validation_report.json": "cf45a540b59f1013c041698a9e0f9faab041c13b4bd7ff81c9c5880f8b7107e1",
+    "validation_report.md": "d8333aebc178fb8d529d0e10eb4a387dbe7947bbbf1387122894e0b0077e9c33",
+    "validation_specification.json": "d22fed21a52c16cf83b6dec9bbbe2307157a5b8d102b6e1c0d776bdf399a53c9"
+  }
+}

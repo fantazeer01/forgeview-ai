@@ -2254,3 +2254,27 @@ Obtaining evidence capable of reversing those failures would require another
 open-ended wallet program, contrary to the final-sprint stop rule and lower in
 information value than testing the preserved Repricing evidence at less
 latency-sensitive horizons.
+
+## D-124: Permanently freeze Repricing after slower-horizon derivative NO-GO
+
+Status: Accepted
+Decision: Repricing is permanently frozen as a production-alpha direction. No
+further detector, derivative, evidence-capture, latency, credential,
+containment, paper-runtime or execution task may be prioritized. Existing
+artifacts remain preserved for audit and negative-control use.
+
+All fixed-horizon mean-reversion variants were negative. Continuation point
+estimates were positive at 30-180 seconds, but no horizon passed the complete
+preregistered gate. Every market-cluster confidence interval included zero;
+the longer horizons did not beat matched random timing; SOL was negative or
+effectively flat; and positive P&L was concentrated above the 40% asset/session
+limits. Selecting the best point estimate would be post-result optimization.
+
+The next research direction is non-directional executable structural
+mispricing using existing public quote sessions. It must begin with triage and
+may not launch capture, execution or infrastructure work.
+
+Reason: The slower-horizon test exhausted the final authorized Repricing
+alternative and failed its binary advancement rule. Directly executable
+structural constraints offer a different source of edge that is not dependent
+on predicting final outcomes, copying wallets or capturing a short-lived lag.

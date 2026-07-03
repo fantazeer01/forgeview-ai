@@ -1586,3 +1586,23 @@ may wait until authenticated evidence justifies order-path work.
 Frozen strategy, evidence gates, holdout status and authorization prohibitions
 are unchanged. The next project task is a public-only review of
 less-latency-sensitive strategy candidates.
+
+## Slower-Horizon Derivative Validation v1
+
+The final derivative validation returned `NO_GO_FREEZE_REPRICING_PERMANENTLY`.
+It replayed the same 338 valid anchors from Balanced Batches 001-002 and the
+fourth canonical soak. Entry used the first executable ask after a two-second
+delay; fixed 30/60/120/180-second exits used executable bids; actual spread and
+the existing 0.005 transaction-cost stress were included.
+
+Continuation expectancy was +0.019601 / +0.035171 / +0.038394 / +0.028768 at
+30 / 60 / 120 / 180 seconds. Mean-reversion expectancy was -0.056146 /
+-0.071653 / -0.076056 / -0.066227. No continuation result had a clustered or
+eight-way-adjusted confidence interval above zero. The 30/60-second detector
+timing beat matched random timing but failed concentration and confidence
+gates; 120/180-second timing did not beat random. SOL and session concentration
+prevented robustness at every horizon.
+
+Repricing is permanently frozen under D-124. The branch must not be reopened
+for more data, derivatives, latency, credentials, infrastructure or execution.
+Artifacts remain available for audit. The sealed holdout remains untouched.

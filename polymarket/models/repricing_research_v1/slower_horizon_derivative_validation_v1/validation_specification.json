@@ -1,0 +1,23 @@
+{
+  "frozen_before_analysis": true,
+  "signal_anchor_count": 338,
+  "horizons_seconds": [30, 60, 120, 180],
+  "directions": ["continuation", "mean_reversion"],
+  "entry_delay_seconds": 2.0,
+  "transaction_cost_probability_points": 0.005,
+  "maximum_snapshot_lag_seconds": 5.0,
+  "expiry_rule": "exclude when fixed horizon exceeds signal time-to-expiry",
+  "spread_and_slippage": "actual executable ask-to-bid quote replay",
+  "confidence": {
+    "cluster": "market within session",
+    "bootstrap_trials": 5000,
+    "family_size": 8,
+    "multiplicity": ["Bonferroni confidence intervals", "Holm matched-random p-values"],
+    "matched_random_timing_trials": 1000
+  },
+  "decision": {
+    "advance": "positive expectancy; Bonferroni-adjusted interval above zero; Holm random p <= 0.05; every session positive; session and asset concentration <= 40%",
+    "otherwise": "freeze Repricing permanently"
+  },
+  "holdout": "sealed_not_inspected"
+}

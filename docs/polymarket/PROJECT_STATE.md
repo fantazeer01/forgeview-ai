@@ -3444,6 +3444,34 @@ parameters on evaluation folds.
 
 Artifacts are under `polymarket/models/research_synthesis_v1/`.
 
+## Repricing Slower-Horizon Derivative Validation v1
+
+The final Repricing derivative test is complete with a **NO-GO**. Using the
+same 338 frozen signal anchors, actual executable ask-to-bid quotes, a two-second
+entry delay and the existing 0.005 transaction-cost stress, continuation point
+estimates were positive at 30, 60, 120 and 180 seconds. None passed the complete
+gate.
+
+The best continuation point estimate was 120 seconds: 269 signals, 56.51% win
+rate, +0.038394 expectancy, +10.328 P&L and 3.922 max drawdown. Its clustered
+95% interval was [-0.026077, +0.101316], matched random timing was not beaten,
+and SOL expectancy was negative. The 30-second and 60-second anchors beat
+matched random timing, but their adjusted confidence intervals crossed zero
+and asset/session P&L concentration exceeded 40%. Mean reversion was negative
+at all four horizons and in all three sessions.
+
+Repricing is permanently frozen. Existing code, datasets and reports remain
+preserved for audit and negative-control use, but no Repricing evidence,
+execution, latency, credential, infrastructure or derivative task may be
+prioritized. Wallet Intelligence remains permanently frozen under D-123.
+
+The next task is **Run Polymarket Executable Structural Mispricing Triage v1**,
+an existing-data-only review of directly executable non-directional
+opportunities such as complete-set and internally crossed public quotes.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/slower_horizon_derivative_validation_v1/`.
+
 ## Wallet Specialist Alpha Chronological Validation v1
 
 The final Wallet Intelligence alpha sprint is complete with irreversible
