@@ -1,0 +1,9 @@
+dataset_group,file_count,bytes,role,portfolio_interpretation
+wallet_intelligence,25,1376088179,"wallet activity, lifecycle, outcomes and prospective timing","primary existing-data alpha source"
+microstructure_dataset_batch_001,21,8654836,"schema-v1 microstructure development","negative standalone control; possible prespecified filter"
+microstructure_dataset_batch_002,22,95690415,"schema-v1 microstructure development","negative standalone control; possible prespecified filter"
+training,7,2180729,"outcome-prediction development","YES-price negative control"
+resolutions,7,11976011,"public resolution joins","supports wallet outcome alignment"
+repricing_research_balanced_batch_001,3,82450,"balanced repricing labels","preserved supported evidence"
+repricing_research_balanced_batch_002,3,33251,"balanced repricing labels","preserved supported evidence"
+validation_protocol,7,728759,"frozen validation metadata","unchanged; sealed holdout not inspected"

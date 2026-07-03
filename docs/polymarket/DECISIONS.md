@@ -2201,3 +2201,25 @@ It offers limited information beyond existing public RTT/WebSocket evidence,
 while requiring Home PC security changes and credential governance. Public-only
 evaluation of hypotheses tolerant of one-to-five-second delay has higher
 expected information gain and lower operational risk.
+
+## D-122: Prioritize Wallet Specialist Alpha validation and stop incremental infrastructure
+
+Status: Accepted
+Decision: Wallet Intelligence becomes the primary research branch. The next
+experiment must freeze the four existing above-baseline wallets and test their
+asset-conditioned directional skill on chronological, leakage-safe evaluation
+folds using existing public data. Consensus, timing and liquidity filters are
+secondary hypotheses and may not be used to select the primary result.
+
+Repricing remains preserved but deferred. Final-outcome prediction and
+standalone microstructure prediction are frozen. Credentialed calibration,
+host-containment remediation and further latency infrastructure are stopped
+until a public-only strategy survives conservative delay and cost tests.
+
+Reason: Four wallets produced match rates of 0.714286-0.833333 over 258 resolved
+fast-crypto positions, offering the strongest low-latency-sensitivity signal in
+the current asset. Repricing has supported weak evidence but turns negative at
+the observed two-second entry plus cost. Outcome and microstructure models do
+not beat YES price. A short existing-data wallet validation therefore has the
+best expected information gain and shortest credible route to a prospective
+paper strategy. This is not a profitability or copyability claim.

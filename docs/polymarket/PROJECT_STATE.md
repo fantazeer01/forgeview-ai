@@ -3409,3 +3409,37 @@ Review v1**.
 
 Artifacts are under
 `polymarket/models/repricing_research_v1/host_containment_architectural_review_v1/`.
+
+## Polymarket Research Portfolio Synthesis v1
+
+Incremental infrastructure work is stopped. The existing public datasets and
+research artifacts were reviewed as one portfolio, with profitability speed as
+the selection objective. The sealed holdout remains untouched.
+
+The primary research branch is now **Wallet Intelligence**. Its strongest
+existing signal is not generic wallet following: four of 28 evaluated wallets
+passed above-baseline outcome-alignment gates on 258 resolved fast-crypto
+positions, with individual match rates from 0.714286 to 0.833333. The complete
+sample contains 1,788 resolved positions, including three below-baseline
+wallets, so wallet identity and asset specialization must be frozen before any
+validation. Prospective public observability remains inconclusive at only two
+eligible trades and cannot support a copyability claim.
+
+Repricing remains `PRESERVED_DEFERRED`. Its 338-signal weak-evidence result is
+statistically meaningful and beats a matched random-timing baseline, but actual
+two-second entry plus cost produced -0.009810 expectancy. More credential,
+containment or sub-second infrastructure is not justified before a strategy
+passes public, cost-aware validation.
+
+Final-outcome prediction and standalone microstructure prediction are frozen as
+negative controls: YES price remained best, and the 426-row microstructure
+sample produced no stable incremental feature. Microstructure may be reused
+only as a preregistered feasibility or regime filter.
+
+The next task is **Run Wallet Specialist Alpha Chronological Validation v1**.
+It uses existing public data only, attempts to disprove the four-wallet
+specialist hypothesis with leakage-safe time splits and conservative
+delay/cost assumptions, and may not tune wallet selection or strategy
+parameters on evaluation folds.
+
+Artifacts are under `polymarket/models/research_synthesis_v1/`.

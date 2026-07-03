@@ -1,0 +1,6 @@
+branch,status,reason,restart_condition
+Wallet Intelligence,PRIMARY_RESEARCH_BRANCH,"Largest resolved behavioral evidence base; four wallets show above-baseline outcome alignment; execution can tolerate longer windows","Run chronological leakage-safe specialist validation now"
+Repricing,PRESERVED_DEFERRED,"Weak evidence is statistically supported but economics reverse at actual two-second entry plus cost","Resume only with credible executable-entry measurement or a slower derivative hypothesis"
+Outcome Prediction,FROZEN_NEGATIVE_CONTROL,"YES price beats every tested model and feature group","New independent information source and preregistered premise"
+Microstructure Outcome Prediction,FROZEN_STANDALONE,"426 rows with complete features produced no stable incremental signal beyond YES price","Substantially larger independent sample or use only as a prespecified filter"
+Latency And Credential Infrastructure,STOPPED,"Public path is fast; remaining order-path work is expensive and does not itself create alpha","Only after a strategy passes cost-aware public shadow gates"

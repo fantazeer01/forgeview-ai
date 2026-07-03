@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "decision": "PRIORITIZE_WALLET_SPECIALIST_ALPHA_VALIDATION",
+  "primary_branch": "Wallet Intelligence",
+  "preserved_deferred_branch": "Repricing",
+  "frozen_branches": [
+    "Final-outcome prediction beyond YES price",
+    "Standalone microstructure outcome prediction",
+    "Incremental latency and credential infrastructure"
+  ],
+  "next_task": "Run Wallet Specialist Alpha Chronological Validation v1",
+  "holdout": {
+    "sealed": true,
+    "outcomes_read": false,
+    "evaluation_run": false
+  },
+  "claims": {
+    "production_worthy_alpha_found": false,
+    "wallet_copyability_proven": false,
+    "repricing_rejected": false
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "branch_decisions.csv": "f607d00fb40bcc3ff8bcd83af224a16d36f8ee4b0b68f8829d88b99e0ba4ba50",
+    "dataset_inventory.csv": "2e65152166bea38eb4edbb13b118173e99c2e13ef76600426f4562c35fdd6d8f",
+    "research_synthesis_report.md": "7a0031b62713f2dd8dfd3c3ee285ebec37224d144de05d32bc40fd3ad4dd9ee0",
+    "synthesis_decision.json": "1173775cbf6325f66c06b33dba68d2a4e6d06d709332818a7f04bd7f87034784",
+    "top_10_alpha_opportunities.csv": "767b34afc21b3dcefaac3cbd088e5391a58e8f6472ac7541ac64fed5635462ea"
+  }
+}
