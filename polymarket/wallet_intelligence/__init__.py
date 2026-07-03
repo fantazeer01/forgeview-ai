@@ -22,6 +22,7 @@ from .first_seen import run_first_seen_experiment
 from .first_seen_prospective import prepare_prospective_experiment, run_prospective_observer
 from .decision_window import run_wallet_decision_window_sprint
 from .evidence_accumulator import prepare_accumulator_progress, run_autonomous_accumulator
+from .specialist_alpha import run_wallet_specialist_alpha_validation
 
 __all__ = [
     "LIFECYCLE_POSITION_FIELDS",
@@ -47,5 +48,6 @@ __all__ = [
     "run_wallet_decision_window_sprint",
     "prepare_accumulator_progress",
     "run_autonomous_accumulator",
+    "run_wallet_specialist_alpha_validation",
     "summarize_outputs",
 ]

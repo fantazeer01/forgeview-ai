@@ -2223,3 +2223,34 @@ the observed two-second entry plus cost. Outcome and microstructure models do
 not beat YES price. A short existing-data wallet validation therefore has the
 best expected information gain and shortest credible route to a prospective
 paper strategy. This is not a profitability or copyability claim.
+
+## D-123: Permanently freeze Wallet Intelligence after specialist alpha NO-GO
+
+Status: Accepted
+Decision: Wallet Intelligence is permanently frozen as a failed alpha research
+direction. No further wallet discovery, selection, scoring, watchlist,
+copyability, monitoring, prospective collection, execution or infrastructure
+task may be prioritized. Existing artifacts remain available for audit and
+negative-control use only.
+
+The final fixed five-minute specialist protocol evaluated 124 signals across
+119 markets. Outcome match was 77.4194%, but conservative expectancy was
+-0.038117 and severe expectancy was -0.075165. All three chronological folds
+were negative. A same-protocol 910-signal non-candidate population produced
+-0.037642 expectancy, so specialist selection did not improve conservative
+value. No individual wallet had a positive expectancy confidence
+interval, and equal plus weighted consensus produced negative expectancy on
+only three and five decisions. Candidate selection also used outcomes from the
+same bounded history, while delayed executable quotes, spread, liquidity,
+queue and fill evidence remain unavailable.
+
+The next research priority is a fixed existing-data test of slower 30-180
+second Repricing continuation/reversion derivatives. It may not reactivate
+credential work or Wallet Intelligence.
+
+Reason: High outcome-match rates did not survive conservative entry economics,
+chronological stability, consensus, or selection-independence requirements.
+Obtaining evidence capable of reversing those failures would require another
+open-ended wallet program, contrary to the final-sprint stop rule and lower in
+information value than testing the preserved Repricing evidence at less
+latency-sensitive horizons.

@@ -88,6 +88,12 @@ from polymarket.wallet_intelligence.evidence_accumulator import (
     refresh_expiry_cache,
     run_autonomous_accumulator,
 )
+from polymarket.wallet_intelligence.specialist_alpha import (
+    FROZEN_SPECIALISTS,
+    build_specialist_signals,
+    run_wallet_specialist_alpha_validation,
+    summarize_folds,
+)
 
 
 class FakeClient:
@@ -2130,6 +2136,92 @@ class WalletAutonomousEvidenceAccumulatorTests(unittest.TestCase):
                 cache = store.expiry_cache()
                 self.assertEqual(cache["btc-updown-5m-1782734400"]["condition_id"], "0xcondition")
                 self.assertEqual(cache["btc-updown-5m-1782734400"]["source"], "gamma_markets_slug")
+
+
+class WalletSpecialistAlphaValidationTests(unittest.TestCase):
+    @staticmethod
+    def _outcome_row(condition, asset, winner="Up", expiry="2026-06-25T12:05:00Z"):
+        return {
+            "condition_id": condition,
+            "resolved_status": "resolved",
+            "winning_outcome": winner,
+            "expiry_timestamp": expiry,
+            "market_slug": f"{asset.lower()}-updown-5m-{condition[-1]}",
+            "asset_class": asset,
+        }
+
+    @staticmethod
+    def _trade(wallet, condition, asset, timestamp, outcome="Up", price="0.40", notional="10"):
+        return {
+            "wallet_id": wallet,
+            "condition_id": condition,
+            "side": "BUY",
+            "up_down_market": "true",
+            "asset_class": asset,
+            "activity_timestamp": str(timestamp),
+            "notional_value": notional,
+            "outcome": outcome,
+            "dedupe_key": f"{wallet}-{condition}-{notional}",
+            "price": price,
+            "transaction_hash": f"0x{condition[-1]}",
+        }
+
+    def test_earliest_buy_and_market_grouping_are_deterministic(self):
+        wallet = next(iter(FROZEN_SPECIALISTS))
+        timestamp = int(datetime.fromisoformat("2026-06-25T12:01:00+00:00").timestamp())
+        trades = [
+            self._trade(wallet, "0xc1", "BTC", timestamp, outcome="Down", notional="1"),
+            self._trade(wallet, "0xc1", "BTC", timestamp, outcome="Up", notional="2"),
+            self._trade(wallet, "0xc2", "ETH", timestamp + 10, outcome="Down"),
+        ]
+        outcomes = [self._outcome_row("0xc1", "BTC"), self._outcome_row("0xc2", "ETH", winner="Down")]
+        signals, exclusions = build_specialist_signals(trades, outcomes)
+        self.assertEqual(len(signals), 2)
+        self.assertEqual(signals[0]["signal_outcome"], "Up")
+        self.assertTrue(signals[0]["matched_outcome"])
+        self.assertEqual(signals[0]["modeled_entry_price"], 0.45)
+        self.assertEqual(exclusions, {})
+        folds = summarize_folds(signals)
+        self.assertEqual(sum(row["sample_size"] for row in folds), 2)
+        self.assertEqual(len({row["condition_id"]: row["fold"] for row in signals}), 2)
+
+    def test_full_validation_is_repeatable_and_fails_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            trade_csv = root / "trades.csv"
+            outcome_csv = root / "outcomes.csv"
+            skill_csv = root / "skill.csv"
+            output = root / "output"
+            start = int(datetime.fromisoformat("2026-06-25T12:01:00+00:00").timestamp())
+            trades = []
+            outcomes = []
+            skill = []
+            for index, (wallet, assets) in enumerate(FROZEN_SPECIALISTS.items(), start=1):
+                condition = f"0xc{index}"
+                asset = assets[0]
+                trades.append(self._trade(wallet, condition, asset, start + index, price="0.60"))
+                outcomes.append(self._outcome_row(condition, asset))
+                skill.append(
+                    {
+                        "wallet_id": wallet,
+                        "resolved_positions": "30",
+                        "evidence_classification": "above_baseline_evidence",
+                    }
+                )
+            for path, rows in ((trade_csv, trades), (outcome_csv, outcomes), (skill_csv, skill)):
+                with path.open("w", encoding="utf-8", newline="") as handle:
+                    writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+                    writer.writeheader()
+                    writer.writerows(rows)
+            first = run_wallet_specialist_alpha_validation(trade_csv, outcome_csv, skill_csv, output)
+            first_files = {path.name: path.read_bytes() for path in output.iterdir()}
+            second = run_wallet_specialist_alpha_validation(trade_csv, outcome_csv, skill_csv, output)
+            second_files = {path.name: path.read_bytes() for path in output.iterdir()}
+            self.assertEqual(first_files, second_files)
+            self.assertEqual(first["decision"], "NO_GO_PERMANENTLY_FREEZE_WALLET_INTELLIGENCE")
+            self.assertTrue(first["validation"]["all_mechanical_validation_passed"])
+            self.assertFalse(second["validation"]["go_gate_passed"])
+            self.assertFalse(second["validation"]["gates"]["selection_leakage_absent"])
 
 
 if __name__ == "__main__":

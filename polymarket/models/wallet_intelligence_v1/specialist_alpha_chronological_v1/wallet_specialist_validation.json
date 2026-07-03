@@ -1,0 +1,20 @@
+{
+  "all_mechanical_validation_passed": true,
+  "gates": {
+    "all_three_folds_positive": false,
+    "at_least_two_wallets_confidently_positive": false,
+    "chronological_fold_order": true,
+    "consensus_sample_at_least_30": false,
+    "date_concentration_below_40_percent": true,
+    "deterministic_repeat_export": true,
+    "direct_liquidity_and_spread_join_available": false,
+    "four_frozen_wallets_present": true,
+    "market_group_leakage_absent": true,
+    "positive_conservative_expectancy": false,
+    "positive_expectancy_confidence": false,
+    "selection_leakage_absent": false
+  },
+  "go_gate_passed": false,
+  "irreversible_decision": "NO_GO_PERMANENTLY_FREEZE_WALLET_INTELLIGENCE",
+  "selection_leakage_reason": "The four wallets were selected using outcomes from the same bounded dataset; chronological row folds cannot create an untouched wallet-selection test."
+}

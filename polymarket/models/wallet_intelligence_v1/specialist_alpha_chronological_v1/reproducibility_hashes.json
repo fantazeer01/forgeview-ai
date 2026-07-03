@@ -1,0 +1,12 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "wallet_specialist_alpha_report.md": "d8668dba92271c1733fee251c06cd872bd9370e911d4f864e22e507848c2467e",
+    "wallet_specialist_consensus.csv": "0f16ecd6ff5f62803d3ca078ff5b9a0d143238a77370d257da79a8a028a2964b",
+    "wallet_specialist_fold_results.csv": "df4cee50ce8d2903ab422cff75aa1540bdc7512b460b78907e3f0bc9c6037784",
+    "wallet_specialist_results.csv": "9543c9b70f5809aa7079e6f1ccfea6dacd87d592d390b057192f2fa1436645e3",
+    "wallet_specialist_signals.csv": "aee53c4775fd2a3d12ac110ff215dcab7faada0021121702c3f2e4da4b861efd",
+    "wallet_specialist_summary.json": "1c5a2ac7373eb12273e9c60bdbd90d7a9fbd4d9c5f1ebfb65875452a9159d793",
+    "wallet_specialist_validation.json": "97e02361ea7b506f55597b17ce767cf9e18d255695aad057c2eabbf72fe00d24"
+  }
+}

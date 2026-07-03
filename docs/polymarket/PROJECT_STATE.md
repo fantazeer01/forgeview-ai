@@ -1,6 +1,6 @@
 # Polymarket Project State
 
-Last updated: June 29, 2026
+Last updated: July 4, 2026
 Canonical objective: [MASTER_OBJECTIVE.md](MASTER_OBJECTIVE.md)  
 Active task: [NEXT_TASK.md](NEXT_TASK.md)  
 Decision log: [DECISIONS.md](DECISIONS.md)
@@ -24,9 +24,9 @@ Wallet logic, Repricing logic, frozen parameters, or execution authorization.
 
 Business Stage 1 - Statistical edge demonstrated: in progress.
 
-Supporting technical stage: Stage 9 - Public wallet strategy hypothesis
-testing. Continuous repricing paper-trading components are also under active
-development, but the continuous paper-trading MVP gate is not yet complete.
+Supporting technical stage: Stage 9 - Slower-horizon Repricing derivative
+testing. Wallet Intelligence has completed its final specialist validation and
+is permanently frozen after a NO-GO decision.
 
 Profit-first governance reset: the primary objective is to build an automated
 system capable of generating sustainable profit on Polymarket BTC, ETH, and
@@ -616,11 +616,11 @@ test over the H1 candidate wallets.
 
 ## Active milestone
 
-Phase 1 - First Automated Dollar. Wallet Intelligence's canonical H2/H3
-collection budget is exhausted and the branch is frozen pending materially new
-evidence or an explicitly authorized integrity correction. The sole active
-task now advances the preflight-approved Repricing paper runtime toward one
-unattended Objective Alpha cycle.
+Phase 1 - First Automated Dollar. Wallet Intelligence is permanently frozen
+after its final specialist alpha validation failed conservative value,
+chronological stability, consensus, selection-independence, and executable-data
+gates. The sole active task tests the preserved Repricing branch at fixed
+slower horizons using existing public evidence.
 
 Current measured baseline:
 
@@ -703,8 +703,8 @@ optimization, and trading remain unauthorized.
 
 ## Next actions
 
-The single active task is Fix Repricing Runtime Backpressure And Liveness
-Fail-Closed v1.
+The single active task is Run Repricing Slower-Horizon Derivative Validation
+v1.
 Its scope and acceptance criteria are defined in `NEXT_TASK.md`.
 
 ## Latest metrics
@@ -3443,3 +3443,69 @@ delay/cost assumptions, and may not tune wallet selection or strategy
 parameters on evaluation folds.
 
 Artifacts are under `polymarket/models/research_synthesis_v1/`.
+
+## Wallet Specialist Alpha Chronological Validation v1
+
+The final Wallet Intelligence alpha sprint is complete with irreversible
+decision `NO_GO_PERMANENTLY_FREEZE_WALLET_INTELLIGENCE`. Only existing public
+data was used; sealed holdout outcomes were neither opened nor evaluated.
+
+Frozen protocol:
+
+- four previously selected H1 specialist wallets and their committed asset
+  specialties;
+- five-minute BTC/ETH/SOL Up/Down markets only;
+- earliest BUY per wallet and condition, with simultaneous rows resolved by
+  largest notional and no threshold search;
+- three global chronological folds grouped by condition ID;
+- 30-second observation delay, at least 60 seconds remaining after detection,
+  and fixed 0.05 adverse entry burden;
+- severe stress at 60 seconds and 0.10 adverse entry burden.
+
+Measured evidence:
+
+- 124 eligible signals across 119 unique markets and seven UTC dates;
+- 96 matched and 28 unmatched outcomes, 77.4194% match rate, Wilson 95%
+  69.3010%-83.8899%;
+- reported-price expectancy +0.009937, but conservative expectancy -0.038117
+  with 95% interval -0.105499 to +0.029264;
+- the same-protocol non-candidate population produced -0.037642 conservative
+  expectancy on 910 signals, so specialists did not improve executable value;
+- conservative maximum drawdown 6.901368;
+- severe-stress expectancy -0.075165 across 111 eligible signals;
+- all three chronological fold expectancies were negative: -0.103971,
+  -0.006424, and -0.007063;
+- BTC / ETH / SOL conservative expectancy: -0.031251 / -0.088448 /
+  +0.026667, with SOL supported by only nine signals and no confidence interval
+  excluding zero;
+- only six specialist-overlap markets existed; equal consensus was available
+  on three with -0.223333 expectancy, while five weighted decisions produced
+  -0.288000 expectancy;
+- modeled decision-window median was 172.5 seconds, but direct contemporaneous
+  spread and liquidity coverage was zero.
+
+Individual conservative expectancy:
+
+- `0x088df...025e`: +0.021818 on 26 signals, confidence interval crosses zero,
+  all rows from one UTC date;
+- `0x1cc53...b199`: +0.020208 on 46 signals, confidence interval crosses zero,
+  only one of three folds positive;
+- `0x29a55...7752`: -0.143750 on 16 signals;
+- `0xde79...3d9a`: -0.108983 on 36 signals, all rows from one UTC date.
+
+Mechanical ordering, market grouping, deterministic export, candidate freeze,
+and repeatability gates pass. Promotion fails because candidate selection used
+outcomes from the same bounded history, conservative aggregate value is
+negative, every chronological fold is negative, no wallet has confidently
+positive expectancy, consensus is sparse and negative, and delayed executable
+quotes plus direct spread/liquidity/fill evidence are unavailable.
+
+Wallet Intelligence is permanently frozen as a failed alpha direction. No
+further Wallet exploration, scoring, monitoring, copyability, selection, or
+execution work is authorized. The fastest remaining public-only route is the
+preserved Repricing branch's slower 30-180 second continuation/reversion
+derivative, tested without new capture or credential infrastructure.
+
+Artifacts are under
+`polymarket/models/wallet_intelligence_v1/specialist_alpha_chronological_v1/`.
+Validation: 57 Wallet Intelligence tests and 256 repository tests pass.

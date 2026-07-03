@@ -61,6 +61,13 @@ from .evidence_accumulator import (
     prepare_accumulator_progress,
     run_autonomous_accumulator,
 )
+from .specialist_alpha import (
+    DEFAULT_OUTCOME_INPUT as DEFAULT_SPECIALIST_OUTCOME_INPUT,
+    DEFAULT_OUTPUT as DEFAULT_SPECIALIST_OUTPUT,
+    DEFAULT_SKILL_INPUT as DEFAULT_SPECIALIST_SKILL_INPUT,
+    DEFAULT_TRADE_INPUT as DEFAULT_SPECIALIST_TRADE_INPUT,
+    run_wallet_specialist_alpha_validation,
+)
 
 
 DEFAULT_INPUT = Path("polymarket/wallet_intelligence/watched_wallets.example.csv")
@@ -217,6 +224,15 @@ def build_parser() -> argparse.ArgumentParser:
     accumulator.add_argument("--output", type=Path, default=DEFAULT_ACCUMULATOR_OUTPUT)
     accumulator.add_argument("--session-limit", type=int, default=0)
     accumulator.add_argument("--session-duration", type=float, default=DEFAULT_DURATION_SECONDS)
+
+    specialist = subparsers.add_parser(
+        "wallet-specialist-alpha",
+        help="Run the frozen chronological wallet-specialist alpha validation.",
+    )
+    specialist.add_argument("--trades", type=Path, default=DEFAULT_SPECIALIST_TRADE_INPUT)
+    specialist.add_argument("--outcomes", type=Path, default=DEFAULT_SPECIALIST_OUTCOME_INPUT)
+    specialist.add_argument("--skill", type=Path, default=DEFAULT_SPECIALIST_SKILL_INPUT)
+    specialist.add_argument("--output", type=Path, default=DEFAULT_SPECIALIST_OUTPUT)
     return parser
 
 
@@ -427,6 +443,15 @@ def main(argv: list[str] | None = None) -> int:
                 observer_db=args.observer_database,
                 output_dir=args.output,
             )
+        print(json.dumps(result, indent=2, sort_keys=True))
+        return 0
+    if args.command == "wallet-specialist-alpha":
+        result = run_wallet_specialist_alpha_validation(
+            trade_csv=args.trades,
+            outcome_csv=args.outcomes,
+            skill_csv=args.skill,
+            output_dir=args.output,
+        )
         print(json.dumps(result, indent=2, sort_keys=True))
         return 0
     parser.error(f"unknown command {args.command}")

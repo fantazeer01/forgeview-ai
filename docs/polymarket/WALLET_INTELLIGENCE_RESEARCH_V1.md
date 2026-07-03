@@ -1944,3 +1944,58 @@ Resume only if materially new multi-date public evidence is available or an
 explicitly authorized sprint corrects historical-page admission and preserves
 the frozen hypotheses and thresholds. No profitability, alpha, copyability,
 or trading conclusion is supported.
+
+## Wallet Specialist Alpha Chronological Validation v1
+
+This final sprint supersedes all conditional Wallet restart language. The
+irreversible decision is:
+
+**NO-GO: Wallet Intelligence is permanently frozen as a failed research
+direction.**
+
+The test froze the four prior H1 candidates, their asset specialties, earliest
+BUY signal semantics, three condition-grouped chronological folds, a 30-second
+observation delay, 60-second minimum decision window, and 0.05 adverse entry
+burden before evaluation. Only five-minute BTC/ETH/SOL markets were eligible.
+
+Results:
+
+- 124 signals, 119 markets, seven UTC dates;
+- 77.4194% outcome match, Wilson 95% 69.3010%-83.8899%;
+- +0.009937 expectancy at reported wallet price;
+- -0.038117 conservative expectancy, 95% -0.105499 to +0.029264;
+- -0.037642 same-protocol conservative expectancy for 910 non-candidate
+  population signals;
+- -0.075165 severe-stress expectancy;
+- three chronological fold expectancies: -0.103971, -0.006424, -0.007063;
+- maximum conservative drawdown: 6.901368;
+- BTC / ETH / SOL expectancy: -0.031251 / -0.088448 / +0.026667;
+- equal / weighted consensus expectancy: -0.223333 / -0.288000 on only three
+  and five actionable decisions respectively.
+
+Two wallets were descriptively positive after the fixed cost burden, but both
+confidence intervals crossed zero; one was confined to a single date and the
+other had only one positive fold out of three. The other two wallets were
+negative. No individual wallet supplied confidently positive value.
+
+The direction fails scientifically because the candidates were selected using
+the same bounded outcome history, all three aggregate folds are negative after
+fixed costs, specialist value is indistinguishable from the negative
+same-protocol population, consensus is sparse and worse, and the existing data
+has no contemporaneous delayed quote, spread, liquidity, queue or fill evidence.
+Outcome alignment is real descriptively but is not executable alpha.
+
+No further Wallet Intelligence exploration is authorized. Historical modules
+and artifacts remain for audit and negative-control use only. The successor is
+the existing-data Repricing Slower-Horizon Derivative Validation v1.
+
+Artifacts:
+
+- `polymarket/models/wallet_intelligence_v1/specialist_alpha_chronological_v1/wallet_specialist_signals.csv`;
+- `wallet_specialist_results.csv`;
+- `wallet_specialist_fold_results.csv`;
+- `wallet_specialist_consensus.csv`;
+- `wallet_specialist_summary.json`;
+- `wallet_specialist_validation.json`;
+- `wallet_specialist_alpha_report.md`;
+- `reproducibility_hashes.json`.

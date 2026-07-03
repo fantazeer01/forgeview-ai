@@ -1,0 +1,343 @@
+{
+  "asset_results": {
+    "BTC": {
+      "expectancy": -0.031250664104546924,
+      "expectancy_95_high": 0.049530566629714196,
+      "expectancy_95_low": -0.11203189483880804,
+      "losses": 21,
+      "max_drawdown": 6.316677440711855,
+      "sample_size": 91,
+      "win_rate": 0.7692307692307693,
+      "win_rate_wilson_95_high": 0.8438184017277187,
+      "win_rate_wilson_95_low": 0.6728332884644229,
+      "wins": 70
+    },
+    "ETH": {
+      "expectancy": -0.08844768527598157,
+      "expectancy_95_high": 0.058630003218051424,
+      "expectancy_95_low": -0.23552537377001456,
+      "losses": 6,
+      "max_drawdown": 3.3999999096224864,
+      "sample_size": 24,
+      "win_rate": 0.75,
+      "win_rate_wilson_95_high": 0.8800063377140499,
+      "win_rate_wilson_95_low": 0.55100555994846,
+      "wins": 18
+    },
+    "SOL": {
+      "expectancy": 0.02666669631146095,
+      "expectancy_95_high": 0.24613794695280808,
+      "expectancy_95_low": -0.19280455432988616,
+      "losses": 1,
+      "max_drawdown": 0.8600000000000001,
+      "sample_size": 9,
+      "win_rate": 0.8888888888888888,
+      "win_rate_wilson_95_high": 0.9801091123614551,
+      "win_rate_wilson_95_low": 0.5650002944233439,
+      "wins": 8
+    }
+  },
+  "baselines": {
+    "contemporaneous_price_value_baseline": 0.0,
+    "prior_population_wallet_match_rate": 0.524609,
+    "random_side_win_rate": 0.5,
+    "same_protocol_population": {
+      "expectancy": -0.0376417691479435,
+      "expectancy_95_high": -0.006860720535644547,
+      "expectancy_95_low": -0.06842281776024246,
+      "losses": 438,
+      "max_drawdown": 40.50534106675252,
+      "sample_size": 910,
+      "win_rate": 0.5186813186813187,
+      "win_rate_wilson_95_high": 0.5509979843467642,
+      "win_rate_wilson_95_low": 0.48620759400801605,
+      "wins": 472
+    },
+    "same_protocol_population_exclusions": {
+      "insufficient_modeled_decision_window": 178,
+      "non_buy": 546,
+      "non_five_minute_market": 588,
+      "outside_frozen_specialty": 715
+    },
+    "same_protocol_population_wallets": 22
+  },
+  "concentration": {
+    "assets": {
+      "BTC": 91,
+      "ETH": 24,
+      "SOL": 9
+    },
+    "unique_markets": 119,
+    "utc_dates": {
+      "2026-02-16": 36,
+      "2026-06-20": 12,
+      "2026-06-21": 10,
+      "2026-06-22": 7,
+      "2026-06-23": 6,
+      "2026-06-24": 5,
+      "2026-06-25": 48
+    }
+  },
+  "consensus": {
+    "disagreement_markets": 2,
+    "equal_agreement_expectancy": -0.2233333245363968,
+    "equal_agreement_markets": 3,
+    "equal_agreement_win_rate": 0.6666666666666666,
+    "overlap_markets": 5,
+    "weighted_decision_markets": 5,
+    "weighted_expectancy": -0.28799999472183807,
+    "weighted_win_rate": 0.4
+  },
+  "decision": "NO_GO_PERMANENTLY_FREEZE_WALLET_INTELLIGENCE",
+  "exclusions": {
+    "insufficient_modeled_decision_window": 40,
+    "missing_or_conflicting_resolution": 3,
+    "non_buy": 156,
+    "non_five_minute_market": 200,
+    "outside_frozen_specialty": 80
+  },
+  "filter_interactions": {
+    "liquidity_coverage_rows": 0,
+    "liquidity_interaction": "NOT_MEASURABLE_FAIL_CLOSED",
+    "reason": "Existing wallet history is not joined to contemporaneous order-book snapshots.",
+    "spread_coverage_rows": 0,
+    "spread_interaction": "NOT_MEASURABLE_FAIL_CLOSED"
+  },
+  "folds": [
+    {
+      "expectancy": -0.1039706256115707,
+      "expectancy_95_high": 0.015600204214487517,
+      "expectancy_95_low": -0.2235414554376289,
+      "first_trade_utc": "2026-02-16T06:47:49+00:00",
+      "fold": 1,
+      "last_trade_utc": "2026-06-20T16:47:02+00:00",
+      "losses": 9,
+      "max_drawdown": 4.618825057429504,
+      "sample_size": 40,
+      "unique_markets": 40,
+      "win_rate": 0.775,
+      "win_rate_wilson_95_high": 0.8768390867645927,
+      "win_rate_wilson_95_low": 0.6249690325768998,
+      "wins": 31
+    },
+    {
+      "expectancy": -0.0064241140260454885,
+      "expectancy_95_high": 0.12065884408487916,
+      "expectancy_95_low": -0.13350707213697013,
+      "first_trade_utc": "2026-06-20T16:50:50+00:00",
+      "fold": 2,
+      "last_trade_utc": "2026-06-25T11:05:52+00:00",
+      "losses": 11,
+      "max_drawdown": 2.0545346245401843,
+      "sample_size": 40,
+      "unique_markets": 40,
+      "win_rate": 0.725,
+      "win_rate_wilson_95_high": 0.8389198375233267,
+      "win_rate_wilson_95_low": 0.5716504419378943,
+      "wins": 29
+    },
+    {
+      "expectancy": -0.007062841541580272,
+      "expectancy_95_high": 0.09770525360147772,
+      "expectancy_95_low": -0.11183093668463825,
+      "first_trade_utc": "2026-06-25T11:06:56+00:00",
+      "fold": 3,
+      "last_trade_utc": "2026-06-25T21:36:43+00:00",
+      "losses": 8,
+      "max_drawdown": 3.209999648747309,
+      "sample_size": 44,
+      "unique_markets": 39,
+      "win_rate": 0.8181818181818182,
+      "win_rate_wilson_95_high": 0.9048719428437227,
+      "win_rate_wilson_95_low": 0.6803944911281533,
+      "wins": 36
+    }
+  ],
+  "frozen_specialists": {
+    "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e": [
+      "BTC",
+      "ETH",
+      "SOL"
+    ],
+    "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199": [
+      "BTC"
+    ],
+    "0x29a55c2bf8efd1029c001477b34be47d3ca37752": [
+      "ETH"
+    ],
+    "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a": [
+      "BTC"
+    ]
+  },
+  "holdout": {
+    "holdout_evaluation_run": false,
+    "sealed_outcomes_read": false
+  },
+  "overall": {
+    "expectancy": -0.03811737591398531,
+    "expectancy_95_high": 0.029264394108663327,
+    "expectancy_95_low": -0.10549914593663395,
+    "losses": 28,
+    "max_drawdown": 6.901368472204842,
+    "sample_size": 124,
+    "win_rate": 0.7741935483870968,
+    "win_rate_wilson_95_high": 0.8388990425821045,
+    "win_rate_wilson_95_low": 0.6930097812633303,
+    "wins": 96
+  },
+  "protocol": {
+    "conservative_cost": 0.05,
+    "folds": "three contiguous global chronological condition-ID groups",
+    "minimum_decision_window_seconds": 60.0,
+    "observation_delay_seconds": 30.0,
+    "severe_cost": 0.1,
+    "severe_delay_seconds": 60.0,
+    "signal": "earliest BUY per frozen wallet and condition; simultaneous rows choose largest notional",
+    "threshold_tuning": false
+  },
+  "stress": {
+    "conservative": {
+      "adverse_entry_cost": 0.05,
+      "delay_seconds": 30.0,
+      "expectancy": -0.03811737591398531,
+      "max_drawdown": 6.901368472204842,
+      "sample_size": 124
+    },
+    "reported_price": {
+      "adverse_entry_cost": 0.0,
+      "delay_seconds": 0.0,
+      "expectancy": 0.00993661384467256,
+      "max_drawdown": 4.099506152547152,
+      "sample_size": 124
+    },
+    "severe": {
+      "adverse_entry_cost": 0.1,
+      "delay_seconds": 60.0,
+      "expectancy": -0.07516474131572122,
+      "max_drawdown": 9.448100140009057,
+      "sample_size": 111
+    }
+  },
+  "task": "Wallet Specialist Alpha Chronological Validation v1",
+  "timing_before_expiry": {
+    "at_least_120_seconds": 92,
+    "at_least_180_seconds": 57,
+    "maximum_seconds": 331.0,
+    "mean_seconds": 168.34677419354838,
+    "median_seconds": 172.5,
+    "minimum_seconds": 67.0
+  },
+  "unknowns": [
+    "untouched wallet-selection sample",
+    "actual public observation delay for these historical trades",
+    "delayed executable quote",
+    "direct spread and order-book liquidity at entry",
+    "queue position, fill probability, and market impact"
+  ],
+  "validation": {
+    "all_mechanical_validation_passed": true,
+    "gates": {
+      "all_three_folds_positive": false,
+      "at_least_two_wallets_confidently_positive": false,
+      "chronological_fold_order": true,
+      "consensus_sample_at_least_30": false,
+      "date_concentration_below_40_percent": true,
+      "deterministic_repeat_export": true,
+      "direct_liquidity_and_spread_join_available": false,
+      "four_frozen_wallets_present": true,
+      "market_group_leakage_absent": true,
+      "positive_conservative_expectancy": false,
+      "positive_expectancy_confidence": false,
+      "selection_leakage_absent": false
+    },
+    "go_gate_passed": false,
+    "irreversible_decision": "NO_GO_PERMANENTLY_FREEZE_WALLET_INTELLIGENCE",
+    "selection_leakage_reason": "The four wallets were selected using outcomes from the same bounded dataset; chronological row folds cannot create an untouched wallet-selection test."
+  },
+  "wallets": [
+    {
+      "asset_counts": "{\"BTC\": 9, \"ETH\": 8, \"SOL\": 9}",
+      "date_counts": "{\"2026-06-25\": 26}",
+      "expectancy": 0.02181753451982519,
+      "expectancy_95_high": 0.14445536460228925,
+      "expectancy_95_low": -0.10082029556263888,
+      "frozen_specialty": "BTC;ETH;SOL",
+      "largest_date_share": 1.0,
+      "losses": 3,
+      "max_drawdown": 1.6399999890370291,
+      "nonempty_fold_count": 1,
+      "positive_fold_count": 1,
+      "robustness": "positive_after_conservative_cost",
+      "sample_size": 26,
+      "stability": 1.0,
+      "wallet_id": "0x088df3b7e5c1b5c2d4b7dc760863153480cf025e",
+      "win_rate": 0.8846153846153846,
+      "win_rate_wilson_95_high": 0.9599675537638938,
+      "win_rate_wilson_95_low": 0.7102409678828635,
+      "wins": 23
+    },
+    {
+      "asset_counts": "{\"BTC\": 46}",
+      "date_counts": "{\"2026-06-20\": 12, \"2026-06-21\": 10, \"2026-06-22\": 7, \"2026-06-23\": 6, \"2026-06-24\": 4, \"2026-06-25\": 7}",
+      "expectancy": 0.02020818158889277,
+      "expectancy_95_high": 0.13971394265718415,
+      "expectancy_95_low": -0.09929757947939861,
+      "frozen_specialty": "BTC",
+      "largest_date_share": 0.2608695652173913,
+      "losses": 12,
+      "max_drawdown": 2.477852383282351,
+      "nonempty_fold_count": 3,
+      "positive_fold_count": 1,
+      "robustness": "positive_after_conservative_cost",
+      "sample_size": 46,
+      "stability": 0.3333333333333333,
+      "wallet_id": "0x1cc53dd33c49d0a222c61ebfd2f24ba48802b199",
+      "win_rate": 0.7391304347826086,
+      "win_rate_wilson_95_high": 0.843991135543574,
+      "win_rate_wilson_95_low": 0.597408464719844,
+      "wins": 34
+    },
+    {
+      "asset_counts": "{\"ETH\": 16}",
+      "date_counts": "{\"2026-06-24\": 1, \"2026-06-25\": 15}",
+      "expectancy": -0.14375000000000004,
+      "expectancy_95_high": 0.03895707977489937,
+      "expectancy_95_low": -0.32645707977489946,
+      "frozen_specialty": "ETH",
+      "largest_date_share": 0.9375,
+      "losses": 5,
+      "max_drawdown": 3.0900000000000007,
+      "nonempty_fold_count": 2,
+      "positive_fold_count": 1,
+      "robustness": "fails_conservative_cost",
+      "sample_size": 16,
+      "stability": 0.5,
+      "wallet_id": "0x29a55c2bf8efd1029c001477b34be47d3ca37752",
+      "win_rate": 0.6875,
+      "win_rate_wilson_95_high": 0.8583535614521796,
+      "win_rate_wilson_95_low": 0.44404355834740666,
+      "wins": 11
+    },
+    {
+      "asset_counts": "{\"BTC\": 36}",
+      "date_counts": "{\"2026-02-16\": 36}",
+      "expectancy": -0.1089829684427417,
+      "expectancy_95_high": 0.015604678978554318,
+      "expectancy_95_low": -0.2335706158640377,
+      "frozen_specialty": "BTC",
+      "largest_date_share": 1.0,
+      "losses": 8,
+      "max_drawdown": 4.383386896905376,
+      "nonempty_fold_count": 1,
+      "positive_fold_count": 0,
+      "robustness": "fails_conservative_cost",
+      "sample_size": 36,
+      "stability": 0.0,
+      "wallet_id": "0xde79cc7660d5c05b4cd2f4e72cae30cde2583d9a",
+      "win_rate": 0.7777777777777778,
+      "win_rate_wilson_95_high": 0.8828366802420353,
+      "win_rate_wilson_95_low": 0.6191529705388181,
+      "wins": 28
+    }
+  ]
+}
