@@ -1,46 +1,44 @@
 # Polymarket Next Task
 
-Last updated: July 3, 2026
+Last updated: July 4, 2026
 Task status: ACTIVE
 
 This file contains exactly one active task. Read canonical project memory
 before starting it.
 
-## Active task: Prepare Repricing Host Containment Remediation And Governance Package v1
+## Active task: Run Public-Only Less-Latency-Sensitive Strategy Candidate Review v1
 
 ### Objective
 
-Prepare an exact, reviewable Windows containment and governance change package
-that could satisfy the failed preflight gates after separate approval. Do not
-apply host changes and do not use credentials.
+Identify and rank Polymarket strategy hypotheses whose expected economics are
+less sensitive than Repricing to sub-two-second execution, using existing
+public data, project evidence and replay capabilities only.
 
 ### Required scope
 
-1. Resolve the exact calibration executable, local proxy endpoint and rule
-   precedence required for proxy-only egress.
-2. Produce reviewed firewall apply, verification and rollback scripts in
-   non-executing dry-run form.
-3. Specify restricted process identity, filesystem, shell and child-process
-   controls for Windows.
-4. Define kill-switch/watchdog host drill procedures.
-5. Finalize non-secret owner, revocation, incident, provider and expiring
-   authorization record schemas.
-6. Produce a change-impact and rollback review for explicit approval.
+1. Define a latency-tolerance rubric emphasizing one-to-five-second delay and
+   minute-scale holding/action windows.
+2. Review candidate families including slower cross-market dislocations,
+   wallet lifecycle/timing, spread-liquidity regimes and post-event
+   continuation/reversion.
+3. Estimate public-data availability, testability, sample density, executable
+   cost exposure and time-to-evidence for each candidate.
+4. Identify which candidates can reuse existing sessions and infrastructure.
+5. Recommend exactly one public-only candidate sprint or conclude none is
+   sufficiently promising.
 
 ### Forbidden
 
-- no firewall, registry, service, account or host-policy modification;
-- no execution of generated remediation commands;
-- no real credential, wallet, private key, API secret or passphrase;
-- no authenticated endpoint connection or credential provisioning;
-- no real order, cancellation or heartbeat;
-- no strategy, evidence-gate or holdout change.
+- no credentials, authenticated endpoints, wallet/private-key logic or orders;
+- no host firewall or containment changes;
+- no sealed holdout inspection or evaluation;
+- no production model training;
+- no strategy parameter optimization or new long capture campaign.
 
 ### Acceptance criteria
 
-- exact commands are inert artifacts and separately reviewable;
-- rollback precedes apply and covers unrelated-host impact;
-- governance templates contain no identities or secrets;
-- package states the explicit approval required before execution;
+- candidates ranked by information gain and executable robustness;
+- latency assumptions and missing data explicit;
+- one successor selected without changing existing frozen protocols;
 - relevant and full repository tests pass;
-- exactly one successor task remains.
+- exactly one active successor remains.

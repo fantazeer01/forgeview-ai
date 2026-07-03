@@ -1,0 +1,11 @@
+﻿{
+    "algorithm":  "sha256",
+    "files":  {
+                  "polymarket/models/repricing_research_v1/host_containment_architectural_review_v1/architectural_review_report.md":  "e9c646c3eaf250a5a2bcbc74062c49f2c8eb39e9765a615f721687bab428dac8",
+                  "polymarket/models/repricing_research_v1/host_containment_architectural_review_v1/expected_information_gain.csv":  "08d5068e62c611b4907a969e6c492657538666d957eb3024c5a693b85ad57abf",
+                  "polymarket/models/repricing_research_v1/host_containment_architectural_review_v1/optional_governance_work.csv":  "ee82773d762c22010fe671c4b2f68a16673f8bc2b49c0435d2efd14a6a05fe7f",
+                  "polymarket/models/repricing_research_v1/host_containment_architectural_review_v1/prioritized_remediation_list.csv":  "92fb10a5590af8c663a863a0c7b6b408d63ecaf8f8535928e17c9cf2f077aa92",
+                  "polymarket/models/repricing_research_v1/host_containment_architectural_review_v1/recommended_roadmap.md":  "d1218d7c6e59ce11a972400a7f99c35154c482a8990e6080e323f600264aa263",
+                  "polymarket/models/repricing_research_v1/host_containment_architectural_review_v1/review_decision.json":  "aa3f1d64e6915088283c26a6c51a8613cbc3e2d95f322fa46507bc45032b1ed2"
+              }
+}

@@ -1,0 +1,14 @@
+{
+  "authenticated_calls_made": 0,
+  "credentials_used": false,
+  "current_next_task_should_remain_unchanged": false,
+  "decision": "C_CHANGE_RESEARCH_PRIORITY",
+  "evidence_protocol_changed": false,
+  "host_settings_modified": false,
+  "orders_or_cancellations": 0,
+  "repricing_branch_status": "PRESERVED_DEFERRED",
+  "recommended_if_repricing_resumes": "B_MINIMUM_MANDATORY_CONTAINMENT_ONLY",
+  "recommended_now": "PUBLIC_ONLY_LESS_LATENCY_SENSITIVE_CANDIDATE_REVIEW",
+  "sealed_holdout_status": "UNTOUCHED",
+  "strategy_changed": false
+}

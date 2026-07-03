@@ -3378,3 +3378,34 @@ may not apply host settings or use credentials.
 
 Artifacts are under
 `polymarket/models/repricing_research_v1/host_containment_preflight_v1/`.
+
+## Repricing Host-Containment Architectural Review v1
+
+The architectural decision is `C_CHANGE_RESEARCH_PRIORITY`. The complete host
+remediation/governance package is not the highest-value immediate task, and
+minimum containment for credentialed no-order calibration is deferred.
+
+Weak Repricing evidence remains preserved: immediate execution replay is
+positive, while actual two-second entry plus cost is negative. Public WebSocket
+and local paths are already fast. The decisive unknown is the real order path:
+EIP-712 signing, order submission, exchange acceptance, matching, queue
+position, fills and cancellation. Credentialed no-order calibration measures
+only L2 authentication, read RTT and user-channel behavior, so it cannot close
+that uncertainty.
+
+The full governance package has low direct information gain and high cost. A
+minimum package has low-to-moderate engineering information gain but still does
+not establish executability. Public-only review of less-latency-sensitive
+hypotheses has the highest current portfolio-level information gain and avoids
+credential and Home PC containment risk.
+
+Repricing is preserved as `PRESERVED_DEFERRED`, not rejected. If reactivated,
+only mandatory containment should be implemented before a bounded no-order
+calibration; optional production governance remains postponed. All existing
+authorization and safety gates remain unchanged.
+
+The next task is **Run Public-Only Less-Latency-Sensitive Strategy Candidate
+Review v1**.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/host_containment_architectural_review_v1/`.

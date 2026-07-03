@@ -2181,3 +2181,23 @@ Reason: The inspector completed without mutation and proved a clean fixture
 child, but all firewall profiles are disabled, scoped outbound rules are absent
 and 12 additional containment/governance gates fail. Fail-closed status avoids
 mistaking a correct fixture sandbox for host-level security.
+
+## D-121: Defer credentialed Repricing calibration and change research priority
+
+Status: Accepted
+Decision: Do not build the full Repricing host-containment/governance package
+now. Do not proceed immediately with minimum credentialed no-order containment.
+Preserve the Repricing branch and redirect current work to a public-only review
+of less-latency-sensitive strategy candidates.
+
+If Repricing is later reactivated, implement only the mandatory minimum host
+controls before no-order calibration. Production-grade governance, capital,
+live cancellation, long-term monitoring and failover work may be postponed
+until authenticated measurements justify an order-path proposal.
+
+Reason: No-order calibration cannot measure the dominant unknowns: order
+signing, submission, exchange acceptance, matching, queue position and fills.
+It offers limited information beyond existing public RTT/WebSocket evidence,
+while requiring Home PC security changes and credential governance. Public-only
+evaluation of hypotheses tolerant of one-to-five-second delay has higher
+expected information gain and lower operational risk.

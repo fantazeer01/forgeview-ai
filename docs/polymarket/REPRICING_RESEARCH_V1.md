@@ -1569,3 +1569,20 @@ The preflight reads no secret values and modifies no host settings. Credentialed
 calibration remains prohibited. The next task is **Prepare Repricing Host
 Containment Remediation And Governance Package v1**, limited to non-applied
 change plans and assignment templates.
+
+## Host-Containment Architectural Review v1
+
+The project selected `C_CHANGE_RESEARCH_PRIORITY`. Repricing remains preserved
+but deferred. Full host governance is premature, and minimum credentialed
+no-order calibration is not the immediate next step because it cannot measure
+order acceptance, matching, queue position or fills.
+
+If the branch resumes, use the minimum mandatory containment path only: isolated
+environment, exact proxy/egress enforcement, external L2-only provider,
+expiring authorization, accountable owners, kill/watchdog drills,
+zero-open-order gate, redaction/audit and clock controls. Production governance
+may wait until authenticated evidence justifies order-path work.
+
+Frozen strategy, evidence gates, holdout status and authorization prohibitions
+are unchanged. The next project task is a public-only review of
+less-latency-sensitive strategy candidates.

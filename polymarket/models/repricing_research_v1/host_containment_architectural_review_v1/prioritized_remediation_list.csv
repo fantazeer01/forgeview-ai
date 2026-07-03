@@ -1,0 +1,14 @@
+priority,item,mandatory_before_any_credentialed_calibration,do_now,rationale
+P0,separate isolated credential-bearing environment,yes,no,Home PC containment is absent and branch is not production candidate
+P0,exact proxy allowlist plus OS direct-egress denial,yes,no,application flag cannot contain compromised process
+P0,externally provisioned L2-only credentials with no private key present,yes,no,credential capability must be isolated
+P0,unique narrow expiring authorization record,yes,no,no credential use without explicit scope and time bound
+P0,independent approver rollback revocation and incident owners,yes,no,credential incidents require accountable response
+P0,kill switch watchdog and proxy-loss fail-closed host drills,yes,no,fixture tests do not prove host behavior
+P0,zero-open-order preflight without cancellation,yes,no,no-order premise must be enforced
+P0,structural redaction audit hashing and secret scan,yes,no,mandatory before any secret-bearing process
+P1,clock discipline and bounded calibration duration,yes,no,latency attribution requires synchronized time
+P2,production-grade continuous supervision,no,no,postpone until execution feasibility exists
+P2,capital and daily-loss controls,no,no,no-order calibration has zero capital exposure
+P2,order cancellation and fill reconciliation engine,no,no,belongs to separately authorized order-path stage
+P3,long-term audit retention and compliance workflow,no,no,not needed to answer current research question
