@@ -1,0 +1,38 @@
+{
+  "authorization": {
+    "expires_at": "<UTC_ISO8601_AFTER_APPROVAL>",
+    "id": "<EXPIRING_AUTHORIZATION_ID>",
+    "scope": "credentialed_no_order_calibration"
+  },
+  "host_drills": {
+    "evidence_id": "<FIXTURE_HOST_DRILL_EVIDENCE_ID>",
+    "passed": false
+  },
+  "kill_switch": {
+    "configured": false,
+    "host_drill_passed": false
+  },
+  "owners": {
+    "incident": "<ROLE_ID>",
+    "independent_approver": "<ROLE_ID>",
+    "revocation": "<ROLE_ID>",
+    "rollback": "<ROLE_ID>"
+  },
+  "proxy": {
+    "configured": false,
+    "direct_egress_denied": false
+  },
+  "restricted_process": {
+    "child_process_denied": false,
+    "configured": false,
+    "shell_denied": false
+  },
+  "secret_provider": {
+    "configured": false,
+    "provider_id": "<NON_SECRET_PROVIDER_ID>"
+  },
+  "watchdog": {
+    "configured": false,
+    "host_drill_passed": false
+  }
+}

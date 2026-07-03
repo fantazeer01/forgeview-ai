@@ -6,42 +6,41 @@ Task status: ACTIVE
 This file contains exactly one active task. Read canonical project memory
 before starting it.
 
-## Active task: Implement Repricing No-Order Calibration Host Containment Preflight v1
+## Active task: Prepare Repricing Host Containment Remediation And Governance Package v1
 
 ### Objective
 
-Implement a read-only Windows host-containment inspector and fixture isolation
-launcher that can prove whether firewall, proxy, process, environment and
-operator prerequisites are present without applying host changes or using
-credentials.
+Prepare an exact, reviewable Windows containment and governance change package
+that could satisfy the failed preflight gates after separate approval. Do not
+apply host changes and do not use credentials.
 
 ### Required scope
 
-1. Inspect Windows Firewall profile and process-specific outbound-rule state.
-2. Validate direct-egress denial and local-proxy-only design using fixtures.
-3. Implement a restricted fixture child-process launcher with an exact clean
-   environment, bounded lifetime and no shell/child-process capability.
-4. Generate but do not execute proposed firewall/proxy configuration and
-   rollback commands for independent review.
-5. Validate kill-switch, parent death, proxy loss, log failure and rollback
-   drills at the fixture boundary.
-6. Define operator/revocation/authorization record templates without names or
-   secrets.
+1. Resolve the exact calibration executable, local proxy endpoint and rule
+   precedence required for proxy-only egress.
+2. Produce reviewed firewall apply, verification and rollback scripts in
+   non-executing dry-run form.
+3. Specify restricted process identity, filesystem, shell and child-process
+   controls for Windows.
+4. Define kill-switch/watchdog host drill procedures.
+5. Finalize non-secret owner, revocation, incident, provider and expiring
+   authorization record schemas.
+6. Produce a change-impact and rollback review for explicit approval.
 
 ### Forbidden
 
 - no firewall, registry, service, account or host-policy modification;
+- no execution of generated remediation commands;
 - no real credential, wallet, private key, API secret or passphrase;
 - no authenticated endpoint connection or credential provisioning;
 - no real order, cancellation or heartbeat;
-- no strategy, threshold, evidence-gate or production execution change;
-- no sealed holdout inspection or evaluation.
+- no strategy, evidence-gate or holdout change.
 
 ### Acceptance criteria
 
-- deterministic host preflight with explicit pass/fail evidence;
-- fixture child process cannot inherit forbidden environment names;
-- proposed controls and rollback are reviewable but never executed;
-- all missing governance assignments remain blockers;
+- exact commands are inert artifacts and separately reviewable;
+- rollback precedes apply and covers unrelated-host impact;
+- governance templates contain no identities or secrets;
+- package states the explicit approval required before execution;
 - relevant and full repository tests pass;
 - exactly one successor task remains.

@@ -2164,3 +2164,20 @@ rules exist, and no implemented restricted process boundary was found. External
 secret-provider operations, revocation ownership, rollback/incident ownership,
 an expiring authorization record and host-level failure drills are also absent.
 The local sandbox cannot contain a compromised host process by itself.
+
+## D-120: Host containment preflight fails closed on the Home PC
+
+Status: Accepted
+Decision: The read-only host preflight is the canonical readiness check before
+any no-order credential authorization review. It must report PASS on every
+mandatory firewall, proxy, process, environment, owner, authorization, provider
+and host-drill gate. A PASS still does not authorize credential use.
+
+The current host remains `NOT_READY_FOR_CREDENTIALS`. No host remediation may
+be applied automatically; proposed firewall/process/governance changes require
+separate review and explicit approval.
+
+Reason: The inspector completed without mutation and proved a clean fixture
+child, but all firewall profiles are disabled, scoped outbound rules are absent
+and 12 additional containment/governance gates fail. Fail-closed status avoids
+mistaking a correct fixture sandbox for host-level security.

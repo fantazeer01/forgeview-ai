@@ -1,0 +1,17 @@
+gate,status,severity,current_evidence,required_remediation
+firewall_inspection,PASS,none,read-only query completed,retain
+fixture_child_clean_environment,PASS,none,isolated environment fixture passed,retain and host-drill
+all_firewall_profiles_enabled,FAIL,critical,Domain Private Public disabled,review and separately approve profile enablement
+deny_direct_egress_rule,FAIL,critical,no scoped rule,define reviewed executable-specific block rule
+allow_local_proxy_rule,FAIL,critical,no scoped rule,define reviewed executable-specific loopback allow rule
+proxy_only_egress_ready,FAIL,critical,no host proxy configuration,implement only after approval
+restricted_process_identity_ready,FAIL,critical,no governance evidence,design restricted identity and child-shell denial
+kill_switch_ready,FAIL,high,fixture only,configure and host-drill
+watchdog_ready,FAIL,high,fixture only,configure and host-drill
+rollback_owner_assigned,FAIL,high,no metadata,assign accountable role
+revocation_owner_assigned,FAIL,critical,no metadata,assign accountable role
+incident_owner_assigned,FAIL,high,no metadata,assign accountable role
+independent_approver_assigned,FAIL,critical,no metadata,assign independent role
+authorization_record_valid,FAIL,critical,no record,create only after technical gates and approval
+secret_provider_metadata_present,FAIL,critical,no provider environment name or metadata,approve provider contract without secret values
+host_failure_drills_passed,FAIL,critical,no evidence ID,run approved fixture-only host drills

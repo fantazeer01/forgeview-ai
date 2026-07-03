@@ -1,0 +1,59 @@
+{
+  "credential_calibration_authorized": false,
+  "failed_gates": [
+    "all_firewall_profiles_enabled",
+    "deny_direct_egress_rule",
+    "allow_local_proxy_rule",
+    "proxy_only_egress_ready",
+    "restricted_process_identity_ready",
+    "kill_switch_ready",
+    "watchdog_ready",
+    "rollback_owner_assigned",
+    "revocation_owner_assigned",
+    "incident_owner_assigned",
+    "independent_approver_assigned",
+    "authorization_record_valid",
+    "secret_provider_metadata_present",
+    "host_failure_drills_passed"
+  ],
+  "gates": {
+    "all_firewall_profiles_enabled": false,
+    "allow_local_proxy_rule": false,
+    "authorization_record_valid": false,
+    "deny_direct_egress_rule": false,
+    "firewall_inspection": true,
+    "fixture_child_clean_environment": true,
+    "host_failure_drills_passed": false,
+    "incident_owner_assigned": false,
+    "independent_approver_assigned": false,
+    "kill_switch_ready": false,
+    "proxy_only_egress_ready": false,
+    "restricted_process_identity_ready": false,
+    "revocation_owner_assigned": false,
+    "rollback_owner_assigned": false,
+    "secret_provider_metadata_present": false,
+    "watchdog_ready": false
+  },
+  "host_settings_modified": false,
+  "inspection_error": null,
+  "outbound_rules": [],
+  "profiles": [
+    {
+      "default_outbound_action": "NotConfigured",
+      "enabled": false,
+      "name": "Domain"
+    },
+    {
+      "default_outbound_action": "NotConfigured",
+      "enabled": false,
+      "name": "Private"
+    },
+    {
+      "default_outbound_action": "NotConfigured",
+      "enabled": false,
+      "name": "Public"
+    }
+  ],
+  "secret_values_read": false,
+  "status": "NOT_READY_FOR_CREDENTIALS"
+}

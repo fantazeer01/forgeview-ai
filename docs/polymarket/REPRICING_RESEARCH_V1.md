@@ -1557,3 +1557,15 @@ assigned.
 No credentialed calibration may proceed. The next task is **Implement Repricing
 No-Order Calibration Host Containment Preflight v1**, which remains read-only
 and fixture-only and may not apply firewall changes or use credentials.
+
+## No-Order Calibration Host Containment Preflight v1
+
+The deterministic read-only preflight is implemented. The Home PC result is
+`NOT_READY_FOR_CREDENTIALS`: firewall inspection and clean fixture-child gates
+pass, while 14 mandatory containment/governance gates fail. All firewall
+profiles are disabled and no scoped proxy/direct-egress rules are present.
+
+The preflight reads no secret values and modifies no host settings. Credentialed
+calibration remains prohibited. The next task is **Prepare Repricing Host
+Containment Remediation And Governance Package v1**, limited to non-applied
+change plans and assignment templates.

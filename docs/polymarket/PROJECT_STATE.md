@@ -3351,3 +3351,30 @@ plans. It may not enable firewall rules, provision credentials or authenticate.
 
 Artifacts are under
 `polymarket/models/repricing_research_v1/no_order_authorization_gate_review_v1/`.
+
+## Repricing No-Order Calibration Host Containment Preflight v1
+
+The read-only Windows preflight is implemented and fixture-tested. It checks
+firewall profiles, scoped outbound rules, proxy/direct-egress evidence,
+restricted process metadata, clean child environment, kill switch, watchdog,
+owners, expiring authorization, secret-provider metadata and host drills. It
+returns PASS only when every mandatory gate passes and never authorizes
+calibration itself.
+
+The live Home PC result is `NOT_READY_FOR_CREDENTIALS` with 14 failed gates.
+All three Windows Firewall profiles remain disabled, no scoped containment
+rules exist, and proxy, restricted process, host kill/watchdog drills, owner
+assignments, authorization record, provider metadata and host drill evidence
+are absent. Firewall inspection and clean fixture child environment pass.
+
+The implementation reads environment names but not secret-provider values,
+rejects secret-bearing governance fields, uses only read-only firewall cmdlets
+and emits `host_settings_modified=false`. No credentials, authenticated calls,
+orders, cancellations, holdout access or strategy changes occurred.
+
+The next task is **Prepare Repricing Host Containment Remediation And Governance
+Package v1**. It may refine proposed changes and role templates for approval but
+may not apply host settings or use credentials.
+
+Artifacts are under
+`polymarket/models/repricing_research_v1/host_containment_preflight_v1/`.

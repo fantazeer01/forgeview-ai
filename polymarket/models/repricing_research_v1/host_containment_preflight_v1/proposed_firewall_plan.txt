@@ -1,0 +1,13 @@
+REVIEW DATA ONLY - DO NOT EXECUTE WITHOUT SEPARATE APPROVAL
+
+Apply outline:
+1. Review Windows Firewall profile enablement and unrelated-host impact.
+2. New-NetFirewallRule -DisplayName 'ForgeView Calibration Deny Direct Egress' -Direction Outbound -Action Block -Program '<REVIEWED_CALIBRATION_EXECUTABLE>'
+3. New-NetFirewallRule -DisplayName 'ForgeView Calibration Allow Local Proxy' -Direction Outbound -Action Allow -Program '<REVIEWED_CALIBRATION_EXECUTABLE>' -RemoteAddress 127.0.0.1
+
+Rollback outline:
+1. Remove-NetFirewallRule -DisplayName 'ForgeView Calibration Allow Local Proxy'
+2. Remove-NetFirewallRule -DisplayName 'ForgeView Calibration Deny Direct Egress'
+3. Restore only firewall profile state documented in the approved change record.
+
+The read-only preflight never invokes these commands.

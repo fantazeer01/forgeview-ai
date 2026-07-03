@@ -1,0 +1,12 @@
+﻿{
+    "algorithm":  "sha256",
+    "files":  {
+                  "polymarket/models/repricing_research_v1/host_containment_preflight_v1/blocker_matrix.csv":  "f3c5e4719923bb7092a13be318df648464783fd71ac127613b7fecacc02e4da7",
+                  "polymarket/models/repricing_research_v1/host_containment_preflight_v1/credential_readiness_decision.json":  "c5c085409c10a4dfba5ae38485489adb70b6009d2f9556b18b2005ccc87c667c",
+                  "polymarket/models/repricing_research_v1/host_containment_preflight_v1/governance_metadata_template.json":  "048c2c15d7c70c027c8fafdcd9fae83ea22710dd1394788d2cecf8a69ba1017c",
+                  "polymarket/models/repricing_research_v1/host_containment_preflight_v1/host_containment_preflight_report.md":  "06f6fd7952d540abcab273a1132accf786881c672fbd85ea6150be5f35e8db9e",
+                  "polymarket/models/repricing_research_v1/host_containment_preflight_v1/live_host/host_preflight_result.json":  "328320f6ffa31add61a5c0694a51911b822bcb4c3c3ef227714bc9a8aa04b94b",
+                  "polymarket/models/repricing_research_v1/host_containment_preflight_v1/proposed_firewall_plan.txt":  "c2a42b4d0953fbb55bbc265eb57414ea71e907b7b9081c392daf43cf82a2da34",
+                  "polymarket/models/repricing_research_v1/host_containment_preflight_v1/remediation_checklist.md":  "f78d9e5892b596165fbebf17b232e4c279a0b230d610121c0dffc2e311fbff38"
+              }
+}
