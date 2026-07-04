@@ -1,0 +1,17 @@
+{
+  "frozen_before_analysis": true,
+  "sessions": 5,
+  "scheduled_hours": 60.0,
+  "public_only": true,
+  "quote_age_limit_seconds": 5.0,
+  "near_expiry_seconds": 30.0,
+  "wide_spread_threshold": 0.03,
+  "total_cost_probability_points": 0.01,
+  "order_size_shares": 250.0,
+  "maximum_fill_fraction": 0.5,
+  "persistence_seconds": [2, 5],
+  "execution_prices": "top-of-book executable bid and ask",
+  "independent_no_book_required_for_complete_set_claim": true,
+  "holdout": "sealed_not_inspected",
+  "decision": "B_FREEZE_STRUCTURAL_MISPRICING_RECOMMEND_NEW_DIRECTION"
+}

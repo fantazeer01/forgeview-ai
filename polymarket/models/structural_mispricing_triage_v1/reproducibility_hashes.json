@@ -1,0 +1,12 @@
+{
+  "algorithm": "sha256",
+  "deterministic_repeat_match": true,
+  "files": {
+    "candidate_rankings.csv": "39e6c92159c881626ff1cafc3fb7b8f68c7cb7287977e8c9ff051f1890280cc0",
+    "session_inventory.csv": "fb99290c5ac7b88e23dc8c800a0956b78df393d108420ce456923fae659a920c",
+    "structural_episodes.csv": "f04539fb04b55b740506b15b2b10422325af6e3acc90ac180abec2ae938f17e5",
+    "triage_report.json": "781ec39d94c1d9e1a68409af17a4afafe3fb8a4e4aad9ced1e18a10ae8f8acd6",
+    "triage_report.md": "3f7dbf2a604e1eb55450d764aed65d0ae8080111fd076f8894d556ed69193d4d",
+    "triage_specification.json": "4e1b3bbc6ba011396fc5ef36673ec4817a10db354704484c724c623cc85d4348"
+  }
+}

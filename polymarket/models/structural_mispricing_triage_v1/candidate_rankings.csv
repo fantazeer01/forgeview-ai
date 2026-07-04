@@ -1,0 +1,11 @@
+rank,candidate,testability,qualifying_states,episodes,markets,assets,persists_2s_episodes,persists_5s_episodes,median_episode_seconds,best_net_margin,mean_net_margin,maximum_conservative_capacity_shares,economics,verdict,frequency_states_per_hour,frequency_episodes_per_hour,fresh_quote_state_denominator,near_expiry_state_denominator
+1,crossed_or_inverted_yes_book,testable,0,0,0,,0,0,,,,0.0,direct bid-minus-ask less 0.01 cost,reject_no_positive_fresh_states,0.0,0.0,280284,15573
+2,complete_set_acquisition,not_independently_testable,0,0,0,,0,0,,-0.010999999999999987,-0.021816247092235022,0.0,derived margin equals -YES spread - 0.01,reject_missing_independent_no_book,0.0,0.0,280284,15573
+3,complete_set_liquidation,not_independently_testable,0,0,0,,0,0,,-0.010999999999999987,-0.021816247092235022,0.0,derived margin equals -YES spread - 0.01,reject_missing_independent_no_book,0.0,0.0,280284,15573
+4,locked_book,testable,0,0,0,,0,0,,,,0.0,zero gross margin less 0.01 cost,reject_nonpositive_after_cost,0.0,0.0,280284,15573
+5,stale_bid_ask_inconsistency,testable_but_ineligible,0,0,0,,0,0,,,,0.0,stale states fail quote-age gate,reject_stale_or_zero_count,0.0,0.0,280284,15573
+6,temporary_wide_spread_capture,observable_not_directly_executable,7534,6312,1799,BTC;ETH;SOL,533,102,0.0,-0.04,-0.06640562782054686,125.0,marketable round trip equals -spread - 0.01; passive capture has unknown queue/fill,reject_requires_two_uncertain_passive_fills,125.56666666666666,105.2,280284,15573
+7,near_expiry_structural_distortion,testable,0,0,0,,0,0,,-0.010999999999999998,-0.02810325563475246,0.0,crossed fresh states within 30 seconds of expiry,reject_no_positive_near_expiry_states,0.0,0.0,280284,15573
+8,multi_outcome_pricing_inconsistency,not_applicable,0,0,0,,0,0,,,,0.0,all captured markets are binary and no multi-outcome books exist,reject_unsupported_schema,0.0,0.0,280284,15573
+9,executable_bid_ask_anomaly,testable,0,0,0,,0,0,,,,0.0,same as crossed-book direct execution,reject_no_positive_fresh_states,0.0,0.0,280284,15573
+10,liquidity_aware_arbitrage_like_setup,testable,0,0,0,,0,0,,,,0.0,crossed margin with 250-share cap and 50% fill cap,reject_no_positive_capacity,0.0,0.0,280284,15573

@@ -2278,3 +2278,23 @@ Reason: The slower-horizon test exhausted the final authorized Repricing
 alternative and failed its binary advancement rule. Directly executable
 structural constraints offer a different source of edge that is not dependent
 on predicting final outcomes, copying wallets or capturing a short-lived lag.
+
+## D-125: Freeze structural mispricing after executable quote triage
+
+Status: Accepted
+Decision: Structural mispricing is permanently frozen for the current research
+asset. No complete-set, crossed-book, near-expiry anomaly, multi-outcome
+arbitrage or related execution/infrastructure task may be advanced from these
+sessions. Existing artifacts remain preserved for audit.
+
+The next hypothesis is passive liquidity provision, treated as a separate
+inventory-and-adverse-selection problem rather than arbitrage. Its first sprint
+must use existing data only and must model uncertain maker fills conservatively.
+It may not launch capture, connect credentials or place orders.
+
+Reason: Five complete public sessions provided 280,284 fresh quote states and
+no crossed or locked book. Wide spreads occurred frequently but crossing both
+sides produced best net margin -0.040000. Capturing them passively requires
+unmeasured queue priority and two-sided fills. Independent NO and multi-outcome
+books were not captured, so complete-set claims are unsupported and algebraic
+complements remain strictly negative after spread and cost.

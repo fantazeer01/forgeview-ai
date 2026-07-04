@@ -3472,6 +3472,36 @@ opportunities such as complete-set and internally crossed public quotes.
 Artifacts are under
 `polymarket/models/repricing_research_v1/slower_horizon_derivative_validation_v1/`.
 
+## Polymarket Executable Structural Mispricing Triage v1
+
+Decision: **B_FREEZE_STRUCTURAL_MISPRICING_RECOMMEND_NEW_DIRECTION**.
+
+The fixed existing-data triage used five complete and continuous public
+sessions totaling 60 hours, 2,175 markets, 320,736 raw snapshots and 280,284
+valid fresh deduplicated quote states. It found zero crossed/inverted books,
+zero locked books, zero positive near-expiry structural states and zero
+profitable conservative capacity.
+
+Temporary wide spreads were the only frequent pattern: 7,534 states in 6,312
+episodes, or 125.5667 states/hour. Only 533 episodes persisted two seconds and
+102 persisted five seconds. The best marketable net margin was -0.040000 and
+mean margin was -0.066406 after the existing 0.01 cost. Passive spread capture
+cannot be admitted because both queue fills and adverse selection are unknown.
+
+The schema contains one independent YES book. It does not contain independently
+synchronized NO-token books or multi-outcome books. Algebraically derived
+complete-set acquisition and liquidation margins are exactly `-YES spread`
+before cost; the best observed theoretical margin was -0.011000 after cost.
+
+Structural mispricing is permanently frozen. Wallet Intelligence and Repricing
+remain frozen. The next task is **Run Polymarket Passive Liquidity Provision
+Existing-Data Feasibility Triage v1**, which may test maker-fill proxies and
+post-fill adverse selection from the same sessions but may not capture data,
+place orders or treat displayed spread as earned P&L.
+
+Artifacts are under `polymarket/models/structural_mispricing_triage_v1/` and
+the branch record is `docs/polymarket/STRUCTURAL_MISPRICING_RESEARCH_V1.md`.
+
 ## Wallet Specialist Alpha Chronological Validation v1
 
 The final Wallet Intelligence alpha sprint is complete with irreversible

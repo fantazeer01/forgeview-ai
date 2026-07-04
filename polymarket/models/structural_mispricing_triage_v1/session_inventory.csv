@@ -1,0 +1,6 @@
+session_number,session_path,mode,expected_duration_seconds,campaign_status,continuity_status,fatal_capture_errors,raw_snapshots,deduplicated_quote_states,first_timestamp,last_timestamp
+1,polymarket/runs/microstructure_development_v1/20260623_120611/session.jsonl,public,21600.0,complete,continuous,0,32041,27743,2026-06-23T12:07:01.892700+00:00,2026-06-23T18:06:09.895585+00:00
+2,polymarket/runs/microstructure_development_v1_batch_002/20260623_214015/session.jsonl,public,21600.0,complete,continuous,0,32089,28619,2026-06-23T21:40:23.665242+00:00,2026-06-24T03:40:13.667247+00:00
+3,polymarket/runs/repricing_balanced_v1/20260624_154206/session.jsonl,public,43200.0,complete,continuous,0,63820,55580,2026-06-24T15:42:14.759650+00:00,2026-06-25T03:42:04.754620+00:00
+4,polymarket/runs/repricing_balanced_v1_batch_002/20260625_200724/session.jsonl,public,43200.0,complete,continuous,0,64235,56604,2026-06-25T20:07:56.804409+00:00,2026-06-26T08:07:22.813620+00:00
+5,polymarket/runs/repricing_paper_soak_v4/20260701_212557/v5_sessions/20260701_212638/session.jsonl,public,86400.0,complete,continuous,0,128551,112258,2026-07-01T21:26:46.365377+00:00,2026-07-02T21:26:36.369584+00:00
