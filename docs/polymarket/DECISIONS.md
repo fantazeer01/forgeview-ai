@@ -2298,3 +2298,23 @@ sides produced best net margin -0.040000. Capturing them passively requires
 unmeasured queue priority and two-sided fills. Independent NO and multi-outcome
 books were not captured, so complete-set claims are unsupported and algebraic
 complements remain strictly negative after spread and cost.
+
+## D-126: Permanently freeze passive liquidity provision after adverse-selection NO-GO
+
+Status: Accepted
+Decision: Passive liquidity provision is permanently frozen in the current
+five-minute BTC/ETH/SOL universe. No further maker-policy, queue, fill,
+inventory, cancellation, capture, credential or execution task may be advanced
+for this branch. Existing artifacts remain available for audit.
+
+The next task is a strategic exhaustion and market-universe pivot review. It
+must choose whether slower or structurally richer Polymarket markets justify a
+new research program, or whether Polymarket work should stop. It may not launch
+collection or implementation.
+
+Reason: All eight fixed passive policies were negative with confidence
+intervals wholly below zero. The least-negative SOL 15-second policy lost
+-0.042789 per expected filled share and was one-sided on 73.20% of triggered
+attempts. Longer quote lives worsened loss and drawdown. Queue uncertainty and
+unobserved maker acknowledgements are limitations, not evidence capable of
+reversing a conservatively negative result.

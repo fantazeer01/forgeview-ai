@@ -1,0 +1,11 @@
+{
+  "algorithm": "sha256",
+  "deterministic_repeat_match": true,
+  "files": {
+    "passive_lp_attempts.csv": "83b9c0f29e741cdd212c670c2c94e1bd90695c6ba84c386025f657857f858f11",
+    "passive_lp_policy_summary.csv": "eb8c840ac457ed3a466e8cd27a427eb82790075e2f29828f944185a68623171d",
+    "passive_lp_report.json": "97a563ca27094191ad43b1e9ae5fcd45dcccfe9fe0d3cea4f737ce71ee09b460",
+    "passive_lp_report.md": "3b0d53a25ee8da9d1e0815c2576e24797cc6d5503e23ad91ff59690abd5c5bbd",
+    "passive_lp_specification.json": "c35cf94a6bfeca3aef847cdb52b077c5eeb2cf0c8a451fc6e77193c85351540d"
+  }
+}

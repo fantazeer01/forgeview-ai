@@ -1,0 +1,17 @@
+{
+  "frozen_before_analysis": true,
+  "public_sessions": 5,
+  "source_wide_spread_episodes": 6312,
+  "quote_lifetimes_seconds": [2, 5, 15, 30],
+  "asset_segments_at_15_seconds": ["BTC", "ETH", "SOL"],
+  "near_expiry_policy_seconds": 5,
+  "queue_fill_ratio": 0.375,
+  "queue_basis": "50% severe fill cap times 75% non-miss rate",
+  "maximum_filled_shares_per_side": 125.0,
+  "per_filled_leg_cost": 0.005,
+  "maximum_entry_quote_age_seconds": 2.0,
+  "cancellation_latency_seconds": 2.0,
+  "inventory_exit": "fresh executable bid/ask after quote life plus cancellation latency",
+  "holdout": "sealed_not_inspected",
+  "decision": "B_FREEZE_PASSIVE_LIQUIDITY_PROVISION_RECOMMEND_NEW_DIRECTION"
+}

@@ -3502,6 +3502,43 @@ place orders or treat displayed spread as earned P&L.
 Artifacts are under `polymarket/models/structural_mispricing_triage_v1/` and
 the branch record is `docs/polymarket/STRUCTURAL_MISPRICING_RESEARCH_V1.md`.
 
+## Polymarket Passive Liquidity Provision Existing-Data Feasibility Triage v1
+
+Decision: **B_FREEZE_PASSIVE_LIQUIDITY_PROVISION_RECOMMEND_NEW_DIRECTION**.
+
+The fixed replay used the same five complete public sessions and 6,312
+wide-spread episodes. Maker-fill eligibility required subsequent fresh public
+quotes to deplete through the posted level. Expected quantity was discounted
+to 37.5% of capped visible size using the existing severe fill and miss
+assumptions. Unmatched inventory was crossed out after fixed quote lives plus
+two-second cancellation latency; displayed spread was never treated as P&L.
+
+Every preregistered policy was negative with its market-cluster confidence
+interval wholly below zero. Broad 2/5/15/30-second expectancy per attempt was
+-0.795748 / -0.944989 / -1.244880 / -1.507288 dollars. Longer quote life
+increased two-sided completion but worsened adverse-selection loss and
+drawdown.
+
+The least-negative policy was SOL 15s: 157 attempts (2.6167/hour), 36.54%
+queue-adjusted fill probability, 73.20% one-sided share among triggered
+attempts, 43.3709 expected filled shares/hour, -0.709218 dollars per attempt,
+-0.042789 per expected filled share and 113.380 max drawdown. Its clustered
+95% interval was [-0.977226, -0.452753]. No asset was positive; near-expiry
+quoting was worse than broad 5-second quoting.
+
+Passive liquidity provision is permanently frozen. The narrow five-minute
+BTC/ETH/SOL research asset has now rejected outcome prediction, Wallet
+Intelligence, Repricing, structural mispricing and passive LP after conservative
+execution treatment.
+
+The next task is **Run Polymarket Five-Minute Alpha Exhaustion And
+Market-Universe Pivot Review v1**. It must decide whether the project should
+pivot to slower or structurally richer Polymarket markets, or stop Polymarket
+research, without launching data collection or implementation.
+
+Artifacts are under `polymarket/models/passive_liquidity_triage_v1/` and the
+branch record is `docs/polymarket/PASSIVE_LIQUIDITY_RESEARCH_V1.md`.
+
 ## Wallet Specialist Alpha Chronological Validation v1
 
 The final Wallet Intelligence alpha sprint is complete with irreversible
